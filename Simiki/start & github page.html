@@ -3,7 +3,7 @@
     <head>
         <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
         <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
-        <title>start&github page - </title>
+        <title>start & github page - </title>
         <meta name="keywords" content=""/>
         <meta name="description" content=""/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -13,12 +13,87 @@
         <div id="container">
             
 <div id="header">
-  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Simiki">Simiki</a>&nbsp;»&nbsp;start&github page</div>
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Simiki">Simiki</a>&nbsp;»&nbsp;start & github page</div>
 </div>
 <div class="clearfix"></div>
-<div id="title">start&github page</div>
+<div id="title">start & github page</div>
   <div id="content">
-  
+  <h1 id="simiki">Simiki 快速开始</h1>
+<h3 id="install">install</h3>
+<blockquote>
+<p>pip isntall simiki</p>
+</blockquote>
+<h3 id="update">update</h3>
+<blockquote>
+<p>pip install -U simiki</p>
+</blockquote>
+<h3 id="init-site">Init Site</h3>
+<blockquote>
+<p>mkdir mywiki &amp;&amp; cd mywiki
+simiki init</p>
+</blockquote>
+<h3 id="create-a-new-wiki">Create a new wiki</h3>
+<blockquote>
+<p>simiki new -t "start" -c Simiki</p>
+</blockquote>
+<h3 id="generate">Generate</h3>
+<blockquote>
+<p>simiki generate</p>
+</blockquote>
+<h3 id="preview">Preview</h3>
+<blockquote>
+<p>simiki preview</p>
+</blockquote>
+<h1 id="github-page">github page</h1>
+<h3 id="_1">创建用户页面。</h3>
+<ul>
+<li>
+<p>1.创建一个库名为 <username> .github.io 。<username>是您的Github上的用户名。</p>
+</li>
+<li>
+<p>2.切换到你的本地站点，设置输出目录中的主分支：</p>
+</li>
+</ul>
+<p>'''shell
+cd output
+git init
+git add .
+git commit -m 'your comment'</p>
+<h1 id="these-steps-will-be-shown-when-you-create-a-repo-in-github">These steps will be shown when you create a repo in Github:</h1>
+<p>git remote add origin git@github.com:<username>/<username>.github.io
+git push -u origin master
+'''</p>
+<ul>
+<li>3.回到父目录，并新建.gitignore文件：</li>
+</ul>
+<p>'''shell
+cd ../
+touch .gitignore
+'''</p>
+<ul>
+<li>4.编辑.gitignore的内容：</li>
+</ul>
+<p>'''
+*.pyc
+output
+'''</p>
+<ul>
+<li>5.安装源分支：</li>
+</ul>
+<p>'''
+git init
+git checkout -b wiki
+git add .
+git commit -m 'your comment'</p>
+<h1 id="these-steps-will-be-shown-when-you-create-a-repo-in-github_1">These steps will be shown when you create a repo in Github:</h1>
+<p>git remote add origin git@github.com:<username>/<username>.github.io
+git push -u origin wiki
+'''</p>
+<p>等待一段时间，访问HTTPS：// <username> .github.io </p>
+<h1 id="_2">备注</h1>
+<ol>
+<li>simiki generate 必须在主目录下</li>
+</ol>
 </div>
 
         </div>
