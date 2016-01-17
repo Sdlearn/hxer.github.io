@@ -3,7 +3,7 @@
     <head>
         <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
         <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
-        <title>start & github page - </title>
+        <title>start & github page - Wiki | janes</title>
         <meta name="keywords" content=""/>
         <meta name="description" content=""/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -48,51 +48,44 @@ simiki init</p>
 <h3 id="_1">创建用户页面。</h3>
 <ul>
 <li>
-<p>1.创建一个库名为 <username> .github.io 。<username>是您的Github上的用户名。</p>
+<p>1.创建一个库名为 <Username> .github.io 。<Username>是您的Github上的用户名。</p>
 </li>
 <li>
 <p>2.切换到你的本地站点，设置输出目录中的主分支：</p>
 </li>
 </ul>
-<p>'''shell
-cd output
+<p><code>cd output
 git init
 git add .
-git commit -m 'your comment'</p>
-<h1 id="these-steps-will-be-shown-when-you-create-a-repo-in-github">These steps will be shown when you create a repo in Github:</h1>
-<p>git remote add origin git@github.com:<username>/<username>.github.io
-git push -u origin master
-'''</p>
+git commit -m 'your comment'
+\# These steps will be shown when you create a repo in Github:
+git remote add origin git@github.com:&lt;Username&gt;/&lt;Username&gt;.github.io
+git push -u origin master</code></p>
 <ul>
 <li>3.回到父目录，并新建.gitignore文件：</li>
 </ul>
-<p>'''shell
-cd ../
-touch .gitignore
-'''</p>
+<p><code>cd ../
+touch .gitignore</code></p>
 <ul>
 <li>4.编辑.gitignore的内容：</li>
 </ul>
-<p>'''
-*.pyc
-output
-'''</p>
+<p><code>*.pyc
+output</code></p>
 <ul>
 <li>5.安装源分支：</li>
 </ul>
-<p>'''
-git init
+<p><code>git init
 git checkout -b wiki
 git add .
-git commit -m 'your comment'</p>
-<h1 id="these-steps-will-be-shown-when-you-create-a-repo-in-github_1">These steps will be shown when you create a repo in Github:</h1>
-<p>git remote add origin git@github.com:<username>/<username>.github.io
-git push -u origin wiki
-'''</p>
-<p>等待一段时间，访问HTTPS：// <username> .github.io </p>
+git commit -m 'your comment'
+\# These steps will be shown when you create a repo in Github:
+git remote add origin git@github.com:&lt;Username&gt;/&lt;Username&gt;.github.io
+git push -u origin wiki</code></p>
+<p>等待一段时间，访问HTTPS：// <Username> .github.io </p>
 <h1 id="_2">备注</h1>
 <ol>
 <li>simiki generate 必须在主目录下</li>
+<li>output 在github <strong>master</strong>分支，而源文件资源在<strong>wiki</strong>分支</li>
 </ol>
 </div>
 
