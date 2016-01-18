@@ -94,6 +94,35 @@ simiki init</p>
 
 
 <p>等待一段时间，访问 HTTPS:// <Username> .github.io </p>
+<h1 id="github">在其他地方同步github，并继续写作</h1>
+<div class="hlcode"><pre>mydir mywiki
+<span class="nb">cd </span>mywiki
+git init
+git remote add origin git@github.com:&lt;Username&gt;/&lt;Username&gt;.github.io
+git pull origin wiki:master     <span class="c">#同步的是 wiki 分支, 保存的是源文件</span>
+simiki generate
+<span class="nb">cd </span>output
+git init 
+git remote add origin git@github.com:&lt;Username&gt;/&lt;Username&gt;.github.io
+git pull origin master:master     <span class="c">#同步的是 master 分支, 保存的是输出文件</span>
+</pre></div>
+
+
+<p>产生更新后，分别推送 源文件 和 输出文件 到相应分支</p>
+<ul>
+<li>mywiki 目录下</li>
+</ul>
+<div class="hlcode"><pre>git push origin wiki
+</pre></div>
+
+
+<ul>
+<li>output 目录下</li>
+</ul>
+<div class="hlcode"><pre>git push origin master
+</pre></div>
+
+
 <h1 id="_2">备注</h1>
 <ol>
 <li>simiki generate 必须在主目录下</li>
