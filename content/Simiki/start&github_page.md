@@ -45,7 +45,7 @@ cd output
 git init
 git add .
 git commit -m 'your comment'
-\# These steps will be shown when you create a repo in Github:
+# These steps will be shown when you create a repo in Github:
 git remote add origin git@github.com:<Username>/<Username>.github.io
 git push -u origin master
 ```
@@ -71,12 +71,42 @@ git init
 git checkout -b wiki
 git add .
 git commit -m 'your comment'
-\# These steps will be shown when you create a repo in Github:
+# These steps will be shown when you create a repo in Github:
 git remote add origin git@github.com:<Username>/<Username>.github.io
 git push -u origin wiki
 ```
 
 等待一段时间，访问 HTTPS:// <Username> .github.io 
+
+
+# 在其他地方同步github，并继续写作
+
+```bash
+mydir mywiki
+cd mywiki
+git init
+git remote add origin git@github.com:<Username>/<Username>.github.io
+git pull origin wiki:master     #同步的是 wiki 分支, 保存的是源文件
+simiki generate
+cd output
+git init 
+git remote add origin git@github.com:<Username>/<Username>.github.io
+git pull origin master:master     #同步的是 master 分支, 保存的是输出文件
+```
+
+产生更新后，分别推送 源文件 和 输出文件 到相应分支
+
+* mywiki 目录下
+
+```bash
+git push origin master:wiki
+```
+
+* output 目录下
+
+```bash
+git push origin master:master
+```
 
 
 # 备注
