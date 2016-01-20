@@ -14,5 +14,6 @@ date: 2016-01-20 05:16
 
 * finish RSA homework
 * python socket programming, get password from http GET method
+* clean evernote
  
 
