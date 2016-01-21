@@ -1,7 +1,56 @@
 ---
-title: "sublime text3"
+title: "code editor"
 date: 2016-01-20 21:38
 ---
+
+# vscode
+
+## 运行python
+
+* press **Ctrl+Shift+B**
+
+It will open a message saying "No task runner configured"
+
+* Press "Configure Task Runner"
+
+It will open/create the file .vscode/tasks.json
+
+* Replace the instructions with
+
+```
+// A task runner that calls the Typescript compiler (tsc) and
+// Compiles a HelloWorld.ts program
+
+{
+    "version": "0.1.0",
+    "command": "python",
+    "args": ["${fileBasename}"],
+    "showOutput": "always"
+}
+```
+
+this configure also for ** windows 10** to run 
+
+4. Go back to your Python file and press Ctrl+Shift+B again
+
+It should run the code with python
+
+## 安装插件
+
+* 方法 1. Ctrl/Cmd+P (或 Ctrl/Cmd + E) 输入 ext install [插件关键字/名称]
+
+* 方法 2. Ctrl/Cmd+Shift+P (或 F1) 输入 Extensions, 选中 Install Extension 然后输入插件名称/关键字.
+
+* 不在插件商店的插件, 则可以放置到用户目录下的 .vscode/extensions 文件夹中~ 重启 VS Code 即可生效.
+
+## 插件
+
+* python
+    
+    + Magic Python
+
+
+# sublime text3
 
 ## 官网下载deb包，安装
 
@@ -109,3 +158,4 @@ setting-User:{
 
 }
 ```
+
