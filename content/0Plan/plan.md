@@ -16,4 +16,8 @@ date: 2016-01-20 05:16
 * python socket programming, get password from http GET method
 * clean evernote
  
+ ## 01-21
+ 
+ * VM analysis
+ * python http
 
