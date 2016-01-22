@@ -3,7 +3,7 @@
     <head>
         <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
         <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
-        <title>sublime text3 - Wiki | janes</title>
+        <title>code editor - Wiki | janes</title>
         <meta name="keywords" content=""/>
         <meta name="description" content=""/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -13,12 +13,64 @@
         <div id="container">
             
 <div id="header">
-  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Kali2">Kali2</a>&nbsp;»&nbsp;sublime text3</div>
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Kali2">Kali2</a>&nbsp;»&nbsp;code editor</div>
 </div>
 <div class="clearfix"></div>
-<div id="title">sublime text3</div>
+<div id="title">code editor</div>
   <div id="content">
-  <h2 id="deb">官网下载deb包，安装</h2>
+  <h1 id="vscode">vscode</h1>
+<h2 id="python">运行python</h2>
+<ul>
+<li>press <strong>Ctrl+Shift+B</strong></li>
+</ul>
+<p>It will open a message saying "No task runner configured"</p>
+<ul>
+<li>Press "Configure Task Runner"</li>
+</ul>
+<p>It will open/create the file .vscode/tasks.json</p>
+<ul>
+<li>Replace the instructions with</li>
+</ul>
+<div class="hlcode"><pre><span class="c1">// A task runner that calls the Typescript compiler (tsc) and</span>
+<span class="c1">// Compiles a HelloWorld.ts program</span>
+
+<span class="p">{</span>
+    <span class="s">&quot;version&quot;</span><span class="o">:</span> <span class="s">&quot;0.1.0&quot;</span><span class="p">,</span>
+    <span class="s">&quot;command&quot;</span><span class="o">:</span> <span class="s">&quot;python&quot;</span><span class="p">,</span>
+    <span class="s">&quot;args&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s">&quot;${fileBasename}&quot;</span><span class="p">],</span>
+    <span class="s">&quot;showOutput&quot;</span><span class="o">:</span> <span class="s">&quot;always&quot;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>this configure also for <strong> windows 10</strong> to run </p>
+<ol>
+<li>Go back to your Python file and press Ctrl+Shift+B again</li>
+</ol>
+<p>It should run the code with python</p>
+<h2 id="_1">安装插件</h2>
+<ul>
+<li>
+<p>方法 1. Ctrl/Cmd+P (或 Ctrl/Cmd + E) 输入 ext install [插件关键字/名称]</p>
+</li>
+<li>
+<p>方法 2. Ctrl/Cmd+Shift+P (或 F1) 输入 Extensions, 选中 Install Extension 然后输入插件名称/关键字.</p>
+</li>
+<li>
+<p>不在插件商店的插件, 则可以放置到用户目录下的 .vscode/extensions 文件夹中~ 重启 VS Code 即可生效.</p>
+</li>
+</ul>
+<h2 id="_2">插件</h2>
+<ul>
+<li>
+<p>python</p>
+<ul>
+<li>Magic Python</li>
+</ul>
+</li>
+</ul>
+<h1 id="sublime-text3">sublime text3</h1>
+<h2 id="deb">官网下载deb包，安装</h2>
 <h2 id="subl">命令行输入：subl, 即可运行</h2>
 <h2 id="user">user 配置文件</h2>
 <div class="hlcode"><pre><span class="p">{</span>
@@ -37,7 +89,7 @@
 </pre></div>
 
 
-<h2 id="_1">安装包管理</h2>
+<h2 id="_3">安装包管理</h2>
 <p>选择：view-&gt;Show Console,复制如下内容后回车，稍等片刻后会提示重启即可（需要联网）</p>
 <div class="hlcode"><pre><span class="n">import</span> <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">,</span><span class="n">os</span><span class="p">,</span><span class="n">hashlib</span><span class="p">;</span> <span class="n">h</span> <span class="o">=</span> <span class="err">&#39;</span><span class="mi">2915</span><span class="n">d1851351e5ee549c20394736b442</span><span class="err">&#39;</span> <span class="o">+</span> <span class="err">&#39;</span><span class="mi">8</span><span class="n">bc59f460fa1548d1514676163dafc88</span><span class="err">&#39;</span><span class="p">;</span> <span class="n">pf</span> <span class="o">=</span> <span class="err">&#39;</span><span class="n">Package</span> <span class="n">Control</span><span class="p">.</span><span class="n">sublime</span><span class="o">-</span><span class="n">package</span><span class="err">&#39;</span><span class="p">;</span> <span class="n">ipp</span> <span class="o">=</span> <span class="n">sublime</span><span class="p">.</span><span class="n">installed_packages_path</span><span class="p">();</span> <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">install_opener</span><span class="p">(</span> <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">build_opener</span><span class="p">(</span> <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">ProxyHandler</span><span class="p">())</span> <span class="p">);</span> <span class="n">by</span> <span class="o">=</span> <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">urlopen</span><span class="p">(</span> <span class="err">&#39;</span><span class="n">http</span><span class="o">:</span><span class="c1">//packagecontrol.io/&#39; + pf.replace(&#39; &#39;, &#39;%20&#39;)).read(); dh = hashlib.sha256(by).hexdigest(); print(&#39;Error validating download (got %s instead of %s), please try manual install&#39; % (dh, h)) if dh != h else open(os.path.join( ipp, pf), &#39;wb&#39; ).write(by)</span>
 </pre></div>
@@ -55,7 +107,7 @@
 </pre></div>
 
 
-<h2 id="_2">字体</h2>
+<h2 id="_4">字体</h2>
 <ul>
 <li>安装文泉驿字体:</li>
 </ul>
@@ -68,7 +120,7 @@
 </pre></div>
 
 
-<h2 id="_3">输入中文</h2>
+<h2 id="_5">输入中文</h2>
 <p>安装插件 InputHelper，用于输入中文</p>
 <div class="hlcode"><pre><span class="err">$</span><span class="n">cd</span> <span class="o">~/</span><span class="p">.</span><span class="n">config</span><span class="o">/</span><span class="n">sublime</span><span class="o">-</span><span class="n">text</span><span class="o">-</span><span class="mi">3</span><span class="o">/</span><span class="n">Packages</span>
 <span class="err">$</span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/xgenvn/InputHelper.git</span>
@@ -76,7 +128,7 @@
 
 
 <p>到此，按下Ctrl + Shift + Z，输入中文；</p>
-<h2 id="_4">插件</h2>
+<h2 id="_6">插件</h2>
 <ul>
 <li>Install SublimeREPL</li>
 </ul>
