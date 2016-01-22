@@ -59,6 +59,21 @@ sudo apt-get isntall chromium
 
 ## proxy
 
+* shadowsocks
+
+    + install
+   
+    ```
+    pip install shadowsocks
+    ```
+    
+    + run
+    
+    ```
+    sslocal -s <remote_ip> -p <remote_port> -k <password> 
+
+    ```
+    
 * socks proxy
 
 1.安装
