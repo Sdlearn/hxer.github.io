@@ -3,6 +3,8 @@ title: "install and configure"
 date: 2016-01-20 21:20
 ---
 
+# kali2 sana
+
 ## 更新源
 
 vim /etc/apt/sources.list
@@ -29,10 +31,15 @@ apt-get install fcitx fcitx-googlepinyin
 
 重启或用户注销
 
-## 安装vpn
+## upgrade to kali Rolling
 
 ```
-apt-get install -y network-manager-openvpn-gnome network-manager-pptp network-manager-pptp-gnome network-manager-vpnc network-manager-vpnc-gnome
+root@kali:# cat << EOF >/etc/apt/sources.list
+> deb http://http.kali.org/kali kali-rolling main non-free contrib
+> EOF
+root@kali:#apt-get update
+root@kali:#apt-get dist-upgrade
+root@kali:#reboot 
 ```
 
 ## 安装火狐
@@ -47,6 +54,43 @@ apt-get install firefox-mozilla-build
 
 ```
 sudo apt-get isntall chromium
+```
+
+
+## proxy
+
+* socks proxy
+
+1.安装
+
+```
+$ pip install proxychains
+```
+
+2.编辑proxychains配置
+
+```
+$ vim /etc/proxychains.conf
+```
+
+3.将socks4 127.0.0.1 9095改为
+
+> socks5 127.0.0.1 1080
+
+ps: 默认的socks4 127.0.0.1 9095是tor代理，而socks5 127.0.0.1 1080是shadowsocks的代理
+
+4.使用方法
+
+在需要代理的命令前加上 proxychains ，如：
+
+```
+$ sudo proxychains apt-get update
+```
+
+## 安装vpn
+
+```
+apt-get install -y network-manager-openvpn-gnome network-manager-pptp network-manager-pptp-gnome network-manager-vpnc network-manager-vpnc-gnome
 ```
 
 ## 新增用户
@@ -83,37 +127,7 @@ id username         #查看配置
 
 ```
 # vi /etc/init.d/rc.local
-#service ssh start  // add for sshd autorun
-```
-
-## proxy
-
-* socks proxy
-
-1.安装
-
-```
-$ pip install proxychains
-```
-
-2.编辑proxychains配置
-
-```
-$ vim /etc/proxychains.conf
-```
-
-3.将socks4 127.0.0.1 9095改为
-
-> socks5 127.0.0.1 1080
-
-ps: 默认的socks4 127.0.0.1 9095是tor代理，而socks5 127.0.0.1 1080是shadowsocks的代理
-
-4.使用方法
-
-在需要代理的命令前加上 proxychains ，如：
-
-```
-$ sudo proxychains apt-get update
+    service ssh start  // add for sshd auto run
 ```
 
 ## ftp
