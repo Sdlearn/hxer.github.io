@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>start & github page - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Simiki">Simiki</a>&nbsp;»&nbsp;start & github page</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">start & github page</div>
+  <div id="content">
+  <h1 id="simiki">Simiki 快速开始</h1>
+<h3 id="install">install</h3>
+<blockquote>
+<p>pip isntall simiki</p>
+</blockquote>
+<h3 id="update">update</h3>
+<blockquote>
+<p>pip install -U simiki</p>
+</blockquote>
+<h3 id="init-site">Init Site</h3>
+<blockquote>
+<p>mkdir mywiki &amp;&amp; cd mywiki</p>
+<p>simiki init</p>
+</blockquote>
+<h3 id="create-a-new-wiki">Create a new wiki</h3>
+<blockquote>
+<p>simiki new -t "start" -c Simiki</p>
+</blockquote>
+<h3 id="generate">Generate</h3>
+<blockquote>
+<p>simiki generate</p>
+</blockquote>
+<h3 id="preview">Preview</h3>
+<blockquote>
+<p>simiki preview</p>
+</blockquote>
+<h1 id="github-page">github page</h1>
+<h3 id="_1">创建用户页面。</h3>
+<ul>
+<li>
+<p>1.创建一个库名为 <Username> .github.io 。<Username>是您的Github上的用户名。</p>
+</li>
+<li>
+<p>2.切换到你的本地站点，设置输出目录中的主分支：</p>
+</li>
+</ul>
+<div class="hlcode"><pre><span class="nx">cd</span> <span class="nb">output</span>
+<span class="nx">git</span> <span class="nb">init</span>
+<span class="nx">git</span> <span class="nb">add</span> <span class="nx">.</span>
+<span class="nx">git</span> <span class="nx">commit</span> <span class="na">-m</span> <span class="s1">&#39;your comment&#39;</span>
+<span class="err">#</span> <span class="nx">These</span> <span class="nx">steps</span> <span class="nx">will</span> <span class="nx">be</span> <span class="nx">shown</span> <span class="nx">when</span> <span class="nx">you</span> <span class="nb">create</span> <span class="nx">a</span> <span class="n">repo</span> <span class="k">in</span> <span class="nx">Github</span><span class="p">:</span>
+<span class="nx">git</span> <span class="nx">remote</span> <span class="nb">add</span> <span class="nx">origin</span> <span class="nx">git</span><span class="p">@</span><span class="nx">github.com</span><span class="p">:</span><span class="o">&lt;</span><span class="nx">Username</span><span class="o">&gt;/&lt;</span><span class="nx">Username</span><span class="o">&gt;</span><span class="bp">.</span><span class="nx">github.io</span>
+<span class="nx">git</span> <span class="nb">push</span> <span class="na">-u</span> <span class="nx">origin</span> <span class="nx">master</span>
+</pre></div>
+
+
+<ul>
+<li>3.回到父目录，并新建.gitignore文件：</li>
+</ul>
+<div class="hlcode"><pre><span class="n">cd</span> <span class="p">..</span><span class="o">/</span>
+<span class="n">touch</span> <span class="p">.</span><span class="n">gitignore</span>
+</pre></div>
+
+
+<ul>
+<li>4.编辑.gitignore的内容：</li>
+</ul>
+<div class="hlcode"><pre><span class="o">*</span><span class="p">.</span><span class="n">pyc</span>
+<span class="n">output</span>
+</pre></div>
+
+
+<ul>
+<li>5.安装源分支：</li>
+</ul>
+<div class="hlcode"><pre><span class="nx">git</span> <span class="nb">init</span>
+<span class="nx">git</span> <span class="nx">checkout</span> <span class="na">-b</span> <span class="nx">wiki</span>
+<span class="nx">git</span> <span class="nb">add</span> <span class="nx">.</span>
+<span class="nx">git</span> <span class="nx">commit</span> <span class="na">-m</span> <span class="s1">&#39;your comment&#39;</span>
+<span class="err">#</span> <span class="nx">These</span> <span class="nx">steps</span> <span class="nx">will</span> <span class="nx">be</span> <span class="nx">shown</span> <span class="nx">when</span> <span class="nx">you</span> <span class="nb">create</span> <span class="nx">a</span> <span class="n">repo</span> <span class="k">in</span> <span class="nx">Github</span><span class="p">:</span>
+<span class="nx">git</span> <span class="nx">remote</span> <span class="nb">add</span> <span class="nx">origin</span> <span class="nx">git</span><span class="p">@</span><span class="nx">github.com</span><span class="p">:</span><span class="o">&lt;</span><span class="nx">Username</span><span class="o">&gt;/&lt;</span><span class="nx">Username</span><span class="o">&gt;</span><span class="bp">.</span><span class="nx">github.io</span>
+<span class="nx">git</span> <span class="nb">push</span> <span class="na">-u</span> <span class="nx">origin</span> <span class="nx">wiki</span>
+</pre></div>
+
+
+<p>等待一段时间，访问 HTTPS:// <Username> .github.io </p>
+<h1 id="github">在其他地方同步github，并继续写作</h1>
+<div class="hlcode"><pre>mydir mywiki
+<span class="nb">cd </span>mywiki
+git init
+git remote add origin git@github.com:&lt;Username&gt;/&lt;Username&gt;.github.io
+git pull origin wiki:master     <span class="c">#同步的是 wiki 分支, 保存的是源文件</span>
+simiki generate
+<span class="nb">cd </span>output
+git init 
+git remote add origin git@github.com:&lt;Username&gt;/&lt;Username&gt;.github.io
+git pull origin master:master     <span class="c">#同步的是 master 分支, 保存的是输出文件</span>
+</pre></div>
+
+
+<p>产生更新后，分别推送 源文件 和 输出文件 到相应分支</p>
+<ul>
+<li>mywiki 目录下</li>
+</ul>
+<div class="hlcode"><pre>git push origin master:wiki
+</pre></div>
+
+
+<ul>
+<li>output 目录下</li>
+</ul>
+<div class="hlcode"><pre>git push origin master:master
+</pre></div>
+
+
+<h1 id="_2">备注</h1>
+<ol>
+<li>simiki generate 必须在主目录下</li>
+<li>output 在github <strong>master</strong>分支，而源文件资源在<strong>wiki</strong>分支</li>
+</ol>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
