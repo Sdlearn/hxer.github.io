@@ -3,6 +3,14 @@ title: "install and configure"
 date: 2016-01-20 21:20
 ---
 
+# rolling
+
+## reboot shutdown不能关机
+
+solution: 
+
+先做 用户注销，然后返回到登录页面，点击关机或重启
+
 # kali2 sana
 
 ## 更新源
@@ -42,6 +50,16 @@ root@kali:#apt-get dist-upgrade
 root@kali:#reboot 
 ```
 
+## 设置 root 密码
+
+```
+sudo passwd
+#输入root密码
+#确认root密码
+
+su root
+```
+
 ## 安装火狐
 ```
 apt-get remove iceweasel
@@ -79,7 +97,7 @@ sudo apt-get isntall chromium
 1.安装
 
 ```
-$ pip install proxychains
+$ sudo apt-get install proxychains
 ```
 
 2.编辑proxychains配置
