@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>Selenium and Xvfb  - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Python">Python</a>&nbsp;»&nbsp;Selenium and Xvfb </div>
+</div>
+<div class="clearfix"></div>
+<div id="title">Selenium and Xvfb </div>
+  <div id="content">
+  <h2 id="reference">reference</h2>
+<ul>
+<li><a href="http://selenium-python.readthedocs.org/getting-started.html">selenium-python doc</a></li>
+</ul>
+<h2 id="install">install</h2>
+<div class="hlcode"><pre><span class="n">pip</span> <span class="n">install</span> <span class="n">selenium</span>
+</pre></div>
+
+
+<h2 id="simple-example">simple example</h2>
+<div class="hlcode"><pre><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.common.keys</span> <span class="kn">import</span> <span class="n">Keys</span>
+
+<span class="k">class</span> <span class="nc">PythonOrgSearch</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Firefox</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">test_search_in_python_org</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">driver</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span>
+        <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://www.python.org&quot;</span><span class="p">)</span>     <span class="c">#visit url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s">&quot;Python&quot;</span><span class="p">,</span> <span class="n">driver</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>   <span class="c"># confirm</span>
+        <span class="n">elem</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s">&quot;q&quot;</span><span class="p">)</span>
+        <span class="n">elem</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s">&quot;pycon&quot;</span><span class="p">)</span>         <span class="c">#input</span>
+        <span class="n">elem</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">Keys</span><span class="o">.</span><span class="n">RETURN</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="s">&quot;No results found.&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">driver</span><span class="o">.</span><span class="n">page_source</span>
+
+    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>     <span class="c">#close browser</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+
+<ul>
+<li>
+<p>close vs quit</p>
+<ul>
+<li>close() </li>
+</ul>
+<p>close browser</p>
+<ul>
+<li>quit()</li>
+</ul>
+<p>close a tab</p>
+</li>
+<li>
+<p>input like human</p>
+<ul>
+<li>
+<p>send_keys(string)</p>
+</li>
+<li>
+<p>click()</p>
+</li>
+<li>
+<p>clear()</p>
+</li>
+</ul>
+</li>
+<li>
+<p>find element</p>
+<ul>
+<li>
+<p>find_element_by_name()</p>
+</li>
+<li>
+<p>find_elements()</p>
+</li>
+</ul>
+<p><code>python
+from selenium.webdriver.common.by import By
+webdriver.find_elements(By.NAME, &lt;string&gt;)[0].send_keys(&lt;string&gt;)
+webdriver.find_elements(By.XPATH, "//input[@value='&lt;string&gt;']")[0].click()</code></p>
+</li>
+<li>
+<p>Keys class provide keys in the keyboard like RETURN, F1, ALT etc.</p>
+</li>
+<li>
+<p>support browser</p>
+</li>
+</ul>
+<p>Currently supported WebDriver implementations are Firefox, Chrome, Ie and Remote</p>
+<h1 id="xvfb">Xvfb</h1>
+<p>It is an X11 server that performs all graphical operations in memory, not showing any screen output</p>
+<p>Only a network layer is necessary.</p>
+<h2 id="install_1">install</h2>
+<div class="hlcode"><pre><span class="n">System</span> <span class="n">Requirements</span><span class="o">:</span>
+
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">xvfb</span>   <span class="err">#</span> <span class="n">or</span> <span class="n">similar</span><span class="p">)</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">xvfbwrapper</span>
+</pre></div>
+
+
+<h2 id="example">example</h2>
+<div class="hlcode"><pre><span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<span class="kn">from</span> <span class="nn">xvfbwrapper</span> <span class="kn">import</span> <span class="n">Xvfb</span>
+
+
+<span class="k">class</span> <span class="nc">TestPages</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xvfb</span> <span class="o">=</span> <span class="n">Xvfb</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">1280</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">720</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addCleanup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xvfb</span><span class="o">.</span><span class="n">stop</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xvfb</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">browser</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Firefox</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addCleanup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">browser</span><span class="o">.</span><span class="n">quit</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testUbuntuHomepage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">browser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;http://www.ubuntu.com&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s">&#39;Ubuntu&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">browser</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">verbosity</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
