@@ -5,11 +5,20 @@ date: 2016-01-20 21:20
 
 # rolling
 
+## source
+
+```
+deb http://http.kali.org/kali kali-rolling main contrib non-free
+```
+
 ## reboot shutdown不能关机
 
 solution: 
 
 先做 用户注销，然后返回到登录页面，点击关机或重启
+
+
+
 
 # kali2 sana
 
