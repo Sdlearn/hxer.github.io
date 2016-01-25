@@ -43,7 +43,7 @@
 </pre></div>
 
 
-<p>this configure also for <strong> windows 10</strong> to run </p>
+<p>this configure also for <strong> windows 10</strong> to run</p>
 <ol>
 <li>Go back to your Python file and press Ctrl+Shift+B again</li>
 </ol>
@@ -70,44 +70,23 @@
 </li>
 </ul>
 <h1 id="sublime-text3">sublime text3</h1>
-<h2 id="deb">官网下载deb包，安装</h2>
-<h2 id="subl">命令行输入：subl, 即可运行</h2>
-<h2 id="user">user 配置文件</h2>
-<div class="hlcode"><pre><span class="p">{</span>
-<span class="s">&quot;color_scheme&quot;</span><span class="o">:</span> <span class="s">&quot;Packages/Theme - Flatland/Flatland Monokai.tmTheme&quot;</span><span class="p">,</span>
-<span class="s">&quot;theme&quot;</span><span class="o">:</span> <span class="s">&quot;Flatland Dark.sublime-theme&quot;</span><span class="p">,</span>
-<span class="s">&quot;ensure_newline_at_eof_on_save&quot;</span><span class="o">:</span> <span class="nb">true</span><span class="p">,</span>
-<span class="s">&quot;translate_tabs_to_spaces&quot;</span><span class="o">:</span> <span class="nb">true</span><span class="p">,</span>
-<span class="s">&quot;trim_trailing_white_space_on_save&quot;</span><span class="o">:</span> <span class="nb">true</span><span class="p">,</span>
-<span class="s">&quot;show_encoding&quot;</span><span class="o">:</span> <span class="nb">true</span><span class="p">,</span>
-<span class="s">&quot;remember_full_screen&quot;</span><span class="o">:</span> <span class="nb">true</span><span class="p">,</span>
-<span class="s">&quot;open_files_in_new_window&quot;</span><span class="o">:</span> <span class="nb">false</span><span class="p">,</span>
-<span class="s">&quot;create_window_at_startup&quot;</span><span class="o">:</span> <span class="nb">false</span><span class="p">,</span>
-<span class="s">&quot;close_windows_when_empty&quot;</span><span class="o">:</span> <span class="nb">false</span><span class="p">,</span>
-<span class="s">&quot;ignored_packages&quot;</span><span class="o">:</span> <span class="p">[],</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<h2 id="_3">安装包管理</h2>
+<ul>
+<li>
+<p>官网下载deb包，安装</p>
+</li>
+<li>
+<p>命令行输入：subl, 即可运行</p>
+</li>
+<li>
+<p>安装包管理</p>
+</li>
+</ul>
 <p>选择：view-&gt;Show Console,复制如下内容后回车，稍等片刻后会提示重启即可（需要联网）</p>
 <div class="hlcode"><pre><span class="n">import</span> <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">,</span><span class="n">os</span><span class="p">,</span><span class="n">hashlib</span><span class="p">;</span> <span class="n">h</span> <span class="o">=</span> <span class="err">&#39;</span><span class="mi">2915</span><span class="n">d1851351e5ee549c20394736b442</span><span class="err">&#39;</span> <span class="o">+</span> <span class="err">&#39;</span><span class="mi">8</span><span class="n">bc59f460fa1548d1514676163dafc88</span><span class="err">&#39;</span><span class="p">;</span> <span class="n">pf</span> <span class="o">=</span> <span class="err">&#39;</span><span class="n">Package</span> <span class="n">Control</span><span class="p">.</span><span class="n">sublime</span><span class="o">-</span><span class="n">package</span><span class="err">&#39;</span><span class="p">;</span> <span class="n">ipp</span> <span class="o">=</span> <span class="n">sublime</span><span class="p">.</span><span class="n">installed_packages_path</span><span class="p">();</span> <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">install_opener</span><span class="p">(</span> <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">build_opener</span><span class="p">(</span> <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">ProxyHandler</span><span class="p">())</span> <span class="p">);</span> <span class="n">by</span> <span class="o">=</span> <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">urlopen</span><span class="p">(</span> <span class="err">&#39;</span><span class="n">http</span><span class="o">:</span><span class="c1">//packagecontrol.io/&#39; + pf.replace(&#39; &#39;, &#39;%20&#39;)).read(); dh = hashlib.sha256(by).hexdigest(); print(&#39;Error validating download (got %s instead of %s), please try manual install&#39; % (dh, h)) if dh != h else open(os.path.join( ipp, pf), &#39;wb&#39; ).write(by)</span>
 </pre></div>
 
 
-<p>快捷键：Prefernces-&gt;Key Bindingd - User</p>
-<div class="hlcode"><pre><span class="p">[</span> <span class="p">{</span><span class="s">&quot;keys&quot;</span><span class="o">:</span><span class="p">[</span><span class="s">&quot;f5&quot;</span><span class="p">],</span>
-    <span class="s">&quot;caption&quot;</span><span class="o">:</span> <span class="s">&quot;SublimeREPL: Python - RUN current file&quot;</span><span class="p">,</span>
-    <span class="s">&quot;command&quot;</span><span class="o">:</span> <span class="s">&quot;run_existing_window_command&quot;</span><span class="p">,</span> <span class="s">&quot;args&quot;</span><span class="o">:</span>
-    <span class="p">{</span>
-        <span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="s">&quot;repl_python_run&quot;</span><span class="p">,</span>
-        <span class="s">&quot;file&quot;</span><span class="o">:</span> <span class="s">&quot;config/Python/Main.sublime-menu&quot;</span>
-    <span class="p">}}</span>
-<span class="p">]</span>
-</pre></div>
-
-
-<h2 id="_4">字体</h2>
+<h2 id="_3">字体</h2>
 <ul>
 <li>安装文泉驿字体:</li>
 </ul>
@@ -120,7 +99,7 @@
 </pre></div>
 
 
-<h2 id="_5">输入中文</h2>
+<h2 id="_4">输入中文</h2>
 <p>安装插件 InputHelper，用于输入中文</p>
 <div class="hlcode"><pre><span class="err">$</span><span class="n">cd</span> <span class="o">~/</span><span class="p">.</span><span class="n">config</span><span class="o">/</span><span class="n">sublime</span><span class="o">-</span><span class="n">text</span><span class="o">-</span><span class="mi">3</span><span class="o">/</span><span class="n">Packages</span>
 <span class="err">$</span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/xgenvn/InputHelper.git</span>
@@ -128,17 +107,18 @@
 
 
 <p>到此，按下Ctrl + Shift + Z，输入中文；</p>
-<h2 id="_6">插件</h2>
+<h2 id="_5">插件</h2>
 <ul>
 <li>Install SublimeREPL</li>
 </ul>
 <p>Preferences | Package Control | Package Control: Install Package （enter）
 Choose SublimeREPL</p>
 <ul>
+<li>Theme-Flatland</li>
 <li>Package Control</li>
 <li>git</li>
 <li>
-<p>]GitGutter</p>
+<p>GitGutter</p>
 </li>
 <li>
 <p>Anaconda</p>
@@ -169,6 +149,35 @@ Choose SublimeREPL</p>
     <span class="s">&quot;enable_highlight&quot;</span><span class="o">:</span> <span class="nb">true</span><span class="p">,</span>
 
 <span class="p">}</span>
+</pre></div>
+
+
+<h2 id="user">user 配置文件</h2>
+<div class="hlcode"><pre><span class="p">{</span>
+<span class="s">&quot;color_scheme&quot;</span><span class="o">:</span> <span class="s">&quot;Packages/Theme - Flatland/Flatland Monokai.tmTheme&quot;</span><span class="p">,</span>
+<span class="s">&quot;theme&quot;</span><span class="o">:</span> <span class="s">&quot;Flatland Dark.sublime-theme&quot;</span><span class="p">,</span>
+<span class="s">&quot;ensure_newline_at_eof_on_save&quot;</span><span class="o">:</span> <span class="nb">true</span><span class="p">,</span>
+<span class="s">&quot;translate_tabs_to_spaces&quot;</span><span class="o">:</span> <span class="nb">true</span><span class="p">,</span>
+<span class="s">&quot;trim_trailing_white_space_on_save&quot;</span><span class="o">:</span> <span class="nb">true</span><span class="p">,</span>
+<span class="s">&quot;show_encoding&quot;</span><span class="o">:</span> <span class="nb">true</span><span class="p">,</span>
+<span class="s">&quot;remember_full_screen&quot;</span><span class="o">:</span> <span class="nb">true</span><span class="p">,</span>
+<span class="s">&quot;open_files_in_new_window&quot;</span><span class="o">:</span> <span class="nb">false</span><span class="p">,</span>
+<span class="s">&quot;create_window_at_startup&quot;</span><span class="o">:</span> <span class="nb">false</span><span class="p">,</span>
+<span class="s">&quot;close_windows_when_empty&quot;</span><span class="o">:</span> <span class="nb">false</span><span class="p">,</span>
+<span class="s">&quot;ignored_packages&quot;</span><span class="o">:</span> <span class="p">[],</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>快捷键：Prefernces-&gt;Key Bindingd - User</p>
+<div class="hlcode"><pre><span class="p">[</span> <span class="p">{</span><span class="s">&quot;keys&quot;</span><span class="o">:</span><span class="p">[</span><span class="s">&quot;f5&quot;</span><span class="p">],</span>
+    <span class="s">&quot;caption&quot;</span><span class="o">:</span> <span class="s">&quot;SublimeREPL: Python - RUN current file&quot;</span><span class="p">,</span>
+    <span class="s">&quot;command&quot;</span><span class="o">:</span> <span class="s">&quot;run_existing_window_command&quot;</span><span class="p">,</span> <span class="s">&quot;args&quot;</span><span class="o">:</span>
+    <span class="p">{</span>
+        <span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="s">&quot;repl_python_run&quot;</span><span class="p">,</span>
+        <span class="s">&quot;file&quot;</span><span class="o">:</span> <span class="s">&quot;config/Python/Main.sublime-menu&quot;</span>
+    <span class="p">}}</span>
+<span class="p">]</span>
 </pre></div>
 </div>
 
