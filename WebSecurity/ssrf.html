@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>ssrf - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#WebSecurity">WebSecurity</a>&nbsp;»&nbsp;ssrf</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">ssrf</div>
+  <div id="content">
+  <h2 id="common-example">common example</h2>
+<ul>
+<li>get image and save</li>
+</ul>
+<div class="hlcode"><pre><span class="cp">&lt;?php</span>
+<span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">])){</span>
+    <span class="nv">$content</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">]);</span>
+    <span class="nv">$filename</span> <span class="o">=</span> <span class="s1">&#39;./images/&#39;</span><span class="o">.</span><span class="nx">rand</span><span class="p">()</span><span class="o">.</span><span class="s1">&#39;img.jpg&#39;</span><span class="p">;</span>
+    <span class="nb">file_put_contents</span><span class="p">(</span><span class="nv">$filename</span><span class="p">,</span> <span class="nv">$content</span><span class="p">);</span>
+    <span class="nv">$img</span> <span class="o">=</span> <span class="s2">&quot;&lt;img src=</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="nv">$filename</span><span class="o">.</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">/&gt;&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">echo</span> <span class="nv">$img</span><span class="p">;</span>
+</pre></div>
+
+
+<ul>
+<li>use curl</li>
+</ul>
+<div class="hlcode"><pre><span class="x">if (isset($_POST[&#39;link&#39;])){                                                          </span>
+<span class="x">    $link = $_POST[&#39;link&#39;];                                                          </span>
+<span class="x">    $filename = &#39;./images/&#39;.rand().&#39;.txt&#39;;                                                         </span>
+<span class="x">    $curlobj = curl_init($link);                                                                                                                </span>
+<span class="x">    $fp = fopen($filename, &#39;w&#39;);                                                     </span>
+<span class="x">    curl_setopt($curlobj, CURLOPT_FILE, $fp);   #output                                        </span>
+<span class="x">    curl_setopt($curlobj, CURLOPT_HEADER, 0);   #0:不显示响应头信息                                  </span>
+<span class="x">    curl_exec($curlobj);                                                             </span>
+<span class="x">    curl_close($curlobj);                                                            </span>
+<span class="x">    fclose($fp);                                                                     </span>
+<span class="x">    $fp = fopen($filename, &#39;r&#39;);                                                     </span>
+<span class="x">    $result = fread($fp, filesize($filename));                                       </span>
+<span class="x">    fclose($fp);                                                                     </span>
+<span class="x">    echo $result;                                                                    </span>
+<span class="x">} </span>
+</pre></div>
+
+
+<p>可以用来扫端口</p>
+<ul>
+<li>post: link=http:127.0.0.1:22/</li>
+</ul>
+<p>output banner:</p>
+<blockquote>
+<p>SSH-2.0-OpenSSH_7.1p2 Debian-2 Protocol mismatch. </p>
+</blockquote>
+<ul>
+<li>post: link=http:127.0.0.1:25/</li>
+</ul>
+<p>error port ,output warning</p>
+<blockquote>
+<p>Warning: fread(): Length parameter must be greater than 0 in /var/www/ssrf.php on line 22</p>
+</blockquote>
+<p><strong> 危害 </strong></p>
+<ul>
+<li>
+<p>扫描主机，端口</p>
+</li>
+<li>
+<p>访问本地文件，或外网不可达的地址，内网弱口令多</p>
+</li>
+</ul>
+<p><strong> 防御 </strong></p>
+<ul>
+<li>
+<p>过滤返回信息，验证远程服务器对请求的响应是比较容易的方法。如果web应用是去获取某一种类型的文件。那么在把返回结果展示给用户之前先验证返回的信息是否符合标准。</p>
+</li>
+<li>
+<p>统一错误信息，避免用户可以根据错误信息来判断远端服务器的端口状态。</p>
+</li>
+<li>
+<p>限制请求的端口为http常用的端口，比如，80,443,8080,8090。</p>
+</li>
+<li>
+<p>黑名单内网ip。避免应用被用来获取获取内网数据，攻击内网。</p>
+</li>
+<li>
+<p>禁用不需要的协议。仅仅允许http和https请求。可以防止类似于file:///,gopher://,ftp:// 等引起的问题。</p>
+</li>
+</ul>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

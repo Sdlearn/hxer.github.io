@@ -152,19 +152,47 @@ Choose SublimeREPL</p>
 </pre></div>
 
 
+<ul>
+<li>vi mod </li>
+</ul>
+<p>启用Vintage,Vintage默认禁用</p>
+<p>选择Preferences/Settings - Default菜单</p>
+<p>编辑ignored_packages配置, 修改:</p>
+<div class="hlcode"><pre><span class="s">&quot;ignored_packages&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s">&quot;Vintage&quot;</span><span class="p">]</span>
+</pre></div>
+
+
+<p>成:</p>
+<div class="hlcode"><pre><span class="s">&quot;ignored_packages&quot;</span><span class="o">:</span> <span class="p">[]</span>
+</pre></div>
+
+
+<p>然后保存文件。</p>
+<p>Vintage模式则已启用——你可以看到"INSERT MODE"显示在状态栏了。</p>
+<p>Vintage默认是插入模式。可以添加:</p>
+<div class="hlcode"><pre><span class="s">&quot;vintage_start_in_command_mode&quot;</span><span class="o">:</span> <span class="nb">true</span>
+</pre></div>
+
+
+<p>这项配置到User Settings里</p>
 <h2 id="user">user 配置文件</h2>
 <div class="hlcode"><pre><span class="p">{</span>
-<span class="s">&quot;color_scheme&quot;</span><span class="o">:</span> <span class="s">&quot;Packages/Theme - Flatland/Flatland Monokai.tmTheme&quot;</span><span class="p">,</span>
-<span class="s">&quot;theme&quot;</span><span class="o">:</span> <span class="s">&quot;Flatland Dark.sublime-theme&quot;</span><span class="p">,</span>
-<span class="s">&quot;ensure_newline_at_eof_on_save&quot;</span><span class="o">:</span> <span class="nb">true</span><span class="p">,</span>
-<span class="s">&quot;translate_tabs_to_spaces&quot;</span><span class="o">:</span> <span class="nb">true</span><span class="p">,</span>
-<span class="s">&quot;trim_trailing_white_space_on_save&quot;</span><span class="o">:</span> <span class="nb">true</span><span class="p">,</span>
-<span class="s">&quot;show_encoding&quot;</span><span class="o">:</span> <span class="nb">true</span><span class="p">,</span>
-<span class="s">&quot;remember_full_screen&quot;</span><span class="o">:</span> <span class="nb">true</span><span class="p">,</span>
-<span class="s">&quot;open_files_in_new_window&quot;</span><span class="o">:</span> <span class="nb">false</span><span class="p">,</span>
-<span class="s">&quot;create_window_at_startup&quot;</span><span class="o">:</span> <span class="nb">false</span><span class="p">,</span>
-<span class="s">&quot;close_windows_when_empty&quot;</span><span class="o">:</span> <span class="nb">false</span><span class="p">,</span>
-<span class="s">&quot;ignored_packages&quot;</span><span class="o">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;close_windows_when_empty&quot;</span><span class="o">:</span> <span class="n">false</span><span class="o">,</span>
+    <span class="s2">&quot;color_scheme&quot;</span><span class="o">:</span> <span class="s2">&quot;Packages/Theme - Flatland/Flatland Monokai.tmTheme&quot;</span><span class="o">,</span>
+    <span class="s2">&quot;create_window_at_startup&quot;</span><span class="o">:</span> <span class="n">false</span><span class="o">,</span>
+    <span class="s2">&quot;ensure_newline_at_eof_on_save&quot;</span><span class="o">:</span> <span class="n">true</span><span class="o">,</span>
+    <span class="s2">&quot;font_size&quot;</span><span class="o">:</span> <span class="m">12</span><span class="o">,</span>
+    <span class="s2">&quot;ignored_packages&quot;</span><span class="o">:</span>
+    <span class="cp">[</span>
+
+    <span class="cp">]</span><span class="o">,</span>
+    <span class="s2">&quot;open_files_in_new_window&quot;</span><span class="o">:</span> <span class="n">false</span><span class="o">,</span>
+    <span class="s2">&quot;remember_full_screen&quot;</span><span class="o">:</span> <span class="n">true</span><span class="o">,</span>
+    <span class="s2">&quot;show_encoding&quot;</span><span class="o">:</span> <span class="n">true</span><span class="o">,</span>
+    <span class="s2">&quot;theme&quot;</span><span class="o">:</span> <span class="s2">&quot;Flatland Dark.sublime-theme&quot;</span><span class="o">,</span>
+    <span class="s2">&quot;translate_tabs_to_spaces&quot;</span><span class="o">:</span> <span class="n">true</span><span class="o">,</span>
+    <span class="s2">&quot;trim_trailing_white_space_on_save&quot;</span><span class="o">:</span> <span class="n">true</span><span class="o">,</span>
+    <span class="s2">&quot;vintage_start_in_command_mode&quot;</span><span class="o">:</span> <span class="n">true</span><span class="o">,</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -178,6 +206,320 @@ Choose SublimeREPL</p>
         <span class="s">&quot;file&quot;</span><span class="o">:</span> <span class="s">&quot;config/Python/Main.sublime-menu&quot;</span>
     <span class="p">}}</span>
 <span class="p">]</span>
+</pre></div>
+
+
+<h1 id="vim">vim</h1>
+<h2 id="vunble">vunble</h2>
+<div class="hlcode"><pre><span class="n">mkdir</span> <span class="o">~/</span><span class="p">.</span><span class="n">vim</span>
+<span class="n">mkdir</span> <span class="o">~/</span><span class="p">.</span><span class="n">vim</span><span class="o">/</span><span class="n">bundle</span>
+<span class="n">mkdir</span> <span class="o">~/</span><span class="p">.</span><span class="n">vim</span><span class="o">/</span><span class="n">bundle</span><span class="o">/</span><span class="n">vundle</span>
+<span class="n">vim</span> <span class="o">~/</span><span class="p">.</span><span class="n">vimrc</span>
+
+<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/gmarik/vundle.git ~/.vim/bundle/</span>
+</pre></div>
+
+
+<ul>
+<li>vim .vimrc</li>
+</ul>
+<div class="hlcode"><pre><span class="s2">&quot; Use Vim settings, rather then Vi settings. This setting must be as early as</span>
+<span class="s2">&quot;</span> <span class="nx">possible</span><span class="p">,</span> <span class="nx">as</span> <span class="nx">it</span> <span class="nx">has</span> <span class="nx">side</span> <span class="nx">effects.</span>
+<span class="nb">set</span> <span class="nx">nocompatible</span>
+
+<span class="s2">&quot; Highlight current line</span>
+<span class="s2">au WinLeave * set nocursorline nocursorcolumn</span>
+<span class="s2">au WinEnter * set cursorline cursorcolumn</span>
+<span class="s2">set cursorline cursorcolumn</span>
+
+<span class="s2">&quot;</span> <span class="nx">Leader</span>
+<span class="k">let</span> <span class="n">mapleader</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span>
+
+<span class="nb">set</span> <span class="n">backspace</span><span class="o">=</span><span class="mi">2</span>   <span class="s2">&quot; Backspace deletes like most programs in insert mode</span>
+<span class="s2">set nobackup</span>
+<span class="s2">set nowritebackup</span>
+<span class="s2">set noswapfile    &quot;</span> <span class="nx">http</span><span class="p">:</span><span class="c1">//robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287</span>
+<span class="nb">set</span> <span class="n">history</span><span class="o">=</span><span class="mi">50</span>
+<span class="nb">set</span> <span class="nx">ruler</span>         <span class="s2">&quot; show the cursor position all the time</span>
+<span class="s2">set showcmd       &quot;</span> <span class="nx">display</span> <span class="nx">incomplete</span> <span class="nx">commands</span>
+<span class="nb">set</span> <span class="nx">incsearch</span>     <span class="s2">&quot; do incremental searching</span>
+<span class="s2">set laststatus=2  &quot;</span> <span class="nx">Always</span> <span class="nx">display</span> <span class="nx">the</span> <span class="nb">status</span> <span class="nb">line</span>
+<span class="nb">set</span> <span class="nx">autowrite</span>     <span class="s2">&quot; Automatically :write before running commands</span>
+<span class="s2">set confirm       &quot;</span> <span class="nx">Need</span> <span class="nx">confrimation</span> <span class="k">while</span> <span class="nx">exit</span>
+<span class="nb">set</span> <span class="n">fileencodings</span><span class="o">=</span><span class="nx">utf</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span><span class="nx">gb18030</span><span class="p">,</span><span class="nx">gbk</span><span class="p">,</span><span class="nx">big5</span>
+
+<span class="s2">&quot; Switch syntax highlighting on, when the terminal has colors</span>
+<span class="s2">&quot;</span> <span class="nx">Also</span> <span class="nx">switch</span> <span class="k">on</span> <span class="nx">highlighting</span> <span class="nx">the</span> <span class="nb">last</span> <span class="nx">used</span> <span class="nb">search</span> <span class="nx">pattern.</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">&amp;</span><span class="nx">t_Co</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="o">||</span> <span class="nx">has</span><span class="p">(</span><span class="s2">&quot;gui_running&quot;</span><span class="p">))</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nb">exists</span><span class="p">(</span><span class="s2">&quot;syntax_on&quot;</span><span class="p">)</span>
+  <span class="nx">syntax</span> <span class="k">on</span>
+<span class="nx">endif</span>
+
+<span class="s2">&quot; .vimrc.bundles save configuration of plugin</span>
+<span class="s2">if filereadable(expand(&quot;</span><span class="err">~</span><span class="p">/</span><span class="nx">.vimrc.bundles</span><span class="s2">&quot;))</span>
+<span class="s2">  source ~/.vimrc.bundles</span>
+<span class="s2">endif</span>
+
+<span class="s2">filetype plugin indent on</span>
+
+<span class="s2">augroup vimrcEx</span>
+<span class="s2">  autocmd!</span>
+
+<span class="s2">  &quot;</span> <span class="nx">When</span> <span class="nx">editing</span> <span class="nx">a</span> <span class="nb">file</span><span class="p">,</span> <span class="nx">always</span> <span class="nx">jump</span> <span class="k">to</span> <span class="nx">the</span> <span class="nb">last</span> <span class="nx">known</span> <span class="nx">cursor</span> <span class="nx">position.</span>
+  <span class="s2">&quot; Don&#39;t do it for commit messages, when the position is invalid, or when</span>
+<span class="s2">  &quot;</span> <span class="nx">inside</span> <span class="nx">an</span> <span class="nx">event</span> <span class="nx">handler</span> <span class="p">(</span><span class="nx">happens</span> <span class="nx">when</span> <span class="nx">dropping</span> <span class="nx">a</span> <span class="nb">file</span> <span class="k">on</span> <span class="nx">gvim</span><span class="p">)</span><span class="nx">.</span>
+  <span class="nx">autocmd</span> <span class="nx">BufReadPost</span> <span class="o">*</span>
+    <span class="o">\</span> <span class="k">if</span> <span class="o">&amp;</span><span class="nb">ft</span> <span class="o">!=</span> <span class="s1">&#39;gitcommit&#39;</span> <span class="o">&amp;&amp;</span> <span class="nb">line</span><span class="p">(</span><span class="s2">&quot;&#39;</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nb">line</span><span class="p">(</span><span class="s2">&quot;&#39;</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nb">line</span><span class="p">(</span><span class="s2">&quot;$&quot;</span><span class="p">)</span> <span class="o">|</span>
+    <span class="o">\</span>   <span class="nx">exe</span> <span class="s2">&quot;normal g`</span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">|</span>
+    <span class="o">\</span> <span class="nx">endif</span>
+
+  <span class="s2">&quot; Cucumber navigation commands</span>
+<span class="s2">  autocmd User Rails Rnavcommand step features/step_definitions -glob=**/* -suffix=_steps.rb</span>
+<span class="s2">  autocmd User Rails Rnavcommand config config -glob=**/* -suffix=.rb -default=routes</span>
+
+<span class="s2">  &quot;</span> <span class="nb">Set</span> <span class="nx">syntax</span> <span class="nx">highlighting</span> <span class="nb">for</span> <span class="nx">specific</span> <span class="nb">file</span> <span class="nx">types</span>
+  <span class="nx">autocmd</span> <span class="nx">BufRead</span><span class="p">,</span><span class="nx">BufNewFile</span> <span class="nx">Appraisals</span> <span class="nb">set</span> <span class="n">filetype</span><span class="o">=</span><span class="nx">ruby</span>
+  <span class="nx">autocmd</span> <span class="nx">BufRead</span><span class="p">,</span><span class="nx">BufNewFile</span> <span class="o">*</span><span class="bp">.</span><span class="nx">md</span> <span class="nb">set</span> <span class="n">filetype</span><span class="o">=</span><span class="nx">markdown</span>
+
+  <span class="s2">&quot; Enable spellchecking for Markdown</span>
+<span class="s2">  autocmd FileType markdown setlocal spell</span>
+
+<span class="s2">  &quot;</span> <span class="nx">Automatically</span> <span class="nx">wrap</span> <span class="nx">at</span> <span class="mi">80</span> <span class="nx">characters</span> <span class="nb">for</span> <span class="nx">Markdown</span>
+  <span class="nx">autocmd</span> <span class="nx">BufRead</span><span class="p">,</span><span class="nx">BufNewFile</span> <span class="o">*</span><span class="bp">.</span><span class="nx">md</span> <span class="nx">setlocal</span> <span class="n">textwidth</span><span class="o">=</span><span class="mi">80</span>
+<span class="nx">augroup</span> <span class="nb">END</span>
+
+<span class="s2">&quot; Softtabs, 4 spaces</span>
+<span class="s2">set tabstop=4</span>
+<span class="s2">set shiftwidth=2</span>
+<span class="s2">set shiftround</span>
+<span class="s2">set expandtab</span>
+
+<span class="s2">&quot;</span> <span class="nx">Display</span> <span class="nx">extra</span> <span class="nx">whitespace</span>
+<span class="nb">set</span> <span class="nb">list</span> <span class="n">listchars</span><span class="o">=</span><span class="nx">tab</span><span class="p">:</span><span class="err">»·</span><span class="p">,</span><span class="nx">trail</span><span class="p">:</span><span class="err">·</span>
+
+<span class="s2">&quot; Use The Silver Searcher https://github.com/ggreer/the_silver_searcher</span>
+<span class="s2">if executable(&#39;ag&#39;)</span>
+<span class="s2">  &quot;</span> <span class="nx">Use</span> <span class="nx">Ag</span> <span class="nx">over</span> <span class="nx">Grep</span>
+  <span class="nb">set</span> <span class="n">grepprg</span><span class="o">=</span><span class="nx">ag</span><span class="o">\</span> <span class="o">--</span><span class="nx">nogroup</span><span class="o">\</span> <span class="o">--</span><span class="nx">nocolor</span>
+
+  <span class="s2">&quot; Use ag in CtrlP for listing files. Lightning fast and respects .gitignore</span>
+<span class="s2">  let g:ctrlp_user_command = &#39;ag %s -l --nocolor -g &quot;&quot;&#39;</span>
+
+<span class="s2">  &quot;</span> <span class="nx">ag</span> <span class="nx">is</span> <span class="nx">fast</span> <span class="nx">enough</span> <span class="nx">that</span> <span class="nx">CtrlP</span> <span class="nx">doesn</span><span class="s1">&#39;t need to cache</span>
+<span class="s1">  let g:ctrlp_use_caching = 0</span>
+<span class="s1">endif</span>
+
+<span class="s1">&quot; Color scheme</span>
+<span class="s1">colorscheme molokai</span>
+<span class="s1">highlight NonText guibg=#060606</span>
+<span class="s1">highlight Folded  guibg=#0A0A0A guifg=#9090D0</span>
+
+<span class="s1">&quot; Make it obvious where 80 characters is</span>
+<span class="s1">set textwidth=80</span>
+<span class="s1">set colorcolumn=+1</span>
+
+<span class="s1">&quot; Numbers</span>
+<span class="s1">set number</span>
+<span class="s1">set numberwidth=5</span>
+
+<span class="s1">&quot; Tab completion</span>
+<span class="s1">&quot; will insert tab at beginning of line,</span>
+<span class="s1">&quot; will use completion if not at beginning</span>
+<span class="s1">set wildmode=list:longest,list:full</span>
+<span class="s1">function! InsertTabWrapper()</span>
+<span class="s1">    let col = col(&#39;</span><span class="nx">.</span><span class="s1">&#39;) - 1</span>
+<span class="s1">    if !col || getline(&#39;</span><span class="nx">.</span><span class="s1">&#39;)[col - 1] !~ &#39;</span><span class="o">\</span><span class="nx">k</span><span class="s1">&#39;</span>
+<span class="s1">        return &quot;\&lt;tab&gt;&quot;</span>
+<span class="s1">    else</span>
+<span class="s1">        return &quot;\&lt;c-p&gt;&quot;</span>
+<span class="s1">    endif</span>
+<span class="s1">endfunction</span>
+<span class="s1">inoremap &lt;Tab&gt; &lt;c-r&gt;=InsertTabWrapper()&lt;cr&gt;</span>
+<span class="s1">inoremap &lt;S-Tab&gt; &lt;c-n&gt;</span>
+
+<span class="s1">&quot; Exclude Javascript files in :Rtags via rails.vim due to warnings when parsing</span>
+<span class="s1">let g:Tlist_Ctags_Cmd=&quot;ctags --exclude=&#39;</span><span class="o">*</span><span class="bp">.</span><span class="nx">js</span><span class="s1">&#39;&quot;</span>
+
+<span class="s1">&quot; Index ctags from any project, including those outside Rails</span>
+<span class="s1">map &lt;Leader&gt;ct :!ctags -R .&lt;CR&gt;</span>
+
+<span class="s1">&quot; Switch between the last two files</span>
+<span class="s1">nnoremap &lt;leader&gt;&lt;leader&gt; &lt;c-^&gt;</span>
+
+<span class="s1">&quot; Get off my lawn</span>
+<span class="s1">nnoremap &lt;Left&gt; :echoe &quot;Use h&quot;&lt;CR&gt;</span>
+<span class="s1">nnoremap &lt;Right&gt; :echoe &quot;Use l&quot;&lt;CR&gt;</span>
+<span class="s1">nnoremap &lt;Up&gt; :echoe &quot;Use k&quot;&lt;CR&gt;</span>
+<span class="s1">nnoremap &lt;Down&gt; :echoe &quot;Use j&quot;&lt;CR&gt;</span>
+
+<span class="s1">&quot; vim-rspec mappings</span>
+<span class="s1">nnoremap &lt;Leader&gt;t :call RunCurrentSpecFile()&lt;CR&gt;</span>
+<span class="s1">nnoremap &lt;Leader&gt;s :call RunNearestSpec()&lt;CR&gt;</span>
+<span class="s1">nnoremap &lt;Leader&gt;l :call RunLastSpec()&lt;CR&gt;</span>
+
+<span class="s1">&quot; Run commands that require an interactive shell</span>
+<span class="s1">nnoremap &lt;Leader&gt;r :RunInInteractiveShell&lt;space&gt;</span>
+
+<span class="s1">&quot; Treat &lt;li&gt; and &lt;p&gt; tags like the block tags they are</span>
+<span class="s1">let g:html_indent_tags = &#39;</span><span class="nx">li</span><span class="o">\|</span><span class="nx">p</span><span class="s1">&#39;</span>
+
+<span class="s1">&quot; Open new split panes to right and bottom, which feels more natural</span>
+<span class="s1">set splitbelow</span>
+<span class="s1">set splitright</span>
+
+<span class="s1">&quot; Quicker window movement</span>
+<span class="s1">nnoremap &lt;C-j&gt; &lt;C-w&gt;j</span>
+<span class="s1">nnoremap &lt;C-k&gt; &lt;C-w&gt;k</span>
+<span class="s1">nnoremap &lt;C-h&gt; &lt;C-w&gt;h</span>
+<span class="s1">nnoremap &lt;C-l&gt; &lt;C-w&gt;l</span>
+
+<span class="s1">&quot; configure syntastic syntax checking to check on open as well as save</span>
+<span class="s1">let g:syntastic_check_on_open=1</span>
+<span class="s1">let g:syntastic_html_tidy_ignore_errors=[&quot; proprietary attribute </span><span class="se">\&quot;</span><span class="s1">ng-&quot;]</span>
+
+<span class="s1">autocmd Syntax javascript set syntax=jquery &quot; JQuery syntax support</span>
+
+<span class="s1">set matchpairs+=&lt;:&gt;</span>
+<span class="s1">set statusline+=%{fugitive#statusline()} &quot;  Git Hotness</span>
+
+<span class="s1">&quot; Nerd Tree</span>
+<span class="s1">let NERDChristmasTree=0</span>
+<span class="s1">let NERDTreeWinSize=40</span>
+<span class="s1">let NERDTreeChDirMode=2</span>
+<span class="s1">let NERDTreeIgnore=[&#39;</span><span class="o">\</span><span class="err">~$</span><span class="s1">&#39;, &#39;</span><span class="o">\</span><span class="bp">.</span><span class="nx">pyc</span><span class="err">$</span><span class="s1">&#39;, &#39;</span><span class="o">\</span><span class="bp">.</span><span class="nx">swp</span><span class="err">$</span><span class="s1">&#39;]</span>
+<span class="s1">let NERDTreeShowBookmarks=1</span>
+<span class="s1">let NERDTreeWinPos=&quot;left&quot;</span>
+<span class="s1">autocmd vimenter * if !argc() | NERDTree | endif &quot; Automatically open a NERDTree if no files where specified</span>
+<span class="s1">autocmd bufenter * if (winnr(&quot;$&quot;) == 1 &amp;&amp; exists(&quot;b:NERDTreeType&quot;) &amp;&amp; b:NERDTreeType == &quot;primary&quot;) | q | endif &quot; Close vim if the only window left open is a NERDTree</span>
+<span class="s1">nmap &lt;F5&gt; :NERDTreeToggle&lt;cr&gt;</span>
+
+<span class="s1">&quot; Tagbar</span>
+<span class="s1">let g:tagbar_width=35</span>
+<span class="s1">let g:tagbar_autofocus=1</span>
+<span class="s1">nmap &lt;F6&gt; :TagbarToggle&lt;CR&gt;</span>
+
+<span class="s1">&quot; Emmet</span>
+<span class="s1">let g:user_emmet_mode=&#39;</span><span class="nx">i</span><span class="s1">&#39; &quot; enable for insert mode</span>
+
+<span class="s1">&quot; Search results high light</span>
+<span class="s1">set hlsearch</span>
+
+<span class="s1">&quot; nohlsearch shortcut</span>
+<span class="s1">nmap -hl :nohlsearch&lt;cr&gt;</span>
+<span class="s1">nmap +hl :set hlsearch&lt;cr&gt;</span>
+
+<span class="s1">&quot; Javascript syntax hightlight</span>
+<span class="s1">syntax enable</span>
+
+<span class="s1">&quot; YouCompleteMe</span>
+<span class="s1">let g:ycm_autoclose_preview_window_after_completion=1</span>
+<span class="s1">nnoremap &lt;leader&gt;g :YcmCompleter GoToDefinitionElseDeclaration&lt;CR&gt;</span>
+
+<span class="s1">&quot; ctrlp</span>
+<span class="s1">set wildignore+=*/tmp/*,*.so,*.swp,*.zip     &quot; MacOSX/Linux&quot;</span>
+<span class="s1">let g:ctrlp_custom_ignore = &#39;</span><span class="o">\</span><span class="nx">v</span><span class="err">[</span><span class="o">\/</span><span class="cp">]</span>\.(git|hg|svn)$&#39;
+
+set laststatus=2 &quot; Always display the status line
+set statusline+=%{fugitive#statusline()} &quot;  Git Hotness
+
+nnoremap <span class="nt">&lt;leader&gt;</span>w :w<span class="nt">&lt;CR&gt;</span>
+nnoremap <span class="nt">&lt;leader&gt;</span>q :q<span class="nt">&lt;CR&gt;</span>
+
+&quot; RSpec.vim mappings
+map <span class="nt">&lt;Leader&gt;</span>t :call RunCurrentSpecFile()<span class="nt">&lt;CR&gt;</span>
+map <span class="nt">&lt;Leader&gt;</span>s :call RunNearestSpec()<span class="nt">&lt;CR&gt;</span>
+map <span class="nt">&lt;Leader&gt;</span>l :call RunLastSpec()<span class="nt">&lt;CR&gt;</span>
+map <span class="nt">&lt;Leader&gt;</span>a :call RunAllSpecs()<span class="nt">&lt;CR&gt;</span>
+
+&quot; Vim-instant-markdown doesn&#39;t work in zsh
+set shell=bash\ -i
+
+&quot; Snippets author
+let g:snips_author = &#39;Yuez&#39;
+</pre></div>
+
+
+<ul>
+<li>vim .vimrc.bundles</li>
+</ul>
+<div class="hlcode"><pre><span class="k">if</span> <span class="o">&amp;</span><span class="n">compatible</span>
+  <span class="n">set</span> <span class="n">nocompatible</span>
+<span class="n">end</span>
+
+<span class="s">&quot; support vundle</span>
+<span class="n">filetype</span> <span class="n">off</span>
+<span class="n">set</span> <span class="n">rtp</span><span class="o">+=~/</span><span class="p">.</span><span class="n">vim</span><span class="o">/</span><span class="n">bundle</span><span class="o">/</span><span class="n">vundle</span><span class="o">/</span>
+<span class="n">call</span> <span class="n">vundle</span><span class="err">#</span><span class="n">rc</span><span class="p">()</span>
+
+<span class="s">&quot; Let Vundle manage Vundle</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">gmarik</span><span class="o">/</span><span class="n">vundle</span><span class="err">&#39;</span>
+
+<span class="s">&quot; Define bundles via Github repos</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">christoomey</span><span class="o">/</span><span class="n">vim</span><span class="o">-</span><span class="n">run</span><span class="o">-</span><span class="n">interactive</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">Valloric</span><span class="o">/</span><span class="n">YouCompleteMe</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">croaky</span><span class="o">/</span><span class="n">vim</span><span class="o">-</span><span class="n">colors</span><span class="o">-</span><span class="n">github</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">danro</span><span class="o">/</span><span class="n">rename</span><span class="p">.</span><span class="n">vim</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">majutsushi</span><span class="o">/</span><span class="n">tagbar</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">kchmck</span><span class="o">/</span><span class="n">vim</span><span class="o">-</span><span class="n">coffee</span><span class="o">-</span><span class="n">script</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">kien</span><span class="o">/</span><span class="n">ctrlp</span><span class="p">.</span><span class="n">vim</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">pbrisbin</span><span class="o">/</span><span class="n">vim</span><span class="o">-</span><span class="n">mkdir</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">scrooloose</span><span class="o">/</span><span class="n">syntastic</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">slim</span><span class="o">-</span><span class="n">template</span><span class="o">/</span><span class="n">vim</span><span class="o">-</span><span class="n">slim</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">thoughtbot</span><span class="o">/</span><span class="n">vim</span><span class="o">-</span><span class="n">rspec</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">tpope</span><span class="o">/</span><span class="n">vim</span><span class="o">-</span><span class="n">bundler</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">tpope</span><span class="o">/</span><span class="n">vim</span><span class="o">-</span><span class="n">endwise</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">tpope</span><span class="o">/</span><span class="n">vim</span><span class="o">-</span><span class="n">fugitive</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">tpope</span><span class="o">/</span><span class="n">vim</span><span class="o">-</span><span class="n">rails</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">tpope</span><span class="o">/</span><span class="n">vim</span><span class="o">-</span><span class="n">surround</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">vim</span><span class="o">-</span><span class="n">ruby</span><span class="o">/</span><span class="n">vim</span><span class="o">-</span><span class="n">ruby</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">vim</span><span class="o">-</span><span class="n">scripts</span><span class="o">/</span><span class="n">ctags</span><span class="p">.</span><span class="n">vim</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">vim</span><span class="o">-</span><span class="n">scripts</span><span class="o">/</span><span class="n">matchit</span><span class="p">.</span><span class="n">zip</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">vim</span><span class="o">-</span><span class="n">scripts</span><span class="o">/</span><span class="n">tComment</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="s">&quot;mattn/emmet-vim&quot;</span>
+<span class="n">Bundle</span> <span class="s">&quot;scrooloose/nerdtree&quot;</span>
+<span class="n">Bundle</span> <span class="s">&quot;Lokaltog/vim-powerline&quot;</span>
+<span class="n">Bundle</span> <span class="s">&quot;godlygeek/tabular&quot;</span>
+<span class="n">Bundle</span> <span class="s">&quot;msanders/snipmate.vim&quot;</span>
+<span class="n">Bundle</span> <span class="s">&quot;jelera/vim-javascript-syntax&quot;</span>
+<span class="n">Bundle</span> <span class="s">&quot;altercation/vim-colors-solarized&quot;</span>
+<span class="n">Bundle</span> <span class="s">&quot;othree/html5.vim&quot;</span>
+<span class="n">Bundle</span> <span class="s">&quot;xsbeats/vim-blade&quot;</span>
+<span class="n">Bundle</span> <span class="s">&quot;Raimondi/delimitMate&quot;</span>
+<span class="n">Bundle</span> <span class="s">&quot;groenewege/vim-less&quot;</span>
+<span class="n">Bundle</span> <span class="s">&quot;evanmiller/nginx-vim-syntax&quot;</span>
+<span class="n">Bundle</span> <span class="s">&quot;Lokaltog/vim-easymotion&quot;</span>
+<span class="n">Bundle</span> <span class="s">&quot;tomasr/molokai&quot;</span>
+<span class="n">Bundle</span> <span class="s">&quot;klen/python-mode&quot;</span>
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="err">$</span><span class="n">vim</span>            <span class="err">#</span><span class="n">open</span> <span class="n">vim</span>
+<span class="o">:</span><span class="n">BundleInstall</span>  <span class="err">#</span><span class="n">install</span> <span class="n">plugin</span>
+</pre></div>
+
+
+<ul>
+<li>YouCompleteMe error</li>
+</ul>
+<div class="hlcode"><pre><span class="n">Done</span><span class="o">!</span> <span class="n">With</span> <span class="n">errors</span><span class="p">;</span> <span class="n">press</span> <span class="n">l</span> <span class="n">to</span> <span class="n">view</span> <span class="n">log</span>
+<span class="n">ycm_client_support</span><span class="p">.[</span><span class="n">so</span><span class="o">|</span><span class="n">pyd</span><span class="o">|</span><span class="n">dll</span><span class="p">]</span> <span class="n">and</span> <span class="n">ycm_core</span><span class="p">.[</span><span class="n">so</span><span class="o">|</span><span class="n">pyd</span><span class="o">|</span><span class="n">dll</span><span class="p">]</span> <span class="n">not</span> <span class="n">detected</span><span class="p">;</span> <span class="n">you</span> <span class="n">need</span>
+<span class="n">to</span> <span class="n">compile</span> <span class="n">YCM</span> <span class="n">before</span> <span class="n">using</span> <span class="n">it</span><span class="p">.</span> <span class="n">Read</span> <span class="n">the</span> <span class="n">docs</span><span class="o">!</span>
+</pre></div>
+
+
+<p>solution:</p>
+<div class="hlcode"><pre><span class="n">cd</span> <span class="o">~/</span><span class="p">.</span><span class="n">vim</span><span class="o">/</span><span class="n">bundle</span><span class="o">/</span><span class="n">YouComleteMe</span>
+<span class="n">git</span> <span class="n">submodule</span> <span class="n">update</span> <span class="o">--</span><span class="n">init</span> <span class="o">--</span><span class="n">recursive</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">cmake</span>
+ <span class="n">python</span> <span class="n">install</span><span class="p">.</span><span class="n">py</span>
+</pre></div>
+
+
+<ul>
+<li>bundle base cmd</li>
+</ul>
+<div class="hlcode"><pre><span class="o">:</span><span class="n">BundleInstall</span>
+<span class="n">BundleClean</span>
+<span class="n">BundleUpdate</span>
 </pre></div>
 </div>
 

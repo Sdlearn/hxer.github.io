@@ -153,9 +153,12 @@ sslocal -s <remote_ip> -p <remote_port> -k <password> </p>
 </pre></div>
 
 
-<p>开机自启动</p>
-<div class="hlcode"><pre><span class="cp"># vi /etc/init.d/rc.local</span>
-    <span class="n">service</span> <span class="n">ssh</span> <span class="n">start</span>  <span class="c1">// add for sshd auto run</span>
+<h2 id="_5">开机自启动</h2>
+<div class="hlcode"><pre><span class="cp"># vi /etc/rc.local</span>
+
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">apache2</span> <span class="n">start</span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">mysql</span> <span class="n">start</span>
+<span class="n">exit</span> <span class="mi">0</span>
 </pre></div>
 
 
@@ -232,21 +235,21 @@ a.安装GD扩展库：     </p>
 </pre></div>
 
 
-<h2 id="_5">命令行锁屏</h2>
+<h2 id="_6">命令行锁屏</h2>
 <div class="hlcode"><pre><span class="cp"># apt-get install gnome-screensaver</span>
 <span class="err">$</span> <span class="n">gnome</span><span class="o">-</span><span class="n">screensaver</span><span class="o">-</span><span class="n">command</span> <span class="o">-</span><span class="n">l</span>     <span class="err">#</span><span class="n">lock</span>
 <span class="err">$</span> <span class="n">gnome</span><span class="o">-</span><span class="n">screensaver</span><span class="o">-</span><span class="n">command</span> <span class="o">-</span><span class="n">a</span>     <span class="err">#</span><span class="n">active</span>
 </pre></div>
 
 
-<h2 id="_6">系统设置</h2>
+<h2 id="_7">系统设置</h2>
 <ul>
 <li>终端快捷键</li>
 </ul>
 <p>设置&gt;键盘&gt;快捷键&gt;自定义快捷键</p>
-<p>名称：终端
+<p>名称：终端/termianl
 命令：gnome-terminal</p>
-<p>添加后，单击那一行，按下 ctrl+alt+T</p>
+<p>添加后，单击 disabled，按下 ctrl+alt+T</p>
 <ul>
 <li>设置屏幕刷新率</li>
 </ul>
