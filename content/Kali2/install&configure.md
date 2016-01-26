@@ -165,11 +165,15 @@ id username         #查看配置
 #/etc/init.d/ssh status
 ```
 
-开机自启动
+## 开机自启动
 
 ```
-# vi /etc/init.d/rc.local
-    service ssh start  // add for sshd auto run
+# vi /etc/rc.local
+
+/etc/init.d/apache2 start
+/etc/init.d/mysql start
+exit 0
+
 ```
 
 ## ftp
@@ -268,10 +272,10 @@ $ gnome-screensaver-command -a     #active
 
 设置>键盘>快捷键>自定义快捷键
 
-名称：终端
+名称：终端/termianl
 命令：gnome-terminal
 
-添加后，单击那一行，按下 ctrl+alt+T
+添加后，单击 disabled，按下 ctrl+alt+T
 
 * 设置屏幕刷新率
 
