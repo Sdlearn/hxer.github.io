@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>mysql - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#WebSecurity">WebSecurity</a>&nbsp;»&nbsp;mysql</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">mysql</div>
+  <div id="content">
+  <h1 id="database">database</h1>
+<h2 id="mysql">mysql 独立的数据库</h2>
+<p>保存MySQL的各种设置参数</p>
+<h2 id="user">user表段</h2>
+<p>其中user表段设置了MySQL中数据库用户的部分信息。</p>
+<ul>
+<li>user字段为用户登陆名，可以有相同的名字重复</li>
+<li>password字段为登陆密码哈希，是40位的密文，类似于md5</li>
+<li>host字段设置的是这个用户可以在哪些机器上登陆，localhost表示只能是本机登陆，host可以是数据库ip也可以是数据库服务器的名称，例如“mysqldbserver”之类。</li>
+<li>file_priv字段规定了这个用户是不是可以读取硬盘里面的文件，设置为Y则表示允许，设置为N则表示禁止。</li>
+</ul>
+<h1 id="mysql_1">MySQL注入中常用的一些参数。</h1>
+<ul>
+<li>注入语句的格式为：参数的使用位置为上述语句中的 XO 位置</li>
+</ul>
+<div class="hlcode"><pre><span class="k">union</span><span class="o">+</span><span class="k">select</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">XO</span><span class="p">,</span><span class="mi">4</span><span class="p">,...</span><span class="n">n</span><span class="o">+</span><span class="k">from</span><span class="o">+</span><span class="n">XXOO</span>
+</pre></div>
+
+
+<ul>
+<li>user()</li>
+</ul>
+<p>数据库的用户，格式为 user @ server 例如 root@ localhost 
+所有的user，都会在mysql数据库的user表段中记录，用于设置权限等</p>
+<ul>
+<li>database()</li>
+</ul>
+<p>当前数据库名，网站建设者任意给予的数据库的名称</p>
+<ul>
+<li>version()</li>
+</ul>
+<p>当前使用的数据库的版本，版本最后通常会表明系统的版本，例如5.x.x-nt表示nt(windows)系统下使用的mysql版本</p>
+<ul>
+<li>@@datadir</li>
+</ul>
+<p>数据路径。windows常用，通常用于load_file时猜测网站路径等。例如c:\program files\mysql5\data\</p>
+<ul>
+<li>concat()</li>
+</ul>
+<p>联合数据。和联合函数union不同，union用于联合两条SQL语句，这个用于联合两条数据结果。通常是联合两个字段名，在错误回显注入法中，这个函数会联合更复杂的。
+数据库中管理员通常有登录名和密码等多个字段，用concat轻松一次注入出来。例如concat(username,0x3a,password)，不同字段用逗号 , 隔开，中间加一个hex编码值。
+冒号进行hex编码得到0x3a，放在concat里面注入以后就显示冒号，常用的有 <strong> 0x3a,0x5c,0x5f,0x3c62723e </strong>等</p>
+<ul>
+<li>
+<p>group_concat()
+用法与上面类似，通常格式如下：group_concat(DISTINCT+user,0x3a,password)，group_concat顾名思义，如果管理员账号不止一个的话，concat一次只能注入出来一个，使用group_concat把多条数据一次注入出来。</p>
+</li>
+<li>
+<p>concat_ws()</p>
+</li>
+</ul>
+<p>用法类似</p>
+<ul>
+<li>hex()和unhex()</li>
+</ul>
+<p>有一些注入点由于数据库中对数据字段的类型定义，可能不支持union来显示某些不同类型的内容，所以使用hex对数据进行hex编码，例如union+select+hex(password)+from+mysql.user
+注入出来的数据全都是0x1234567890abcdef类似的数据，使用winhex等工具转换回编码即可
+hex参数可用于任何参数外面，hex(concat(xxoo))，hex(user()),hex(database())</p>
+<ul>
+<li>load_file()</li>
+</ul>
+<p>这是MySQL以文本方式读取文件的参数，例如：linux系统的网站load_file('/etc /passwd')或者windows系统的网站load_file('c:\boot.ini')
+这个参数可以用的前提是，你user()得到的用户名，在mysql.user表中的字段file_priv设置为Y，则load_file()参数则可用
+需要注意的是，如果为windows系统，保险起见将路径设置为双斜杠\ 因为在计算机语言中双斜杠才是单斜杠的意思，如果为单斜杠，例如d:\table，那么这个路径中得\t就会被解析为键盘上的tab键，\n\r类似，最终得不到想要的结果
+很多时候，php的网站的gpc会设置为on（就是对特殊字符做修改，例如单引号'自动修改为\'），那么load_file('c:\boot.ini')就变成：load_file(\'c:\\boot.ini\')出现语法错误，得不到结果
+解决方法就是，和concat参数一样，hex混用，将c:\boot.ini进行hex编码，得到：0x633a5c5c626f6f742e696e69，原语句修改为：union+select+1,load_file(0x633a5c5c626f6f742e696e69)即可
+使用load_file参数后面可以不加from</p>
+<p><strong> 关于几点需要注意：</strong></p>
+<ul>
+<li>注入时，猜字段爆数据，有时候会遇到在原始语句后面加一些语句例如order by,desc等等，例如</li>
+</ul>
+<div class="hlcode"><pre><span class="k">SELECT</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span> <span class="k">FROM</span> <span class="n">news</span> <span class="k">where</span> <span class="n">id</span><span class="o">=</span><span class="mi">1</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="kt">date</span> <span class="k">DESC</span>
+</pre></div>
+
+
+<p>注入语句以后：</p>
+<div class="hlcode"><pre><span class="k">select</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span> <span class="k">from</span> <span class="n">news</span> <span class="k">where</span> <span class="n">id</span><span class="o">=</span><span class="mi">1</span> <span class="k">union</span> <span class="k">select</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span> <span class="k">from</span> <span class="n">admin</span> <span class="k">order</span> <span class="k">by</span> <span class="kt">date</span> <span class="k">DESC</span>
+</pre></div>
+
+
+<p>注入都会提示错误。所以，通常注入的时候，在语句最后加一个--横杠或者/*注释符，结束后面的语句</p>
+<div class="hlcode"><pre><span class="n">news</span><span class="p">.</span><span class="n">php</span><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="o">+</span><span class="k">union</span><span class="o">+</span><span class="k">select</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="o">+</span><span class="k">from</span><span class="o">+</span><span class="n">admin</span><span class="c1">--</span>
+<span class="c1">news.php?id=1+union+select+1,2,3,4+from+admin/*</span>
+</pre></div>
+
+
+<ul>
+<li>注入时，union联合了前面和后面两个语句，系统到底执行哪个呢？只要前面那个出现了逻辑错误，union一定执行后面一个注入的SQL语句</li>
+</ul>
+<p>制造逻辑错误</p>
+<div class="hlcode"><pre><span class="n">news</span><span class="p">.</span><span class="n">php</span><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span> <span class="k">and</span> <span class="mi">1</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">news</span><span class="p">.</span><span class="n">php</span><span class="o">?</span><span class="n">id</span><span class="o">=-</span><span class="mi">1</span>
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

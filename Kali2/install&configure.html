@@ -84,22 +84,29 @@
 
 <h2 id="proxy">proxy</h2>
 <ul>
-<li>
-<p>shadowsocks</p>
-<ul>
-<li>install</li>
+<li>shadowsocks</li>
 </ul>
-<p><code>pip install shadowsocks</code></p>
+<p>install</p>
+<div class="hlcode"><pre><span class="n">pip</span> <span class="n">install</span> <span class="n">shadowsocks</span>
+</pre></div>
+
+
+<p>run</p>
+<div class="hlcode"><pre><span class="nx">sslocal</span> <span class="na">-s</span> <span class="o">&lt;</span><span class="nx">remote_ip</span><span class="o">&gt;</span> <span class="na">-p</span> <span class="o">&lt;</span><span class="nx">remote_port</span><span class="o">&gt;</span> <span class="na">-k</span> <span class="o">&lt;</span><span class="nx">password</span><span class="o">&gt;</span> 
+</pre></div>
+
+
+<p>run with user login</p>
+<div class="hlcode"><pre><span class="nx">vim</span> <span class="err">~</span><span class="p">/</span><span class="nx">ss.sh</span>
+    <span class="nx">sslocal</span> <span class="na">-s</span> <span class="o">&lt;</span><span class="nx">remote_ip</span><span class="o">&gt;</span> <span class="na">-p</span> <span class="o">&lt;</span><span class="nx">remote_port</span><span class="o">&gt;</span> <span class="na">-k</span> <span class="o">&lt;</span><span class="nx">password</span><span class="o">&gt;</span>   <span class="vi">#add</span> <span class="k">to</span> <span class="nx">ss.sh</span>
+<span class="nb">chmod</span> <span class="nx">u</span><span class="o">+</span><span class="nx">x</span> <span class="nx">ss.sh</span>
+<span class="nx">vim</span> <span class="err">~</span><span class="p">/</span><span class="nx">.profile</span>
+    <span class="nx">sh</span> <span class="err">~</span><span class="p">/</span><span class="nx">ss.sh</span> <span class="mi">1</span><span class="o">&gt;/</span><span class="nx">dev</span><span class="p">/</span><span class="nb">null</span> <span class="mi">2</span><span class="o">&gt;</span><span class="err">~</span><span class="p">/</span><span class="nx">ss.log</span> <span class="o">&amp;</span>     <span class="vi">#add</span> <span class="k">to</span> <span class="nb">file</span> <span class="nb">end</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="nb">stdout</span> <span class="mi">2</span><span class="p">:</span><span class="nx">stderr</span>
+</pre></div>
+
+
 <ul>
-<li>run</li>
-</ul>
-<p>```
-sslocal -s <remote_ip> -p <remote_port> -k <password> </p>
-<p>```</p>
-</li>
-<li>
-<p>socks proxy</p>
-</li>
+<li>socks proxy</li>
 </ul>
 <p>1.安装</p>
 <div class="hlcode"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">proxychains</span>
@@ -205,8 +212,19 @@ sslocal -s <remote_ip> -p <remote_port> -k <password> </p>
 </pre></div>
 
 
-<p>2.mysql 服务启动        </p>
+<p>2.mysql 服务启动    </p>
 <div class="hlcode"><pre><span class="n">sudo</span> <span class="n">service</span> <span class="n">mysql</span> <span class="n">start</span>
+</pre></div>
+
+
+<ul>
+<li>mysql root 默认无密码，设置密码</li>
+</ul>
+<div class="hlcode"><pre><span class="nx">mysql</span> <span class="na">-u</span> <span class="nb">root</span>
+<span class="o">&gt;</span><span class="nx">use</span> <span class="nx">mysql</span><span class="p">;</span>
+<span class="o">&gt;</span><span class="nx">UPDATE</span> <span class="nb">user</span> <span class="nb">SET</span> <span class="n">Password</span><span class="o">=</span><span class="nx">PASSWORD</span><span class="p">(</span><span class="s1">&#39;&lt;passwd&gt;&#39;</span><span class="p">)</span> <span class="k">WHERE</span> <span class="n">User</span><span class="o">=</span><span class="s1">&#39;root&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span><span class="nb">flush</span> <span class="nx">privileges</span><span class="p">;</span>
+<span class="o">&gt;</span><span class="nx">exit</span><span class="p">;</span> 
 </pre></div>
 
 
@@ -329,32 +347,43 @@ a.安装GD扩展库：     </p>
 <p>按要求下载 apache-maven-3.2.3-bin.tar.gz    </p>
 <p>下载文件解压至/usr/local/目录下</p>
 <p>vi /etc/profile 设置全局变量</p>
-<p><code>M2_HOME=/usr/local/apache-maven-3.2.3 
-        export M2_HOME 
-        PATH=$PATH:$M2_HOME/bin 
-        export PATH</code></p>
-<p>```</p>
-<h1 id="source-etcprofile">source /etc/profile  生效</h1>
-<p>```</p>
-<p>测试是否成功</p>
-<p>```</p>
-<h1 id="mvn-v">mvn -v</h1>
-<p>``` </p>
-<ul>
-<li>maven 修建项目</li>
-</ul>
-<p>```</p>
-<h1 id="cd-webgoat-webgoat">cd webgoat* #(webgoat 源码解压目录),</h1>
-<h1 id="mvn-clean-package">mvn clean package</h1>
-<h1 id="mvn-tomcatrun-war">mvn tomcat:run-war</h1>
-<p>```</p>
-<ul>
-<li>选用eclipse，安装maven插件，</li>
-</ul>
-<p>name为：m2e, </p>
-<p>location为：http://download.eclipse.org/technology/m2e/releases</p>
-<p>当这样安装插件时会报错，原因是m2e插件和eclipse版本不匹配导致，location改为：http://download.eclipse.org/technology/m2e/releases/1.4 即可。</p>
 </li>
+</ul>
+<div class="hlcode"><pre><span class="n">M2_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">apache</span><span class="o">-</span><span class="n">maven</span><span class="o">-</span><span class="mf">3.2.3</span> 
+<span class="n">export</span> <span class="n">M2_HOME</span> 
+<span class="n">PATH</span><span class="o">=</span><span class="err">$</span><span class="n">PATH</span><span class="o">:</span><span class="err">$</span><span class="n">M2_HOME</span><span class="o">/</span><span class="n">bin</span> 
+<span class="n">export</span> <span class="n">PATH</span>
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="c">#source /etc/profile  生效</span>
+</pre></div>
+
+
+<p>测试是否成功</p>
+<div class="hlcode"><pre><span class="c">#mvn -v</span>
+</pre></div>
+
+
+<p>maven 修建项目</p>
+<div class="hlcode"><pre><span class="c">#cd webgoat* #(webgoat 源码解压目录),</span>
+<span class="c">#mvn clean package</span>
+<span class="c">#mvn tomcat:run-war</span>
+</pre></div>
+
+
+<p>选用eclipse，安装maven插件，</p>
+<div class="hlcode"><pre><span class="n">name</span><span class="err">为：</span><span class="n">m2e</span><span class="p">,</span>
+
+<span class="n">location</span><span class="err">为：</span><span class="n">http</span><span class="o">:</span><span class="c1">//download.eclipse.org/technology/m2e/releases</span>
+
+<span class="err">当这样安装插件时会报错，原因是</span><span class="n">m2e</span><span class="err">插件和</span><span class="n">eclipse</span><span class="err">版本不匹配导致，</span><span class="n">location</span><span class="err">改为：</span><span class="n">http</span><span class="o">:</span><span class="c1">//download.eclipse.org/technology/m2e/releases/1.4 即可。</span>
+</pre></div>
+
+
+<h1 id="note">note</h1>
+<ul>
+<li>use ~/.profile instead of ~/.bash_profile</li>
 </ul>
 </div>
 
