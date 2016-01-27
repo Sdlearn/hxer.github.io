@@ -5,6 +5,15 @@ date: 2016-01-20 21:38
 
 # vscode
 
+## install
+
+```
+Download
+unzip VSCode-linux-x64.zip -d ~/vscode
+sudo ln -s ~/vscode/Code /usr/local/bin/code
+code        #to run
+```
+
 ## 运行python
 
 * press **Ctrl+Shift+B**

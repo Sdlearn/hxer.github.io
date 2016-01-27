@@ -88,18 +88,27 @@ sudo apt-get isntall chromium
 
 * shadowsocks
 
-    + install
-   
-    ```
-    pip install shadowsocks
-    ```
-    
-    + run
-    
-    ```
-    sslocal -s <remote_ip> -p <remote_port> -k <password> 
+install
 
-    ```
+```
+pip install shadowsocks
+```
+
+run
+
+```
+sslocal -s <remote_ip> -p <remote_port> -k <password> 
+```
+
+run with user login
+
+```
+vim ~/ss.sh
+    sslocal -s <remote_ip> -p <remote_port> -k <password>   #add to ss.sh
+chmod u+x ss.sh
+vim ~/.profile
+    sh ~/ss.sh 1>/dev/null 2>~/ss.log &     #add to file end, 1:stdout 2:stderr
+``` 
     
 * socks proxy
 
@@ -222,9 +231,20 @@ sudo service apache2 start
                 Require all granted
             </Directory>
                  
-2.mysql 服务启动        
+2.mysql 服务启动    
+    
 ```
 sudo service mysql start
+```
+
+* mysql root 默认无密码，设置密码
+
+```
+mysql -u root
+>use mysql;
+>UPDATE user SET Password=PASSWORD('<passwd>') WHERE User='root';
+>flush privileges;
+>exit; 
 ```
 
 3.php 配置      
@@ -358,36 +378,41 @@ key：1A2ZZ-8RH06-AZTJ1-7A17H-32RM8
     下载文件解压至/usr/local/目录下
         
     vi /etc/profile 设置全局变量
+
+```
+M2_HOME=/usr/local/apache-maven-3.2.3 
+export M2_HOME 
+PATH=$PATH:$M2_HOME/bin 
+export PATH
+```
     
-    ```
-            M2_HOME=/usr/local/apache-maven-3.2.3 
-            export M2_HOME 
-            PATH=$PATH:$M2_HOME/bin 
-            export PATH
-    ```
+```
+#source /etc/profile  生效
+```
+
+测试是否成功
+
+```
+#mvn -v
+``` 
+ 
+maven 修建项目
     
-    ```
-    #source /etc/profile  生效
-    ```
+```
+#cd webgoat* #(webgoat 源码解压目录),
+#mvn clean package
+#mvn tomcat:run-war
+```
     
-    测试是否成功
-    
-    ```
-    #mvn -v
-    ``` 
-    
-    + maven 修建项目
-    
-    ```
-    #cd webgoat* #(webgoat 源码解压目录),
-    #mvn clean package
-    #mvn tomcat:run-war
-    ```
-    
-    + 选用eclipse，安装maven插件，
+选用eclipse，安装maven插件，
     
     name为：m2e, 
     
     location为：http://download.eclipse.org/technology/m2e/releases
     
     当这样安装插件时会报错，原因是m2e插件和eclipse版本不匹配导致，location改为：http://download.eclipse.org/technology/m2e/releases/1.4 即可。
+
+
+# note
+
+* use ~/.profile instead of ~/.bash_profile

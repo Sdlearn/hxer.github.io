@@ -7,7 +7,7 @@ date: 2016-01-25 16:23
 
 * get image and save
 
-```php
+```
 <?php
 if (isset($_POST['url'])){
     $content = file_get_contents($_POST['url']);
@@ -20,7 +20,7 @@ echo $img;
 
 * use curl
 
-```php
+```
 if (isset($_POST['link'])){                                                          
     $link = $_POST['link'];                                                          
     $filename = './images/'.rand().'.txt';                                                         
@@ -57,6 +57,54 @@ error port ,output warning
 * 扫描主机，端口
 
 * 访问本地文件，或外网不可达的地址，内网弱口令多
+
+** search ssrf **
+
+* url key
+
+```
+share
+wap
+url
+link
+src
+source
+target
+u
+3g
+display
+sourceURI
+imageURL
+domain
+```
+
+** bypass **
+
+* @
+
+> http://abc@127.0.0.1
+
+* add port
+
+> http://127.0.0.1:8000
+
+* short url
+
+> http://dwz.cn//11SMa 
+
+* 可以指向任意ip的域名:xip.io
+
+```
+10.0.0.1.xip.io         10.0.0.1
+www.10.0.0.1.xip.io     10.0.0.1
+mysite.10.0.0.1.xip.io  10.0.0.1 
+```
+
+* ip 地址进制转换
+
+```
+115.239.210.26 = 16373751032    #IPy.IP('115.239.210.26').int()
+```
 
 ** 防御 **
 
