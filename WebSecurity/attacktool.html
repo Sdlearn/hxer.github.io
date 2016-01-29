@@ -107,7 +107,10 @@
 
 
 <p>http proxy check</p>
-<div class="hlcode"><pre><span class="n">htpwdScan</span><span class="p">.</span><span class="n">py</span> <span class="o">-</span><span class="n">u</span><span class="o">=</span><span class="n">http</span><span class="o">:</span><span class="c1">//www.baidu.com -get -proxylist=available.txt -checkproxy -suc=&quot;百度一下&quot;</span>
+<div class="hlcode"><pre><span class="n">htpwdscan</span> <span class="o">-</span><span class="n">u</span><span class="o">=</span><span class="n">http</span><span class="o">:</span><span class="c1">//www.baidu.com -get -proxylist=available.txt -checkproxy -suc=&quot;百度一下&quot;</span>
+
+<span class="cp"># or check by website that to crack</span>
+<span class="n">htpwdscan</span> <span class="o">-</span><span class="n">f</span><span class="o">=</span><span class="n">post</span><span class="p">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">proxylist</span><span class="o">=</span><span class="n">proxies</span><span class="p">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">checkproxy</span> <span class="o">-</span><span class="n">suc</span><span class="o">=</span><span class="s">&quot;用户名或密码错误&quot;</span> 
 </pre></div>
 
 
@@ -137,6 +140,7 @@
 </pre></div>
 
 
+<h2 id="webscarab">webscarab</h2>
 <h2 id="cewl-custom-word-list-generator">CeWL - Custom Word List generator</h2>
 <h1 id="sql">SQL</h1>
 <h2 id="sqlmap">sqlmap</h2>
