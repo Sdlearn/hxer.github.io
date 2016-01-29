@@ -14,7 +14,7 @@ git branch -m <old_branch_name> <new_branch_name>   #重命名本地分支
 
 use vim plugin pythonmode, generate .ropeproject directory,so add follow to .gitignore
 
-'''
+```
 # vim
 .ropeproject/
-'''
+```

@@ -100,7 +100,10 @@ Connection: close
 http proxy check
 
 ```
-htpwdScan.py -u=http://www.baidu.com -get -proxylist=available.txt -checkproxy -suc="百度一下"
+htpwdscan -u=http://www.baidu.com -get -proxylist=available.txt -checkproxy -suc="百度一下"
+
+# or check by website that to crack
+htpwdscan -f=post.txt -proxylist=proxies.txt -checkproxy -suc="用户名或密码错误" 
 ```
 
 ## burpsuite
@@ -135,6 +138,7 @@ cluster bomb
 ```
 -------username/password ---------- cluster bomb 测试
 ```
+## webscarab
 
 ## CeWL - Custom Word List generator
 
