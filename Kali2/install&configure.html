@@ -97,11 +97,11 @@
 
 
 <p>run with user login</p>
-<div class="hlcode"><pre><span class="nx">vim</span> <span class="err">~</span><span class="p">/</span><span class="nx">ss.sh</span>
+<div class="hlcode"><pre><span class="nx">vim</span> <span class="err">~</span><span class="p">/</span><span class="nx">opt</span><span class="p">/</span><span class="nx">ss.sh</span>
     <span class="nx">sslocal</span> <span class="na">-s</span> <span class="o">&lt;</span><span class="nx">remote_ip</span><span class="o">&gt;</span> <span class="na">-p</span> <span class="o">&lt;</span><span class="nx">remote_port</span><span class="o">&gt;</span> <span class="na">-k</span> <span class="o">&lt;</span><span class="nx">password</span><span class="o">&gt;</span>   <span class="vi">#add</span> <span class="k">to</span> <span class="nx">ss.sh</span>
 <span class="nb">chmod</span> <span class="nx">u</span><span class="o">+</span><span class="nx">x</span> <span class="nx">ss.sh</span>
 <span class="nx">vim</span> <span class="err">~</span><span class="p">/</span><span class="nx">.profile</span>
-    <span class="nx">sh</span> <span class="err">~</span><span class="p">/</span><span class="nx">ss.sh</span> <span class="mi">1</span><span class="o">&gt;/</span><span class="nx">dev</span><span class="p">/</span><span class="nb">null</span> <span class="mi">2</span><span class="o">&gt;</span><span class="err">~</span><span class="p">/</span><span class="nx">ss.log</span> <span class="o">&amp;</span>     <span class="vi">#add</span> <span class="k">to</span> <span class="nb">file</span> <span class="nb">end</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="nb">stdout</span> <span class="mi">2</span><span class="p">:</span><span class="nx">stderr</span>
+    <span class="nx">sh</span> <span class="err">~</span><span class="p">/</span><span class="nx">opt</span><span class="p">/</span><span class="nx">ss.sh</span> <span class="mi">1</span><span class="o">&gt;/</span><span class="nx">dev</span><span class="p">/</span><span class="nb">null</span> <span class="mi">2</span><span class="o">&gt;</span><span class="err">~</span><span class="p">/</span><span class="nx">opt</span><span class="p">/</span><span class="nx">ss.log</span> <span class="o">&amp;</span>     <span class="vi">#add</span> <span class="k">to</span> <span class="nb">file</span> <span class="nb">end</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="nb">stdout</span> <span class="mi">2</span><span class="p">:</span><span class="nx">stderr</span>
 </pre></div>
 
 
@@ -126,6 +126,20 @@
 <p>4.使用方法</p>
 <p>在需要代理的命令前加上 proxychains ，如：</p>
 <div class="hlcode"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">proxychains</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+</pre></div>
+
+
+<h2 id="install-docker">install docker</h2>
+<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="p">.</span><span class="n">list</span>
+    <span class="err">#</span> <span class="n">add</span> <span class="n">follow</span> <span class="n">line</span> <span class="n">in</span> <span class="n">the</span> <span class="n">file</span>
+    <span class="n">deb</span> <span class="n">http</span><span class="o">:</span><span class="c1">//http.debian.net/debian jessie-backports main</span>
+
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">docker</span><span class="p">.</span><span class="n">io</span>      
+
+<span class="n">or</span>
+
+<span class="n">curl</span> <span class="o">-</span><span class="n">sSL</span> <span class="n">https</span><span class="o">:</span><span class="c1">//get.docker.com/ | sh </span>
 </pre></div>
 
 
@@ -166,6 +180,14 @@
 <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">apache2</span> <span class="n">start</span>
 <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">mysql</span> <span class="n">start</span>
 <span class="n">exit</span> <span class="mi">0</span>
+</pre></div>
+
+
+<h2 id="office">office</h2>
+<p><a href="http://wps-community.org/download.html">wps</a></p>
+<h2 id="flash">flash</h2>
+<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">flashplugin</span><span class="o">-</span><span class="n">nonfree</span>
+<span class="n">sudo</span> <span class="n">update</span><span class="o">-</span><span class="n">flashplugin</span><span class="o">-</span><span class="n">nonfree</span> <span class="o">--</span><span class="n">install</span> 
 </pre></div>
 
 

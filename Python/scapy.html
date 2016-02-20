@@ -47,6 +47,48 @@
 <p>opcode:1(请求包)
 hardware type:1(以太网)
 protocol type:0x0800(IP)</p>
+<h2 id="send-receive">send &amp; receive</h2>
+<div class="hlcode"><pre><span class="nx">sr</span><span class="p">()</span>
+<span class="o">--</span> <span class="nx">The</span> <span class="nx">sr</span><span class="p">()</span> <span class="kd">function</span> <span class="nx">is</span> <span class="k">for</span> <span class="nx">sending</span> <span class="nx">packets</span> <span class="nx">and</span> <span class="nx">receiving</span> <span class="nx">answers</span><span class="p">.</span> <span class="nx">The</span> <span class="kd">function</span> <span class="nx">returns</span>
+<span class="nx">a</span> <span class="nx">couple</span> <span class="nx">of</span> <span class="nx">packet</span> <span class="nx">and</span> <span class="nx">answers</span><span class="p">,</span> <span class="nx">and</span> <span class="nx">the</span> <span class="nx">unanswered</span> <span class="nx">packets</span><span class="p">.</span>
+
+<span class="nx">sr1</span><span class="p">()</span> 
+<span class="o">--</span> <span class="nx">This</span> <span class="kd">function</span> <span class="nx">is</span> <span class="nx">a</span> <span class="nx">variant</span> <span class="nx">that</span> <span class="nx">only</span> <span class="nx">returns</span> <span class="nx">one</span> <span class="nx">packet</span> <span class="nx">that</span> <span class="nx">answered</span> <span class="nx">the</span> <span class="nx">sent</span>
+<span class="nx">packet</span> <span class="p">(</span><span class="nx">or</span> <span class="nx">the</span> <span class="nx">packet</span> <span class="nx">set</span><span class="p">)</span> <span class="nx">sent</span><span class="p">.</span>
+
+<span class="nx">srp</span><span class="p">()</span>
+<span class="o">--</span> <span class="nx">The</span> <span class="kd">function</span> <span class="nx">srp</span><span class="p">()</span> <span class="nx">does</span> <span class="nx">the</span> <span class="nx">same</span> <span class="k">for</span> <span class="nx">layer</span> <span class="mi">2</span> <span class="nx">packets</span> <span class="p">(</span><span class="nx">Ethernet</span><span class="p">,</span> <span class="mf">802.3</span><span class="p">,</span> <span class="nx">etc</span><span class="p">).</span>
+</pre></div>
+
+
+<h2 id="_1">构造数据包常用参数</h2>
+<ul>
+<li>IP()</li>
+</ul>
+<div class="hlcode"><pre><span class="n">src</span>   <span class="n">e</span><span class="p">.</span><span class="n">g</span><span class="p">.</span> <span class="n">src</span><span class="o">=</span><span class="s">&quot;192.168.222.222&quot;</span>
+<span class="n">dst</span>   <span class="n">e</span><span class="p">.</span><span class="n">g</span><span class="p">.</span> <span class="n">dst</span><span class="o">=</span><span class="s">&quot;192.168.0.1&quot;</span>
+<span class="n">ttl</span>   <span class="n">e</span><span class="p">.</span><span class="n">g</span><span class="p">.</span> <span class="n">ttl</span><span class="o">=</span><span class="mi">64</span> 
+</pre></div>
+
+
+<ul>
+<li>ICMP()</li>
+</ul>
+<div class="hlcode"><pre><span class="n">type</span>   <span class="n">e</span><span class="p">.</span><span class="n">g</span><span class="p">.</span> <span class="n">type</span><span class="o">=</span><span class="mi">8</span><span class="p">(</span><span class="n">Echo</span> <span class="p">(</span><span class="n">ping</span><span class="p">)</span> <span class="n">request</span><span class="p">)</span>
+                 <span class="mi">0</span><span class="p">(</span><span class="n">Echo</span> <span class="p">(</span><span class="n">ping</span><span class="p">)</span> <span class="n">reply</span><span class="p">)</span>
+</pre></div>
+
+
+<ul>
+<li>TCP()</li>
+</ul>
+<div class="hlcode"><pre><span class="n">sport</span>
+<span class="n">dport</span>   <span class="n">e</span><span class="p">.</span><span class="n">g</span><span class="p">.</span> <span class="n">dport</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="p">[</span><span class="mi">22</span><span class="p">,</span><span class="mi">23</span><span class="p">,</span><span class="mi">80</span><span class="p">]</span>
+<span class="n">flags</span>   <span class="n">e</span><span class="p">.</span><span class="n">g</span><span class="p">.</span> <span class="n">flags</span><span class="o">=</span><span class="s">&quot;S&quot;</span><span class="o">--</span><span class="n">SYN</span>
+<span class="n">inter</span>
+<span class="n">retry</span>
+<span class="n">timeout</span>
+</pre></div>
 </div>
 
         </div>

@@ -27,6 +27,22 @@
 </ul>
 <p>Python有现成类库两枚，short_url (不带DB，只有ID&lt;-&gt;base62，有生成最小位数参数，DB自选，一般选择NoSQL)，
 另一个是shorten (可存储到redis或Memory)。</p>
+<h2 id="common-port">common port</h2>
+<p>21,22,23,25,53,79,80,81,82,83,84,85,110,111,119,135,139,143,443,445,465,512,513,514,554,563,585,636,808,873,990,995,1025,1027,1080,1352,1433,1521,1525,1900,1935,2049,2100,2121,2401,3128,3306,3389,4443,4899,5000,5432,5556,5560,5631,5800,5900,5901,6000,6009,7001,7778,8000,8009,8080,8081,8082,8083,8084,8085,8090,8091,8092,8181,8455,8888,8989,9060,9080,9090,9443,28017,50000,65301</p>
+<h2 id="_1">提权</h2>
+<ul>
+<li>win</li>
+</ul>
+<div class="hlcode"><pre><span class="nb">new</span> <span class="nb">user</span> <span class="o">&lt;</span><span class="nx">Username</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="nx">Password</span><span class="o">&gt;</span> <span class="p">/</span><span class="nb">add</span>
+<span class="nx">cd</span> <span class="nx">C</span><span class="p">:</span><span class="o">\</span><span class="nx">WINNT</span><span class="o">\</span><span class="nx">SYSTEM32</span><span class="o">\</span>
+<span class="nb">net</span> <span class="nx">localgroup</span> <span class="nx">administrators</span> <span class="o">&lt;</span><span class="nx">Username</span><span class="o">&gt;</span> <span class="p">/</span><span class="nx">ad</span>
+</pre></div>
+
+
+<h2 id="_2">系统常见敏感信息漏洞</h2>
+<h2 id="win32-apache">win32 + apache</h2>
+<p>短文件名漏洞</p>
+<h2 id="cookie">cookie欺骗漏洞</h2>
 </div>
 
         </div>

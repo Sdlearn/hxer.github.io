@@ -106,6 +106,9 @@
 <p>include找不到被包含的文件时只会产生警告，脚本将继续运行。</p>
 <p>include_once与include类似，唯一区别是如果该文件中的代码已经被包含，则不会再次包含。</p>
 <p>require_once与require类似，唯一区别是如果该文件中的代码已经被包含，则不会再次包含</p>
+<blockquote>
+<p>“zlib://”和“ogg://”等方式绕过 远程文件包含(RFI)</p>
+</blockquote>
 <h2 id="dangerous-functions">dangerous functions</h2>
 <ul>
 <li>file_get_contents()</li>
@@ -124,6 +127,8 @@
 </ul>
 <p>支持 FTP(S),HTTP(S),TELNET,FILE,DICT,LDAP,GOPHER</p>
 <p>install: sudo apt-get install php5-curl. then restart apache</p>
+<h2 id="ldap">LDAP注入</h2>
+<p><a href="http://drops.wooyun.org/tips/967">乌云 LDAP注入与防御</a></p>
 <h2 id="_3">备注</h2>
 <ul>
 <li>注入php 到图片等</li>
