@@ -88,6 +88,8 @@ include_once与include类似，唯一区别是如果该文件中的代码已经�
 require_once与require类似，唯一区别是如果该文件中的代码已经被包含，则不会再次包含
 
 
+> “zlib://”和“ogg://”等方式绕过 远程文件包含(RFI)
+
 ## dangerous functions
 
 * file_get_contents()
@@ -107,6 +109,13 @@ allow_url_fopen=Off
 支持 FTP(S),HTTP(S),TELNET,FILE,DICT,LDAP,GOPHER
 
 install: sudo apt-get install php5-curl. then restart apache
+
+
+## LDAP注入
+
+[乌云 LDAP注入与防御][5]
+
+[5]: http://drops.wooyun.org/tips/967
 
 ## 备注
 

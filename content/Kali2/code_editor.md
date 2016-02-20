@@ -9,8 +9,8 @@ date: 2016-01-20 21:38
 
 ```
 Download
-unzip VSCode-linux-x64.zip -d ~/vscode
-sudo ln -s ~/vscode/Code /usr/local/bin/code
+unzip VSCode-linux-x64.zip -d ~/opt/vscode
+sudo ln -s ~/opt/vscode/Code /usr/local/bin/code
 code        #to run
 ```
 
@@ -194,6 +194,38 @@ Vintage默认是插入模式。可以添加:
     }}
 ]
 ```
+
+# pycharm
+
+* install
+
+```
+download *.tar.gz
+解压
+cd pytcharm*/bin
+./pycharm.sh
+```
+
+* license
+
+```
+username: SanQ
+
+license:
+30796-12042010
+000033sWgINzq3OvdRUDrTyy9BCtS4
+jmMJIvIZY5FaLP4jDn"Br"YQgh9VKR
+mFTbg2svsRmX6ND8DKXcAtaafWxxYl
+```
+
+[pycharm 激活码][50]
+
+* run
+
+```
+charm
+```
+
 
 
 # vim
@@ -509,3 +541,5 @@ sudo apt-get install cmake
 BundleClean
 BundleUpdate
 ```
+
+[50]: http://blog.sina.com.cn/s/blog_83dc494d0102vjyt.html

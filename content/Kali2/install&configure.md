@@ -103,11 +103,11 @@ sslocal -s <remote_ip> -p <remote_port> -k <password>
 run with user login
 
 ```
-vim ~/ss.sh
+vim ~/opt/ss.sh
     sslocal -s <remote_ip> -p <remote_port> -k <password>   #add to ss.sh
 chmod u+x ss.sh
 vim ~/.profile
-    sh ~/ss.sh 1>/dev/null 2>~/ss.log &     #add to file end, 1:stdout 2:stderr
+    sh ~/opt/ss.sh 1>/dev/null 2>~/opt/ss.log &     #add to file end, 1:stdout 2:stderr
 ``` 
     
 * socks proxy
@@ -137,6 +137,22 @@ ps: 默认的socks4 127.0.0.1 9095是tor代理，而socks5 127.0.0.1 1080是shad
 ```
 $ sudo proxychains apt-get update
 ```
+
+## install docker
+
+```
+sudo vim /etc/apt/sources.list
+    # add follow line in the file
+    deb http://http.debian.net/debian jessie-backports main
+
+sudo apt-get update
+sudo apt-get install docker.io      
+
+or
+
+curl -sSL https://get.docker.com/ | sh 
+```
+
 
 ## 安装vpn
 
@@ -182,7 +198,18 @@ id username         #查看配置
 /etc/init.d/apache2 start
 /etc/init.d/mysql start
 exit 0
+```
 
+## office
+
+[wps][12]
+[12]: http://wps-community.org/download.html
+
+## flash
+
+```
+sudo apt-get install flashplugin-nonfree
+sudo update-flashplugin-nonfree --install 
 ```
 
 ## ftp

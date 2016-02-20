@@ -25,3 +25,8 @@ date: 2016-01-20 05:16
  
  * VM analysis
  * CTF
+
+## 02-19
+
+ * 熟悉 Docker 基本命令，简单使用docker， 编写 Dockerfile 
+ 
