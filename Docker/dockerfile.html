@@ -112,6 +112,16 @@
 
 
 <p>COPY 复制新文件或者目录从 <src> 添加到容器指定路径中 <dest>。用法同 ADD，唯一的不同是不能指定远程文件 URLS。</p>
+<p>下面一条命令，会出现 ##镜像中文件层次结构错乱的情况##，暂不清楚是什么造成的，仅记之</p>
+<div class="hlcode"><pre><span class="n">COPY</span> <span class="n">code</span><span class="o">/*</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">code</span>  <span class="err">#</span> <span class="n">code</span> <span class="err">目录与</span> <span class="n">Dockerfile</span> <span class="err">位于同一级目录</span>
+</pre></div>
+
+
+<p>正确的格式如下：</p>
+<div class="hlcode"><pre><span class="n">COPY</span> <span class="n">code</span><span class="o">/</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">code</span><span class="o">/</span>  
+</pre></div>
+
+
 <ul>
 <li>VOLUME</li>
 </ul>
@@ -131,8 +141,7 @@
 
 
 <p>参考：</p>
-<p>[docker 学习笔记][1]</p>
-<p>[1:] http://blog.opskumu.com/docker.html</p>
+<p><a href="http://blog.opskumu.com/docker.html">docker 学习笔记</a></p>
 </div>
 
         </div>

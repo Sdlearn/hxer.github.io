@@ -25,12 +25,21 @@
 
 <h2 id="quick-start">quick start</h2>
 <div class="hlcode"><pre><span class="n">OVPN_DATA</span><span class="o">=</span><span class="s">&quot;ovpn-data&quot;</span>
+
+<span class="cp"># 初始化ovpn_data容器，包含配置文件和证书</span>
 <span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">name</span> <span class="err">$</span><span class="n">OVPN_DATA</span> <span class="o">-</span><span class="n">v</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">openvpn</span> <span class="n">busybox</span>
+
+<span class="cp">#</span>
 <span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">volumes</span><span class="o">-</span><span class="n">from</span> <span class="err">$</span><span class="n">OVPN_DATA</span> <span class="o">--</span><span class="n">rm</span> <span class="n">kylemanna</span><span class="o">/</span><span class="n">openvpn</span> <span class="n">ovpn_genconfig</span> <span class="o">-</span><span class="n">u</span> <span class="n">udp</span><span class="o">:</span><span class="c1">//VPN.SERVERNAME.COM  #更改VPN.SERVERNAME.COM为你的ip或域名</span>
+
+<span class="cp"># 生成EasyRSA PKI 证书授权中心</span>
 <span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">volumes</span><span class="o">-</span><span class="n">from</span> <span class="err">$</span><span class="n">OVPN_DATA</span> <span class="o">--</span><span class="n">rm</span> <span class="o">-</span><span class="n">it</span> <span class="n">kylemanna</span><span class="o">/</span><span class="n">openvpn</span> <span class="n">ovpn_initpki</span>
-<span class="cp"># input ca pssword for securiry </span>
+
+<span class="cp"># input ca pssword for securiry</span>
 <span class="p">...</span>
-<span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">volumes</span><span class="o">-</span><span class="n">from</span> <span class="err">$</span><span class="n">OVPN_DATA</span> <span class="o">-</span><span class="n">d</span> <span class="o">-</span><span class="n">p</span> <span class="mi">1194</span><span class="o">:</span><span class="mi">1194</span><span class="o">/</span><span class="n">udp</span> <span class="o">--</span><span class="n">cap</span><span class="o">-</span><span class="n">add</span><span class="o">=</span><span class="n">NET_ADMIN</span> <span class="n">kylemanna</span><span class="o">/</span><span class="n">openvpn</span>  <span class="err">#</span><span class="n">sart</span> <span class="n">openvpn</span> <span class="n">server</span> <span class="n">process</span>
+
+<span class="cp">#sart openvpn server process</span>
+<span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">volumes</span><span class="o">-</span><span class="n">from</span> <span class="err">$</span><span class="n">OVPN_DATA</span> <span class="o">-</span><span class="n">d</span> <span class="o">-</span><span class="n">p</span> <span class="mi">1194</span><span class="o">:</span><span class="mi">1194</span><span class="o">/</span><span class="n">udp</span> <span class="o">--</span><span class="n">cap</span><span class="o">-</span><span class="n">add</span><span class="o">=</span><span class="n">NET_ADMIN</span> <span class="n">kylemanna</span><span class="o">/</span><span class="n">openvpn</span>
 </pre></div>
 
 
@@ -65,19 +74,26 @@
 26
 27
 28
-29</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/bin/bash</span>
+29
+30
+31
+32
+33</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/bin/bash</span>
 <span class="nb">set</span> -ex
-<span class="nv">OVPN_DATA</span><span class="o">=</span>basic-data
-<span class="nv">CLIENT</span><span class="o">=</span>travis-client
+<span class="nv">OVPN_DATA</span><span class="o">=</span>ovpn-data
+<span class="nv">CLIENT</span><span class="o">=</span>xx-client
 <span class="nv">IMG</span><span class="o">=</span>kylemanna/openvpn
 
 <span class="c">#</span>
 <span class="c"># Create a docker container with the config data</span>
-<span class="c">#</span>
+<span class="c"># 初始化ovpn_data容器，包含配置文件和证书</span>
 docker run --name <span class="nv">$OVPN_DATA</span> -v /etc/openvpn busybox
 
+<span class="c"># fetch host ip</span>
 ip addr ls
 <span class="nv">SERV_IP</span><span class="o">=</span><span class="k">$(</span>ip -4 -o addr show scope global  | awk <span class="s1">&#39;{print $4}&#39;</span> | sed -e <span class="s1">&#39;s:/.*::&#39;</span> | head -n1<span class="k">)</span>
+
+
 docker run --volumes-from <span class="nv">$OVPN_DATA</span> --rm <span class="nv">$IMG</span> ovpn_genconfig -u udp://<span class="nv">$SERV_IP</span>
 
 <span class="c"># nopass is insecure</span>
@@ -85,15 +101,16 @@ docker run --volumes-from <span class="nv">$OVPN_DATA</span> --rm -it -e <span c
 
 docker run --volumes-from <span class="nv">$OVPN_DATA</span> --rm -it <span class="nv">$IMG</span> easyrsa build-client-full <span class="nv">$CLIENT</span> nopass
 
-docker run --volumes-from <span class="nv">$OVPN_DATA</span> --rm <span class="nv">$IMG</span> ovpn_getclient <span class="nv">$CLIENT</span> | tee client/config.ovpn
+docker run --volumes-from <span class="nv">$OVPN_DATA</span> --rm <span class="nv">$IMG</span> ovpn_getclient <span class="nv">$CLIENT</span> &gt; <span class="nv">$CLIENT</span>.ovpn
 
 <span class="c">#</span>
 <span class="c"># Fire up the server</span>
 <span class="c">#</span>
-sudo iptables -N DOCKER
-sudo iptables -I FORWARD -j DOCKER
+iptables -N DOCKER
+ptables -I FORWARD -j DOCKER
+
 <span class="c"># run in shell bg to get logs</span>
-docker run --name <span class="s2">&quot;ovpn-test&quot;</span> --volumes-from <span class="nv">$OVPN_DATA</span> --rm -p 1194:1194/udp --privileged <span class="nv">$IMG</span> &amp;
+docker run --name <span class="s2">&quot;ovpn-test&quot;</span> --volumes-from <span class="nv">$OVPN_DATA</span> --rm -p 1194:1194/udp --privileged <span class="nv">$IMG</span>  1&gt;/root/ovpn_info.log 2&gt;/root/ovpn_error.log &amp;
 </pre></div>
 </td></tr></table>
 
@@ -101,7 +118,10 @@ docker run --name <span class="s2">&quot;ovpn-test&quot;</span> --volumes-from <
 <li>生成客户端证书和配置文件</li>
 </ul>
 <p>替换CLIENTNAME, 客户端的名字是用来识别正在运行的OpenVPN客户端的机器, e.g. CLIENTNAME:phone</p>
-<div class="hlcode"><pre><span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">volumes</span><span class="o">-</span><span class="n">from</span> <span class="err">$</span><span class="n">OVPN_DATA</span> <span class="o">--</span><span class="n">rm</span> <span class="o">-</span><span class="n">it</span> <span class="n">kylemanna</span><span class="o">/</span><span class="n">openvpn</span> <span class="n">easyrsa</span> <span class="n">build</span><span class="o">-</span><span class="n">client</span><span class="o">-</span><span class="n">full</span> <span class="n">CLIENTNAME</span> <span class="n">nopass</span>
+<div class="hlcode"><pre><span class="cp"># 创建客户端证书</span>
+<span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">volumes</span><span class="o">-</span><span class="n">from</span> <span class="err">$</span><span class="n">OVPN_DATA</span> <span class="o">--</span><span class="n">rm</span> <span class="o">-</span><span class="n">it</span> <span class="n">kylemanna</span><span class="o">/</span><span class="n">openvpn</span> <span class="n">easyrsa</span> <span class="n">build</span><span class="o">-</span><span class="n">client</span><span class="o">-</span><span class="n">full</span> <span class="n">CLIENTNAME</span> <span class="n">nopass</span>
+
+<span class="cp"># 传送到客户端证书和配置文件</span>
 <span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">volumes</span><span class="o">-</span><span class="n">from</span> <span class="err">$</span><span class="n">OVPN_DATA</span> <span class="o">--</span><span class="n">rm</span> <span class="n">kylemanna</span><span class="o">/</span><span class="n">openvpn</span> <span class="n">ovpn_getclient</span> <span class="n">CLIENTNAME</span> <span class="o">&gt;</span> <span class="n">CLIENTNAME</span><span class="p">.</span><span class="n">ovpn</span>
 </pre></div>
 
@@ -129,12 +149,12 @@ docker run --name <span class="s2">&quot;ovpn-test&quot;</span> --volumes-from <
 
 <p>then import .ovpn file</p>
 <ul>
-<li>note </li>
+<li>note</li>
 </ul>
 <p>The OpenVPN protocol requires the client and server to have synchronized time. If the time on your local PC is incorrect you may see the error ##TLS Error: Unroutable control packet received## from in your logs</p>
 <p>solve <a href="https://www.ivpn.net/knowledgebase/152/TLS-Error-Unroutable-control-packet-received.html">TLS Error: Unroutable control packet received</a></p>
 <h2 id="_2">验证操作</h2>
-<p>有几种通过VPN路由来验证网络连接的方法。 </p>
+<p>有几种通过VPN路由来验证网络连接的方法。</p>
 <ul>
 <li>网页浏览器</li>
 </ul>
@@ -166,8 +186,8 @@ docker run --name <span class="s2">&quot;ovpn-test&quot;</span> --volumes-from <
 
 <p>预期的反应应该是OpenVPN服务器的IP地址。</p>
 <h2 id="_3">参考</h2>
-<p><a href="http://dockone.io/article/214">在Ubuntu14.04的Docker容器中运行OpenVPN</a>
-<a href="https://hub.docker.com/r/kylemanna/openvpn/">kylemanna/openvpn OpenVPN for Docker</a></p>
+<p><a href="http://dockone.io/article/214">在Ubuntu14.04的Docker容器中运行OpenVPN</a></p>
+<p><a href="https://hub.docker.com/r/kylemanna/openvpn/">kylemanna/openvpn OpenVPN for Docker</a></p>
 </div>
 
         </div>
