@@ -156,8 +156,25 @@ curl -sSL https://get.docker.com/ | sh
 
 ## 安装vpn
 
+* openvpn
+
 ```
-apt-get install -y network-manager-openvpn-gnome network-manager-pptp network-manager-pptp-gnome network-manager-vpnc network-manager-vpnc-gnome
+apt-get install -y openvpn
+```
+
+vim ovpn.sh
+=== ovpn.sh ===
+#!/bin/bash
+
+# run openvpn with configuration
+# need root privilige
+openvpn --config clientname.ovpn 1>ovpn_info.log 2>ovpn_error.log &
+================
+
+chmod u+x ovpn.sh
+
+# run 
+sudo ./ovpn.sh
 ```
 
 ## 新增用户

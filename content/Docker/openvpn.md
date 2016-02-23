@@ -13,12 +13,21 @@ docker pull kylemanna/openvpn
 
 ```
 OVPN_DATA="ovpn-data"
+
+# 初始化ovpn_data容器，包含配置文件和证书
 docker run --name $OVPN_DATA -v /etc/openvpn busybox
+
+#
 docker run --volumes-from $OVPN_DATA --rm kylemanna/openvpn ovpn_genconfig -u udp://VPN.SERVERNAME.COM  #更改VPN.SERVERNAME.COM为你的ip或域名
+
+# 生成EasyRSA PKI 证书授权中心
 docker run --volumes-from $OVPN_DATA --rm -it kylemanna/openvpn ovpn_initpki
-# input ca pssword for securiry 
+
+# input ca pssword for securiry
 ...
-docker run --volumes-from $OVPN_DATA -d -p 1194:1194/udp --cap-add=NET_ADMIN kylemanna/openvpn  #sart openvpn server process
+
+#sart openvpn server process
+docker run --volumes-from $OVPN_DATA -d -p 1194:1194/udp --cap-add=NET_ADMIN kylemanna/openvpn
 ```
 
 * sh 文件配置
@@ -26,17 +35,20 @@ docker run --volumes-from $OVPN_DATA -d -p 1194:1194/udp --cap-add=NET_ADMIN kyl
 ```
 #!/bin/bash
 set -ex
-OVPN_DATA=basic-data
-CLIENT=travis-client
+OVPN_DATA=ovpn-data
+CLIENT=xx-client
 IMG=kylemanna/openvpn
 
 #
 # Create a docker container with the config data
-#
+# 初始化ovpn_data容器，包含配置文件和证书
 docker run --name $OVPN_DATA -v /etc/openvpn busybox
 
+# fetch host ip
 ip addr ls
 SERV_IP=$(ip -4 -o addr show scope global  | awk '{print $4}' | sed -e 's:/.*::' | head -n1)
+
+
 docker run --volumes-from $OVPN_DATA --rm $IMG ovpn_genconfig -u udp://$SERV_IP
 
 # nopass is insecure
@@ -44,15 +56,16 @@ docker run --volumes-from $OVPN_DATA --rm -it -e "EASYRSA_BATCH=1" -e "EASYRSA_R
 
 docker run --volumes-from $OVPN_DATA --rm -it $IMG easyrsa build-client-full $CLIENT nopass
 
-docker run --volumes-from $OVPN_DATA --rm $IMG ovpn_getclient $CLIENT | tee client/config.ovpn
+docker run --volumes-from $OVPN_DATA --rm $IMG ovpn_getclient $CLIENT > $CLIENT.ovpn
 
 #
 # Fire up the server
 #
-sudo iptables -N DOCKER
-sudo iptables -I FORWARD -j DOCKER
+iptables -N DOCKER
+ptables -I FORWARD -j DOCKER
+
 # run in shell bg to get logs
-docker run --name "ovpn-test" --volumes-from $OVPN_DATA --rm -p 1194:1194/udp --privileged $IMG &
+docker run --name "ovpn-test" --volumes-from $OVPN_DATA --rm -p 1194:1194/udp --privileged $IMG  1>/root/ovpn_info.log 2>/root/ovpn_error.log &
 ```
 
 * 生成客户端证书和配置文件
@@ -60,7 +73,10 @@ docker run --name "ovpn-test" --volumes-from $OVPN_DATA --rm -p 1194:1194/udp --
 替换CLIENTNAME, 客户端的名字是用来识别正在运行的OpenVPN客户端的机器, e.g. CLIENTNAME:phone
 
 ```
+# 创建客户端证书
 docker run --volumes-from $OVPN_DATA --rm -it kylemanna/openvpn easyrsa build-client-full CLIENTNAME nopass
+
+# 传送到客户端证书和配置文件
 docker run --volumes-from $OVPN_DATA --rm kylemanna/openvpn ovpn_getclient CLIENTNAME > CLIENTNAME.ovpn
 ```
 
@@ -86,7 +102,7 @@ sudo apt-get install network-manager-openvpn-gnome
 ```
  then import .ovpn file
 
-* note 
+* note
 
 The OpenVPN protocol requires the client and server to have synchronized time. If the time on your local PC is incorrect you may see the error ##TLS Error: Unroutable control packet received## from in your logs
 
@@ -94,7 +110,7 @@ solve [TLS Error: Unroutable control packet received][3]
 
 ## 验证操作
 
-有几种通过VPN路由来验证网络连接的方法。 
+有几种通过VPN路由来验证网络连接的方法。
 
 * 网页浏览器
 
@@ -135,6 +151,7 @@ dig +short myip.opendns.com @resolver1.opendns.com
 ## 参考
 
 [在Ubuntu14.04的Docker容器中运行OpenVPN][1]
+
 [kylemanna/openvpn OpenVPN for Docker][2]
 
 [1]: http://dockone.io/article/214

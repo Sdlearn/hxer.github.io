@@ -103,6 +103,18 @@ COPY <src>... <dest>
 
 COPY 复制新文件或者目录从 <src> 添加到容器指定路径中 <dest>。用法同 ADD，唯一的不同是不能指定远程文件 URLS。
 
+下面一条命令，会出现 ##镜像中文件层次结构错乱的情况##，暂不清楚是什么造成的，仅记之
+
+```
+COPY code/* /root/code  # code 目录与 Dockerfile 位于同一级目录
+```
+
+正确的格式如下：
+
+```
+COPY code/ /root/code/  
+```
+
 * VOLUME
 
 ```
@@ -126,4 +138,4 @@ RUN apt-get update && apt-get install -y \
 
 [docker 学习笔记][1]
 
-[1:] http://blog.opskumu.com/docker.html
+[1]: http://blog.opskumu.com/docker.html

@@ -30,3 +30,8 @@ date: 2016-01-20 05:16
 
  * 熟悉 Docker 基本命令，简单使用docker， 编写 Dockerfile 
  
+## 02-20
+
+ * docker openvpn 部署应用
+ * Dockerfile build django:demo, dockfile saave in github
+ * docker hub and daocloud usage
