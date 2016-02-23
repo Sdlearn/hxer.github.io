@@ -27,7 +27,7 @@ e.g. run -p 8000:8000
 
 ## install docker
 
-* [install][1]
+* [ 官方安装教程 ][1]
 
 * cmd line
 

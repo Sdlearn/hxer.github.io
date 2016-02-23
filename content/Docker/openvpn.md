@@ -65,7 +65,7 @@ iptables -N DOCKER
 ptables -I FORWARD -j DOCKER
 
 # run in shell bg to get logs
-docker run --name "ovpn-test" --volumes-from $OVPN_DATA --rm -p 1194:1194/udp --privileged $IMG  1>/root/ovpn_info.log 2>/root/ovpn_error.log &
+docker run --name "ovpn-server" --volumes-from $OVPN_DATA --rm -p 1194:1194/udp --privileged $IMG  1>/root/ovpn_info.log 2>/root/ovpn_error.log &
 ```
 
 * 生成客户端证书和配置文件
