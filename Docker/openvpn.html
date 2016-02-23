@@ -110,7 +110,7 @@ iptables -N DOCKER
 ptables -I FORWARD -j DOCKER
 
 <span class="c"># run in shell bg to get logs</span>
-docker run --name <span class="s2">&quot;ovpn-test&quot;</span> --volumes-from <span class="nv">$OVPN_DATA</span> --rm -p 1194:1194/udp --privileged <span class="nv">$IMG</span>  1&gt;/root/ovpn_info.log 2&gt;/root/ovpn_error.log &amp;
+docker run --name <span class="s2">&quot;ovpn-server&quot;</span> --volumes-from <span class="nv">$OVPN_DATA</span> --rm -p 1194:1194/udp --privileged <span class="nv">$IMG</span>  1&gt;/root/ovpn_info.log 2&gt;/root/ovpn_error.log &amp;
 </pre></div>
 </td></tr></table>
 
