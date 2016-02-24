@@ -26,14 +26,14 @@
 <ul>
 <li>步骤</li>
 </ul>
-<p>1.注册登录<a href="https://circleci.com"> Docker Hub</a>
-2.绑定GitHub账户(user menu-&gt;Settings-&gt;Linked Account &amp; Services-&gt;Link GitHub-&gt;Public and Private)
-3.创建自动构建(Create menu-&gt; Create Automated Build)
-4.选择Github，选择一个含有 Dockerfile 的项目
-5.输入自动构建的 名字 和简要描述，创建
-6.配置Build Settings, 定制化 Dockerfile路径 和 tag name
-7.Github关联项目的分支(与Build Settings对应)一旦有push，Docker Hub会自动开始构建
-8.选择 Build Details 查看构建错误或成功信息</p>
+<p>1.注册登录<a href="https://circleci.com"> Docker Hub</a></p>
+<p>2.绑定GitHub账户(user menu-&gt;Settings-&gt;Linked Account &amp; Services-&gt;Link GitHub-&gt;Public and Private)</p>
+<p>3.创建自动构建(Create menu-&gt; Create Automated Build)</p>
+<p>4.选择Github，选择一个含有 Dockerfile 的项目</p>
+<p>5.输入自动构建的 名字 和简要描述，创建</p>
+<p>6.配置Build Settings, 定制化 Dockerfile路径 和 tag name</p>
+<p>7.Github关联项目的分支(与Build Settings对应)一旦有push，Docker Hub会自动开始构建</p>
+<p>8.选择 Build Details 查看构建错误或成功信息</p>
 <h2 id="circleci"><a href="https://circleci.com"> CircleCI </a></h2>
 <p>CircleCI 是一个持续集成与发布平台，支持Docker容器进行测试。只需要提供一个Dockerfile，CircleCI会据此构建镜像，并启动一个新容器，然后在其中运行测试</p>
 <ul>
@@ -46,13 +46,13 @@
 <p>1.注册，使用github帐号完成注册</p>
 <p><a href="http://dockone.io/article/217">CircleCI 持续部署</a></p>
 <p>工作流程：</p>
-<p>1.在本地功能分支上完成应用代码。
-2.在GitHub上发起一个到master分支的Pull Request。
-3.在Docker容器上运行自动测试。
-4.如果测试通过，手动将这个PR merge进master分支。
-5.一旦merge成功，再次运行自动测试。
-6.如果第二次测试也通过，就在Docker Hub上对应用进行构建。
-7.一旦构建完成，自动化地部署到生产环境。</p>
+<p>1.在本地功能分支上完成应用代码。</p>
+<p>2.在GitHub上发起一个到master分支的Pull Request。</p>
+<p>3.在Docker容器上运行自动测试。</p>
+<p>4.如果测试通过，手动将这个PR merge进master分支。</p>
+<p>5.一旦merge成功，再次运行自动测试。</p>
+<p>6.如果第二次测试也通过，就在Docker Hub上对应用进行构建。</p>
+<p>7.一旦构建完成，自动化地部署到生产环境。</p>
 <ul>
 <li>备注</li>
 </ul>
