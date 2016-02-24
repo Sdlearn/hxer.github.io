@@ -123,16 +123,25 @@ VOLUME ["/data"]
 
 创建一个可以从本地主机或其他容器挂载的挂载点
 
-* note
+## note
 
-1.避免使用 RUN apt-get upgrade
+* 1.避免使用 RUN apt-get upgrade
+
+这样会打乱镜像中包的依赖，可能会出现问题
  
-2.apt-get update 和 apt-get install 连接使用，避免缓存问题
+* 2.apt-get update 和 apt-get install 连接使用，避免缓存问题
 
 ```
 RUN apt-get update && apt-get install -y \
     python   
 ```
+
+* 3.COPY vs ADD
+
+ADD 比 COPY 多了2个功能--下载URL和解压，其他一样
+
+如果不希望压缩文件拷贝到container后会被解压，则使用COPY
+如果需要自动下载URL并拷贝到container，则使用ADD
 
 参考：
 

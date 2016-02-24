@@ -43,3 +43,4 @@ date: 2016-01-20 05:16
  ## 02-22
 
  * docker build shadowsocks image
+ * docker 持续集成与自动发布
