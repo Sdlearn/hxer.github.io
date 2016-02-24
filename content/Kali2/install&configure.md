@@ -105,7 +105,9 @@ run with user login
 ```
 vim ~/opt/ss.sh
     sslocal -s <remote_ip> -p <remote_port> -k <password>   #add to ss.sh
+    
 chmod u+x ss.sh
+
 vim ~/.profile
     sh ~/opt/ss.sh 1>/dev/null 2>~/opt/ss.log &     #add to file end, 1:stdout 2:stderr
 ``` 
@@ -162,7 +164,11 @@ curl -sSL https://get.docker.com/ | sh
 apt-get install -y openvpn
 ```
 
+配置
+
+```
 vim ovpn.sh
+
 === ovpn.sh ===
 #!/bin/bash
 
@@ -192,6 +198,7 @@ id username         #查看配置
 ```
 #vi /etc/ssh/sshd_config   
 ```
+
 将#PasswordAuthentication no的注释去掉，并且将NO修改为YES
 将#PermitRootLogin yes的注释去掉
 

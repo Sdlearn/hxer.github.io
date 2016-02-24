@@ -44,3 +44,9 @@ date: 2016-01-20 05:16
 
  * docker build shadowsocks image
  * docker 持续集成与自动发布
+ 
+ ## 02-23
+ 
+ * Docker cirecleCI
+ * Docker 微容器
+ * Docker Hub 自动构建
