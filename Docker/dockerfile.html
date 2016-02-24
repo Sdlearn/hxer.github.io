@@ -130,16 +130,25 @@
 
 
 <p>创建一个可以从本地主机或其他容器挂载的挂载点</p>
+<h2 id="note">note</h2>
 <ul>
-<li>note</li>
+<li>1.避免使用 RUN apt-get upgrade</li>
 </ul>
-<p>1.避免使用 RUN apt-get upgrade</p>
-<p>2.apt-get update 和 apt-get install 连接使用，避免缓存问题</p>
+<p>这样会打乱镜像中包的依赖，可能会出现问题</p>
+<ul>
+<li>2.apt-get update 和 apt-get install 连接使用，避免缓存问题</li>
+</ul>
 <div class="hlcode"><pre><span class="n">RUN</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span> <span class="o">&amp;&amp;</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> \
     <span class="n">python</span>   
 </pre></div>
 
 
+<ul>
+<li>3.COPY vs ADD</li>
+</ul>
+<p>ADD 比 COPY 多了2个功能--下载URL和解压，其他一样</p>
+<p>如果不希望压缩文件拷贝到container后会被解压，则使用COPY
+如果需要自动下载URL并拷贝到container，则使用ADD</p>
 <p>参考：</p>
 <p><a href="http://blog.opskumu.com/docker.html">docker 学习笔记</a></p>
 </div>

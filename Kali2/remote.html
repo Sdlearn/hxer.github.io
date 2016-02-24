@@ -30,6 +30,16 @@
 
 <h2 id="ssh-keygen-f">ssh-keygen [-f <filename>]</h2>
 <p>ssh-keygen 生成公钥和私钥文件，将公钥文件的内容，放到远程主机 $HOME/.ssh/authorized_keys 文件中，以后就可以免密码登录</p>
+<h2 id="ssh_1">ssh 长连接设置</h2>
+<ul>
+<li>client</li>
+</ul>
+<div class="hlcode"><pre><span class="n">su</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssh</span>
+<span class="n">echo</span> <span class="s">&quot;    ServerAliveInterval 60&quot;</span> <span class="o">&gt;&gt;</span> <span class="n">ssh_config</span>
+<span class="n">service</span> <span class="n">ssh</span> <span class="n">restart</span>
+<span class="n">exit</span>
+</pre></div>
 </div>
 
         </div>
