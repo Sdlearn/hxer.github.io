@@ -224,6 +224,16 @@ id username         #查看配置
 exit 0
 ```
 
+## terminal 设置
+
+Edit menu -> Preferences
+
+1.去掉 Show menubar by default in terminals 的勾选
+
+2.Shortcuts menu, 勾选Enable shortcuts, Hide and Show toolbar 绑定快捷键F2.
+
+> 设置 F2 显示或隐藏菜单栏，默认是隐藏菜单栏
+
 ## office
 
 [wps][12]
@@ -232,9 +242,31 @@ exit 0
 ## flash
 
 ```
-sudo apt-get install flashplugin-nonfree
-sudo update-flashplugin-nonfree --install 
+su root
+apt-get install flashplugin-nonfree
+update-flashplugin-nonfree --install 
 ```
+
+* 安装百度云
+
+首先先git一下：https://github.com/LiuLang/bcloud-packages
+
+然后安装自己对应版本（32bit or 64bit） 
+
+```
+dpkg -i bcloud-x.x.x.deb
+apt-get -f install
+```
+
+* 安装网易云音乐
+
+```
+git clone https://github.com/cosven/FeelUOwn.git
+cd FeelUOwn
+./install.sh
+```
+
+> 注：遇到有什么依赖没有安装，根据提示缺少什么依赖安装什么依赖即可。
 
 ## ftp
 

@@ -77,18 +77,7 @@ disable_functions="eval,phpinfo"
 
 * 文件头+GIF89a
 
-## file inclusion
 
-require找不到被包含的文件时会产生致命错误，并停止脚本运行。
-
-include找不到被包含的文件时只会产生警告，脚本将继续运行。
-
-include_once与include类似，唯一区别是如果该文件中的代码已经被包含，则不会再次包含。
-
-require_once与require类似，唯一区别是如果该文件中的代码已经被包含，则不会再次包含
-
-
-> “zlib://”和“ogg://”等方式绕过 远程文件包含(RFI)
 
 ## dangerous functions
 

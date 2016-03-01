@@ -8,6 +8,10 @@ date: 2016-01-26 18:49
 
 [1]: http://support.lenovo.com.cn/lenovo/wsi/htmls/detail_20151111145810868.html
 
+## web服务器
+
+WEB服务器一个奇怪的特性，就是如果没有返回响应而WEB服务器又接受了请求，那么请求的内容将原封不动的写入WEB日志，不会进行HTTP编码
+
 ## URL shortening
 
 URL shortening，即短地址，把URL变短，服务器通过查询短地址，提供302跳转到目的地址。
@@ -40,3 +44,19 @@ net localgroup administrators <Username> /ad
 短文件名漏洞
 
 ## cookie欺骗漏洞
+
+## binwalk
+
+参数：
+
+* -e
+
+提取文件
+
+* if=输入文件
+
+* of=输出文件
+
+* skip=<跳过的字节数>
+
+* count=<要提取的字节数>
