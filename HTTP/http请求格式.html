@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>HTTP请求格式 - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#HTTP">HTTP</a>&nbsp;»&nbsp;HTTP请求格式</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">HTTP请求格式</div>
+  <div id="content">
+  <h2 id="http">http协议请求头格式</h2>
+<blockquote>
+<p>特别提醒：请求报头后面有一个“回车换行”，平常使用的时候容易忽然这一点造成问题。</p>
+</blockquote>
+<div class="hlcode"><pre><span class="p">{</span><span class="n">method</span><span class="p">}</span> <span class="p">{</span><span class="n">path</span><span class="p">}</span> <span class="p">{</span><span class="n">http_version</span><span class="p">}(</span><span class="n">CRLF</span><span class="p">)</span>
+<span class="p">{</span><span class="n">header_name</span><span class="p">}</span><span class="o">:</span> <span class="p">{</span><span class="n">header_value</span><span class="p">}(</span><span class="n">CRLF</span><span class="p">)</span>
+<span class="p">...</span><span class="n">more</span> <span class="n">header</span> <span class="n">info</span><span class="p">(</span><span class="n">CRLF</span><span class="p">)</span>
+<span class="p">(</span><span class="n">CRLF</span><span class="p">)</span>
+<span class="p">{</span><span class="n">content</span><span class="p">}</span>
+</pre></div>
+
+
+<ul>
+<li>格式中的变量说明</li>
+</ul>
+<div class="hlcode"><pre><span class="n">method</span><span class="o">:</span> <span class="n">GET</span><span class="o">,</span><span class="n">POST</span><span class="o">,</span><span class="n">PUT</span><span class="o">,</span><span class="n">DELETE</span> <span class="err">等等</span>
+<span class="n">path</span><span class="o">:</span> <span class="n">URL</span><span class="err">路径部分，如：</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="na">html</span>
+<span class="n">version</span><span class="err">：如：</span><span class="n">http</span><span class="o">/</span><span class="mf">1.1</span>
+<span class="n">header_name</span><span class="o">:</span> <span class="err">如：</span><span class="n">Host</span>
+<span class="n">header_value</span><span class="o">:</span> <span class="err">如：</span> <span class="n">www</span><span class="o">.</span><span class="na">eertime</span><span class="o">.</span><span class="na">com</span>
+</pre></div>
+
+
+<h2 id="_1">常用请求头</h2>
+<ul>
+<li>Accept</li>
+</ul>
+<p>Accept请求报头域用于指定客户端接受哪些类型的信息。eg：Accept：image/gif，表明客户端希望接受GIF图象格式的资源；Accept：text/html，表明客户端希望接受html文本。</p>
+<ul>
+<li>Accept-Charset</li>
+</ul>
+<p>Accept-Charset请求报头域用于指定客户端接受的字符集。eg：Accept-Charset:iso-8859-1,gb2312.如果在请求消息中没有设置这个域，缺省是任何字符集都可以接受。</p>
+<ul>
+<li>Accept-Encoding</li>
+</ul>
+<p>Accept-Encoding请求报头域类似于Accept，但是它是用于指定可接受的内容编码。eg：Accept-Encoding:gzip.deflate.如果请求消息中没有设置这个域服务器假定客户端对各种内容编码都可以接受。</p>
+<ul>
+<li>Accept-Language</li>
+</ul>
+<p>Accept-Language请求报头域类似于Accept，但是它是用于指定一种自然语言。eg：Accept-Language:zh-cn.如果请求消息中没有设置这个报头域，服务器假定客户端对各种语言都可以接受。</p>
+<ul>
+<li>Authorization</li>
+</ul>
+<p>Authorization请求报头域主要用于证明客户端有权查看某个资源。当浏览器访问一个页面时，如果收到服务器的响应代码为401（未授权），可以发送一个包含Authorization请求报头域的请求，要求服务器对其进行验证。</p>
+<ul>
+<li>Connection</li>
+</ul>
+<p>HTTP/1.1 applications that do not support persisitent connections MUST include the "close" connection option in every message</p>
+<ul>
+<li>Host（发送请求时，该报头域是必需的）</li>
+</ul>
+<blockquote>
+<p>HTTP/1.1协议中，客户端必须包含 Host 请求头</p>
+</blockquote>
+<p>Host请求报头域主要用于指定被请求资源的Internet主机和端口号，它通常从HTTP URL中提取出来的，eg：
+我们在浏览器中输入：http://www.eertime.com/index.html
+浏览器发送的请求消息中，就会包含Host请求报头域，如下：
+Host：www.eertime.com
+此处使用缺省端口号80，若指定了端口号，则变成：Host：www.eertime.com:指定端口号 </p>
+<ul>
+<li>User-Agent</li>
+</ul>
+<p>我们上网登陆论坛的时候，往往会看到一些欢迎信息，其中列出了你的操作系统的名称和版本，你所使用的浏览器的名称和版本，这往往让很多人感到很神奇，实际上，服务器应用程序就是从User-Agent这个请求报头域中获取到这些信息。User-Agent请求报头域允许客户端将它的操作系统、浏览器和其它属性告诉服务器。不过，这个报头域不是必需的，如果我们自己编写一个浏览器，不使用User-Agent请求报头域，那么服务器端就无法得知我们的信息了。</p>
+<ul>
+<li>Demo</li>
+</ul>
+<div class="hlcode"><pre><span class="n">GET</span> <span class="o">/</span><span class="n">index</span><span class="p">.</span><span class="n">php</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span><span class="err">\</span><span class="n">r</span><span class="err">\</span><span class="n">n</span>
+<span class="nl">Host:</span> <span class="n">www</span><span class="p">.</span><span class="n">eertime</span><span class="p">.</span><span class="n">com</span><span class="err">\</span><span class="n">r</span><span class="err">\</span><span class="n">n</span>
+<span class="n">User</span><span class="o">-</span><span class="n">Agent</span><span class="o">:</span> <span class="n">Mozilla</span><span class="o">/</span><span class="mf">5.0</span> <span class="p">(</span><span class="n">Windows</span> <span class="n">NT</span> <span class="mf">10.0</span><span class="p">;</span> <span class="n">WOW64</span><span class="p">;</span> <span class="n">rv</span><span class="o">:</span><span class="mf">42.0</span><span class="p">)</span> <span class="n">Gecko</span><span class="o">/</span><span class="mi">20100101</span> <span class="n">Firefox</span><span class="o">/</span><span class="mf">42.0</span><span class="err">\</span><span class="n">r</span><span class="err">\</span><span class="n">n</span>
+<span class="nl">Accept:</span> <span class="n">text</span><span class="o">/</span><span class="n">html</span><span class="p">,</span><span class="n">application</span><span class="o">/</span><span class="n">xhtml</span><span class="o">+</span><span class="n">xml</span><span class="p">,</span><span class="n">application</span><span class="o">/</span><span class="n">xml</span><span class="p">;</span><span class="n">q</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span><span class="err">*/</span><span class="o">*</span><span class="p">;</span><span class="n">q</span><span class="o">=</span><span class="mf">0.8</span><span class="err">\</span><span class="n">r</span><span class="err">\</span><span class="n">n</span>
+<span class="n">Accept</span><span class="o">-</span><span class="n">Language</span><span class="o">:</span> <span class="n">zh</span><span class="o">-</span><span class="n">CN</span><span class="p">,</span><span class="n">zh</span><span class="p">;</span><span class="n">q</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span><span class="n">en</span><span class="o">-</span><span class="n">US</span><span class="p">;</span><span class="n">q</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">en</span><span class="p">;</span><span class="n">q</span><span class="o">=</span><span class="mf">0.3</span><span class="err">\</span><span class="n">r</span><span class="err">\</span><span class="n">n</span>
+<span class="n">Accept</span><span class="o">-</span><span class="n">Encoding</span><span class="o">:</span> <span class="n">gzip</span><span class="p">,</span> <span class="n">deflate</span><span class="err">\</span><span class="n">r</span><span class="err">\</span><span class="n">n</span>
+<span class="nl">Connection:</span> <span class="n">keep</span><span class="o">-</span><span class="n">alive</span><span class="err">\</span><span class="n">r</span><span class="err">\</span><span class="n">n</span>
+<span class="n">Cache</span><span class="o">-</span><span class="n">Control</span><span class="o">:</span> <span class="n">max</span><span class="o">-</span><span class="n">age</span><span class="o">=</span><span class="mi">0</span><span class="err">\</span><span class="n">r</span><span class="err">\</span><span class="n">n</span>
+<span class="err">\</span><span class="n">r</span><span class="err">\</span><span class="n">n</span>
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

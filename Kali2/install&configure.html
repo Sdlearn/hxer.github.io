@@ -206,14 +206,44 @@
 </pre></div>
 
 
+<h2 id="terminal">terminal 设置</h2>
+<p>Edit menu -&gt; Preferences</p>
+<p>1.去掉 Show menubar by default in terminals 的勾选</p>
+<p>2.Shortcuts menu, 勾选Enable shortcuts, Hide and Show toolbar 绑定快捷键F2.</p>
+<blockquote>
+<p>设置 F2 显示或隐藏菜单栏，默认是隐藏菜单栏</p>
+</blockquote>
 <h2 id="office">office</h2>
 <p><a href="http://wps-community.org/download.html">wps</a></p>
 <h2 id="flash">flash</h2>
-<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">flashplugin</span><span class="o">-</span><span class="n">nonfree</span>
-<span class="n">sudo</span> <span class="n">update</span><span class="o">-</span><span class="n">flashplugin</span><span class="o">-</span><span class="n">nonfree</span> <span class="o">--</span><span class="n">install</span> 
+<div class="hlcode"><pre><span class="n">su</span> <span class="n">root</span>
+<span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">flashplugin</span><span class="o">-</span><span class="n">nonfree</span>
+<span class="n">update</span><span class="o">-</span><span class="n">flashplugin</span><span class="o">-</span><span class="n">nonfree</span> <span class="o">--</span><span class="n">install</span> 
 </pre></div>
 
 
+<ul>
+<li>安装百度云</li>
+</ul>
+<p>首先先git一下：https://github.com/LiuLang/bcloud-packages</p>
+<p>然后安装自己对应版本（32bit or 64bit） </p>
+<div class="hlcode"><pre><span class="n">dpkg</span> <span class="o">-</span><span class="n">i</span> <span class="n">bcloud</span><span class="o">-</span><span class="n">x</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">deb</span>
+<span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">f</span> <span class="n">install</span>
+</pre></div>
+
+
+<ul>
+<li>安装网易云音乐</li>
+</ul>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/cosven/FeelUOwn.git</span>
+<span class="n">cd</span> <span class="n">FeelUOwn</span>
+<span class="p">.</span><span class="o">/</span><span class="n">install</span><span class="p">.</span><span class="n">sh</span>
+</pre></div>
+
+
+<blockquote>
+<p>注：遇到有什么依赖没有安装，根据提示缺少什么依赖安装什么依赖即可。</p>
+</blockquote>
 <h2 id="ftp">ftp</h2>
 <ul>
 <li>vsftp</li>
