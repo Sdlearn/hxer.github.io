@@ -179,7 +179,7 @@ Python 3.3.3
 
 or, if you prefer 3.3.3 over 2.7.6,
 
-````
+```
 $ pyenv global 3.3.3 2.7.6
 $ pyenv versions
   system
