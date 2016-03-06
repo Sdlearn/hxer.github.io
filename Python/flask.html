@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>Flask - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Python">Python</a>&nbsp;»&nbsp;Flask</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">Flask</div>
+  <div id="content">
+  <h2 id="_1">参考资源</h2>
+<ul>
+<li><a href="http://www.wklken.me/posts/2013/09/09/python-framework-flask.html">FLASK使用小结</a></li>
+<li><a href="http://flask.pocoo.org/docs/0.10/api/">flask api</a></li>
+</ul>
+<h2 id="note">note</h2>
+<ul>
+<li>return a requests response object</li>
+</ul>
+<div class="hlcode"><pre><span class="err">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="sc">&#39;/&#39;</span><span class="p">)</span>
+<span class="n">def</span> <span class="n">index</span><span class="p">()</span><span class="o">:</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="err">&#39;</span><span class="n">xxx</span><span class="err">&#39;</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">content</span><span class="p">,</span> <span class="n">resp</span><span class="p">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">resp</span><span class="p">.</span><span class="n">headers</span><span class="p">.</span><span class="n">items</span><span class="p">())</span>
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
