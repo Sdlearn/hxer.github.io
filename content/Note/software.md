@@ -7,6 +7,17 @@ date: 2016-02-17 20:33
 
 [dukto website][1]
 
+## firefox
+
+插件:
+
+* FireX Proxy
+
+* FireBug
+
+* hackbar
+
+* Tamper Data
 
 
 [ubuntu openvpn 配置][2]
