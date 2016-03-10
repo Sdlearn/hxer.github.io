@@ -63,6 +63,8 @@ It should run the code with python
 
 * 官网下载deb包，安装
 
+* 升级，下载新的deb包，直接安装，不会覆盖之前的配置和已安装的插件
+
 * 命令行输入：subl, 即可运行
 
 * 安装包管理

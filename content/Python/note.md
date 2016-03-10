@@ -3,6 +3,10 @@ title: "note"
 date: 2016-01-22 15:40
 ---
 
+## __dict__
+
+__dict__分层存储属性。每一层的__dict__只存储该层新增的属性。子类不需要重复存储父类中的属性。
+
 ## string
 
 * printable string

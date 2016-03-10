@@ -16,3 +16,18 @@ date: 2016-02-25 00:25
 设置logger的level， level有以下几个级别：
 
 NOTSET < DEBUG < INFO < WARNING < ERROR < CRITICAL
+
+常用示例：
+
+```
+import logging
+
+logging.basicConfig(level=logging.INFO)
+log = logging.getLogger(__name__)
+
+logging.basicConfig(filename="xx.log",
+    level=logging.DEBUG,
+    format='%(asctime)s|%(filename)s|%(funcName)s|line:%(lineno)d%(levelname)s %(message)s',
+    datefmt='%Y-%m-%d %H:%M'
+)
+```
