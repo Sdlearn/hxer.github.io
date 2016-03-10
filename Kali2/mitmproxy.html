@@ -1,0 +1,323 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>mitmproxy - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Kali2">Kali2</a>&nbsp;»&nbsp;mitmproxy</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">mitmproxy</div>
+  <div id="content">
+  <h2 id="mitmproxy">mitmproxy</h2>
+<p>mitmproxy 是一个基于python的中间人代理的框架。</p>
+<ul>
+<li>install </li>
+</ul>
+<p><a href="http://docs.mitmproxy.org/en/stable/install.html">官方安装文档</a></p>
+<p>注意:</p>
+<p><a href="http://stackoverflow.com/questions/24455238/lxml-installation-error-ubuntu-14-04-internal-compiler-error">虚拟机安装lxml内存不够报错</a></p>
+<h2 id="_1">介绍</h2>
+<p>首次运行mitmproxy</p>
+<div class="hlcode"><pre><span class="err">$</span><span class="n">mitmproxy</span>
+</pre></div>
+
+
+<p>会在当前用户目录下生成文件夹"~/.mitmproxy/"</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">cd</span> <span class="o">~/</span><span class="p">.</span><span class="n">mitmproxy</span><span class="o">/</span>
+<span class="err">$</span> <span class="n">ls</span>
+<span class="n">mitmproxy</span><span class="o">-</span><span class="n">ca</span><span class="o">-</span><span class="n">cert</span><span class="p">.</span><span class="n">cer</span>   <span class="err">#</span> <span class="err">安卓上使用</span>  
+<span class="n">mitmproxy</span><span class="o">-</span><span class="n">ca</span><span class="o">-</span><span class="n">cert</span><span class="p">.</span><span class="n">pem</span>   <span class="err">#</span> <span class="err">非</span><span class="n">windows</span><span class="err">平台使用</span>
+<span class="n">mitmproxy</span><span class="o">-</span><span class="n">dhparam</span><span class="p">.</span><span class="n">pem</span>
+<span class="n">mitmproxy</span><span class="o">-</span><span class="n">ca</span><span class="o">-</span><span class="n">cert</span><span class="p">.</span><span class="n">p12</span>   <span class="err">#</span> <span class="n">windows</span><span class="err">上使用</span>  
+<span class="n">mitmproxy</span><span class="o">-</span><span class="n">ca</span><span class="p">.</span><span class="n">pem</span>        <span class="err">#</span> <span class="err">私钥</span>
+</pre></div>
+
+
+<h2 id="libmproxy">libmproxy</h2>
+<ul>
+<li>HTTPRequest (libmproxy.models.HTTPRequest)</li>
+</ul>
+<div class="hlcode"><pre><span class="n">anticache</span><span class="p">:</span>
+        <span class="n">Modifies</span> <span class="n">this</span> <span class="n">request</span> <span class="n">to</span> <span class="n">remove</span> <span class="n">headers</span> <span class="n">that</span> <span class="n">might</span> <span class="n">produce</span> <span class="n">a</span> <span class="n">cached</span>
+        <span class="n">response</span><span class="o">.</span> <span class="n">That</span> <span class="ow">is</span><span class="p">,</span> <span class="n">we</span> <span class="n">remove</span> <span class="n">ETags</span> <span class="ow">and</span> <span class="n">If</span><span class="o">-</span><span class="n">Modified</span><span class="o">-</span><span class="n">Since</span> <span class="n">headers</span><span class="o">.</span>
+
+<span class="n">anticomp</span><span class="p">:</span>
+        <span class="n">Modifies</span> <span class="n">this</span> <span class="n">request</span> <span class="n">to</span> <span class="n">remove</span> <span class="n">headers</span> <span class="n">that</span> <span class="n">will</span> <span class="n">compress</span> <span class="n">the</span>
+        <span class="n">resource</span><span class="s">&#39;s data.</span>
+
+<span class="n">body</span><span class="p">:</span><span class="bp">None</span>
+
+<span class="n">constrain_encoding</span><span class="p">:</span>
+        <span class="n">Limits</span> <span class="n">the</span> <span class="n">permissible</span> <span class="n">Accept</span><span class="o">-</span><span class="n">Encoding</span> <span class="n">values</span><span class="p">,</span> <span class="n">based</span> <span class="n">on</span> <span class="n">what</span> <span class="n">we</span> <span class="n">can</span>
+        <span class="n">decode</span> <span class="n">appropriately</span><span class="o">.</span>
+
+<span class="n">content</span><span class="p">:</span>
+        <span class="n">The</span> <span class="n">raw</span> <span class="p">(</span><span class="n">encoded</span><span class="p">)</span> <span class="n">HTTP</span> <span class="n">message</span> <span class="n">body</span>
+
+        <span class="n">See</span> <span class="n">also</span><span class="p">:</span> <span class="p">:</span><span class="n">py</span><span class="p">:</span><span class="n">attr</span><span class="p">:</span><span class="sb">`text`</span>
+
+<span class="n">cookies</span><span class="p">:</span>
+        <span class="n">The</span> <span class="n">request</span> <span class="n">cookies</span><span class="o">.</span>
+        <span class="n">An</span> <span class="n">empty</span> <span class="p">:</span><span class="n">py</span><span class="p">:</span><span class="n">class</span><span class="p">:</span><span class="sb">`ODict`</span> <span class="nb">object</span> <span class="k">if</span> <span class="n">the</span> <span class="n">cookie</span> <span class="n">monster</span> <span class="n">ate</span> <span class="n">them</span> <span class="nb">all</span><span class="o">.</span>
+
+<span class="n">copy</span><span class="p">:</span><span class="bp">None</span>
+
+<span class="n">decode</span><span class="p">:</span>
+            <span class="n">Decodes</span> <span class="n">body</span> <span class="n">based</span> <span class="n">on</span> <span class="n">the</span> <span class="n">current</span> <span class="n">Content</span><span class="o">-</span><span class="n">Encoding</span> <span class="n">header</span><span class="p">,</span> <span class="n">then</span>
+            <span class="n">removes</span> <span class="n">the</span> <span class="n">header</span><span class="o">.</span> <span class="n">If</span> <span class="n">there</span> <span class="ow">is</span> <span class="n">no</span> <span class="n">Content</span><span class="o">-</span><span class="n">Encoding</span> <span class="n">header</span><span class="p">,</span> <span class="n">no</span>
+            <span class="n">action</span> <span class="ow">is</span> <span class="n">taken</span><span class="o">.</span>
+
+            <span class="n">Returns</span><span class="p">:</span>
+                <span class="bp">True</span><span class="p">,</span> <span class="k">if</span> <span class="n">decoding</span> <span class="n">succeeded</span><span class="o">.</span>
+                <span class="bp">False</span><span class="p">,</span> <span class="n">otherwise</span><span class="o">.</span>
+
+<span class="n">encode</span><span class="p">:</span>
+            <span class="n">Encodes</span> <span class="n">body</span> <span class="k">with</span> <span class="n">the</span> <span class="n">encoding</span> <span class="n">e</span><span class="p">,</span> <span class="n">where</span> <span class="n">e</span> <span class="ow">is</span> <span class="s">&quot;gzip&quot;</span><span class="p">,</span> <span class="s">&quot;deflate&quot;</span> <span class="ow">or</span> <span class="s">&quot;identity&quot;</span><span class="o">.</span>
+
+            <span class="n">Returns</span><span class="p">:</span>
+                <span class="bp">True</span><span class="p">,</span> <span class="k">if</span> <span class="n">decoding</span> <span class="n">succeeded</span><span class="o">.</span>
+                <span class="bp">False</span><span class="p">,</span> <span class="n">otherwise</span><span class="o">.</span>
+
+<span class="n">first_line_format</span><span class="p">:</span>
+        <span class="n">HTTP</span> <span class="n">request</span> <span class="n">form</span> <span class="k">as</span> <span class="n">defined</span> <span class="ow">in</span> <span class="sb">`RFC7230 &lt;https://tools.ietf.org/html/rfc7230#section-5.3&gt;`</span><span class="n">_</span><span class="o">.</span>
+
+        <span class="n">origin</span><span class="o">-</span><span class="n">form</span> <span class="ow">and</span> <span class="n">asterisk</span><span class="o">-</span><span class="n">form</span> <span class="n">are</span> <span class="n">subsumed</span> <span class="k">as</span> <span class="s">&quot;relative&quot;</span><span class="o">.</span>
+
+<span class="n">form_in</span><span class="p">:</span><span class="bp">None</span>
+
+<span class="n">form_out</span><span class="p">:</span><span class="bp">None</span>
+
+<span class="n">from_state</span><span class="p">:</span><span class="bp">None</span>
+
+<span class="n">get_cookies</span><span class="p">:</span><span class="bp">None</span>
+
+<span class="n">get_decoded_content</span><span class="p">:</span>
+            <span class="n">Returns</span> <span class="n">the</span> <span class="n">decoded</span> <span class="n">content</span> <span class="n">based</span> <span class="n">on</span> <span class="n">the</span> <span class="n">current</span> <span class="n">Content</span><span class="o">-</span><span class="n">Encoding</span>
+            <span class="n">header</span><span class="o">.</span>
+            <span class="n">Doesn</span><span class="s">&#39;t change the message iteself or its headers.</span>
+
+<span class="n">get_form_multipart</span><span class="p">:</span><span class="bp">None</span>
+
+<span class="n">get_form_urlencoded</span><span class="p">:</span><span class="bp">None</span>
+
+<span class="n">get_path_components</span><span class="p">:</span><span class="bp">None</span>
+
+<span class="n">get_query</span><span class="p">:</span><span class="bp">None</span>
+
+<span class="n">get_state</span><span class="p">:</span><span class="bp">None</span>
+
+<span class="n">headers</span><span class="p">:</span>
+        <span class="n">Message</span> <span class="n">headers</span> <span class="nb">object</span>
+
+        <span class="n">Returns</span><span class="p">:</span>
+            <span class="n">netlib</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">Headers</span>
+
+<span class="n">host</span><span class="p">:</span>
+        <span class="n">Target</span> <span class="n">host</span><span class="o">.</span> <span class="n">This</span> <span class="n">may</span> <span class="n">be</span> <span class="n">parsed</span> <span class="kn">from</span> <span class="nn">the</span> <span class="nn">raw</span> <span class="nn">request</span>
+        <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="kn">from</span> <span class="nn">a</span> <span class="sb">``</span><span class="n">GET</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span><span class="sb">``</span> <span class="n">request</span> <span class="n">line</span><span class="p">)</span>
+        <span class="ow">or</span> <span class="n">inferred</span> <span class="kn">from</span> <span class="nn">the</span> <span class="nn">proxy</span> <span class="nn">mode</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="n">an</span> <span class="n">IP</span> <span class="ow">in</span> <span class="n">transparent</span> <span class="n">mode</span><span class="p">)</span><span class="o">.</span>
+
+        <span class="n">Setting</span> <span class="n">the</span> <span class="n">host</span> <span class="n">attribute</span> <span class="n">also</span> <span class="n">updates</span> <span class="n">the</span> <span class="n">host</span> <span class="n">header</span><span class="p">,</span> <span class="k">if</span> <span class="n">present</span><span class="o">.</span>
+
+<span class="n">http_version</span><span class="p">:</span>
+        <span class="n">Version</span> <span class="n">string</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="s">&quot;HTTP/1.1&quot;</span>
+
+<span class="n">method</span><span class="p">:</span>
+        <span class="n">HTTP</span> <span class="n">request</span> <span class="n">method</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="s">&quot;GET&quot;</span><span class="o">.</span>
+
+<span class="n">multipart_form</span><span class="p">:</span>
+        <span class="n">The</span> <span class="n">multipart</span> <span class="n">form</span> <span class="n">data</span> <span class="k">as</span> <span class="n">an</span> <span class="p">:</span><span class="n">py</span><span class="p">:</span><span class="n">class</span><span class="p">:</span><span class="sb">`ODict`</span> <span class="nb">object</span><span class="o">.</span>
+        <span class="bp">None</span> <span class="k">if</span> <span class="n">there</span> <span class="ow">is</span> <span class="n">no</span> <span class="n">data</span> <span class="ow">or</span> <span class="n">the</span> <span class="n">content</span><span class="o">-</span><span class="nb">type</span> <span class="n">indicates</span> <span class="n">non</span><span class="o">-</span><span class="n">form</span> <span class="n">data</span><span class="o">.</span>
+
+<span class="n">path</span><span class="p">:</span>
+        <span class="n">HTTP</span> <span class="n">request</span> <span class="n">path</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="s">&quot;/index.html&quot;</span><span class="o">.</span>
+        <span class="n">Guaranteed</span> <span class="n">to</span> <span class="n">start</span> <span class="k">with</span> <span class="n">a</span> <span class="n">slash</span><span class="o">.</span>
+
+<span class="n">path_components</span><span class="p">:</span>
+        <span class="n">The</span> <span class="n">URL</span><span class="s">&#39;s path components as a list of strings.</span>
+        <span class="n">Components</span> <span class="n">are</span> <span class="n">unquoted</span><span class="o">.</span>
+
+<span class="n">port</span><span class="p">:</span>
+        <span class="n">Target</span> <span class="n">port</span>
+
+<span class="n">pretty_host</span><span class="p">:</span>
+        <span class="n">Similar</span> <span class="n">to</span> <span class="p">:</span><span class="n">py</span><span class="p">:</span><span class="n">attr</span><span class="p">:</span><span class="sb">`host`</span><span class="p">,</span> <span class="n">but</span> <span class="n">using</span> <span class="n">the</span> <span class="n">Host</span> <span class="n">headers</span> <span class="k">as</span> <span class="n">an</span> <span class="n">additional</span> <span class="n">preferred</span> <span class="n">data</span> <span class="n">source</span><span class="o">.</span>
+        <span class="n">This</span> <span class="ow">is</span> <span class="n">useful</span> <span class="ow">in</span> <span class="n">transparent</span> <span class="n">mode</span> <span class="n">where</span> <span class="p">:</span><span class="n">py</span><span class="p">:</span><span class="n">attr</span><span class="p">:</span><span class="sb">`host`</span> <span class="ow">is</span> <span class="n">only</span> <span class="n">an</span> <span class="n">IP</span> <span class="n">address</span><span class="p">,</span>
+        <span class="n">but</span> <span class="n">may</span> <span class="ow">not</span> <span class="n">reflect</span> <span class="n">the</span> <span class="n">actual</span> <span class="n">destination</span> <span class="k">as</span> <span class="n">the</span> <span class="n">Host</span> <span class="n">header</span> <span class="n">could</span> <span class="n">be</span> <span class="n">spoofed</span><span class="o">.</span>
+
+<span class="n">pretty_url</span><span class="p">:</span>
+        <span class="n">Like</span> <span class="p">:</span><span class="n">py</span><span class="p">:</span><span class="n">attr</span><span class="p">:</span><span class="sb">`url`</span><span class="p">,</span> <span class="n">but</span> <span class="n">using</span> <span class="p">:</span><span class="n">py</span><span class="p">:</span><span class="n">attr</span><span class="p">:</span><span class="sb">`pretty_host`</span> <span class="n">instead</span> <span class="n">of</span> <span class="p">:</span><span class="n">py</span><span class="p">:</span><span class="n">attr</span><span class="p">:</span><span class="sb">`host`</span><span class="o">.</span>
+
+<span class="n">query</span><span class="p">:</span>
+        <span class="n">The</span> <span class="n">request</span> <span class="n">query</span> <span class="n">string</span> <span class="k">as</span> <span class="n">an</span> <span class="p">:</span><span class="n">py</span><span class="p">:</span><span class="n">class</span><span class="p">:</span><span class="sb">`ODict`</span> <span class="nb">object</span><span class="o">.</span>
+        <span class="bp">None</span><span class="p">,</span> <span class="k">if</span> <span class="n">there</span> <span class="ow">is</span> <span class="n">no</span> <span class="n">query</span><span class="o">.</span>
+
+<span class="n">replace</span><span class="p">:</span>
+            <span class="n">Replaces</span> <span class="n">a</span> <span class="n">regular</span> <span class="n">expression</span> <span class="n">pattern</span> <span class="k">with</span> <span class="n">repl</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">headers</span><span class="p">,</span> <span class="n">the</span>
+            <span class="n">request</span> <span class="n">path</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">body</span> <span class="n">of</span> <span class="n">the</span> <span class="n">request</span><span class="o">.</span> <span class="n">Encoded</span> <span class="n">content</span> <span class="n">will</span> <span class="n">be</span>
+            <span class="n">decoded</span> <span class="n">before</span> <span class="n">replacement</span><span class="p">,</span> <span class="ow">and</span> <span class="n">re</span><span class="o">-</span><span class="n">encoded</span> <span class="n">afterwards</span><span class="o">.</span>
+
+            <span class="n">Returns</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">replacements</span> <span class="n">made</span><span class="o">.</span>
+
+<span class="n">scheme</span><span class="p">:</span>
+        <span class="n">HTTP</span> <span class="n">request</span> <span class="n">scheme</span><span class="p">,</span> <span class="n">which</span> <span class="n">should</span> <span class="n">be</span> <span class="s">&quot;http&quot;</span> <span class="ow">or</span> <span class="s">&quot;https&quot;</span><span class="o">.</span>
+
+<span class="n">set_cookies</span><span class="p">:</span><span class="bp">None</span>
+
+<span class="n">set_form_urlencoded</span><span class="p">:</span><span class="bp">None</span>
+
+<span class="n">set_path_components</span><span class="p">:</span><span class="bp">None</span>
+
+<span class="n">set_query</span><span class="p">:</span><span class="bp">None</span>
+
+<span class="n">set_state</span><span class="p">:</span><span class="bp">None</span>
+
+<span class="n">text</span><span class="p">:</span>
+        <span class="n">The</span> <span class="n">decoded</span> <span class="n">HTTP</span> <span class="n">message</span> <span class="n">body</span><span class="o">.</span>
+        <span class="n">Decoded</span> <span class="n">contents</span> <span class="n">are</span> <span class="ow">not</span> <span class="n">cached</span><span class="p">,</span> <span class="n">so</span> <span class="n">accessing</span> <span class="n">this</span> <span class="n">attribute</span> <span class="n">repeatedly</span> <span class="ow">is</span> <span class="n">relatively</span> <span class="n">expensive</span><span class="o">.</span>
+
+        <span class="o">..</span> <span class="n">note</span><span class="p">::</span>
+            <span class="n">This</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">implemented</span> <span class="n">yet</span><span class="o">.</span>
+
+        <span class="n">See</span> <span class="n">also</span><span class="p">:</span> <span class="p">:</span><span class="n">py</span><span class="p">:</span><span class="n">attr</span><span class="p">:</span><span class="sb">`content`</span><span class="p">,</span> <span class="p">:</span><span class="n">py</span><span class="p">:</span><span class="n">class</span><span class="p">:</span><span class="sb">`decoded`</span>
+
+<span class="n">timestamp_end</span><span class="p">:</span>
+        <span class="n">Last</span> <span class="n">byte</span> <span class="n">timestamp</span>
+
+<span class="n">timestamp_start</span><span class="p">:</span>
+        <span class="n">First</span> <span class="n">byte</span> <span class="n">timestamp</span>
+
+<span class="n">url</span><span class="p">:</span>
+        <span class="n">The</span> <span class="n">URL</span> <span class="n">string</span><span class="p">,</span> <span class="n">constructed</span> <span class="kn">from</span> <span class="nn">the</span> <span class="nn">request</span><span class="s">&#39;s URL components</span>
+
+<span class="n">urlencoded_form</span><span class="p">:</span>
+        <span class="n">The</span> <span class="n">URL</span><span class="o">-</span><span class="n">encoded</span> <span class="n">form</span> <span class="n">data</span> <span class="k">as</span> <span class="n">an</span> <span class="p">:</span><span class="n">py</span><span class="p">:</span><span class="n">class</span><span class="p">:</span><span class="sb">`ODict`</span> <span class="nb">object</span><span class="o">.</span>
+        <span class="bp">None</span> <span class="k">if</span> <span class="n">there</span> <span class="ow">is</span> <span class="n">no</span> <span class="n">data</span> <span class="ow">or</span> <span class="n">the</span> <span class="n">content</span><span class="o">-</span><span class="nb">type</span> <span class="n">indicates</span> <span class="n">non</span><span class="o">-</span><span class="n">form</span> <span class="n">data</span><span class="o">.</span>
+
+<span class="n">wrap</span><span class="p">:</span><span class="bp">None</span>
+</pre></div>
+
+
+<p>抓取含 passwd 或 password 数据包，借鉴Mitmproxy官网代码。</p>
+<div class="hlcode"><pre><span class="c"># -*- coding:utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">author: janes</span>
+<span class="sd">date:2016/03/08</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">libmproxy</span> <span class="kn">import</span> <span class="n">controller</span>
+<span class="kn">from</span> <span class="nn">libmproxy</span> <span class="kn">import</span> <span class="n">proxy</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">StickyMaster</span><span class="p">(</span><span class="n">controller</span><span class="o">.</span><span class="n">Master</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">server</span><span class="p">):</span>
+        <span class="n">controller</span><span class="o">.</span><span class="n">Master</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">server</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">controller</span><span class="o">.</span><span class="n">Master</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">findword</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        params:</span>
+<span class="sd">            request: HTTPRequest object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;passwd&#39;</span><span class="p">,</span> <span class="s">&#39;password&#39;</span><span class="p">]</span>
+
+        <span class="n">content</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">content</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;content:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">content</span><span class="p">))</span>
+
+        <span class="n">querylist</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_query</span><span class="p">()</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;query:{q}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="n">querylist</span><span class="p">))</span>
+
+        <span class="c"># find in url</span>
+        <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">querylist</span><span class="p">:</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            param is a tuple(key, value)</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">([</span><span class="n">index</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">map</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">find</span><span class="p">,</span> <span class="n">words</span><span class="p">)]):</span>
+                <span class="k">return</span> <span class="s">&#39;GET&#39;</span>
+
+        <span class="c"># find in content</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">([</span><span class="n">index</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">map</span><span class="p">(</span><span class="n">content</span><span class="o">.</span><span class="n">find</span><span class="p">,</span> <span class="n">words</span><span class="p">)]):</span>
+            <span class="k">return</span> <span class="s">&#39;POST&#39;</span>
+
+        <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">handle_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flow</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        params:</span>
+<span class="sd">            flow: HTTPFlow object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">flow</span><span class="o">.</span><span class="n">request</span>
+
+        <span class="n">flag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">findword</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">flag</span><span class="p">:</span>
+            <span class="n">record</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+        <span class="n">flow</span><span class="o">.</span><span class="n">reply</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">handle_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flow</span><span class="p">):</span>
+        <span class="n">flow</span><span class="o">.</span><span class="n">reply</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">record</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">flag</span><span class="p">):</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">url</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="s">&quot;POST&quot;</span><span class="p">:</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">content</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">get_query</span><span class="p">())</span>
+        <span class="c"># params = {p[0]:p[1] for p in request.get_query()}</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">proxy</span><span class="o">.</span><span class="n">ProxyConfig</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">8001</span><span class="p">)</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">proxy</span><span class="o">.</span><span class="n">ProxyServer</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+    <span class="n">master</span> <span class="o">=</span> <span class="n">StickyMaster</span><span class="p">(</span><span class="n">server</span><span class="p">)</span>
+    <span class="n">master</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+
+<p>终端运行：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">python</span> <span class="n">fetch_password</span><span class="p">.</span><span class="n">py</span>
+
+<span class="err">$</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">SimpleHTTPServer</span>
+<span class="n">Serving</span> <span class="n">HTTP</span> <span class="n">on</span> <span class="mf">0.0.0.0</span> <span class="n">port</span> <span class="mi">8000</span> <span class="p">...</span>
+
+<span class="err">$</span> <span class="n">curl</span> <span class="o">--</span><span class="n">proxy</span> <span class="n">localhost</span><span class="o">:</span><span class="mi">8008</span> <span class="o">-</span><span class="n">v</span> <span class="n">http</span><span class="o">:</span><span class="c1">//localhost:8000/?password=123456</span>
+
+<span class="nl">DEBUG:</span><span class="n">__main__</span><span class="o">:</span><span class="n">query</span><span class="o">:</span><span class="p">[(</span><span class="err">&#39;</span><span class="n">password</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="mi">123456</span><span class="err">&#39;</span><span class="p">)]</span>
+<span class="nl">INFO:</span><span class="n">__main__</span><span class="o">:</span><span class="n">http</span><span class="o">:</span><span class="c1">//localhost:8000/?password=123456</span>
+<span class="nl">INFO:</span><span class="n">__main__</span><span class="o">:</span><span class="p">[(</span><span class="err">&#39;</span><span class="n">password</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="mi">123456</span><span class="err">&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

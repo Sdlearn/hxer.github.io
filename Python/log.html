@@ -31,6 +31,18 @@
 </ul>
 <p>设置logger的level， level有以下几个级别：</p>
 <p>NOTSET &lt; DEBUG &lt; INFO &lt; WARNING &lt; ERROR &lt; CRITICAL</p>
+<p>常用示例：</p>
+<div class="hlcode"><pre><span class="n">import</span> <span class="n">logging</span>
+
+<span class="n">logging</span><span class="p">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="p">.</span><span class="n">INFO</span><span class="p">)</span>
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="p">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+<span class="n">logging</span><span class="p">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s">&quot;xx.log&quot;</span><span class="p">,</span>
+    <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="p">.</span><span class="n">DEBUG</span><span class="p">,</span>
+    <span class="n">format</span><span class="o">=</span><span class="err">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">asctime</span><span class="p">)</span><span class="n">s</span><span class="o">|%</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="n">s</span><span class="o">|%</span><span class="p">(</span><span class="n">funcName</span><span class="p">)</span><span class="n">s</span><span class="o">|</span><span class="n">line</span><span class="o">:%</span><span class="p">(</span><span class="n">lineno</span><span class="p">)</span><span class="n">d</span><span class="o">%</span><span class="p">(</span><span class="n">levelname</span><span class="p">)</span><span class="n">s</span> <span class="o">%</span><span class="p">(</span><span class="n">message</span><span class="p">)</span><span class="n">s</span><span class="err">&#39;</span><span class="p">,</span>
+    <span class="n">datefmt</span><span class="o">=</span><span class="err">&#39;</span><span class="o">%</span><span class="n">Y</span><span class="o">-%</span><span class="n">m</span><span class="o">-%</span><span class="n">d</span> <span class="o">%</span><span class="n">H</span><span class="o">:%</span><span class="n">M</span><span class="err">&#39;</span>
+<span class="p">)</span>
+</pre></div>
 </div>
 
         </div>
