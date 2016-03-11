@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>自省 - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Python">Python</a>&nbsp;»&nbsp;自省</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">自省</div>
+  <div id="content">
+  <h2 id="_1">自省</h2>
+<p>在计算机编程中，自省是指这种能力：检查某些事物以确定它是什么、它知道什么以及它能做什么。</p>
+<h2 id="dir">dir</h2>
+<p>dir() 函数可能是 Python 自省机制中最著名的部分了。它返回传递给它的任何对象的属性名称经过排序的列表。如果不指定对象，则 dir() 返回当前作用域中的名称。</p>
+<h2 id="doc"><strong>doc</strong> 文档字符串</h2>
+<p>__doc__作为一种属性，是一个字符串，它包含了描述对象的注释</p>
+<p>如果模块、类、方法或函数定义的第一条语句是字符串，那么该字符串会作为对象的 <strong>doc</strong> 属性与该对象关联起来</p>
+<h2 id="python">检查python对象</h2>
+<ul>
+<li>名称</li>
+</ul>
+<p>并非所有对象都有名称，但那些有名称的对象都将名称存储在其 <strong>name</strong> 属性中。注：名称是从对象而不是引用该对象的变量中派生的。</p>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="nb">dir</span><span class="p">()</span>    <span class="c">#dir()函数</span>
+<span class="p">[</span><span class="s">&#39;GFileDescriptorBased&#39;</span><span class="p">,</span> <span class="s">&#39;GInitiallyUnowned&#39;</span><span class="p">,</span> <span class="s">&#39;GPollableInputStream&#39;</span><span class="p">,</span> <span class="s">&#39;GPollableOutputStream&#39;</span><span class="p">,</span> <span class="s">&#39;__builtins__&#39;</span><span class="p">,</span> <span class="s">&#39;__doc__&#39;</span><span class="p">,</span> <span class="s">&#39;__name__&#39;</span><span class="p">,</span> <span class="s">&#39;__package__&#39;</span><span class="p">,</span> <span class="s">&#39;keyword&#39;</span><span class="p">,</span> <span class="s">&#39;math&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">directory</span> <span class="o">=</span> <span class="nb">dir</span>    <span class="c">#新变量</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">directory</span><span class="p">()</span>        <span class="c">#跟dir()一样的结果</span>
+<span class="p">[</span><span class="s">&#39;GFileDescriptorBased&#39;</span><span class="p">,</span> <span class="s">&#39;GInitiallyUnowned&#39;</span><span class="p">,</span> <span class="s">&#39;GPollableInputStream&#39;</span><span class="p">,</span> <span class="s">&#39;GPollableOutputStream&#39;</span><span class="p">,</span> <span class="s">&#39;__builtins__&#39;</span><span class="p">,</span> <span class="s">&#39;__doc__&#39;</span><span class="p">,</span> <span class="s">&#39;__name__&#39;</span><span class="p">,</span> <span class="s">&#39;__package__&#39;</span><span class="p">,</span> <span class="s">&#39;directory&#39;</span><span class="p">,</span> <span class="s">&#39;keyword&#39;</span><span class="p">,</span> <span class="s">&#39;math&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">dir</span><span class="o">.</span><span class="n">__name__</span>       <span class="c">#dir()的名字</span>
+<span class="s">&#39;dir&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">directory</span><span class="o">.</span><span class="n">__name__</span>
+<span class="s">&#39;dir&#39;</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">__name__</span>          <span class="c">#这是不一样的   </span>
+<span class="s">&#39;__main__&#39;</span>
+</pre></div>
+
+
+<ul>
+<li>类型</li>
+</ul>
+<p>type() 函数有助于我们确定对象是字符串还是整数，或是其它类型的对象。它通过返回类型对象来做到这一点，可以将这个类型对象与 types 模块中定义的类型相比较</p>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">types</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="n">types</span><span class="o">.</span><span class="n">__doc__</span>
+<span class="n">Define</span> <span class="n">names</span> <span class="k">for</span> <span class="nb">all</span> <span class="nb">type</span> <span class="n">symbols</span> <span class="n">known</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">standard</span> <span class="n">interpreter</span><span class="o">.</span>
+
+<span class="n">Types</span> <span class="n">that</span> <span class="n">are</span> <span class="n">part</span> <span class="n">of</span> <span class="n">optional</span> <span class="n">modules</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="n">array</span><span class="p">)</span> <span class="n">are</span> <span class="ow">not</span> <span class="n">listed</span><span class="o">.</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">dir</span><span class="p">(</span><span class="n">types</span><span class="p">)</span>
+<span class="p">[</span><span class="s">&#39;BooleanType&#39;</span><span class="p">,</span> <span class="s">&#39;BufferType&#39;</span><span class="p">,</span> <span class="s">&#39;BuiltinFunctionType&#39;</span><span class="p">,</span> <span class="s">&#39;BuiltinMethodType&#39;</span><span class="p">,</span> <span class="s">&#39;ClassType&#39;</span><span class="p">,</span> <span class="s">&#39;CodeType&#39;</span><span class="p">,</span> <span class="s">&#39;ComplexType&#39;</span><span class="p">,</span> <span class="s">&#39;DictProxyType&#39;</span><span class="p">,</span> <span class="s">&#39;DictType&#39;</span><span class="p">,</span> <span class="s">&#39;DictionaryType&#39;</span><span class="p">,</span> <span class="s">&#39;EllipsisType&#39;</span><span class="p">,</span> <span class="s">&#39;FileType&#39;</span><span class="p">,</span> <span class="s">&#39;FloatType&#39;</span><span class="p">,</span> <span class="s">&#39;FrameType&#39;</span><span class="p">,</span> <span class="s">&#39;FunctionType&#39;</span><span class="p">,</span> <span class="s">&#39;GeneratorType&#39;</span><span class="p">,</span> <span class="s">&#39;GetSetDescriptorType&#39;</span><span class="p">,</span> <span class="s">&#39;InstanceType&#39;</span><span class="p">,</span> <span class="s">&#39;IntType&#39;</span><span class="p">,</span> <span class="s">&#39;LambdaType&#39;</span><span class="p">,</span> <span class="s">&#39;ListType&#39;</span><span class="p">,</span> <span class="s">&#39;LongType&#39;</span><span class="p">,</span> <span class="s">&#39;MemberDescriptorType&#39;</span><span class="p">,</span> <span class="s">&#39;MethodType&#39;</span><span class="p">,</span> <span class="s">&#39;ModuleType&#39;</span><span class="p">,</span> <span class="s">&#39;NoneType&#39;</span><span class="p">,</span> <span class="s">&#39;NotImplementedType&#39;</span><span class="p">,</span> <span class="s">&#39;ObjectType&#39;</span><span class="p">,</span> <span class="s">&#39;SliceType&#39;</span><span class="p">,</span> <span class="s">&#39;StringType&#39;</span><span class="p">,</span> <span class="s">&#39;StringTypes&#39;</span><span class="p">,</span> <span class="s">&#39;TracebackType&#39;</span><span class="p">,</span> <span class="s">&#39;TupleType&#39;</span><span class="p">,</span> <span class="s">&#39;TypeType&#39;</span><span class="p">,</span> <span class="s">&#39;UnboundMethodType&#39;</span><span class="p">,</span> <span class="s">&#39;UnicodeType&#39;</span><span class="p">,</span> <span class="s">&#39;XRangeType&#39;</span><span class="p">,</span> <span class="s">&#39;__builtins__&#39;</span><span class="p">,</span> <span class="s">&#39;__doc__&#39;</span><span class="p">,</span> <span class="s">&#39;__file__&#39;</span><span class="p">,</span> <span class="s">&#39;__name__&#39;</span><span class="p">,</span> <span class="s">&#39;__package__&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">p</span> <span class="o">=</span> <span class="s">&quot;I love Python&quot;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">type</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="nb">type</span> <span class="s">&#39;str&#39;</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span>  <span class="nb">type</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="n">types</span><span class="o">.</span><span class="n">StringType</span>
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">type</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="nb">type</span> <span class="s">&#39;int&#39;</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">type</span><span class="p">([])</span>
+<span class="o">&lt;</span><span class="nb">type</span> <span class="s">&#39;list&#39;</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">type</span><span class="p">({})</span>
+<span class="o">&lt;</span><span class="nb">type</span> <span class="s">&#39;dict&#39;</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">type</span><span class="p">(</span><span class="nb">dir</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="nb">type</span> <span class="s">&#39;builtin_function_or_method&#39;</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<ul>
+<li>标识</li>
+</ul>
+<p>每个对象都有标识、类型和值。值得注意的是，可能有多个变量引用同一对象，同样地，变量可以引用看起来相似（有相同的类型和值），但拥有截然不同标识的多个对象。当更改对象时（如将某一项添加到列表），这种关于对象标识的概念尤其重要.</p>
+<p>如在下面的示例中， blist 和 clist 变量引用同一个列表对象, id() 函数给任何给定对象返回唯一的标识符</p>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="nb">id</span><span class="o">.</span><span class="n">__doc__</span>
+<span class="nb">id</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">integer</span>
+
+<span class="n">Return</span> <span class="n">the</span> <span class="n">identity</span> <span class="n">of</span> <span class="n">an</span> <span class="nb">object</span><span class="o">.</span>  <span class="n">This</span> <span class="ow">is</span> <span class="n">guaranteed</span> <span class="n">to</span> <span class="n">be</span> <span class="n">unique</span> <span class="n">among</span>
+<span class="n">simultaneously</span> <span class="n">existing</span> <span class="n">objects</span><span class="o">.</span>  <span class="p">(</span><span class="n">Hint</span><span class="p">:</span> <span class="n">it</span><span class="s">&#39;s the object&#39;</span><span class="n">s</span> <span class="n">memory</span> <span class="n">address</span><span class="o">.</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">alist</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">blist</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">clist</span> <span class="o">=</span> <span class="n">blist</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">id</span><span class="p">(</span><span class="n">alist</span><span class="p">)</span>
+<span class="il">2979691052L</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">id</span><span class="p">(</span><span class="n">blist</span><span class="p">)</span>
+<span class="il">2993911916L</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">id</span><span class="p">(</span><span class="n">clist</span><span class="p">)</span>
+<span class="il">2993911916L</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">alist</span> <span class="ow">is</span> <span class="n">blist</span>
+<span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">blist</span> <span class="ow">is</span> <span class="n">clist</span>
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">clist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">clist</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">blist</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+</pre></div>
+
+
+<ul>
+<li>属性</li>
+</ul>
+<p>对象拥有属性，并且dir()函数会返回这些属性的列表。但是，有时我们只想测试一个或多个属性是否存在。如果对象具有我们正在考虑的属性，那么通常希望只检索该属性。这个任务可以由 hasattr() 和 getattr() 函数来完成.</p>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="nb">hasattr</span><span class="o">.</span><span class="n">__doc__</span>
+<span class="nb">hasattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
+
+<span class="n">Return</span> <span class="n">whether</span> <span class="n">the</span> <span class="nb">object</span> <span class="n">has</span> <span class="n">an</span> <span class="n">attribute</span> <span class="k">with</span> <span class="n">the</span> <span class="n">given</span> <span class="n">name</span><span class="o">.</span>
+<span class="p">(</span><span class="n">This</span> <span class="ow">is</span> <span class="n">done</span> <span class="n">by</span> <span class="n">calling</span> <span class="nb">getattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="ow">and</span> <span class="n">catching</span> <span class="n">exceptions</span><span class="o">.</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="nb">getattr</span><span class="o">.</span><span class="n">__doc__</span>
+<span class="nb">getattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">name</span><span class="p">[,</span> <span class="n">default</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">value</span>
+
+<span class="n">Get</span> <span class="n">a</span> <span class="n">named</span> <span class="n">attribute</span> <span class="kn">from</span> <span class="nn">an</span> <span class="nn">object</span><span class="p">;</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&#39;y&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="n">equivalent</span> <span class="n">to</span> <span class="n">x</span><span class="o">.</span><span class="n">y</span><span class="o">.</span>
+<span class="n">When</span> <span class="n">a</span> <span class="n">default</span> <span class="n">argument</span> <span class="ow">is</span> <span class="n">given</span><span class="p">,</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">returned</span> <span class="n">when</span> <span class="n">the</span> <span class="n">attribute</span> <span class="n">doesn</span><span class="s">&#39;t</span>
+<span class="n">exist</span><span class="p">;</span> <span class="n">without</span> <span class="n">it</span><span class="p">,</span> <span class="n">an</span> <span class="n">exception</span> <span class="ow">is</span> <span class="n">raised</span> <span class="ow">in</span> <span class="n">that</span> <span class="n">case</span><span class="o">.</span>
+<span class="o">&gt;&gt;&gt;</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">hasattr</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="s">&#39;__doc__&#39;</span><span class="p">)</span>
+<span class="bp">True</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="nb">getattr</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="s">&#39;__doc__&#39;</span><span class="p">)</span>
+<span class="nb">id</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">integer</span>
+
+<span class="n">Return</span> <span class="n">the</span> <span class="n">identity</span> <span class="n">of</span> <span class="n">an</span> <span class="nb">object</span><span class="o">.</span>  <span class="n">This</span> <span class="ow">is</span> <span class="n">guaranteed</span> <span class="n">to</span> <span class="n">be</span> <span class="n">unique</span> <span class="n">among</span>
+<span class="n">simultaneously</span> <span class="n">existing</span> <span class="n">objects</span><span class="o">.</span>  <span class="p">(</span><span class="n">Hint</span><span class="p">:</span> <span class="n">it</span><span class="s">&#39;s the object&#39;</span><span class="n">s</span> <span class="n">memory</span> <span class="n">address</span><span class="o">.</span><span class="p">)</span>
+</pre></div>
+
+
+<ul>
+<li>可调用</li>
+</ul>
+<p>可以调用表示潜在行为（函数和方法）的对象。可以用 callable() 函数测试对象的可调用性：</p>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="nx">print</span> <span class="nx">callable</span><span class="p">.</span><span class="nx">__doc__</span>
+<span class="nx">callable</span><span class="p">(</span><span class="nx">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nx">bool</span>
+
+<span class="nx">Return</span> <span class="nx">whether</span> <span class="nx">the</span> <span class="nx">object</span> <span class="nx">is</span> <span class="nx">callable</span> <span class="p">(</span><span class="nx">i</span><span class="p">.</span><span class="nx">e</span><span class="p">.,</span> <span class="nx">some</span> <span class="nx">kind</span> <span class="nx">of</span> <span class="kd">function</span><span class="p">).</span>
+<span class="nx">Note</span> <span class="nx">that</span> <span class="nx">classes</span> <span class="nx">are</span> <span class="nx">callable</span><span class="p">,</span> <span class="nx">as</span> <span class="nx">are</span> <span class="nx">instances</span> <span class="kd">with</span> <span class="nx">a</span> <span class="nx">__call__</span><span class="p">()</span> <span class="nx">method</span><span class="p">.</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">callable</span><span class="p">(</span><span class="s2">&quot;a string&quot;</span><span class="p">)</span>
+<span class="nx">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">callable</span><span class="p">(</span><span class="nx">dir</span><span class="p">)</span>
+<span class="nx">True</span>
+</pre></div>
+
+
+<ul>
+<li>实例 </li>
+</ul>
+<p>在 type() 函数提供对象的类型时，还可以使用 isinstance() 函数测试对象，以确定它是否是某个特定类型或定制类的实例：</p>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="nb">isinstance</span><span class="o">.</span><span class="n">__doc__</span>
+<span class="nb">isinstance</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">class</span><span class="o">-</span><span class="ow">or</span><span class="o">-</span><span class="nb">type</span><span class="o">-</span><span class="ow">or</span><span class="o">-</span><span class="nb">tuple</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
+
+<span class="n">Return</span> <span class="n">whether</span> <span class="n">an</span> <span class="nb">object</span> <span class="ow">is</span> <span class="n">an</span> <span class="n">instance</span> <span class="n">of</span> <span class="n">a</span> <span class="k">class</span> <span class="nc">or</span> <span class="n">of</span> <span class="n">a</span> <span class="n">subclass</span> <span class="n">thereof</span><span class="o">.</span>
+<span class="n">With</span> <span class="n">a</span> <span class="nb">type</span> <span class="k">as</span> <span class="n">second</span> <span class="n">argument</span><span class="p">,</span> <span class="k">return</span> <span class="n">whether</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">the</span> <span class="nb">object</span><span class="s">&#39;s type.</span>
+<span class="n">The</span> <span class="n">form</span> <span class="n">using</span> <span class="n">a</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="o">...</span><span class="p">)),</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">shortcut</span> <span class="k">for</span>
+<span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span> <span class="ow">or</span> <span class="o">...</span> <span class="p">(</span><span class="n">etc</span><span class="o">.</span><span class="p">)</span><span class="o">.</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">isinstance</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+<span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">isinstance</span><span class="p">(</span><span class="s">&quot;python&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+<span class="bp">True</span>
+</pre></div>
+
+
+<ul>
+<li>子类</li>
+</ul>
+<p>issubclass() 函数使我们可以查看一个类是不是继承了另一个类：</p>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="nb">issubclass</span><span class="o">.</span><span class="n">__doc__</span>
+<span class="nb">issubclass</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Boolean</span>
+<span class="n">Return</span> <span class="n">whether</span> <span class="k">class</span> <span class="nc">C</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">subclass</span> <span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">e</span><span class="o">.</span><span class="p">,</span> <span class="n">a</span> <span class="n">derived</span> <span class="n">class</span><span class="p">)</span> <span class="n">of</span> <span class="k">class</span> <span class="nc">B</span><span class="o">.</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">class</span> <span class="nc">SuperHero</span><span class="p">(</span><span class="n">Person</span><span class="p">):</span>   <span class="c"># SuperHero inherits from Person...</span>
+<span class="o">...</span>     <span class="k">def</span> <span class="nf">intro</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>       <span class="c"># but with a new SuperHero intro</span>
+<span class="o">...</span>         <span class="s">&quot;&quot;&quot;Return an introduction.&quot;&quot;&quot;</span>
+<span class="o">...</span>         <span class="k">return</span> <span class="s">&quot;Hello, I&#39;m SuperHero </span><span class="si">%s</span><span class="s"> and I&#39;m </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">age</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">SuperHero</span><span class="p">,</span> <span class="n">Person</span><span class="p">)</span>
+<span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">Person</span><span class="p">,</span> <span class="n">SuperHero</span><span class="p">)</span>
+<span class="mi">0</span>
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
