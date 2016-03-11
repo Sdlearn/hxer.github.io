@@ -19,8 +19,8 @@
 <div id="title">迭代器和生成器</div>
   <div id="content">
   <h2 id="_1">迭代器</h2>
-<p><strong>iter</strong> 是迭代规则(iterator potocol)的基础，对象如果没有它，就不能返回迭代器，就没有next()方法，就不能迭代。</p>
-<p><strong>iter</strong>()是类中的核心，它返回迭代器本身，一个实现了__iter__()方法的对象，即意味着是可迭代的。含有next()的对象，就是迭代器，并且在这个方法中，在没有元素的时候要发起 StopIteration()异常</p>
+<p>__iter__ 是迭代规则(iterator potocol)的基础，对象如果没有它，就不能返回迭代器，就没有next()方法，就不能迭代。</p>
+<p>__iter__()是类中的核心，它返回迭代器本身，一个实现了__iter__()方法的对象，即意味着是可迭代的。含有next()的对象，就是迭代器，并且在这个方法中，在没有元素的时候要发起 StopIteration()异常</p>
 <div class="hlcode"><pre><span class="n">Class</span> <span class="n">Fibs</span><span class="p">:</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">max</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="nb">max</span>
