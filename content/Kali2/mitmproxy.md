@@ -19,6 +19,7 @@ mitmproxy 是一个基于python的中间人代理的框架。
 
 首次运行mitmproxy
 
+
 ```
 $mitmproxy
 ```
@@ -36,11 +37,68 @@ mitmproxy-ca.pem        # 私钥
 
 ```
 
+## 操作模式
+
+* 常规代理 --default
+
+常规代理模式是最简单的代理方式，可以访问HTTP网站，针对HTTPS网站，可以在客户端设备上通过浏览器打开 mitm.it 网页，安装符合客户端设备的证书，就可以访问HTTPS站点了。 
+
+* 透明代理
+
+在透明代理模式下，不需要任何客户端配置，流量是直接进入代理的网络层转发出去，代理设备不能改变客户端的任何请求。 
+
+> 如果在mitmproxy代理设备之前有NAT(网络地址转换)设备，mitmproxy代理设备将无法识别目标地址，客户端需要进行相应配置， 参考 [夹杂NAT设备时客户端配置][3]
+
+要达到透明代理的目的，需要两个额外的组件
+
+1.重定向机制，透明地将一个到互联网的服务器的TCP连接重路由到一个监听中的代理服务器。通常用代理服务器在同一个主机上的防火墙来实现，比如linux下的iptables或OSX中的pf
+
+2.获取原始目标地址，这由mitmproxy的一个模块完成
+
+itable设置:
+
+```
+iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8080
+iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 443 -j REDIRECT --to-port 8080
+```
+命令：
+
+```
+mitmproxt -T --host
+```
+
+* 反向代理
+
+反向代理模式下，客户端认为代理服务器就是它要访问的原始服务器，觉察不到代理服务器的存在。 
+
+* 上游代理
+
+上游代理模式可以将客户端所有的请求无条件的转发传输给上游的代理服务器
+
+
+## mitmproxy交互
+
+[mitmproxy基本操作][4]
+
+快捷键：
+
+```
+h: 左移
+j: 上移
+k: 下移
+l: 右移
+space: 向下翻页
+
+q: quit
+
+r: replay request
+```
+
 ## libmproxy
 
 * HTTPRequest (libmproxy.models.HTTPRequest)
 
-```python
+```
 anticache:
         Modifies this request to remove headers that might produce a cached
         response. That is, we remove ETags and If-Modified-Since headers.
@@ -311,3 +369,5 @@ INFO:__main__:[('password', '123456')]
 
 [1]: http://docs.mitmproxy.org/en/stable/install.html
 [2]: http://stackoverflow.com/questions/24455238/lxml-installation-error-ubuntu-14-04-internal-compiler-error
+[3]: http://docs.mitmproxy.org/en/stable/models.html
+[4]: https://greenrobot.me/devpost/how-to-debug-android-http-get-started/
