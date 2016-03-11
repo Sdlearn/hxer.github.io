@@ -22,14 +22,14 @@
 <p>在计算机编程中，自省是指这种能力：检查某些事物以确定它是什么、它知道什么以及它能做什么。</p>
 <h2 id="dir">dir</h2>
 <p>dir() 函数可能是 Python 自省机制中最著名的部分了。它返回传递给它的任何对象的属性名称经过排序的列表。如果不指定对象，则 dir() 返回当前作用域中的名称。</p>
-<h2 id="doc"><strong>doc</strong> 文档字符串</h2>
+<h2 id="9595doc9595">__doc__ 文档字符串</h2>
 <p>__doc__作为一种属性，是一个字符串，它包含了描述对象的注释</p>
-<p>如果模块、类、方法或函数定义的第一条语句是字符串，那么该字符串会作为对象的 <strong>doc</strong> 属性与该对象关联起来</p>
+<p>如果模块、类、方法或函数定义的第一条语句是字符串，那么该字符串会作为对象的 __doc__ 属性与该对象关联起来</p>
 <h2 id="python">检查python对象</h2>
 <ul>
 <li>名称</li>
 </ul>
-<p>并非所有对象都有名称，但那些有名称的对象都将名称存储在其 <strong>name</strong> 属性中。注：名称是从对象而不是引用该对象的变量中派生的。</p>
+<p>并非所有对象都有名称，但那些有名称的对象都将名称存储在其 __name__ 属性中。注：名称是从对象而不是引用该对象的变量中派生的。</p>
 <div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="nb">dir</span><span class="p">()</span>    <span class="c">#dir()函数</span>
 <span class="p">[</span><span class="s">&#39;GFileDescriptorBased&#39;</span><span class="p">,</span> <span class="s">&#39;GInitiallyUnowned&#39;</span><span class="p">,</span> <span class="s">&#39;GPollableInputStream&#39;</span><span class="p">,</span> <span class="s">&#39;GPollableOutputStream&#39;</span><span class="p">,</span> <span class="s">&#39;__builtins__&#39;</span><span class="p">,</span> <span class="s">&#39;__doc__&#39;</span><span class="p">,</span> <span class="s">&#39;__name__&#39;</span><span class="p">,</span> <span class="s">&#39;__package__&#39;</span><span class="p">,</span> <span class="s">&#39;keyword&#39;</span><span class="p">,</span> <span class="s">&#39;math&#39;</span><span class="p">]</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">directory</span> <span class="o">=</span> <span class="nb">dir</span>    <span class="c">#新变量</span>
