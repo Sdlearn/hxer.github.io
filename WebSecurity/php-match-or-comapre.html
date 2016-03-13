@@ -81,61 +81,68 @@
 <ul>
 <li>poc</li>
 </ul>
-<p>'''php
-$arr =  array();
-$arr['user']=TRUE;
-$arr['pass']=TRUE;
-$seialize_str = serialize($arr);    //a:2:{s:4:"user";b:1;s:4:"pass";b:1;}
-$flag='ctf_flag';
-$data_unserialize = unserialize($serialize_str);
-if($data_unserialize['user'] == '???' &amp;&amp; $data_unserialize['pass']=='???')
-{
-    print_r($flag);
-}
-'''</p>
+<div class="hlcode"><pre><span class="x">$arr =  array();</span>
+<span class="x">$arr[&#39;user&#39;]=TRUE;</span>
+<span class="x">$arr[&#39;pass&#39;]=TRUE;</span>
+<span class="x">$seialize_str = serialize($arr);    //a:2:{s:4:&quot;user&quot;;b:1;s:4:&quot;pass&quot;;b:1;}</span>
+<span class="x">$flag=&#39;ctf_flag&#39;;</span>
+<span class="x">$data_unserialize = unserialize($serialize_str);</span>
+<span class="x">if($data_unserialize[&#39;user&#39;] == &#39;???&#39; &amp;&amp; $data_unserialize[&#39;pass&#39;]==&#39;???&#39;)</span>
+<span class="x">{</span>
+<span class="x">    print_r($flag);</span>
+<span class="x">}</span>
+</pre></div>
+
+
 <h2 id="urldecode">urldecode</h2>
 <blockquote>
 <p>string urldecode() 返回字符串类型 </p>
 </blockquote>
-<p>urldecode 与 $_GET[] $_POST[] $_REQEST[] 联合使用
-$_GET[] $_POST[] $_REQEST[] 返回的参数是<strong>已经被解码了</strong>的，在进行 urldecode 相当于 二次 urldecode</p>
+<p>urldecode 与 $_GET[] $_POST[] $_REQEST[] 联合使用</p>
+<p>$_GET[] $_POST[] $_REQEST[] 返回的参数是<strong>已经被解码了</strong>的，在进行 urldecode 相当于 二次 urldecode</p>
 <ul>
 <li>poc</li>
 </ul>
-<p>'''php
-$username = $_GET['username'];  //url: ...?username=%2561dmin   %61 is a
-if (urldecode($username) === "admin"){
-    echo "you are admin";
-}
-'''</p>
+<div class="hlcode"><pre><span class="x">$username = $_GET[&#39;username&#39;];  //url: ...?username=%2561dmin   %61 is a</span>
+<span class="x">if (urldecode($username) === &quot;admin&quot;){</span>
+<span class="x">    echo &quot;you are admin&quot;;</span>
+<span class="x">}</span>
+</pre></div>
+
+
 <h2 id="reference">reference</h2>
 <ul>
 <li>example</li>
 </ul>
-<p>'''php
-$auth = $_COOKIE['auth'];
-if(get_magic_quotes_gpc())
-    $auth = stripslashes($auth);
-$auth = unserialize($auth);</p>
-<p>if(!is_array($auth))    // hint auth is array
-    return false;</p>
-<p>$auth['hmac_t'] = sha1(sha1($auth['username'].$auth['hmac_t'].$auth['password']).$secret_salt);</p>
-<p>if($auth['hmac_t'] !== $auth['hmac'])
-    return false;
-'''</p>
+<div class="hlcode"><pre><span class="x">$auth = $_COOKIE[&#39;auth&#39;];</span>
+<span class="x">if(get_magic_quotes_gpc())</span>
+<span class="x">    $auth = stripslashes($auth);</span>
+<span class="x">$auth = unserialize($auth);</span>
+
+<span class="x">if(!is_array($auth))    // hint auth is array</span>
+<span class="x">    return false;</span>
+
+<span class="x">$auth[&#39;hmac_t&#39;] = sha1(sha1($auth[&#39;username&#39;].$auth[&#39;hmac_t&#39;].$auth[&#39;password&#39;]).$secret_salt);</span>
+
+<span class="x">if($auth[&#39;hmac_t&#39;] !== $auth[&#39;hmac&#39;])</span>
+<span class="x">    return false;</span>
+</pre></div>
+
+
 <ul>
 <li>poc</li>
 </ul>
-<p>'''php
-$a = array("username" =&gt; "dragon", "password" =&gt; true, "hmac_t" =&gt; "0"); 
-$a["hmac"] = &amp;$a["hmac_t"]; // key point <strong><em>*</em></strong><strong><em>*</em></strong>**
-$a["hmac_t"]=1; 
-echo $a["hmac"]."\n";
-echo urlencode(serialize($a)) . "\n";
-'''</p>
-<p>1.<strong>PHP 是可以直接取 Reference </strong>
-则 if !== 的 strict comparison 就 always true 了...因为都是一个<strong> Object </strong>
-2.cookie 提交 auth 为 urlencode(serialize($a)) 或 serialize($a) 均可 </p>
+<div class="hlcode"><pre><span class="x">$a = array(&quot;username&quot; =&gt; &quot;dragon&quot;, &quot;password&quot; =&gt; true, &quot;hmac_t&quot; =&gt; &quot;0&quot;); </span>
+<span class="x">$a[&quot;hmac&quot;] = &amp;$a[&quot;hmac_t&quot;]; // key point ****************</span>
+<span class="x">$a[&quot;hmac_t&quot;]=1; </span>
+<span class="x">echo $a[&quot;hmac&quot;].&quot;\n&quot;;</span>
+<span class="x">echo urlencode(serialize($a)) . &quot;\n&quot;;</span>
+</pre></div>
+
+
+<p>1.<strong>PHP 是可以直接取 Reference </strong></p>
+<p>则 if !== 的 strict comparison 就 always true 了...因为都是一个<strong> Object </strong></p>
+<p>2.cookie 提交 auth 为 urlencode(serialize($a)) 或 serialize($a) 均可 </p>
 </div>
 
         </div>
