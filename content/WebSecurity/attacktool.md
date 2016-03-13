@@ -3,6 +3,10 @@ title: "AttackTool"
 date: 2016-01-26 18:49
 ---
 
+[5]: http://www.openwall.com/php_mt_seed/
+[6]: https://github.com/pwning/public-writeup/tree/master/hitcon2015/web300-giraffes-coffee
+[7]: http://www.gat3way.eu/poc/wtrt/
+
 # Brute Force
 
 ## 字典
@@ -10,6 +14,20 @@ date: 2016-01-26 18:49
 ```
 metasploit  /usr/share/metasploit-framework/data/john/wordlists/password.lst
 ```
+
+## php mt_rand seed crack
+
+tool:
+
+* [php_mt_seed][5]
+
+样例:
+
+[hitcon 2015 web300][6]
+
+mt_rand rainbow:
+
+[mt_rand rainbow][7]
 
 ## hydra
 
