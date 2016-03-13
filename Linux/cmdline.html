@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>cmdline - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Linux">Linux</a>&nbsp;»&nbsp;cmdline</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">cmdline</div>
+  <div id="content">
+  <h2 id="wget">wget</h2>
+<p>常用命令:</p>
+<p>需要下载某个目录下面的所有文件。</p>
+<div class="hlcode"><pre><span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="o">-</span><span class="n">r</span> <span class="o">-</span><span class="n">np</span> <span class="o">-</span><span class="n">k</span> <span class="o">-</span><span class="n">L</span> <span class="o">-</span><span class="n">p</span> <span class="n">www</span><span class="p">.</span><span class="n">xxx</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">path</span><span class="o">/</span>
+</pre></div>
+
+
+<p>在下载时。有用到外部域名的图片或连接。如果需要同时下载就要用-H参数。</p>
+<div class="hlcode"><pre><span class="n">wget</span> <span class="o">-</span><span class="n">np</span> <span class="o">-</span><span class="n">nH</span> <span class="o">-</span><span class="n">r</span> <span class="o">--</span><span class="n">span</span><span class="o">-</span><span class="n">hosts</span> <span class="n">www</span><span class="p">.</span><span class="n">xxx</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">path</span><span class="o">/</span>
+</pre></div>
+
+
+<p>参数：</p>
+<div class="hlcode"><pre><span class="o">-</span><span class="n">c</span> <span class="err">断点续传</span>
+<span class="o">-</span><span class="n">r</span> <span class="err">递归下载，下载指定网页某一目录下（包括子目录）的所有文件</span>
+<span class="o">-</span><span class="n">nd</span> <span class="err">递归下载时不创建一层一层的目录，把所有的文件下载到当前目录</span>
+<span class="o">-</span><span class="n">np</span> <span class="err">递归下载时不搜索上层目录，如</span><span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="o">-</span><span class="n">r</span> <span class="n">www</span><span class="p">.</span><span class="n">xxx</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">path</span><span class="o">/</span>
+<span class="err">没有加参数</span><span class="o">-</span><span class="n">np</span><span class="err">，就会同时下载</span><span class="n">path</span><span class="err">的上一级目录</span><span class="n">pub</span><span class="err">下的其它文件</span>
+<span class="o">-</span><span class="n">k</span> <span class="err">将绝对链接转为相对链接，下载整个站点后脱机浏览网页，最好加上这个参数</span>
+<span class="o">-</span><span class="n">L</span> <span class="err">递归时不进入其它主机，如</span><span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="o">-</span><span class="n">r</span> <span class="n">www</span><span class="p">.</span><span class="n">xxx</span><span class="p">.</span><span class="n">org</span><span class="o">/</span> 
+<span class="o">-</span><span class="n">p</span> <span class="err">下载网页所需的所有文件，如图片等</span>
+<span class="o">-</span><span class="n">A</span> <span class="err">指定要下载的文件样式列表，多个样式用逗号分隔</span>
+<span class="o">-</span><span class="n">i</span> <span class="err">后面跟一个文件，文件内指明要下载的</span><span class="n">URL</span>
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
