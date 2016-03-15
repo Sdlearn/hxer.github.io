@@ -168,6 +168,27 @@ Hypervisor是一种运行在物理服务器和操作系统之间的中间软件�
 > Kitematic 是一个具有现代化的界面设计的自由开源软件，它可以让我们在 Docker 中交互式执行任务。Kitematic 设计的非常漂亮、界面美观。使用它，我们可以简单快速地开箱搭建我们的容器而不需要输入命令，可以在图形用户界面中通过简单的点击从而在容器上部署我们的应用。
 > Kitematic 集成了 Docker Hub，允许我们搜索、拉取任何需要的镜像，并在上面部署应用。它同时也能很好地切换到命令行用户接口模式。目前，它包括了自动映射端口、可视化更改环境变量、配置卷、流式日志以及其它功能。
 
+## docker container support utf-8
+
+write to Dockerfile
+
+```
+# Install program to configure locales
+RUN apt-get update \
+    && apt-get install -y locales \
+    && dpkg-reconfigure locales && \
+        locale-gen C.UTF-8 \
+    && /usr/sbin/update-locale LANG=C.UTF-8
+
+# Install needed default locale for Makefly
+RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen \
+    && locale-gen
+
+# Set default locale for the environment
+ENV LC_ALL C.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
+```
 ## docker 实战
 
 [http://dockone.io/article/217][8]

@@ -140,6 +140,49 @@ ps: 默认的socks4 127.0.0.1 9095是tor代理，而socks5 127.0.0.1 1080是shad
 $ sudo proxychains apt-get update
 ```
 
+## beef
+
+beef use ruby-2.1.5
+
+Debian / Ubuntu
+
+* Install dependencies
+
+```
+gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+or 
+curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
+
+sudo apt-get update
+sudo apt-get install curl git
+curl -sSL https://raw.githubusercontent.com/wayneeseguin/rvm/master/binscripts/rvm-installer | bash -s stable
+source ~/.rvm/scripts/rvm
+
+# openssl patch, because openssl update that affects 2.1.5 compiling
+curl https://github.com/ruby/ruby/commit/801e1fe46d83c856844ba18ae4751478c59af0d1.diff > openssl.patch
+rvm install --patch ./openssl.patch 2.0.0
+
+rvm install 2.1.5
+rvm use 2.1.5 -- default
+gem install bundler
+```
+
+Follow this instruction http://rvm.io/integration/gnome-terminal
+
+* Download BeEF
+
+```
+git clone git://github.com/beefproject/beef.git
+```
+
+* Install gems and launch
+
+```
+cd beef
+bundle install
+./beef
+```
+ 
 ## install docker
 
 ```
@@ -238,6 +281,89 @@ Edit menu -> Preferences
 
 [wps][12]
 [12]: http://wps-community.org/download.html
+
+## nodejs
+
+## source install ##
+
+[nodejs download][9]
+
+Prerequisites:
+
+* `gcc` and `g++` 4.8 or newer, or
+* `clang` and `clang++` 3.4 or newer
+* Python 2.6 or 2.7
+* GNU Make 3.81 or newer
+* libexecinfo (FreeBSD and OpenBSD only)
+
+```text
+$ ./configure
+$ make
+$ [sudo] make install
+```
+
+If your Python binary is in a non-standard location or has a
+non-standard name, run the following instead:
+
+```text
+$ export PYTHON=/path/to/python
+$ $PYTHON ./configure
+$ make
+$ [sudo] make install
+```
+
+To run the tests:
+
+```text
+$ make test
+```
+
+To build the documentation:
+
+```text
+$ make doc
+```
+
+To read the documentation:
+
+```text
+$ man doc/node.1
+```
+
+To test if Node.js was built correctly:
+
+```
+$ node -e "console.log('Hello from Node.js ' + process.version)"
+```
+
+## electronic-wechat 微信
+
+[electronic-wechat github][8]
+
+* install
+
+1.intall nodejs 
+
+then 
+
+```
+# 下载仓库
+git clone https://github.com/geeeeeeeeek/electronic-wechat.git
+
+# 进入仓库
+cd electronic-wechat
+
+# 安装依赖, 运行应用
+npm install -g
+
+npm start
+```
+
+或者下载 realease 的可执行安装包
+
+## note
+
+* use ~/.profile instead of ~/.bash_profile
 
 ## flash
 
@@ -496,6 +622,6 @@ maven 修建项目
     当这样安装插件时会报错，原因是m2e插件和eclipse版本不匹配导致，location改为：http://download.eclipse.org/technology/m2e/releases/1.4 即可。
 
 
-# note
 
-* use ~/.profile instead of ~/.bash_profile
+[8]: https://github.com/geeeeeeeeek/electronic-wechat/blob/master/README_zh.md?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io
+[9]: https://nodejs.org/en/download/
