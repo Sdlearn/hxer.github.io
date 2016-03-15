@@ -172,6 +172,26 @@ Hypervisor是一种运行在物理服务器和操作系统之间的中间软件�
 <p>Kitematic 是一个具有现代化的界面设计的自由开源软件，它可以让我们在 Docker 中交互式执行任务。Kitematic 设计的非常漂亮、界面美观。使用它，我们可以简单快速地开箱搭建我们的容器而不需要输入命令，可以在图形用户界面中通过简单的点击从而在容器上部署我们的应用。
 Kitematic 集成了 Docker Hub，允许我们搜索、拉取任何需要的镜像，并在上面部署应用。它同时也能很好地切换到命令行用户接口模式。目前，它包括了自动映射端口、可视化更改环境变量、配置卷、流式日志以及其它功能。</p>
 </blockquote>
+<h2 id="docker-container-support-utf-8">docker container support utf-8</h2>
+<p>write to Dockerfile</p>
+<div class="hlcode"><pre><span class="cp"># Install program to configure locales</span>
+<span class="n">RUN</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span> \
+    <span class="o">&amp;&amp;</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">locales</span> \
+    <span class="o">&amp;&amp;</span> <span class="n">dpkg</span><span class="o">-</span><span class="n">reconfigure</span> <span class="n">locales</span> <span class="o">&amp;&amp;</span> \
+        <span class="n">locale</span><span class="o">-</span><span class="n">gen</span> <span class="n">C</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span> \
+    <span class="o">&amp;&amp;</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">update</span><span class="o">-</span><span class="n">locale</span> <span class="n">LANG</span><span class="o">=</span><span class="n">C</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span>
+
+<span class="cp"># Install needed default locale for Makefly</span>
+<span class="n">RUN</span> <span class="n">echo</span> <span class="err">&#39;</span><span class="n">en_US</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span> <span class="n">UTF</span><span class="o">-</span><span class="mi">8</span><span class="err">&#39;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">locale</span><span class="p">.</span><span class="n">gen</span> \
+    <span class="o">&amp;&amp;</span> <span class="n">locale</span><span class="o">-</span><span class="n">gen</span>
+
+<span class="cp"># Set default locale for the environment</span>
+<span class="n">ENV</span> <span class="n">LC_ALL</span> <span class="n">C</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span>
+<span class="n">ENV</span> <span class="n">LANG</span> <span class="n">en_US</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span>
+<span class="n">ENV</span> <span class="n">LANGUAGE</span> <span class="n">en_US</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span>
+</pre></div>
+
+
 <h2 id="docker_1">docker 实战</h2>
 <p><a href="http://dockone.io/article/217">http://dockone.io/article/217</a></p>
 </div>
