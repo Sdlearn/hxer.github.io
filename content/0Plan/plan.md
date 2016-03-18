@@ -67,7 +67,7 @@ date: 2016-01-20 05:16
  
  * English
  * read docker book
- * VN analysis
+ * VM analysis
 
 ## 03-08
 
@@ -84,3 +84,29 @@ date: 2016-01-20 05:16
  * mitmproxy
  * english
  * http proxy server 
+
+ ## 03-12
+ 
+ * 0ctf
+ 
+ ## 03-11
+ 
+ * 0ctf
+ 
+ ## 03-14
+
+ * docker for 0ctf rand_2
+ * 0ctf rand_2 poc test
+  
+ ## 03-15
+
+ * docker for beef
+ 
+ ## 03-16
+
+ * learn to use beef 
+ 
+ ## 03-17
+ 
+ * use docker in python -- sidomo
+ * learn to use beef

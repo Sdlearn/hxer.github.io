@@ -189,6 +189,24 @@ ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 ```
+
+## 权限
+
+```
+/var/run/docker.sock
+srw-rw----  1 root     docker        0 Mar 17 12:52 docker.sock
+```
+
+用户加入docker用户组中，免去输入sudo语句。
+
+```
+$ sudo usermod -aG docker <用户名>
+```
+
+> 注意：这条语句需要重新登陆终端才能生效
+
+> 注意：docker用户组的权限等同于root用户组，在生产环境中这样做可能会导致安全问题!
+
 ## docker 实战
 
 [http://dockone.io/article/217][8]
