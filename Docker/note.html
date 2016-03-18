@@ -192,6 +192,21 @@ Kitematic 集成了 Docker Hub，允许我们搜索、拉取任何需要的镜�
 </pre></div>
 
 
+<h2 id="_1">权限</h2>
+<div class="hlcode"><pre><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="p">.</span><span class="n">sock</span>
+<span class="n">srw</span><span class="o">-</span><span class="n">rw</span><span class="o">----</span>  <span class="mi">1</span> <span class="n">root</span>     <span class="n">docker</span>        <span class="mi">0</span> <span class="n">Mar</span> <span class="mi">17</span> <span class="mi">12</span><span class="o">:</span><span class="mi">52</span> <span class="n">docker</span><span class="p">.</span><span class="n">sock</span>
+</pre></div>
+
+
+<p>用户加入docker用户组中，免去输入sudo语句。</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">usermod</span> <span class="o">-</span><span class="n">aG</span> <span class="n">docker</span> <span class="o">&lt;</span><span class="err">用户名</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<blockquote>
+<p>注意：这条语句需要重新登陆终端才能生效</p>
+<p>注意：docker用户组的权限等同于root用户组，在生产环境中这样做可能会导致安全问题!</p>
+</blockquote>
 <h2 id="docker_1">docker 实战</h2>
 <p><a href="http://dockone.io/article/217">http://dockone.io/article/217</a></p>
 </div>
