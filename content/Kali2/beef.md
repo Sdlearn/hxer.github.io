@@ -66,3 +66,52 @@ Redirect Browser (Rickroll): Overwrite the body of the page the victim is on wit
 Redirect Browser: This module will redirect the selected hooked browser to the address specified in the 'Redirect URL' input.
 Redirect Browser (iFrame): This module creates a 100% x 100% overlaying iframe and keeps the browers hooked to the framework. The content of the iframe, page title, page shortcut icon and the time delay are specified in the parameters below.<br><br>The content of the URL bar will not be changed in the hooked browser.
 ```
+
+## beef RESTful API
+
+[RESTful API][1]
+
+## extension
+
+* metasploit
+
+beef 根目录下修改 config.yaml 文件
+
+```
+extension:
+        ......
+        metasploit:
+            enable: true
+```
+
+/beef/extensions/metasploit/config.yaml
+
+```
+    name: 'Metasploit'
+    enable: true
+    host: "127.0.0.1"
+    port: 55552
+    user: "msf"
+    pass: "abc123"
+    uri: '/api'
+    ssl: true
+    ssl_version: 'TLSv1'
+    ssl_verify: true
+    callback_host: "127.0.0.1"
+    autopwn_url: "autopwn"
+```
+
+ip and callbak_host can be change to your host ip
+
+then run in terminal
+
+```
+$msfconsole
+
+msf> load msgrpc ServerHost=127.0.0.1 User=msf Pass=abc123 SSL=y
+
+$./beef
+```
+
+
+[1]: https://github.com/beefproject/beef/wiki/BeEF-RESTful-API

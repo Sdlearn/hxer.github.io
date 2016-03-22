@@ -17,7 +17,13 @@ solution:
 
 先做 用户注销，然后返回到登录页面，点击关机或重启
 
+## 不能挂载 exfat 格式硬盘
 
+solution:
+
+```
+sudo apt-get install exfat-fuse exfat-utils
+```
 
 
 # kali2 sana
@@ -198,6 +204,21 @@ or
 curl -sSL https://get.docker.com/ | sh 
 ```
 
+## irc
+
+* irssi
+
+```
+sudo apt-get install irssi 
+```
+
+## zbar -- decode 二维码
+
+```
+$ apt-get install libzbar-dev
+
+$ pip install zbar
+```
 
 ## 安装vpn
 

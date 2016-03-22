@@ -3,13 +3,28 @@ title: "docker api in python"
 date: 2016-03-17 16:44
 ---
 
+## docker 远程访问
+
+[docker config][3]
+
+默认情况下，Docker守护进程会生成一个socket（/var/run/docker.sock）文件来进行本地进程通信，而不会监听任何端口，因此只能在本地使用docker客户端或者使用Docker API进行操作。
+ 
+如果想在其他主机上操作Docker主机，就需要让Docker守护进程监听一个端口，这样才能实现远程通信。
+
+```
+$ sudo vim /etc/default/docker
+
+DOCKER_OPTS="-H unix:///var/run/docker.sock -H tcp://0.0.0.0:2375"
+
+$ sudo service docker restart
+```
+
+这样就可以本地和远程访问docker进程了。
+
 ## docker-py
 
 [Python API 操作][1]
 [docker-py api][2]
-
-
-
 
 ## install
 
@@ -79,3 +94,4 @@ None if success
 
 [1]: https://letong.gitbooks.io/docker/content/API/python_api.html
 [2]: https://docker-py.readthedocs.org/en/latest/api/
+[3]: https://docs.docker.com/engine/admin/configuring/

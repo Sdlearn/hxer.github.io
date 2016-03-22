@@ -60,3 +60,9 @@ net localgroup administrators <Username> /ad
 * skip=<跳过的字节数>
 
 * count=<要提取的字节数>
+
+## PHP审计工具 RIPS
+
+[download and install][5]
+
+[5]: http://rips-scanner.sourceforge.net/ 
