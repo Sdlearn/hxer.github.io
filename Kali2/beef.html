@@ -74,6 +74,46 @@
 <span class="nx">Redirect</span> <span class="nx">Browser</span><span class="p">:</span> <span class="nx">This</span> <span class="nx">module</span> <span class="nx">will</span> <span class="nx">redirect</span> <span class="nx">the</span> <span class="nb">selected</span> <span class="nx">hooked</span> <span class="nx">browser</span> <span class="k">to</span> <span class="nx">the</span> <span class="nx">address</span> <span class="n">specified</span> <span class="k">in</span> <span class="nx">the</span> <span class="s1">&#39;Redirect URL&#39;</span> <span class="nx">input.</span>
 <span class="nx">Redirect</span> <span class="nx">Browser</span> <span class="p">(</span><span class="nx">iFrame</span><span class="p">):</span> <span class="nx">This</span> <span class="nx">module</span> <span class="nx">creates</span> <span class="nx">a</span> <span class="mi">100</span><span class="o">%</span> <span class="nx">x</span> <span class="mi">100</span><span class="o">%</span> <span class="nx">overlaying</span> <span class="nx">iframe</span> <span class="ow">and</span> <span class="nx">keeps</span> <span class="nx">the</span> <span class="nx">browers</span> <span class="nx">hooked</span> <span class="k">to</span> <span class="nx">the</span> <span class="nx">framework.</span> <span class="nx">The</span> <span class="nb">content</span> <span class="nx">of</span> <span class="nx">the</span> <span class="nx">iframe</span><span class="p">,</span> <span class="nx">page</span> <span class="nb">title</span><span class="p">,</span> <span class="nx">page</span> <span class="nx">shortcut</span> <span class="nx">icon</span> <span class="ow">and</span> <span class="nx">the</span> <span class="nb">time</span> <span class="nx">delay</span> <span class="nx">are</span> <span class="n">specified</span> <span class="k">in</span> <span class="nx">the</span> <span class="nx">parameters</span> <span class="nx">below.</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">&gt;&lt;</span><span class="nx">br</span><span class="o">&gt;</span><span class="nx">The</span> <span class="nb">content</span> <span class="nx">of</span> <span class="nx">the</span> <span class="nb">URL</span> <span class="nx">bar</span> <span class="nx">will</span> <span class="ow">not</span> <span class="nx">be</span> <span class="n">changed</span> <span class="k">in</span> <span class="nx">the</span> <span class="nx">hooked</span> <span class="nx">browser.</span>
 </pre></div>
+
+
+<h2 id="beef-restful-api">beef RESTful API</h2>
+<p><a href="https://github.com/beefproject/beef/wiki/BeEF-RESTful-API">RESTful API</a></p>
+<h2 id="extension">extension</h2>
+<ul>
+<li>metasploit</li>
+</ul>
+<p>beef 根目录下修改 config.yaml 文件</p>
+<div class="hlcode"><pre><span class="nl">extension:</span>
+        <span class="p">......</span>
+        <span class="nl">metasploit:</span>
+            <span class="nl">enable:</span> <span class="nb">true</span>
+</pre></div>
+
+
+<p>/beef/extensions/metasploit/config.yaml</p>
+<div class="hlcode"><pre>    <span class="nl">name:</span> <span class="err">&#39;</span><span class="n">Metasploit</span><span class="err">&#39;</span>
+    <span class="nl">enable:</span> <span class="nb">true</span>
+    <span class="nl">host:</span> <span class="s">&quot;127.0.0.1&quot;</span>
+    <span class="nl">port:</span> <span class="mi">55552</span>
+    <span class="nl">user:</span> <span class="s">&quot;msf&quot;</span>
+    <span class="nl">pass:</span> <span class="s">&quot;abc123&quot;</span>
+    <span class="nl">uri:</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">api</span><span class="err">&#39;</span>
+    <span class="nl">ssl:</span> <span class="nb">true</span>
+    <span class="nl">ssl_version:</span> <span class="err">&#39;</span><span class="n">TLSv1</span><span class="err">&#39;</span>
+    <span class="nl">ssl_verify:</span> <span class="nb">true</span>
+    <span class="nl">callback_host:</span> <span class="s">&quot;127.0.0.1&quot;</span>
+    <span class="nl">autopwn_url:</span> <span class="s">&quot;autopwn&quot;</span>
+</pre></div>
+
+
+<p>ip and callbak_host can be change to your host ip</p>
+<p>then run in terminal</p>
+<div class="hlcode"><pre><span class="err">$</span><span class="n">msfconsole</span>
+
+<span class="n">msf</span><span class="o">&gt;</span> <span class="n">load</span> <span class="n">msgrpc</span> <span class="n">ServerHost</span><span class="o">=</span><span class="mf">127.0.0.1</span> <span class="n">User</span><span class="o">=</span><span class="n">msf</span> <span class="n">Pass</span><span class="o">=</span><span class="n">abc123</span> <span class="n">SSL</span><span class="o">=</span><span class="n">y</span>
+
+<span class="err">$</span><span class="p">.</span><span class="o">/</span><span class="n">beef</span>
+</pre></div>
 </div>
 
         </div>

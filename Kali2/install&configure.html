@@ -27,6 +27,12 @@
 <h2 id="reboot-shutdown">reboot shutdown不能关机</h2>
 <p>solution: </p>
 <p>先做 用户注销，然后返回到登录页面，点击关机或重启</p>
+<h2 id="exfat">不能挂载 exfat 格式硬盘</h2>
+<p>solution:</p>
+<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">exfat</span><span class="o">-</span><span class="n">fuse</span> <span class="n">exfat</span><span class="o">-</span><span class="n">utils</span>
+</pre></div>
+
+
 <h1 id="kali2-sana">kali2 sana</h1>
 <h2 id="_1">更新源</h2>
 <p>vim /etc/apt/sources.list</p>
@@ -184,6 +190,21 @@
 <span class="n">or</span>
 
 <span class="n">curl</span> <span class="o">-</span><span class="n">sSL</span> <span class="n">https</span><span class="o">:</span><span class="c1">//get.docker.com/ | sh </span>
+</pre></div>
+
+
+<h2 id="irc">irc</h2>
+<ul>
+<li>irssi</li>
+</ul>
+<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">irssi</span> 
+</pre></div>
+
+
+<h2 id="zbar-decode">zbar -- decode 二维码</h2>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libzbar</span><span class="o">-</span><span class="n">dev</span>
+
+<span class="err">$</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">zbar</span>
 </pre></div>
 
 

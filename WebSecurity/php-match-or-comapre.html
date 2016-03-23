@@ -134,14 +134,14 @@
 </ul>
 <div class="hlcode"><pre><span class="x">$a = array(&quot;username&quot; =&gt; &quot;dragon&quot;, &quot;password&quot; =&gt; true, &quot;hmac_t&quot; =&gt; &quot;0&quot;); </span>
 <span class="x">$a[&quot;hmac&quot;] = &amp;$a[&quot;hmac_t&quot;]; // key point ****************</span>
-<span class="x">$a[&quot;hmac_t&quot;]=1; </span>
+<span class="x">$a[&quot;hmac_t&quot;] = 1; </span>
 <span class="x">echo $a[&quot;hmac&quot;].&quot;\n&quot;;</span>
 <span class="x">echo urlencode(serialize($a)) . &quot;\n&quot;;</span>
 </pre></div>
 
 
 <p>1.<strong>PHP 是可以直接取 Reference </strong></p>
-<p>则 if !== 的 strict comparison 就 always true 了...因为都是一个<strong> Object </strong></p>
+<p>则 === 的 strict comparison 就 always true 了...因为都是一个<strong> Object </strong></p>
 <p>2.cookie 提交 auth 为 urlencode(serialize($a)) 或 serialize($a) 均可 </p>
 </div>
 

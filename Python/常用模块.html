@@ -23,6 +23,51 @@
 <span class="nl">platform:</span> <span class="err">返回操作系统平台</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">g</span><span class="p">.</span> <span class="err">&#39;</span><span class="n">linux2</span><span class="err">&#39;</span>
 <span class="nl">path:</span> <span class="err">模块搜索路径，</span><span class="n">Python</span> <span class="err">在导入期间将在其中的目录列表中寻找模块。最前面的空字符串</span> <span class="err">&#39;&#39;</span> <span class="err">是指当前目录</span>
 </pre></div>
+
+
+<h2 id="zbar-decode">zbar -- decode 二维码</h2>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libzbar</span><span class="o">-</span><span class="n">dev</span>
+
+<span class="err">$</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">zbar</span>
+</pre></div>
+
+
+<p>demo:</p>
+<div class="hlcode"><pre><span class="n">png</span> <span class="o">=</span> <span class="err">&#39;</span><span class="n">xx</span><span class="p">.</span><span class="n">png</span><span class="err">&#39;</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">png</span><span class="p">).</span><span class="n">convert</span><span class="p">(</span><span class="sc">&#39;L&#39;</span><span class="p">)</span>
+<span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">size</span>
+
+<span class="n">zimage</span> <span class="o">=</span> <span class="n">zbar</span><span class="p">.</span><span class="n">Image</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">Y800</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">img</span><span class="p">.</span><span class="n">tobytes</span><span class="p">())</span>
+
+<span class="n">scanner</span><span class="p">.</span><span class="n">scan</span><span class="p">(</span><span class="n">zimage</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">symbol</span> <span class="n">in</span> <span class="n">zimage</span><span class="o">:</span>
+    <span class="n">print</span> <span class="n">symbol</span><span class="p">.</span><span class="n">type</span><span class="p">,</span> <span class="n">symbol</span><span class="p">.</span><span class="n">data</span>
+</pre></div>
+
+
+<h2 id="beautifulsoup">beautifulsoup</h2>
+<div class="hlcode"><pre><span class="n">pip</span> <span class="n">install</span> <span class="n">beautifulsoup4</span>
+</pre></div>
+
+
+<h2 id="cairosvg-svg-png-pdf">cairosvg --转换 svg 格式 为 png, pdf</h2>
+<p><a href="http://cairosvg.org/documentation/">doc</a></p>
+<div class="hlcode"><pre><span class="n">pip</span> <span class="n">install</span> <span class="n">cairosvg</span>
+</pre></div>
+
+
+<ul>
+<li>cairosvg.svg2png</li>
+</ul>
+<div class="hlcode"><pre><span class="kd">function</span> <span class="nx">expect</span> <span class="nx">one</span> <span class="nx">of</span> <span class="nx">these</span> <span class="nx">parameters</span><span class="o">:</span>
+
+<span class="o">--</span> <span class="nx">bytestring</span><span class="p">,</span> <span class="nx">a</span> <span class="kr">byte</span> <span class="nx">string</span> <span class="nx">containing</span> <span class="nx">SVG</span><span class="p">,</span> <span class="nx">or</span>
+<span class="o">--</span> <span class="nx">url</span><span class="p">,</span> <span class="nx">an</span> <span class="nx">URL</span> <span class="nx">or</span> <span class="nx">a</span> <span class="nx">filename</span><span class="p">,</span> <span class="nx">or</span>
+<span class="o">--</span> <span class="nx">file_obj</span><span class="p">,</span> <span class="nx">a</span> <span class="nx">file</span><span class="o">-</span><span class="nx">like</span> <span class="nx">object</span><span class="p">.</span>
+
+<span class="nx">If</span> <span class="nx">the</span> <span class="nx">write_to</span> <span class="nx">argument</span> <span class="nx">is</span> <span class="nx">provided</span> <span class="p">(</span><span class="nx">filename</span> <span class="nx">or</span> <span class="nx">file</span><span class="o">-</span><span class="nx">like</span> <span class="nx">object</span><span class="p">),</span> <span class="nx">the</span> <span class="nx">output</span> <span class="nx">is</span> <span class="nx">written</span> <span class="nx">there</span><span class="p">.</span> <span class="nx">Otherwise</span><span class="p">,</span> <span class="nx">the</span> <span class="kd">function</span> <span class="nx">returns</span> <span class="nx">a</span> <span class="kr">byte</span> <span class="nx">string</span>
+</pre></div>
 </div>
 
         </div>

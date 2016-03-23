@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>XHR - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#JS">JS</a>&nbsp;»&nbsp;XHR</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">XHR</div>
+  <div id="content">
+  <h2 id="xmlhttprequest">XMLHttpRequest</h2>
+<p>现在所有浏览器都支持XMLHttpRequest对象，(IE5,IE6使用ActiveObject)。</p>
+<p>XMLHttpRequest用于在后台与服务器交换数据。</p>
+<h2 id="xhr">创建XHR对象</h2>
+<div class="hlcode"><pre><span class="n">var</span> <span class="n">xmlhttp</span> <span class="o">=</span> <span class="n">new</span> <span class="n">XMLHttpRequest</span><span class="p">();</span>
+</pre></div>
+
+
+<h2 id="xhr_1">XHR 请求</h2>
+<div class="hlcode"><pre><span class="n">xmlhttp</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;GET&quot;</span><span class="p">,</span> <span class="s">&quot;file&quot;</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+<span class="n">xmlhttp</span><span class="p">.</span><span class="n">send</span><span class="p">();</span>
+
+<span class="n">xmlhttp</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;POST&quot;</span><span class="p">,</span> <span class="s">&quot;ajax.html&quot;</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+<span class="n">xmlhttp</span><span class="p">.</span><span class="n">setRequestHeader</span><span class="p">(</span><span class="s">&quot;Content-type&quot;</span><span class="p">,</span> <span class="s">&quot;application/x-www-form-urlencode&quot;</span><span class="p">);</span>
+<span class="n">xmlhttp</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="s">&quot;name=janes&amp;passwd=123456&quot;</span><span class="p">);</span>
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="n">open</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">async</span><span class="p">)</span>
+    <span class="nl">method:</span> <span class="err">请求的类型，</span><span class="n">GET</span> <span class="n">or</span> <span class="n">POST</span>
+    <span class="nl">url:</span> <span class="err">文件在服务器的位置</span>
+    <span class="nl">async:</span><span class="nb">true</span><span class="p">(</span><span class="err">异步</span><span class="p">)</span><span class="err">，</span> <span class="n">flasse</span><span class="p">(</span><span class="err">同步</span><span class="p">)</span>
+
+<span class="n">send</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+    <span class="nl">string:</span> <span class="err">仅用于</span><span class="n">POST</span><span class="err">请求</span>
+
+<span class="n">serRequestHeader</span><span class="p">(</span><span class="n">header</span><span class="p">,</span><span class="n">value</span><span class="p">)</span>
+    <span class="nl">header:</span><span class="err">请求头名称</span>
+    <span class="nl">value:</span><span class="err">请求头的值</span>
+</pre></div>
+
+
+<p>注：</p>
+<ul>
+<li>POST vs GET</li>
+</ul>
+<p>1.特定情况使用POST</p>
+<div class="hlcode"><pre><span class="err">无法使用缓存文件（更新服务器上的文件或数据库）</span>
+<span class="err">向服务器发送大量数据（</span><span class="n">POST</span><span class="err">没有数据量限制）</span>
+<span class="err">发送包含未知字符串的用户输入时</span>
+</pre></div>
+
+
+<ul>
+<li>open async</li>
+</ul>
+<p>XHR对象用于AJAX的话，async必须设置为true, </p>
+<h2 id="_1">服务器响应</h2>
+<div class="hlcode"><pre><span class="n">responseText</span>
+    <span class="err">获得字符串形式的响应数据</span>
+<span class="n">responseXML</span>
+    <span class="err">获得</span><span class="n">XML</span><span class="err">形式的响应数据</span>
+</pre></div>
+
+
+<h2 id="onreadystatechange">onreadystatechange 事件</h2>
+<p>当请求被发送到服务器时，执行一些基于响应的任务</p>
+<p>每当readyState 改变时，就会触发onreadystatechange事件</p>
+<p>readyState属性存有XMLHttpRequest的状态信息</p>
+<div class="hlcode"><pre><span class="n">onreadystatechange</span>
+    <span class="err">存储函数或函数名，每当</span><span class="n">readyState</span><span class="err">属性改变时，就会调用该函数</span>
+
+<span class="n">readyState</span>
+    <span class="mi">0</span><span class="o">:</span> <span class="err">请求未初始化</span>
+    <span class="mi">1</span><span class="o">:</span> <span class="err">服务器连接已建立</span>
+    <span class="mi">2</span><span class="o">:</span> <span class="err">请求已接收</span>
+    <span class="mi">3</span><span class="o">:</span> <span class="err">请求处理中</span>
+    <span class="mi">4</span><span class="o">:</span> <span class="err">请求已完成，且响应就绪</span>
+
+<span class="n">state</span>
+    <span class="mi">200</span><span class="o">:</span> <span class="n">OK</span>
+    <span class="mi">404</span><span class="o">:</span> <span class="n">not</span> <span class="n">found</span>
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
