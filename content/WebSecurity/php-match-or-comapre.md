@@ -120,13 +120,13 @@ if($auth['hmac_t'] !== $auth['hmac'])
 ```php
 $a = array("username" => "dragon", "password" => true, "hmac_t" => "0"); 
 $a["hmac"] = &$a["hmac_t"]; // key point ****************
-$a["hmac_t"]=1; 
+$a["hmac_t"] = 1; 
 echo $a["hmac"]."\n";
 echo urlencode(serialize($a)) . "\n";
 ```
 
 1.**PHP 是可以直接取 Reference **
 
-则 if !== 的 strict comparison 就 always true 了...因为都是一个** Object **
+则 === 的 strict comparison 就 always true 了...因为都是一个** Object **
 
 2.cookie 提交 auth 为 urlencode(serialize($a)) 或 serialize($a) 均可 
