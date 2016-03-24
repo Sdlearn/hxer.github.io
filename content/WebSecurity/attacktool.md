@@ -3,6 +3,8 @@ title: "AttackTool"
 date: 2016-01-26 18:49
 ---
 
+[2]: https://github.com/lijiejie/htpwdScan
+[3]: http://drops.wooyun.org/tools/1548
 [5]: http://www.openwall.com/php_mt_seed/
 [6]: https://github.com/pwning/public-writeup/tree/master/hitcon2015/web300-giraffes-coffee
 [7]: http://www.gat3way.eu/poc/wtrt/
@@ -65,6 +67,7 @@ http post form attack
 ```
 hydra -l admin -P pass.lst -o ok.lst -t 1 -f 127.0.0.1 http-post-form “/login.php:name=^USER^&pwd=^PASS^:incorrect:H=Cookie: security=low; PHPSESSID=o7qiqd9fc1d003u9d38k64t0f4”
 ```
+
 > http-post-form or http-get-form
 
 > incorrect表示错误猜解的返回信息提示，自定义,最好和页面返回的信息一致，不要略写，不然可能产生错报，具体原因待去看源码
@@ -74,7 +77,6 @@ hydra -l admin -P pass.lst -o ok.lst -t 1 -f 127.0.0.1 http-post-form “/login.
 ## htpwdScan
 
 [github htpwdScan][2]
-[2]: https://github.com/lijiejie/htpwdScan
 
 * install
 
@@ -127,7 +129,6 @@ htpwdscan -f=post.txt -proxylist=proxies.txt -checkproxy -suc="用户名或密�
 ## burpsuite
 
 [乌云 Brup使用介绍][3]
-[3]: http://drops.wooyun.org/tools/1548
 
 检测模式
 
