@@ -28,6 +28,19 @@
 </pre></div>
 
 
+<h2 id="php">php 开关标签</h2>
+<p>php共有四种开关标签，如下两种总是有效的</p>
+<div class="hlcode"><pre><span class="cp">&lt;?php ?&gt;</span> 
+<span class="nt">&lt;script</span> <span class="na">language=</span><span class="s">”php”</span><span class="nt">&gt;</span> <span class="nt">&lt;/script&gt;</span>
+</pre></div>
+
+
+<p>另外两种需要在 php.ini 配置文件设置开或关</p>
+<div class="hlcode"><pre><span class="x">(“&lt;?”, “?&gt;”)</span>
+<span class="x">(“</span><span class="cp">&lt;%</span><span class="err">”</span><span class="p">,</span><span class="err">”</span><span class="cp">%&gt;</span><span class="x">”)</span>
+</pre></div>
+
+
 <h2 id="_2">执行系统命令（命令注入攻击）</h2>
 <ul>
 <li>shell_exec()</li>

@@ -42,6 +42,39 @@
 <span class="o">-</span><span class="n">A</span> <span class="err">指定要下载的文件样式列表，多个样式用逗号分隔</span>
 <span class="o">-</span><span class="n">i</span> <span class="err">后面跟一个文件，文件内指明要下载的</span><span class="n">URL</span>
 </pre></div>
+
+
+<h2 id="curl">curl</h2>
+<p>参数</p>
+<div class="hlcode"><pre><span class="o">-</span><span class="n">X</span><span class="o">/--</span><span class="n">request</span> <span class="p">[</span><span class="n">GET</span><span class="o">|</span><span class="n">POST</span><span class="o">|</span><span class="n">PUT</span><span class="o">|</span><span class="n">DELETE</span><span class="o">|</span><span class="err">…</span><span class="p">]</span>  <span class="err">使用指定的</span><span class="n">http</span> <span class="n">method</span><span class="err">发出</span> <span class="n">http</span> <span class="n">request</span>
+<span class="o">-</span><span class="n">H</span><span class="o">/--</span><span class="n">header</span>                           <span class="err">设定</span><span class="n">header</span>
+<span class="o">-</span><span class="n">i</span><span class="o">/--</span><span class="n">include</span>                          <span class="err">显示</span><span class="n">response</span><span class="err">的</span><span class="n">header</span>
+<span class="o">-</span><span class="n">d</span><span class="o">/--</span><span class="n">data</span>                             <span class="err">设定</span> <span class="n">http</span> <span class="n">parameters</span> 
+<span class="o">-</span><span class="n">v</span><span class="o">/--</span><span class="n">verbose</span>                          <span class="err">显示详细信息</span>
+<span class="o">-</span><span class="n">u</span><span class="o">/--</span><span class="n">user</span>                             <span class="err">使用者帐号，密码</span>
+<span class="o">-</span><span class="n">b</span><span class="o">/--</span><span class="n">cookie</span>                           <span class="n">cookie</span>
+</pre></div>
+
+
+<ul>
+<li>sample</li>
+</ul>
+<div class="hlcode"><pre><span class="cp"># set header</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">v</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">H</span> <span class="s">&quot;Content-Type: application/json&quot;</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www.example.com/users</span>
+
+<span class="cp"># post params</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">X</span> <span class="n">POST</span> <span class="o">-</span><span class="n">d</span> <span class="s">&quot;param1=value1&amp;param2=value2&quot;</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">X</span> <span class="n">POST</span> <span class="o">-</span><span class="n">d</span> <span class="s">&quot;param1=value1&quot;</span> <span class="o">-</span><span class="n">d</span> <span class="s">&quot;param2=value2&quot;</span>
+
+<span class="cp"># 存cookie</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">X</span> <span class="n">POST</span> <span class="o">-</span><span class="n">d</span> <span class="n">username</span><span class="o">=</span><span class="n">kent</span> <span class="o">-</span><span class="n">d</span> <span class="n">password</span><span class="o">=</span><span class="n">kent123</span> <span class="o">-</span><span class="n">c</span>  <span class="o">~/</span><span class="n">cookie</span><span class="p">.</span><span class="n">txt</span>  <span class="n">http</span><span class="o">:</span><span class="c1">//www.rest.com/auth</span>
+
+<span class="cp"># 载入cookie</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">i</span> <span class="o">--</span><span class="n">header</span> <span class="s">&quot;Accept:application/json&quot;</span> <span class="o">-</span><span class="n">X</span> <span class="n">GET</span> <span class="o">-</span><span class="n">b</span> <span class="o">~/</span><span class="n">cookie</span><span class="p">.</span><span class="n">txt</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www.rest.com/users/1</span>
+
+<span class="cp"># HTTP Basic Authentication</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">i</span> <span class="o">--</span><span class="n">user</span> <span class="n">kent</span><span class="o">:</span><span class="n">secret</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www.rest.com/api/foo&#39;</span>
+</pre></div>
 </div>
 
         </div>
