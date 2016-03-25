@@ -33,3 +33,37 @@ wget -np -nH -r --span-hosts www.xxx.org/pub/path/
 -A 指定要下载的文件样式列表，多个样式用逗号分隔
 -i 后面跟一个文件，文件内指明要下载的URL
 ```
+
+## curl 
+
+参数
+
+```
+-X/--request [GET|POST|PUT|DELETE|…]  使用指定的http method发出 http request
+-H/--header                           设定header
+-i/--include                          显示response的header
+-d/--data                             设定 http parameters 
+-v/--verbose                          显示详细信息
+-u/--user                             使用者帐号，密码
+-b/--cookie                           cookie
+```
+
+* sample
+
+```
+# set header
+curl -v -i -H "Content-Type: application/json" http://www.example.com/users
+
+# post params
+curl -X POST -d "param1=value1&param2=value2"
+curl -X POST -d "param1=value1" -d "param2=value2"
+
+# 存cookie
+curl -i -X POST -d username=kent -d password=kent123 -c  ~/cookie.txt  http://www.rest.com/auth
+
+# 载入cookie
+curl -i --header "Accept:application/json" -X GET -b ~/cookie.txt http://www.rest.com/users/1
+
+# HTTP Basic Authentication
+curl -i --user kent:secret http://www.rest.com/api/foo'
+```
