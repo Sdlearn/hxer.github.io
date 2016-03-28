@@ -3,9 +3,9 @@ title: "remote"
 date: 2016-01-24 18:52
 ---
 
-# ssh
+## ssh
 
-## ssh login
+* ssh login
 
 ```
 ssh -l root ip
@@ -15,13 +15,13 @@ or
 ssh root@ip
 ```
 
-## ssh-keygen [-f <filename>]
+* ssh-keygen [-f <filename>]
 
 ssh-keygen 生成公钥和私钥文件，将公钥文件的内容，放到远程主机 $HOME/.ssh/authorized_keys 文件中，以后就可以免密码登录
 
-## ssh 长连接设置
+* ssh 长连接设置
 
-* client
+** client **
 
 ```
 su
@@ -30,3 +30,7 @@ echo "    ServerAliveInterval 60" >> ssh_config
 service ssh restart
 exit
 ```
+
+## rdesktop
+
+rdesktop is an implementation of a client software for Microsoft's proprietary Remote Desktop Protocol (RDP). Rdesktop is free and open-source software, 

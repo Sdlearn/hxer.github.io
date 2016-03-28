@@ -9,6 +9,10 @@ date: 2016-01-26 18:49
 [6]: https://github.com/pwning/public-writeup/tree/master/hitcon2015/web300-giraffes-coffee
 [7]: http://www.gat3way.eu/poc/wtrt/
 
+## Nikto
+
+Nikto Web Scanner is a Web server scanner that tests Web servers for dangerous files/CGIs, outdated server software and other problems.
+
 # Brute Force
 
 ## 字典
