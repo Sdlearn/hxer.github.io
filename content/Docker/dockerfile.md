@@ -76,6 +76,10 @@ ENV myDog Rex The Dog
 ENV myCat fluffy
 ```
 
+* USER
+
+使用哪个用户跑container
+
 * ADD
 
 ```
@@ -94,6 +98,10 @@ ADD hom?.txt /mydir/    # ? is replaced with any single character
 <dest> 路径必须是绝对路径，如果 <dest> 不存在，会自动创建对应目录
 <src> 路径必须是 Dockerfile 所在路径的相对路径
 <src> 如果是一个目录，只会复制目录下的内容，而目录本身则不会被复制
+
+注:
+
+> 所有拷贝到container中的文件和文件夹权限, 和原文件权限保持一致？？？
 
 * COPY
 

@@ -7,6 +7,14 @@ date: 2016-01-22 15:40
 
 __dict__分层存储属性。每一层的__dict__只存储该层新增的属性。子类不需要重复存储父类中的属性。
 
+## install pip
+
+[getpip.py][21]
+
+```
+sudo pyton getpip.py
+```
+
 ## string
 
 * printable string
@@ -146,4 +154,5 @@ X (VERBOSE)
 [2]: http://python.usyiyi.cn/python_278/library/argparse.html
 [10]: http://pyzh.readthedocs.org/en/latest/python-questions-on-stackoverflow.html
 [20]: http://drops.wooyun.org/tips/7301
+[21]: https://bootstrap.pypa.io/get-pip.py
 
