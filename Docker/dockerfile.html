@@ -88,6 +88,10 @@
 
 
 <ul>
+<li>USER</li>
+</ul>
+<p>使用哪个用户跑container</p>
+<ul>
 <li>ADD</li>
 </ul>
 <div class="hlcode"><pre><span class="nb">ADD</span> <span class="o">&lt;</span><span class="nb">src</span><span class="o">&gt;</span><span class="nx">...</span> <span class="o">&lt;</span><span class="nx">dest</span><span class="o">&gt;</span>
@@ -104,6 +108,10 @@
 <p><dest> 路径必须是绝对路径，如果 <dest> 不存在，会自动创建对应目录
 <src> 路径必须是 Dockerfile 所在路径的相对路径
 <src> 如果是一个目录，只会复制目录下的内容，而目录本身则不会被复制</p>
+<p>注:</p>
+<blockquote>
+<p>所有拷贝到container中的文件和文件夹权限, 和原文件权限保持一致？？？</p>
+</blockquote>
 <ul>
 <li>COPY</li>
 </ul>
@@ -125,11 +133,12 @@
 <ul>
 <li>VOLUME</li>
 </ul>
-<div class="hlcode"><pre><span class="n">VOLUME</span> <span class="p">[</span><span class="s">&quot;/data&quot;</span><span class="p">]</span>
+<div class="hlcode"><pre><span class="cp"># 在容器内新建 /data 目录</span>
+<span class="n">VOLUME</span> <span class="p">[</span><span class="s">&quot;/data&quot;</span><span class="p">]</span>
 </pre></div>
 
 
-<p>创建一个可以从本地主机或其他容器挂载的挂载点</p>
+<p>VOLUME指令用来在容器中设置一个挂载点，可以用来让主机或其他容器挂载，以实现数据共享或对容器数据的备份、恢复或迁移</p>
 <h2 id="note">note</h2>
 <ul>
 <li>1.避免使用 RUN apt-get upgrade</li>
