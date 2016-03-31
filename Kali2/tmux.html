@@ -1,0 +1,242 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>tmux - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Kali2">Kali2</a>&nbsp;»&nbsp;tmux</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">tmux</div>
+  <div id="content">
+  <h2 id="_1">简介</h2>
+<p>Tmux 是一个工具，用于在一个终端窗口中运行多个终端会话。不仅如此，你还可以通过 Tmux 使终端会话运行于后台或是按需接入、断开会话</p>
+<p>tmux是典型的c/s架构。有如下几个概念。</p>
+<ul>
+<li>session</li>
+</ul>
+<p>session是一个特定的终端组合。输入tmux就可以打开一个新的session。</p>
+<ul>
+<li>window</li>
+</ul>
+<p>window 为session中的终端。</p>
+<ul>
+<li>pane </li>
+</ul>
+<p>pane为一个window分隔出来的各个间隔，即window中的终端。</p>
+<h2 id="install">install</h2>
+<div class="hlcode"><pre><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">tmux</span>
+</pre></div>
+
+
+<h2 id="_2">基本用法</h2>
+<p>tmux的所有操作必须先使用一个前缀键进入命令模式，或者说进入控制台，就像vi中的esc。默认的前缀为<c-b>,比较难按，很多人会改为screen中的<c-a>，来保持一致性。</p>
+<p>进入命令模式，输入<strong>?</strong>显示所有的bind-key,按 q 退出。</p>
+<p>Tmux 的配置文件 ~/.tmux.conf</p>
+<p>系统默认 bind-key, 省略了前缀键:</p>
+<ul>
+<li>复制粘贴</li>
+</ul>
+<div class="hlcode"><pre><span class="p">[</span>   <span class="o">:</span> <span class="err">进入复制模式。</span>
+<span class="p">]</span>   <span class="o">:</span> <span class="err">粘贴</span>
+</pre></div>
+
+
+<p>进入复制模式后，按下sapce就可以选择文本。回车键进行复制</p>
+<ul>
+<li>session操作</li>
+</ul>
+<div class="hlcode"><pre><span class="n">s</span>   <span class="o">:</span> <span class="err">列出当前</span> <span class="n">Tmux</span> <span class="err">中的会话</span>
+<span class="n">d</span>   <span class="o">:</span> <span class="n">deattch</span><span class="err">当前</span><span class="n">session</span><span class="err">。输入</span><span class="n">tmux</span> <span class="n">attach</span> <span class="p">[</span><span class="o">-</span><span class="n">t</span> <span class="n">sessionname</span><span class="p">]</span><span class="err">重新进入该</span><span class="n">session</span><span class="err">。</span>
+<span class="err">$</span>   <span class="o">:</span> <span class="err">重命名当前</span><span class="n">session</span>
+
+<span class="o">&lt;</span><span class="n">c</span><span class="o">-</span><span class="n">z</span><span class="o">&gt;</span> <span class="o">:</span> <span class="err">挂起当前</span><span class="n">session</span>
+</pre></div>
+
+
+<ul>
+<li>window操作</li>
+</ul>
+<div class="hlcode"><pre><span class="n">c</span>   <span class="o">:</span> <span class="err">创建一个新的</span><span class="n">window</span>
+<span class="n">b</span>   <span class="o">:</span> <span class="err">重命名当前</span><span class="n">window</span>
+<span class="o">&amp;</span>   <span class="o">:</span> <span class="err">关闭当前</span><span class="n">window</span>
+<span class="n">n</span>   <span class="o">:</span> <span class="err">移动到下一个窗口</span>
+<span class="n">p</span>   <span class="o">:</span> <span class="err">移动到前一个窗口</span>
+<span class="n">l</span>   <span class="o">:</span> <span class="err">切换到上一个窗口</span>
+<span class="n">w</span>   <span class="o">:</span> <span class="err">列出所有窗口编号</span><span class="p">,</span><span class="err">并进行选择切换编号</span><span class="p">,</span><span class="err">移动到指定编号的窗口。</span>
+<span class="p">.</span>   <span class="o">:</span> <span class="err">修改窗口编号，相当于排序。</span>
+<span class="n">f</span>   <span class="o">:</span> <span class="err">搜索所有的窗</span>
+</pre></div>
+
+
+<p>若要切换窗口，只需要先按下Ctrl-b，然后再按下想切换的窗口所对应的数字，该数字会紧挨着窗口的名字显示</p>
+<ul>
+<li>pane操作</li>
+</ul>
+<div class="hlcode"><pre><span class="s">&quot;   : 横向分割</span>
+<span class="o">%</span>   <span class="o">:</span> <span class="err">纵向分割</span>
+<span class="err">方向键</span> <span class="o">:</span> <span class="err">在</span><span class="n">pane</span><span class="err">直接移动</span>
+<span class="n">o</span>   <span class="o">:</span> <span class="err">到下一个</span><span class="n">pane</span>
+<span class="n">opt</span><span class="o">+</span><span class="err">方向键</span> <span class="o">:</span> <span class="err">调整</span><span class="n">pane</span><span class="err">大小</span>
+<span class="p">{</span> <span class="o">/</span> <span class="p">}</span> <span class="o">:</span> <span class="err">左右</span><span class="n">pane</span><span class="err">交换</span>
+<span class="err">空格</span> <span class="o">:</span> <span class="err">横竖切换</span>
+<span class="n">q</span>   <span class="o">:</span> <span class="err">显示</span><span class="n">pane</span><span class="err">的编号</span>
+<span class="n">x</span>   <span class="o">:</span> <span class="err">关闭当前</span><span class="n">pane</span>
+</pre></div>
+
+
+<h2 id="_3">自定义配置文件</h2>
+<ul>
+<li>reload conf</li>
+</ul>
+<div class="hlcode"><pre><span class="cp"># bind a reload key r</span>
+<span class="n">bind</span> <span class="n">r</span> <span class="n">source</span><span class="o">-</span><span class="n">file</span> <span class="o">~/</span><span class="p">.</span><span class="n">tmux</span><span class="p">.</span><span class="n">conf</span> <span class="p">;</span> <span class="n">display</span><span class="o">-</span><span class="n">message</span> <span class="s">&quot;Config reloaded..&quot;</span>
+</pre></div>
+
+
+<ul>
+<li>vim</li>
+</ul>
+<div class="hlcode"><pre><span class="n">set</span> <span class="o">-</span><span class="n">g</span> <span class="n">status</span><span class="o">-</span><span class="n">keys</span> <span class="n">vi</span>
+<span class="n">setw</span> <span class="o">-</span><span class="n">g</span> <span class="n">mode</span><span class="o">-</span><span class="n">keys</span> <span class="n">vi</span>
+</pre></div>
+
+
+<ul>
+<li>复制粘贴</li>
+</ul>
+<div class="hlcode"><pre><span class="err">#</span> <span class="nt">Copy</span> <span class="nt">and</span> <span class="nt">paste</span> <span class="nt">like</span> <span class="nt">in</span> <span class="nt">vim</span>
+<span class="nt">unbind</span> <span class="cp">[</span>
+<span class="nx">unbind</span> <span class="cp">]</span>
+<span class="nt">bind</span> <span class="nt">Escape</span> <span class="nt">copy-mode</span>
+<span class="nt">unbind</span> <span class="nt">p</span>
+<span class="nt">bind</span> <span class="nt">p</span> <span class="nt">paste-buffer</span>
+<span class="nt">bind</span> <span class="nt">-t</span> <span class="nt">vi-copy</span> <span class="s1">&#39;v&#39;</span> <span class="nt">begin-selection</span>
+<span class="nt">bind</span> <span class="nt">-t</span> <span class="nt">vi-copy</span> <span class="s1">&#39;y&#39;</span> <span class="nt">copy-selection</span>
+</pre></div>
+
+
+<p>设置 Tmux esc进入复制模式，使用 v 键选择文本，用 y 键复制文本</p>
+<p>所有的复制都会被记录到缓冲区，输入#或者 tmux list-buffers查看缓冲区,同时也进入了复制模式。也可以使用”=”来选择并粘贴缓冲区内容</p>
+<p>在默认情况下，当从 Tmux 中复制文本时，复制下来的文本只能粘贴到同一个 Tmux 会话中。若要使复制下来的文本可以粘贴到任何位置，就需要让 Tmux 将文本复制到系统的剪贴板</p>
+<p>使用 xclip 同样键入y复制buffer中最新的内容到系统剪贴板，配置如下</p>
+<div class="hlcode"><pre><span class="n">bind</span> <span class="n">y</span> <span class="n">run</span><span class="o">-</span><span class="n">shell</span> <span class="s">&quot;tmux show-buffer | xclip -sel clip -i&quot;</span> <span class="err">\</span><span class="p">;</span> <span class="n">display</span><span class="o">-</span><span class="n">message</span> <span class="s">&quot;Copied tmux buffer to system clipboard&quot;</span>
+</pre></div>
+
+
+<ul>
+<li>状态栏</li>
+</ul>
+<div class="hlcode"><pre><span class="cp"># 状态栏</span>
+
+<span class="cp"># 颜色</span>
+  <span class="n">set</span> <span class="o">-</span><span class="n">g</span> <span class="n">status</span><span class="o">-</span><span class="n">bg</span> <span class="n">black</span>
+  <span class="n">set</span> <span class="o">-</span><span class="n">g</span> <span class="n">status</span><span class="o">-</span><span class="n">fg</span> <span class="n">white</span>
+
+<span class="cp"># 对齐方式</span>
+  <span class="n">set</span><span class="o">-</span><span class="n">option</span> <span class="o">-</span><span class="n">g</span> <span class="n">status</span><span class="o">-</span><span class="n">justify</span> <span class="n">centre</span>
+
+<span class="cp"># 左下角</span>
+  <span class="n">set</span><span class="o">-</span><span class="n">option</span> <span class="o">-</span><span class="n">g</span> <span class="n">status</span><span class="o">-</span><span class="n">left</span> <span class="err">&#39;#</span><span class="p">[</span><span class="n">bg</span><span class="o">=</span><span class="n">black</span><span class="p">,</span><span class="n">fg</span><span class="o">=</span><span class="n">green</span><span class="p">][</span><span class="err">#</span><span class="p">[</span><span class="n">fg</span><span class="o">=</span><span class="n">cyan</span><span class="p">]</span><span class="err">#</span><span class="n">S</span><span class="err">#</span><span class="p">[</span><span class="n">fg</span><span class="o">=</span><span class="n">green</span><span class="p">]]</span><span class="err">&#39;</span>
+  <span class="n">set</span><span class="o">-</span><span class="n">option</span> <span class="o">-</span><span class="n">g</span> <span class="n">status</span><span class="o">-</span><span class="n">left</span><span class="o">-</span><span class="n">length</span> <span class="mi">20</span>
+
+<span class="cp"># 窗口列表</span>
+  <span class="n">setw</span> <span class="o">-</span><span class="n">g</span> <span class="n">automatic</span><span class="o">-</span><span class="n">rename</span> <span class="n">on</span>
+  <span class="n">set</span><span class="o">-</span><span class="n">window</span><span class="o">-</span><span class="n">option</span> <span class="o">-</span><span class="n">g</span> <span class="n">window</span><span class="o">-</span><span class="n">status</span><span class="o">-</span><span class="n">format</span> <span class="err">&#39;#</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span><span class="err">#</span><span class="n">I</span><span class="o">:</span><span class="err">#</span><span class="p">[</span><span class="k">default</span><span class="p">]</span><span class="err">#</span><span class="n">W</span><span class="err">#</span><span class="p">[</span><span class="n">fg</span><span class="o">=</span><span class="n">grey</span><span class="p">,</span><span class="n">dim</span><span class="p">]</span><span class="err">&#39;</span>
+  <span class="n">set</span><span class="o">-</span><span class="n">window</span><span class="o">-</span><span class="n">option</span> <span class="o">-</span><span class="n">g</span> <span class="n">window</span><span class="o">-</span><span class="n">status</span><span class="o">-</span><span class="n">current</span><span class="o">-</span><span class="n">format</span> <span class="err">&#39;#</span><span class="p">[</span><span class="n">fg</span><span class="o">=</span><span class="n">cyan</span><span class="p">,</span><span class="n">bold</span><span class="p">]</span><span class="err">#</span><span class="n">I</span><span class="err">#</span><span class="p">[</span><span class="n">fg</span><span class="o">=</span><span class="n">blue</span><span class="p">]</span><span class="o">:</span><span class="err">#</span><span class="p">[</span><span class="n">fg</span><span class="o">=</span><span class="n">cyan</span><span class="p">]</span><span class="err">#</span><span class="n">W</span><span class="err">#</span><span class="p">[</span><span class="n">fg</span><span class="o">=</span><span class="n">dim</span><span class="p">]</span><span class="err">&#39;</span>
+
+<span class="cp"># 右下角</span>
+  <span class="n">set</span> <span class="o">-</span><span class="n">g</span> <span class="n">status</span><span class="o">-</span><span class="n">right</span> <span class="err">&#39;#</span><span class="p">[</span><span class="n">fg</span><span class="o">=</span><span class="n">green</span><span class="p">][</span><span class="err">#</span><span class="p">[</span><span class="n">fg</span><span class="o">=</span><span class="n">cyan</span><span class="p">]</span><span class="o">%</span><span class="n">Y</span><span class="o">-%</span><span class="n">m</span><span class="o">-%</span><span class="n">d</span><span class="err">#</span><span class="p">[</span><span class="n">fg</span><span class="o">=</span><span class="n">green</span><span class="p">]]</span><span class="err">&#39;</span>
+</pre></div>
+
+
+<h2 id="tmux">tmux命令</h2>
+<div class="hlcode"><pre><span class="err">$</span><span class="n">tmux</span> <span class="o">--</span><span class="n">h</span>
+<span class="nl">usage:</span> <span class="n">tmux</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="n">CluvV</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span> <span class="n">shell</span><span class="o">-</span><span class="n">command</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">f</span> <span class="n">file</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">socket</span><span class="o">-</span><span class="n">name</span><span class="p">]</span>
+            <span class="p">[</span><span class="o">-</span><span class="n">S</span> <span class="n">socket</span><span class="o">-</span><span class="n">path</span><span class="p">]</span> <span class="p">[</span><span class="n">command</span> <span class="p">[</span><span class="n">flags</span><span class="p">]]</span>
+</pre></div>
+
+
+<h2 id="_4">配置</h2>
+<div class="hlcode"><pre><span class="err">#</span> <span class="err">状态栏</span>
+
+<span class="err">#</span> <span class="err">颜色</span>
+  <span class="nt">set</span> <span class="nt">-g</span> <span class="nt">status-bg</span> <span class="nt">black</span>
+  <span class="nt">set</span> <span class="nt">-g</span> <span class="nt">status-fg</span> <span class="nt">white</span>
+
+<span class="err">#</span> <span class="err">对齐方式</span>
+  <span class="nt">set-option</span> <span class="nt">-g</span> <span class="nt">status-justify</span> <span class="nt">centre</span>
+
+<span class="err">#</span> <span class="err">左下角</span>
+  <span class="nt">set-option</span> <span class="nt">-g</span> <span class="nt">status-left</span> <span class="s1">&#39;#</span><span class="cp">[</span><span class="n">bg</span><span class="o">=</span><span class="nx">black</span><span class="p">,</span><span class="n">fg</span><span class="o">=</span><span class="nx">green</span><span class="cp">][</span><span class="err">#[</span><span class="n">fg</span><span class="o">=</span><span class="nx">cyan</span><span class="cp">]</span><span class="s1">#S#</span><span class="cp">[</span><span class="n">fg</span><span class="o">=</span><span class="nx">green</span><span class="cp">]</span><span class="s1">]&#39;</span>
+  <span class="nt">set-option</span> <span class="nt">-g</span> <span class="nt">status-left-length</span> <span class="nt">20</span>
+
+<span class="err">#</span> <span class="err">窗口列表</span>
+  <span class="nt">setw</span> <span class="nt">-g</span> <span class="nt">automatic-rename</span> <span class="nt">on</span>
+  <span class="nt">set-window-option</span> <span class="nt">-g</span> <span class="nt">window-status-format</span> <span class="s1">&#39;#</span><span class="cp">[</span><span class="nx">dim</span><span class="cp">]</span><span class="s1">#I:#</span><span class="cp">[</span><span class="nb">default</span><span class="cp">]</span><span class="s1">#W#</span><span class="cp">[</span><span class="n">fg</span><span class="o">=</span><span class="nx">grey</span><span class="p">,</span><span class="nx">dim</span><span class="cp">]</span><span class="s1">&#39;</span>
+  <span class="nt">set-window-option</span> <span class="nt">-g</span> <span class="nt">window-status-current-format</span> <span class="s1">&#39;#</span><span class="cp">[</span><span class="n">fg</span><span class="o">=</span><span class="nx">cyan</span><span class="p">,</span><span class="nx">bold</span><span class="cp">]</span><span class="s1">#I#</span><span class="cp">[</span><span class="n">fg</span><span class="o">=</span><span class="nx">blue</span><span class="cp">]</span><span class="s1">:#</span><span class="cp">[</span><span class="n">fg</span><span class="o">=</span><span class="nx">cyan</span><span class="cp">]</span><span class="s1">#W#</span><span class="cp">[</span><span class="n">fg</span><span class="o">=</span><span class="nx">dim</span><span class="cp">]</span><span class="s1">&#39;</span>
+
+<span class="err">#</span> <span class="err">右下角</span>
+  <span class="nt">set</span> <span class="nt">-g</span> <span class="nt">status-right</span> <span class="s1">&#39;#</span><span class="cp">[</span><span class="n">fg</span><span class="o">=</span><span class="nx">green</span><span class="cp">][</span><span class="err">#[</span><span class="n">fg</span><span class="o">=</span><span class="nx">cyan</span><span class="cp">]</span><span class="s1">%Y-%m-%d#</span><span class="cp">[</span><span class="n">fg</span><span class="o">=</span><span class="nx">green</span><span class="cp">]</span><span class="s1">]&#39;</span>
+
+
+<span class="nt">set</span> <span class="nt">-g</span> <span class="nt">status-keys</span> <span class="nt">vi</span>
+<span class="nt">setw</span> <span class="nt">-g</span> <span class="nt">mode-keys</span> <span class="nt">vi</span>
+
+<span class="err">#</span> <span class="nt">prefix</span> <span class="nt">C-x</span>
+<span class="nt">unbind</span> <span class="nt">C-b</span>
+<span class="nt">set</span> <span class="nt">-g</span> <span class="nt">prefix</span> <span class="nt">C-x</span>
+
+<span class="err">#</span> <span class="nt">Copy</span> <span class="nt">and</span> <span class="nt">paste</span> <span class="nt">like</span> <span class="nt">in</span> <span class="nt">vim</span>
+<span class="nt">unbind</span> <span class="cp">[</span>
+<span class="nx">unbind</span> <span class="cp">]</span>
+<span class="nt">bind</span> <span class="nt">Escape</span> <span class="nt">copy-mode</span>
+<span class="nt">unbind</span> <span class="nt">p</span>
+<span class="nt">bind</span> <span class="nt">p</span> <span class="nt">paste-buffer</span>
+<span class="nt">bind</span> <span class="nt">-t</span> <span class="nt">vi-copy</span> <span class="s1">&#39;v&#39;</span> <span class="nt">begin-selection</span>
+<span class="nt">bind</span> <span class="nt">-t</span> <span class="nt">vi-copy</span> <span class="s1">&#39;y&#39;</span> <span class="nt">copy-selection</span>
+
+<span class="nt">bind</span> <span class="nt">y</span> <span class="nt">run-shell</span> <span class="s2">&quot;tmux show-buffer | xclip -sel clip -i&quot;</span> <span class="err">\</span><span class="o">;</span> <span class="nt">display-message</span> <span class="s2">&quot;Copied tmux buffer to system clipboard&quot;</span>
+
+<span class="err">#</span> <span class="nt">bind</span> <span class="nt">a</span> <span class="nt">reload</span> <span class="nt">key</span> <span class="nt">r</span>
+<span class="nt">bind</span> <span class="nt">r</span> <span class="nt">source-file</span> <span class="o">~/</span><span class="nc">.tmux.conf</span> <span class="o">;</span> <span class="nt">display-message</span> <span class="s2">&quot;Config reloaded..&quot;</span>
+
+<span class="err">#</span> <span class="nt">panel</span> <span class="nt">--------------------------</span>
+<span class="nf">#up</span>
+<span class="nt">bind-key</span> <span class="nt">k</span> <span class="nt">select-pane</span> <span class="nt">-U</span>
+<span class="nf">#down</span>
+<span class="nt">bind-key</span> <span class="nt">j</span> <span class="nt">select-pane</span> <span class="nt">-D</span>
+<span class="nf">#left</span>
+<span class="nt">bind-key</span> <span class="nt">h</span> <span class="nt">select-pane</span> <span class="nt">-L</span>
+<span class="nf">#right</span>
+<span class="nt">bind-key</span> <span class="nt">l</span> <span class="nt">select-pane</span> <span class="nt">-R</span>
+
+<span class="nt">unbind</span> <span class="o">%</span>
+<span class="nt">bind</span> <span class="o">|</span> <span class="nt">splitw</span> <span class="nt">-h</span> <span class="err">#</span> <span class="nt">horizontal</span> <span class="nt">split</span> <span class="o">(</span><span class="nt">prefix</span> <span class="o">|)</span>
+
+<span class="err">#</span> <span class="nt">window</span> <span class="nt">--------------------------</span>
+
+<span class="nf">#select</span> <span class="nt">last</span> <span class="nt">window</span>
+<span class="nt">bind-key</span> <span class="nt">C-l</span> <span class="nt">select-window</span> <span class="nt">-l</span>
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

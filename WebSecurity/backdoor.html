@@ -90,7 +90,7 @@
 <span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">Browse</span> <span class="n">the</span> <span class="n">filesystem</span> <span class="n">or</span> <span class="n">execute</span> <span class="n">commands</span> <span class="n">starts</span> <span class="n">the</span> <span class="n">connection</span>
 <span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">to</span> <span class="n">the</span> <span class="n">target</span><span class="p">.</span> <span class="n">Type</span> <span class="o">:</span><span class="n">help</span> <span class="k">for</span> <span class="n">more</span> <span class="n">information</span><span class="p">.</span>
 
-<span class="n">weevely</span><span class="o">&gt;</span> <span class="n">help</span>
+<span class="n">weevely</span><span class="o">&gt;</span> <span class="o">:</span><span class="n">help</span>
 
  <span class="o">:</span><span class="n">audit_etcpasswd</span>      <span class="n">Get</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="n">with</span> <span class="n">different</span> <span class="n">techniques</span><span class="p">.</span>                           
  <span class="o">:</span><span class="n">audit_filesystem</span>     <span class="n">Audit</span> <span class="n">system</span> <span class="n">files</span> <span class="k">for</span> <span class="n">wrong</span> <span class="n">permissions</span><span class="p">.</span>                            
@@ -130,7 +130,31 @@
  <span class="o">:</span><span class="n">net_curl</span>             <span class="n">Perform</span> <span class="n">a</span> <span class="n">curl</span><span class="o">-</span><span class="n">like</span> <span class="n">HTTP</span> <span class="n">request</span><span class="p">.</span>                                    
  <span class="o">:</span><span class="n">net_scan</span>             <span class="n">TCP</span> <span class="n">Port</span> <span class="n">scan</span><span class="p">.</span>                                                       
  <span class="o">:</span><span class="n">net_phpproxy</span>         <span class="n">Install</span> <span class="n">PHP</span> <span class="n">proxy</span> <span class="n">on</span> <span class="n">the</span> <span class="n">target</span><span class="p">.</span>                                     
- <span class="o">:</span><span class="n">net_proxy</span>            <span class="n">Proxify</span> <span class="n">local</span> <span class="n">HTTP</span> <span class="n">traffic</span> <span class="n">passing</span> <span class="n">through</span> <span class="n">the</span> <span class="n">target</span><span class="p">.</span>               
+ <span class="o">:</span><span class="n">net_proxy</span>            <span class="n">Proxify</span> <span class="n">local</span> <span class="n">HTTP</span> <span class="n">traffic</span> <span class="n">passing</span> <span class="n">through</span> <span class="n">the</span> <span class="n">target</span><span class="p">.</span> 
+
+ <span class="n">The</span> <span class="n">system</span> <span class="n">shell</span> <span class="n">interpreter</span> <span class="n">is</span> <span class="n">not</span> <span class="n">available</span> <span class="n">in</span> <span class="n">this</span> <span class="n">session</span><span class="p">,</span> <span class="n">use</span> <span class="n">the</span>
+<span class="n">following</span> <span class="n">command</span> <span class="n">replacements</span> <span class="n">to</span> <span class="n">simulate</span> <span class="n">a</span> <span class="n">unrestricted</span> <span class="n">shell</span><span class="p">.</span>
+
+ <span class="n">zip</span><span class="p">,</span> <span class="n">unzip</span>                                 <span class="n">file_zip</span>         
+ <span class="n">touch</span>                                      <span class="n">file_touch</span>       
+ <span class="n">gzip</span><span class="p">,</span> <span class="n">gunzip</span>                               <span class="n">file_gzip</span>        
+ <span class="n">mail</span>                                       <span class="n">net_mail</span>         
+ <span class="n">curl</span>                                       <span class="n">net_curl</span>         
+ <span class="n">nmap</span>                                       <span class="n">net_scan</span>         
+ <span class="n">cd</span>                                         <span class="n">file_cd</span>          
+ <span class="n">rm</span>                                         <span class="n">file_rm</span>          
+ <span class="n">cat</span>                                        <span class="n">file_read</span>        
+ <span class="n">ifconfig</span>                                   <span class="n">shell_su</span>         
+ <span class="n">vi</span><span class="p">,</span> <span class="n">vim</span><span class="p">,</span> <span class="n">emacs</span><span class="p">,</span> <span class="n">nano</span><span class="p">,</span> <span class="n">pico</span><span class="p">,</span> <span class="n">gedit</span><span class="p">,</span> <span class="n">kwrite</span>  <span class="n">file_edit</span>        
+ <span class="n">wget</span>                                       <span class="n">file_webdownload</span> 
+ <span class="n">find</span>                                       <span class="n">file_find</span>        
+ <span class="n">tar</span>                                        <span class="n">file_tar</span>         
+ <span class="n">ifconfig</span>                                   <span class="n">net_ifconfig</span>     
+ <span class="n">bzip2</span><span class="p">,</span> <span class="n">bunzip2</span>                             <span class="n">file_bzip2</span>       
+ <span class="n">ls</span><span class="p">,</span> <span class="n">dir</span>                                    <span class="n">file_ls</span>          
+ <span class="n">cp</span><span class="p">,</span> <span class="n">copy</span>                                   <span class="n">file_cp</span>          
+ <span class="n">grep</span>                                       <span class="n">file_grep</span>        
+ <span class="n">whoami</span><span class="p">,</span> <span class="n">hostname</span><span class="p">,</span> <span class="n">pwd</span><span class="p">,</span> <span class="n">uname</span>               <span class="n">system_info</span>                
 
 <span class="n">www</span><span class="o">-</span><span class="n">data</span><span class="err">@</span><span class="n">kali</span><span class="o">:/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">backdoor</span> <span class="err">$</span> <span class="n">ls</span>
 <span class="n">agent</span><span class="p">.</span><span class="n">php</span>

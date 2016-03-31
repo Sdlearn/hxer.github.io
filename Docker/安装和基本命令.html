@@ -89,8 +89,12 @@
 <ul>
 <li>--link</li>
 </ul>
-<p>格式为： --link 要连接的容器:连接名</p>
+<p>格式为： --link 要连接的容器名:连接名</p>
 <p>连接其他容器，并且为连接指定一个名称。docker 通过网桥来实现容器间的网络互联，因此如果创建容器时添加了此参数，则会自动在容器的 hosts 文件中加上被连接容器的 ip，ip 的别(域)名就是这里的连接名。不指定则默认为容器名称。</p>
+<h2 id="exec">exec</h2>
+<div class="hlcode"><pre><span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">name</span> <span class="n">dubuntu</span> <span class="o">-</span><span class="n">d</span> <span class="n">ubuntu</span>
+<span class="n">docker</span> <span class="n">exec</span> <span class="o">-</span><span class="n">it</span> <span class="n">dubuntu</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+</pre></div>
 </div>
 
         </div>
