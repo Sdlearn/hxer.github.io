@@ -20,6 +20,7 @@
   <div id="content">
   <h2 id="_1">简介</h2>
 <p>Tmux 是一个工具，用于在一个终端窗口中运行多个终端会话。不仅如此，你还可以通过 Tmux 使终端会话运行于后台或是按需接入、断开会话</p>
+<p><a href="http://mingxinglai.com/cn/2012/09/tmux/">tmux 配置</a></p>
 <p>tmux是典型的c/s架构。有如下几个概念。</p>
 <ul>
 <li>session</li>
@@ -166,8 +167,44 @@
 </pre></div>
 
 
+<ul>
+<li>会话</li>
+</ul>
+<div class="hlcode"><pre><span class="n">tmux</span> <span class="n">new</span> <span class="o">-</span><span class="n">s</span> <span class="n">session</span>
+<span class="n">tmux</span> <span class="n">new</span> <span class="o">-</span><span class="n">s</span> <span class="n">session</span> <span class="o">-</span><span class="n">d</span> <span class="err">#在后台建立会话</span>
+<span class="n">tmux</span> <span class="n">ls</span> <span class="err">#列出会话</span>
+<span class="n">tmux</span> <span class="n">attach</span> <span class="o">-</span><span class="n">t</span> <span class="n">session</span> <span class="err">#进入某个会话</span>
+</pre></div>
+
+
+<p>tmux中创建一个新的会话，只需要按下 Ctrl-b : ，然后输入如下的命令：</p>
+<div class="hlcode"><pre><span class="n">new</span> <span class="o">-</span><span class="n">s</span> <span class="o">&lt;</span><span class="n">name</span><span class="o">-</span><span class="n">of</span><span class="o">-</span><span class="n">my</span><span class="o">-</span><span class="n">new</span><span class="o">-</span><span class="n">session</span><span class="o">&gt;</span>
+</pre></div>
+
+
 <h2 id="_4">配置</h2>
-<div class="hlcode"><pre><span class="err">#</span> <span class="err">状态栏</span>
+<p>~/.tmux.conf</p>
+<div class="hlcode"><pre><span class="nf">#--</span> <span class="nt">base</span> <span class="nt">settings</span> <span class="nt">--</span><span class="err">#</span>
+<span class="nt">set</span> <span class="nt">-g</span> <span class="nt">default-terminal</span> <span class="s2">&quot;screen-256color&quot;</span>
+<span class="nt">set</span> <span class="nt">-g</span> <span class="nt">display-time</span> <span class="nt">3000</span>
+<span class="nt">set</span> <span class="nt">-g</span> <span class="nt">escape-time</span> <span class="nt">0</span>
+<span class="nt">set</span> <span class="nt">-g</span> <span class="nt">history-limit</span> <span class="nt">65535</span>
+<span class="nt">set</span> <span class="nt">-g</span> <span class="nt">base-index</span> <span class="nt">1</span>
+<span class="nt">set</span> <span class="nt">-g</span> <span class="nt">pane-base-index</span> <span class="nt">1</span>
+
+<span class="err">#</span> <span class="nt">vi</span> <span class="nt">mode</span>
+<span class="nt">set</span> <span class="nt">-g</span> <span class="nt">status-keys</span> <span class="nt">vi</span>
+<span class="nt">setw</span> <span class="nt">-g</span> <span class="nt">mode-keys</span> <span class="nt">vi</span>
+
+<span class="err">#</span> <span class="err">开启</span><span class="nt">status-bar</span> <span class="nt">uft-8</span><span class="err">支持</span>
+<span class="nt">set</span> <span class="nt">-g</span> <span class="nt">status-utf8</span> <span class="nt">on</span>
+
+<span class="nt">set</span> <span class="nt">-g</span> <span class="nt">status-interval</span> <span class="nt">1</span>
+
+<span class="nt">set</span> <span class="nt">-g</span> <span class="nt">visual-activity</span> <span class="nt">on</span>
+<span class="nt">setw</span> <span class="nt">-g</span> <span class="nt">monitor-activity</span> <span class="nt">on</span>
+
+<span class="err">#</span> <span class="err">状态栏</span>
 
 <span class="err">#</span> <span class="err">颜色</span>
   <span class="nt">set</span> <span class="nt">-g</span> <span class="nt">status-bg</span> <span class="nt">black</span>
@@ -177,7 +214,8 @@
   <span class="nt">set-option</span> <span class="nt">-g</span> <span class="nt">status-justify</span> <span class="nt">centre</span>
 
 <span class="err">#</span> <span class="err">左下角</span>
-  <span class="nt">set-option</span> <span class="nt">-g</span> <span class="nt">status-left</span> <span class="s1">&#39;#</span><span class="cp">[</span><span class="n">bg</span><span class="o">=</span><span class="nx">black</span><span class="p">,</span><span class="n">fg</span><span class="o">=</span><span class="nx">green</span><span class="cp">][</span><span class="err">#[</span><span class="n">fg</span><span class="o">=</span><span class="nx">cyan</span><span class="cp">]</span><span class="s1">#S#</span><span class="cp">[</span><span class="n">fg</span><span class="o">=</span><span class="nx">green</span><span class="cp">]</span><span class="s1">]&#39;</span>
+  <span class="err">#</span> <span class="nt">set-option</span> <span class="nt">-g</span> <span class="nt">status-left</span> <span class="s1">&#39;#</span><span class="cp">[</span><span class="n">bg</span><span class="o">=</span><span class="nx">black</span><span class="p">,</span><span class="n">fg</span><span class="o">=</span><span class="nx">green</span><span class="cp">][</span><span class="err">#[</span><span class="n">fg</span><span class="o">=</span><span class="nx">cyan</span><span class="cp">]</span><span class="s1">#S#</span><span class="cp">[</span><span class="n">fg</span><span class="o">=</span><span class="nx">green</span><span class="cp">]</span><span class="s1">]&#39;</span>
+  <span class="nt">set-option</span> <span class="nt">-g</span> <span class="nt">status-left</span> <span class="s2">&quot;#</span><span class="cp">[</span><span class="n">fg</span><span class="o">=</span><span class="nx">green</span><span class="cp">]</span><span class="s2">s#S:w#I.p#P#</span><span class="cp">[</span><span class="nb">default</span><span class="cp">]</span><span class="s2">&quot;</span>
   <span class="nt">set-option</span> <span class="nt">-g</span> <span class="nt">status-left-length</span> <span class="nt">20</span>
 
 <span class="err">#</span> <span class="err">窗口列表</span>
@@ -189,8 +227,6 @@
   <span class="nt">set</span> <span class="nt">-g</span> <span class="nt">status-right</span> <span class="s1">&#39;#</span><span class="cp">[</span><span class="n">fg</span><span class="o">=</span><span class="nx">green</span><span class="cp">][</span><span class="err">#[</span><span class="n">fg</span><span class="o">=</span><span class="nx">cyan</span><span class="cp">]</span><span class="s1">%Y-%m-%d#</span><span class="cp">[</span><span class="n">fg</span><span class="o">=</span><span class="nx">green</span><span class="cp">]</span><span class="s1">]&#39;</span>
 
 
-<span class="nt">set</span> <span class="nt">-g</span> <span class="nt">status-keys</span> <span class="nt">vi</span>
-<span class="nt">setw</span> <span class="nt">-g</span> <span class="nt">mode-keys</span> <span class="nt">vi</span>
 
 <span class="err">#</span> <span class="nt">prefix</span> <span class="nt">C-x</span>
 <span class="nt">unbind</span> <span class="nt">C-b</span>
@@ -207,10 +243,14 @@
 
 <span class="nt">bind</span> <span class="nt">y</span> <span class="nt">run-shell</span> <span class="s2">&quot;tmux show-buffer | xclip -sel clip -i&quot;</span> <span class="err">\</span><span class="o">;</span> <span class="nt">display-message</span> <span class="s2">&quot;Copied tmux buffer to system clipboard&quot;</span>
 
+
+<span class="nt">unbind</span> <span class="o">%</span>
+<span class="nt">bind</span> <span class="o">|</span> <span class="nt">splitw</span> <span class="nt">-h</span> <span class="err">#</span> <span class="nt">horizontal</span> <span class="nt">split</span> <span class="o">(</span><span class="nt">prefix</span> <span class="o">|)</span>
+
 <span class="err">#</span> <span class="nt">bind</span> <span class="nt">a</span> <span class="nt">reload</span> <span class="nt">key</span> <span class="nt">r</span>
 <span class="nt">bind</span> <span class="nt">r</span> <span class="nt">source-file</span> <span class="o">~/</span><span class="nc">.tmux.conf</span> <span class="o">;</span> <span class="nt">display-message</span> <span class="s2">&quot;Config reloaded..&quot;</span>
 
-<span class="err">#</span> <span class="nt">panel</span> <span class="nt">--------------------------</span>
+<span class="err">#</span> <span class="err">同一个窗口中的面板操作</span><span class="nt">--------------</span>
 <span class="nf">#up</span>
 <span class="nt">bind-key</span> <span class="nt">k</span> <span class="nt">select-pane</span> <span class="nt">-U</span>
 <span class="nf">#down</span>
@@ -220,13 +260,27 @@
 <span class="nf">#right</span>
 <span class="nt">bind-key</span> <span class="nt">l</span> <span class="nt">select-pane</span> <span class="nt">-R</span>
 
-<span class="nt">unbind</span> <span class="o">%</span>
-<span class="nt">bind</span> <span class="o">|</span> <span class="nt">splitw</span> <span class="nt">-h</span> <span class="err">#</span> <span class="nt">horizontal</span> <span class="nt">split</span> <span class="o">(</span><span class="nt">prefix</span> <span class="o">|)</span>
+<span class="err">#</span> <span class="nt">swap</span> <span class="nt">panes</span>
+<span class="nt">bind</span> <span class="o">^</span><span class="nt">u</span> <span class="nt">swapp</span> <span class="nt">-U</span>
+<span class="nt">bind</span> <span class="o">^</span><span class="nt">d</span> <span class="nt">swapp</span> <span class="nt">-D</span>
+
 
 <span class="err">#</span> <span class="nt">window</span> <span class="nt">--------------------------</span>
 
 <span class="nf">#select</span> <span class="nt">last</span> <span class="nt">window</span>
 <span class="nt">bind-key</span> <span class="nt">C-l</span> <span class="nt">select-window</span> <span class="nt">-l</span>
+
+<span class="nt">bind-key</span> <span class="nt">D</span> <span class="nt">source-file</span> <span class="o">~/</span><span class="nc">.tmux</span><span class="o">/</span><span class="nt">layout</span>
+</pre></div>
+
+
+<p>键入 Ctrl + b D (D是大写，要按shrift)，即会自动执行layout脚本</p>
+<p>~/.tmux/layout</p>
+<div class="hlcode"><pre><span class="n">selectp</span> <span class="o">-</span><span class="n">t</span> <span class="mi">1</span>     <span class="err">#选中第</span><span class="mi">0</span><span class="err">个窗格</span>
+<span class="n">splitw</span> <span class="o">-</span><span class="n">h</span> <span class="o">-</span><span class="n">p</span> <span class="mi">50</span>  <span class="err">#将其分成左右两个</span>
+<span class="n">selectp</span> <span class="o">-</span><span class="n">t</span> <span class="mi">2</span>     <span class="err">#选中第一个，也就是右边那个</span>
+<span class="n">splitw</span> <span class="o">-</span><span class="n">v</span> <span class="o">-</span><span class="n">p</span> <span class="mi">50</span>  <span class="err">#将其分成上下两个，这样就变成了图中的布局了</span>
+<span class="n">selectp</span> <span class="o">-</span><span class="n">t</span> <span class="mi">1</span>     <span class="err">#选回第一个</span>
 </pre></div>
 </div>
 

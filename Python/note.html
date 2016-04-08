@@ -37,37 +37,6 @@
 </pre></div>
 
 
-<h2 id="command-line-parsing-library">Command-line parsing library</h2>
-<ul>
-<li>argparse</li>
-</ul>
-<p><a href="http://python.usyiyi.cn/python_278/library/argparse.html">argparse 文档</a></p>
-<div class="hlcode"><pre><span class="n">import</span> <span class="n">argparse</span>
-
-<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="p">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
-<span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="err">&#39;</span><span class="n">foo</span><span class="err">&#39;</span><span class="p">)</span>
-<span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="p">.</span><span class="n">parse_args</span><span class="p">()</span>
-
-<span class="n">args</span><span class="p">.</span><span class="n">foo</span>
-</pre></div>
-
-
-<div class="hlcode"><pre><span class="n">ArgumentParser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="n">name</span> <span class="n">or</span> <span class="n">flags</span><span class="p">...[,</span> <span class="n">action</span><span class="p">][,</span> <span class="n">nargs</span><span class="p">][,</span> <span class="k">const</span><span class="p">][,</span> <span class="k">default</span><span class="p">][,</span> <span class="n">type</span><span class="p">][,</span> <span class="n">choices</span><span class="p">][,</span> <span class="n">required</span><span class="p">][,</span> <span class="n">help</span><span class="p">][,</span> <span class="n">metavar</span><span class="p">][,</span> <span class="n">dest</span><span class="p">])</span>
-
-<span class="n">name</span> <span class="n">or</span> <span class="n">flags</span> <span class="o">-</span> <span class="err">选项字符串的名字或者列表，例如</span><span class="n">foo</span> <span class="err">或者</span><span class="o">-</span><span class="n">f</span><span class="p">,</span> <span class="o">--</span><span class="n">foo</span><span class="err">。</span>
-<span class="n">action</span> <span class="o">-</span> <span class="err">在命令行遇到该参数时采取的基本动作类型。</span>
-<span class="n">nargs</span> <span class="o">-</span> <span class="err">应该读取的命令行参数数目。</span>
-<span class="k">const</span> <span class="o">-</span> <span class="err">某些</span><span class="n">action</span><span class="err">和</span><span class="n">nargs</span><span class="err">选项要求的常数值。</span>
-<span class="k">default</span> <span class="o">-</span> <span class="err">如果命令行中没有出现该参数时的默认值。</span>
-<span class="n">type</span> <span class="o">-</span> <span class="err">命令行参数应该被转换成的类型。</span>
-<span class="n">choices</span> <span class="o">-</span> <span class="err">参数可允许的值的一个容器。</span>
-<span class="n">required</span> <span class="o">-</span> <span class="err">该命令行选项是否可以省略（只针对可选参数）。</span>
-<span class="n">help</span> <span class="o">-</span> <span class="err">参数的简短描述。</span>
-<span class="n">metavar</span> <span class="o">-</span> <span class="err">参数在帮助信息中的名字。</span>
-<span class="n">dest</span> <span class="o">-</span> <span class="err">给</span><span class="n">parse_args</span><span class="p">()</span><span class="err">返回的对象要添加的属性名称。默认情况下，对于可选参数选取最长的名称，中划线转换为下划线</span>
-</pre></div>
-
-
 <h2 id="little-tips">little tips</h2>
 <ul>
 <li>集合 A，B 交集判断</li>
