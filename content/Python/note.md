@@ -26,39 +26,7 @@ import string
 '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~ \t\n\r\x0b\x0c'
 ```
 
-## Command-line parsing library 
 
-* argparse
-
-[argparse 文档][2]
-
-
-
-```
-import argparse
-
-parser = argparse.ArgumentParser()
-parser.add_argument('foo')
-args = parser.parse_args()
-
-args.foo
-```
-
-```
-ArgumentParser.add_argument(name or flags...[, action][, nargs][, const][, default][, type][, choices][, required][, help][, metavar][, dest])
-
-name or flags - 选项字符串的名字或者列表，例如foo 或者-f, --foo。
-action - 在命令行遇到该参数时采取的基本动作类型。
-nargs - 应该读取的命令行参数数目。
-const - 某些action和nargs选项要求的常数值。
-default - 如果命令行中没有出现该参数时的默认值。
-type - 命令行参数应该被转换成的类型。
-choices - 参数可允许的值的一个容器。
-required - 该命令行选项是否可以省略（只针对可选参数）。
-help - 参数的简短描述。
-metavar - 参数在帮助信息中的名字。
-dest - 给parse_args()返回的对象要添加的属性名称。默认情况下，对于可选参数选取最长的名称，中划线转换为下划线
-```
 
 ## little tips
 
@@ -151,7 +119,7 @@ X (VERBOSE)
 
 [SQLMAP源码分析Part1:流程篇][20]
 
-[2]: http://python.usyiyi.cn/python_278/library/argparse.html
+
 [10]: http://pyzh.readthedocs.org/en/latest/python-questions-on-stackoverflow.html
 [20]: http://drops.wooyun.org/tips/7301
 [21]: https://bootstrap.pypa.io/get-pip.py

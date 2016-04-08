@@ -22,7 +22,7 @@ NOTSET < DEBUG < INFO < WARNING < ERROR < CRITICAL
 ```
 import logging
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO, format='%(message)s')
 log = logging.getLogger(__name__)
 
 logging.basicConfig(filename="xx.log",

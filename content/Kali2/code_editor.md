@@ -244,6 +244,10 @@ vim ~/.vimrc
 git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/
 ```
 
+* 函数折叠
+
+命令行模式下， za 组合键折叠当前函数
+
 * vim .vimrc
 
 ```
@@ -533,7 +537,7 @@ solution:
 cd ~/.vim/bundle/YouComleteMe
 git submodule update --init --recursive
 sudo apt-get install cmake
- python install.py
+python install.py
 ```
  
 * bundle base cmd

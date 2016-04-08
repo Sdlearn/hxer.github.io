@@ -7,6 +7,8 @@ date: 2016-03-30 23:58
 
 Tmux 是一个工具，用于在一个终端窗口中运行多个终端会话。不仅如此，你还可以通过 Tmux 使终端会话运行于后台或是按需接入、断开会话
 
+[tmux 配置][1]
+
 tmux是典型的c/s架构。有如下几个概念。
 
 * session
@@ -153,7 +155,6 @@ bind y run-shell "tmux show-buffer | xclip -sel clip -i" \; display-message "Cop
   set -g status-right '#[fg=green][#[fg=cyan]%Y-%m-%d#[fg=green]]'
 ```
 
-
 ## tmux命令
 
 ```
@@ -162,9 +163,47 @@ usage: tmux [-2CluvV] [-c shell-command] [-f file] [-L socket-name]
             [-S socket-path] [command [flags]]
 ```   
 
-## 配置
+* 会话
 
 ```
+tmux new -s session
+tmux new -s session -d #在后台建立会话
+tmux ls #列出会话
+tmux attach -t session #进入某个会话
+```
+
+tmux中创建一个新的会话，只需要按下 Ctrl-b : ，然后输入如下的命令：
+
+```
+new -s <name-of-my-new-session>
+```
+
+## 配置
+
+~/.tmux.conf
+
+```
+
+#-- base settings --#
+set -g default-terminal "screen-256color"
+set -g display-time 3000
+set -g escape-time 0
+set -g history-limit 65535
+set -g base-index 1
+set -g pane-base-index 1
+
+# vi mode
+set -g status-keys vi
+setw -g mode-keys vi
+
+# 开启status-bar uft-8支持
+set -g status-utf8 on
+
+set -g status-interval 1
+
+set -g visual-activity on
+setw -g monitor-activity on
+
 # 状态栏
 
 # 颜色
@@ -175,7 +214,8 @@ usage: tmux [-2CluvV] [-c shell-command] [-f file] [-L socket-name]
   set-option -g status-justify centre
 
 # 左下角
-  set-option -g status-left '#[bg=black,fg=green][#[fg=cyan]#S#[fg=green]]'
+  # set-option -g status-left '#[bg=black,fg=green][#[fg=cyan]#S#[fg=green]]'
+  set-option -g status-left "#[fg=green]s#S:w#I.p#P#[default]"
   set-option -g status-left-length 20
 
 # 窗口列表
@@ -187,8 +227,6 @@ usage: tmux [-2CluvV] [-c shell-command] [-f file] [-L socket-name]
   set -g status-right '#[fg=green][#[fg=cyan]%Y-%m-%d#[fg=green]]'
 
 
-set -g status-keys vi
-setw -g mode-keys vi
 
 # prefix C-x
 unbind C-b
@@ -205,10 +243,14 @@ bind -t vi-copy 'y' copy-selection
 
 bind y run-shell "tmux show-buffer | xclip -sel clip -i" \; display-message "Copied tmux buffer to system clipboard"
 
+
+unbind %
+bind | splitw -h # horizontal split (prefix |)
+
 # bind a reload key r
 bind r source-file ~/.tmux.conf ; display-message "Config reloaded.."
 
-# panel --------------------------
+# 同一个窗口中的面板操作--------------
 #up
 bind-key k select-pane -U
 #down
@@ -218,13 +260,30 @@ bind-key h select-pane -L
 #right
 bind-key l select-pane -R
 
-unbind %
-bind | splitw -h # horizontal split (prefix |)
+# swap panes
+bind ^u swapp -U
+bind ^d swapp -D
+
 
 # window --------------------------
 
 #select last window
 bind-key C-l select-window -l
 
+bind-key D source-file ~/.tmux/layout
 
 ```         
+
+键入 Ctrl + b D (D是大写，要按shrift)，即会自动执行layout脚本
+
+~/.tmux/layout
+
+```
+selectp -t 1     #选中第0个窗格
+splitw -h -p 50  #将其分成左右两个
+selectp -t 2     #选中第一个，也就是右边那个
+splitw -v -p 50  #将其分成上下两个，这样就变成了图中的布局了
+selectp -t 1     #选回第一个
+```
+
+[1]: http://mingxinglai.com/cn/2012/09/tmux/
