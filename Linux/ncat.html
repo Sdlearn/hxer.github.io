@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>nc - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Linux">Linux</a>&nbsp;»&nbsp;nc</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">nc</div>
+  <div id="content">
+  <h2 id="help">help</h2>
+<div class="hlcode"><pre><span class="nv">$ncat</span> <span class="na">-h</span>
+
+<span class="nx">Ncat</span> <span class="mf">7.10</span> <span class="p">(</span> <span class="nx">https</span><span class="p">:</span><span class="c1">//nmap.org/ncat )</span>
+<span class="nb">Usage</span><span class="p">:</span> <span class="nx">ncat</span> <span class="err">[</span><span class="nx">options</span><span class="cp">]</span> <span class="cp">[</span><span class="nb">hostname</span><span class="cp">]</span> <span class="cp">[</span><span class="nb">port</span><span class="cp">]</span>
+
+Options taking a time assume seconds. Append &#39;ms&#39; for milliseconds,
+&#39;s&#39; for seconds, &#39;m&#39; for minutes, or &#39;h&#39; for hours (e.g. 500ms).
+  -4                         Use IPv4 only
+  -6                         Use IPv6 only
+  -U, --unixsock             Use Unix domain sockets only
+  -C, --crlf                 Use CRLF for EOL sequence
+  -c, --sh-exec <span class="nt">&lt;command&gt;</span>    Executes the given command via /bin/sh
+  -e, --exec <span class="nt">&lt;command&gt;</span>       Executes the given command
+      --lua-exec <span class="nt">&lt;filename&gt;</span>  Executes the given Lua script
+  -g hop1<span class="cp">[</span><span class="p">,</span><span class="nx">hop2</span><span class="p">,</span><span class="nx">...</span><span class="cp">]</span>         Loose source routing hop points (8 max)
+  -G <span class="nt">&lt;n&gt;</span>                     Loose source routing hop pointer (4, 8, 12, ...)
+  -m, --max-conns <span class="nt">&lt;n&gt;</span>        Maximum <span class="nt">&lt;n&gt;</span> simultaneous connections
+  -h, --help                 Display this help screen
+  -d, --delay <span class="nt">&lt;time&gt;</span>         Wait between read/writes
+  -o, --output <span class="nt">&lt;filename&gt;</span>    Dump session data to a file
+  -x, --hex-dump <span class="nt">&lt;filename&gt;</span>  Dump session data as hex to a file
+  -i, --idle-timeout <span class="nt">&lt;time&gt;</span>  Idle read/write timeout
+  -p, --source-port port     Specify source port to use
+  -s, --source addr          Specify source address to use (doesn&#39;t affect -l)
+  -l, --listen               Bind and listen for incoming connections
+  -k, --keep-open            Accept multiple connections in listen mode
+  -n, --nodns                Do not resolve hostnames via DNS
+  -t, --telnet               Answer Telnet negotiations
+  -u, --udp                  Use UDP instead of default TCP
+      --sctp                 Use SCTP instead of default TCP
+  -v, --verbose              Set verbosity level (can be used several times)
+  -w, --wait <span class="nt">&lt;time&gt;</span>          Connect timeout
+      --append-output        Append rather than clobber specified output files
+      --send-only            Only send data, ignoring received; quit on EOF
+      --recv-only            Only receive data, never send anything
+      --allow                Allow only given hosts to connect to Ncat
+      --allowfile            A file of hosts allowed to connect to Ncat
+      --deny                 Deny given hosts from connecting to Ncat
+      --denyfile             A file of hosts denied from connecting to Ncat
+      --broker               Enable Ncat&#39;s connection brokering mode
+      --chat                 Start a simple Ncat chat server
+      --proxy <span class="nt">&lt;addr</span><span class="cp">[</span><span class="p">:</span><span class="nb">port</span><span class="cp">]</span><span class="nt">&gt;</span>  Specify address of host to proxy through
+      --proxy-type <span class="nt">&lt;type&gt;</span>    Specify proxy type (&quot;http&quot; or &quot;socks4&quot; or &quot;socks5&quot;)
+      --proxy-auth <span class="nt">&lt;auth&gt;</span>    Authenticate with HTTP or SOCKS proxy server
+      --ssl                  Connect or listen with SSL
+      --ssl-cert             Specify SSL certificate file (PEM) for listening
+      --ssl-key              Specify SSL private key (PEM) for listening
+      --ssl-verify           Verify trust and domain name of certificates
+      --ssl-trustfile        PEM file containing trusted SSL certificates
+      --ssl-ciphers          Cipherlist containing SSL ciphers to use
+      --version              Display Ncat&#39;s version information and exit
+</pre></div>
+
+
+<h2 id="_1">常见用法</h2>
+<ul>
+<li>监听</li>
+</ul>
+<div class="hlcode"><pre><span class="n">nc</span> <span class="o">-</span><span class="n">lvp</span> <span class="n">port</span>
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

