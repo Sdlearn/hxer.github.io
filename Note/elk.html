@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>ELK - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Note">Note</a>&nbsp;»&nbsp;ELK</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">ELK</div>
+  <div id="content">
+  <h2 id="_1">简介</h2>
+<ul>
+<li>ElasticSearch</li>
+</ul>
+<p>Elasticsearch是一个基于Apache Lucene(TM)的开源的实时分布式搜索和分析引擎,可以快速处理大数据，用于全文搜索、结构化搜索、分析以及将这三者混合使用。</p>
+<p><a href="https://www.elastic.co/downloads/elasticsearch">Elasticsearch download</a></p>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/_installation.html">Elasticsearch install and running</a></p>
+<ul>
+<li>Logstash</li>
+</ul>
+<p><a href="https://www.elastic.co/downloads/logstash">logstash download</a>
+<a href="https://www.elastic.co/guide/en/logstash/current/index.html">logstash document</a></p>
+<ul>
+<li>Kibana</li>
+</ul>
+<p><a href="https://www.elastic.co/downloads/kibana">kibana download</a></p>
+<p><a href="https://www.elastic.co/guide/en/kibana/current/setup.html">kibana install and running</a></p>
+<p>download tar.gz and extract</p>
+<div class="hlcode"><pre><span class="n">cd</span> <span class="n">kibana</span><span class="o">-</span><span class="mf">4.5.0</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">x64</span><span class="o">/</span><span class="n">bin</span>
+<span class="p">.</span><span class="o">/</span><span class="n">kibana</span> 
+
+<span class="cp"># browser</span>
+<span class="nl">http:</span><span class="c1">//localhost:5601/app/kibana</span>
+</pre></div>
+
+
+<p>install and run app sense</p>
+<div class="hlcode"><pre><span class="n">cd</span> <span class="n">kibana</span><span class="o">-</span><span class="mf">4.5.0</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">x64</span><span class="o">/</span><span class="n">bin</span>
+<span class="p">.</span><span class="o">/</span><span class="n">kibana</span> <span class="n">plugin</span> <span class="o">--</span><span class="n">install</span> <span class="n">elastic</span><span class="o">/</span><span class="n">sense</span>
+<span class="p">.</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">kibana</span>
+</pre></div>
+
+
+<p>Open Sense your web browser by going to http://localhost:5601/app/sense</p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

@@ -88,8 +88,9 @@
 <ul>
 <li>标签属性值转码</li>
 </ul>
+<p>原理： HTML属性中，会自动对实体字符进行转义</p>
 <p>编码绕过，HTML标记的属性值过滤，HTML <strong>属性</strong> 本身支持ASCII码形式, 转码支持十进制和十六进制。</p>
-<p>可以在十进制（十六进制）字符后面加 <strong>;</strong>, 还可以在前面加0, 如</p>
+<p>可以在十进制（十六进制）字符后面加 <strong>;</strong> , 还可以在前面加 0 , 如</p>
 <div class="hlcode"><pre><span class="o">&amp;</span><span class="err">#</span><span class="mi">0</span>
 <span class="o">&amp;</span><span class="err">#</span><span class="mo">00</span>
 <span class="o">&amp;</span><span class="err">#</span><span class="mo">000</span>
@@ -109,6 +110,11 @@
 
 <p>注：</p>
 <div class="hlcode"><pre><span class="n">Tab</span><span class="p">(</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">9</span><span class="p">),</span> <span class="err">换行符</span><span class="p">(</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">10</span><span class="p">),</span> <span class="err">空格</span><span class="p">(</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">32</span><span class="p">)</span><span class="err">可以被插入到代码中任意地方。</span>
+</pre></div>
+
+
+<p><strong>防御：</strong></p>
+<div class="hlcode"><pre><span class="o">&amp;</span><span class="err">过滤为</span> <span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span> 
 </pre></div>
 
 
