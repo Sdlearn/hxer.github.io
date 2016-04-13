@@ -1,5 +1,5 @@
 ---
-title: "start & github page"
+title: "start github page"
 date: 2016-01-17 15:50
 ---
 
@@ -7,30 +7,41 @@ date: 2016-01-17 15:50
 
 ### install
 
->pip isntall simiki
+```
+pip isntall simiki
+```
 
 ### update
 
->pip install -U simiki
+```
+pip install -U simiki
+```
 
 ### Init Site
 
->mkdir mywiki && cd mywiki
+```
+mkdir mywiki && cd mywiki
 
->simiki init
+simiki init
+```
 
 ### Create a new wiki
 
->simiki new -t "start" -c Simiki
+```
+simiki new -t "start" -c Simiki
+```
 
 ### Generate
 
->simiki generate
+```
+simiki generate
+```
 
 ### Preview
 
->simiki preview
-
+```
+simiki preview
+```
 
 
 # github page

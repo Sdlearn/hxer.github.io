@@ -15,17 +15,25 @@ date: 2016-02-18 12:34
 
 综合：
 http://wargame.kr/
+
 西普学院
 http://www.simplexue.com/CTF.html
+
 http://canyouhack.it/
+
 http://fun.coolshell.cn/
+
 网络信息安全攻防学习平台 http://hackinglab.cn/
+
 idf实验室
 http://ctf.idf.cn/
+
 wechall
 http://www.wechall.net/
+
 合天
 http://erange.heetian.com/
+
 jctf
 http://ctf.3sec.cn/
 
@@ -34,15 +42,21 @@ http://www.ichunqiu.com/
 
 
 渗透:
+
 米安网
 http://ctf.moonsos.com/pentest/index.php
+
 http://webhacking.kr/
+
 四叔叔写的一个
+
 http://hackit.sinaapp.com/
 
 
-xss:
+* xss:
+
 http://prompt.ml/0
+
 http://xss.pkav.net/xss/
 
 
@@ -69,20 +83,21 @@ http://security.cs.rpi.edu/courses/binexp-spring2015/
 https://ctftime.org/event/list/upcoming
 
 
-来自：http://bbs.secbox.cn/thread-38-1-1.html
-
 
 http://overthewire.org
+
 都是Bin http://pwnable.kr
+
 还是Bin http://exploit-exercises.com
+
 都是re，http://reversing.kr
+
 bin干货区
+
 http://security.cs.rpi.edu/courses/binexp-spring2015/
 
-
-
-乌云XSS互动学习平台 http://xss.pkav.net/xss/
 补：脑洞题，严格上不算CTF，但是可以玩玩
+
 http://cafebabe.cc/nazo/
 
 [1]: http://www.hackdog.me
