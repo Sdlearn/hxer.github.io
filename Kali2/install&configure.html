@@ -88,6 +88,47 @@
 </pre></div>
 
 
+<h2 id="java">java</h2>
+<p><a href="http://www.k4linux.com/2015/11/kali-linux-2-0-tutorials-java.html">install java tutorials</a></p>
+<h3 id="download-latest-java-se-sdk">Download latest Java SE SDK :</h3>
+<p>To Download Java Select the file according to your operating system from the list.</p>
+<p>Download Link : http://www.java.com/en/download/linux_manual.jsp</p>
+<p>Java will be saved on Downloads/ folder or save it on /root.</p>
+<p>Uncompress archive:</p>
+<div class="hlcode"><pre><span class="n">root</span><span class="err">@</span><span class="n">k4linux</span><span class="o">:~</span><span class="err">#</span> <span class="n">tar</span> <span class="o">-</span><span class="n">zxvf</span> <span class="n">jre</span><span class="o">*</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span>
+</pre></div>
+
+
+<p>Move the extracted folder to /opt:</p>
+<div class="hlcode"><pre><span class="n">root</span><span class="err">@</span><span class="n">k4linux</span><span class="o">:~</span><span class="err">#</span> <span class="n">mv</span> <span class="n">jre</span><span class="o">*</span> <span class="o">/</span><span class="n">opt</span>
+</pre></div>
+
+
+<p>And go to the folder :</p>
+<div class="hlcode"><pre><span class="n">root</span><span class="err">@</span><span class="n">k4linux</span><span class="o">:~</span><span class="err">#</span> <span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jre</span><span class="o">*</span>
+</pre></div>
+
+
+<h3 id="install-and-register-binaries-of-java">Install and register binaries Of Java :</h3>
+<p>This step registers the downloaded version of Java as an alternative, and switches it to be used as the default:</p>
+<div class="hlcode"><pre><span class="n">update</span><span class="o">-</span><span class="n">alternatives</span> <span class="o">--</span><span class="n">install</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">java</span> <span class="n">java</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jre</span><span class="err">*/</span><span class="n">bin</span><span class="o">/</span><span class="n">java</span> <span class="mi">1</span>
+<span class="n">update</span><span class="o">-</span><span class="n">alternatives</span> <span class="o">--</span><span class="n">install</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mozilla</span><span class="o">/</span><span class="n">plugins</span><span class="o">/</span><span class="n">libjavaplugin</span><span class="p">.</span><span class="n">s</span><span class="err">­</span><span class="n">o</span> <span class="n">mozilla</span><span class="o">-</span><span class="n">javaplugin</span><span class="p">.</span><span class="n">so</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jre</span><span class="err">*/</span><span class="n">lib</span><span class="o">/</span><span class="n">amd64</span><span class="o">/</span><span class="n">libnpjp2</span><span class="p">.</span><span class="n">so</span> <span class="mi">1</span>
+<span class="n">update</span><span class="o">-</span><span class="n">alternatives</span> <span class="o">--</span><span class="n">set</span> <span class="n">java</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jre</span><span class="err">*/</span><span class="n">bin</span><span class="o">/</span><span class="n">java</span>
+<span class="n">update</span><span class="o">-</span><span class="n">alternatives</span> <span class="o">--</span><span class="n">set</span> <span class="n">javac</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jre</span><span class="err">*/</span><span class="n">bin</span><span class="o">/</span><span class="n">javac</span>
+<span class="n">update</span><span class="o">-</span><span class="n">alternatives</span> <span class="o">--</span><span class="n">set</span> <span class="n">mozilla</span><span class="o">-</span><span class="n">javaplugin</span><span class="p">.</span><span class="n">so</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jre</span><span class="err">*/</span><span class="n">lib</span><span class="o">/</span><span class="n">amd64</span><span class="o">/</span><span class="n">libnpjp2</span><span class="p">.</span><span class="n">so</span>
+</pre></div>
+
+
+<p>Testing your installation OF Java on Kali Linux 2.0:</p>
+<p>To check the browser plugin, restart your webrowser, and click “Do I have Java?”</p>
+<p>To check the version of Java you are now running:</p>
+<div class="hlcode"><pre> <span class="n">root</span><span class="err">@</span><span class="n">k4linux</span><span class="o">:~</span><span class="err">#</span> <span class="n">java</span> <span class="o">-</span><span class="n">version</span>
+<span class="n">java</span> <span class="n">version</span> <span class="s">&quot;1.8.0_60&quot;</span>
+<span class="n">Java</span><span class="p">(</span><span class="n">TM</span><span class="p">)</span> <span class="n">SE</span> <span class="n">Runtime</span> <span class="n">Environment</span> <span class="p">(</span><span class="n">build</span> <span class="mf">1.8.0</span><span class="n">_60</span><span class="o">-</span><span class="n">b27</span><span class="p">)</span>
+<span class="n">Java</span> <span class="n">HotSpot</span><span class="p">(</span><span class="n">TM</span><span class="p">)</span> <span class="mi">64</span><span class="o">-</span><span class="n">Bit</span> <span class="n">Server</span> <span class="n">VM</span> <span class="p">(</span><span class="n">build</span> <span class="mf">25.60</span><span class="o">-</span><span class="n">b23</span><span class="p">,</span> <span class="n">mixed</span> <span class="n">mode</span><span class="p">)</span>
+</pre></div>
+
+
 <h2 id="proxy">proxy</h2>
 <ul>
 <li>shadowsocks</li>
