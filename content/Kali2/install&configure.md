@@ -89,6 +89,60 @@ apt-get install firefox-mozilla-build
 sudo apt-get isntall chromium
 ```
 
+## java
+
+[install java tutorials][10]
+
+### Download latest Java SE SDK :
+
+To Download Java Select the file according to your operating system from the list.
+
+Download Link : http://www.java.com/en/download/linux_manual.jsp
+
+Java will be saved on Downloads/ folder or save it on /root.
+
+Uncompress archive:
+
+```
+root@k4linux:~# tar -zxvf jre*.tar.gz
+```
+
+Move the extracted folder to /opt:
+
+```
+root@k4linux:~# mv jre* /opt
+```
+
+And go to the folder :
+
+```
+root@k4linux:~# cd /opt/jre*
+```
+
+### Install and register binaries Of Java :
+
+This step registers the downloaded version of Java as an alternative, and switches it to be used as the default:
+
+```
+update-alternatives --install /usr/bin/java java /opt/jre*/bin/java 1
+update-alternatives --install /usr/lib/mozilla/plugins/libjavaplugin.s­o mozilla-javaplugin.so /opt/jre*/lib/amd64/libnpjp2.so 1
+update-alternatives --set java /opt/jre*/bin/java
+update-alternatives --set javac /opt/jre*/bin/javac
+update-alternatives --set mozilla-javaplugin.so /opt/jre*/lib/amd64/libnpjp2.so
+```
+
+Testing your installation OF Java on Kali Linux 2.0:
+
+To check the browser plugin, restart your webrowser, and click “Do I have Java?”
+
+To check the version of Java you are now running:
+
+```
+ root@k4linux:~# java -version
+java version "1.8.0_60"
+Java(TM) SE Runtime Environment (build 1.8.0_60-b27)
+Java HotSpot(TM) 64-Bit Server VM (build 25.60-b23, mixed mode)
+```
 
 ## proxy
 
@@ -646,3 +700,4 @@ maven 修建项目
 
 [8]: https://github.com/geeeeeeeeek/electronic-wechat/blob/master/README_zh.md?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io
 [9]: https://nodejs.org/en/download/
+[10]: http://www.k4linux.com/2015/11/kali-linux-2-0-tutorials-java.html
