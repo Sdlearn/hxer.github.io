@@ -86,10 +86,11 @@ s = unicode('中文')
 * unicode <==> string
 
 unicode ==> string : encode
+
 string  ==> unicode: decode
 
 
-* base64
+## base64
 
 * characters set
 

@@ -1,5 +1,5 @@
 ---
-title: "django 1.8.7"
+title: "Django 1.8.7"
 date: 2016-01-25 00:22
 ---
 
