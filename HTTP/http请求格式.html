@@ -22,11 +22,11 @@
 <blockquote>
 <p>特别提醒：请求报头后面有一个“回车换行”，平常使用的时候容易忽然这一点造成问题。</p>
 </blockquote>
-<div class="hlcode"><pre><span class="p">{</span><span class="n">method</span><span class="p">}</span> <span class="p">{</span><span class="n">path</span><span class="p">}</span> <span class="p">{</span><span class="n">http_version</span><span class="p">}(</span><span class="n">CRLF</span><span class="p">)</span>
-<span class="p">{</span><span class="n">header_name</span><span class="p">}</span><span class="o">:</span> <span class="p">{</span><span class="n">header_value</span><span class="p">}(</span><span class="n">CRLF</span><span class="p">)</span>
-<span class="p">...</span><span class="n">more</span> <span class="n">header</span> <span class="n">info</span><span class="p">(</span><span class="n">CRLF</span><span class="p">)</span>
-<span class="p">(</span><span class="n">CRLF</span><span class="p">)</span>
-<span class="p">{</span><span class="n">content</span><span class="p">}</span>
+<div class="hlcode"><pre>{method} {path} {http_version}(CRLF)
+{header_name}: {header_value}(CRLF)
+...more header info(CRLF)
+(CRLF)
+{content}
 </pre></div>
 
 
@@ -84,15 +84,15 @@ Host：www.eertime.com
 <ul>
 <li>Demo</li>
 </ul>
-<div class="hlcode"><pre><span class="n">GET</span> <span class="o">/</span><span class="n">index</span><span class="p">.</span><span class="n">php</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span><span class="err">\</span><span class="n">r</span><span class="err">\</span><span class="n">n</span>
-<span class="nl">Host:</span> <span class="n">www</span><span class="p">.</span><span class="n">eertime</span><span class="p">.</span><span class="n">com</span><span class="err">\</span><span class="n">r</span><span class="err">\</span><span class="n">n</span>
-<span class="n">User</span><span class="o">-</span><span class="n">Agent</span><span class="o">:</span> <span class="n">Mozilla</span><span class="o">/</span><span class="mf">5.0</span> <span class="p">(</span><span class="n">Windows</span> <span class="n">NT</span> <span class="mf">10.0</span><span class="p">;</span> <span class="n">WOW64</span><span class="p">;</span> <span class="n">rv</span><span class="o">:</span><span class="mf">42.0</span><span class="p">)</span> <span class="n">Gecko</span><span class="o">/</span><span class="mi">20100101</span> <span class="n">Firefox</span><span class="o">/</span><span class="mf">42.0</span><span class="err">\</span><span class="n">r</span><span class="err">\</span><span class="n">n</span>
-<span class="nl">Accept:</span> <span class="n">text</span><span class="o">/</span><span class="n">html</span><span class="p">,</span><span class="n">application</span><span class="o">/</span><span class="n">xhtml</span><span class="o">+</span><span class="n">xml</span><span class="p">,</span><span class="n">application</span><span class="o">/</span><span class="n">xml</span><span class="p">;</span><span class="n">q</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span><span class="err">*/</span><span class="o">*</span><span class="p">;</span><span class="n">q</span><span class="o">=</span><span class="mf">0.8</span><span class="err">\</span><span class="n">r</span><span class="err">\</span><span class="n">n</span>
-<span class="n">Accept</span><span class="o">-</span><span class="n">Language</span><span class="o">:</span> <span class="n">zh</span><span class="o">-</span><span class="n">CN</span><span class="p">,</span><span class="n">zh</span><span class="p">;</span><span class="n">q</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span><span class="n">en</span><span class="o">-</span><span class="n">US</span><span class="p">;</span><span class="n">q</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">en</span><span class="p">;</span><span class="n">q</span><span class="o">=</span><span class="mf">0.3</span><span class="err">\</span><span class="n">r</span><span class="err">\</span><span class="n">n</span>
-<span class="n">Accept</span><span class="o">-</span><span class="n">Encoding</span><span class="o">:</span> <span class="n">gzip</span><span class="p">,</span> <span class="n">deflate</span><span class="err">\</span><span class="n">r</span><span class="err">\</span><span class="n">n</span>
-<span class="nl">Connection:</span> <span class="n">keep</span><span class="o">-</span><span class="n">alive</span><span class="err">\</span><span class="n">r</span><span class="err">\</span><span class="n">n</span>
-<span class="n">Cache</span><span class="o">-</span><span class="n">Control</span><span class="o">:</span> <span class="n">max</span><span class="o">-</span><span class="n">age</span><span class="o">=</span><span class="mi">0</span><span class="err">\</span><span class="n">r</span><span class="err">\</span><span class="n">n</span>
-<span class="err">\</span><span class="n">r</span><span class="err">\</span><span class="n">n</span>
+<div class="hlcode"><pre><span class="err">GET /index.php HTTP/1.1\r\n</span>
+<span class="err">Host: www.eertime.com\r\n</span>
+<span class="err">User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0\r\n</span>
+<span class="err">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\n</span>
+<span class="err">Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3\r\n</span>
+<span class="err">Accept-Encoding: gzip, deflate\r\n</span>
+<span class="err">Connection: keep-alive\r\n</span>
+<span class="err">Cache-Control: max-age=0\r\n</span>
+<span class="err">\r\n</span>
 </pre></div>
 </div>
 

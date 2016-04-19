@@ -22,13 +22,13 @@
 <ul>
 <li>install </li>
 </ul>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">curl</span> <span class="o">-</span><span class="n">L</span> <span class="n">https</span><span class="o">:</span><span class="c1">//raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash</span>
+<div class="hlcode"><pre>$ curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer <span class="p">|</span> bash
 </pre></div>
 
 
 <p>install requirements</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">make</span> <span class="n">build</span><span class="o">-</span><span class="n">essential</span> <span class="n">libssl</span><span class="o">-</span><span class="n">dev</span> <span class="n">zlib1g</span><span class="o">-</span><span class="n">dev</span> <span class="n">libbz2</span><span class="o">-</span><span class="n">dev</span> \
-<span class="n">libreadline</span><span class="o">-</span><span class="n">dev</span> <span class="n">libsqlite3</span><span class="o">-</span><span class="n">dev</span> <span class="n">wget</span> <span class="n">curl</span> <span class="n">llvm</span>
+<div class="hlcode"><pre>$ sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev <span class="se">\</span>
+libreadline-dev libsqlite3-dev wget curl llvm
 </pre></div>
 
 
@@ -36,9 +36,9 @@
 <li>add PATH</li>
 </ul>
 <p>add follow to the end of file .bashrc</p>
-<div class="hlcode"><pre><span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="s">&quot;/home/hx/.pyenv/bin:$PATH&quot;</span>
-<span class="n">eval</span> <span class="s">&quot;$(pyenv init -)&quot;</span>
-<span class="n">eval</span> <span class="s">&quot;$(pyenv virtualenv-init -)&quot;</span>
+<div class="hlcode"><pre><span class="x">export PATH=&quot;/home/hx/.pyenv/bin:</span><span class="p">$</span><span class="nv">PATH</span><span class="x">&quot;</span>
+<span class="x">eval &quot;</span><span class="p">$(</span><span class="err">pyenv</span> <span class="err">init</span> <span class="err">-</span><span class="p">)</span><span class="x">&quot;</span>
+<span class="x">eval &quot;</span><span class="p">$(</span><span class="err">pyenv</span> <span class="err">virtualenv-init</span> <span class="err">-</span><span class="p">)</span><span class="x">&quot;</span>
 </pre></div>
 
 
@@ -51,14 +51,14 @@
 <ul>
 <li>安装特定版本</li>
 </ul>
-<div class="hlcode"><pre><span class="n">pyenv</span> <span class="n">install</span> <span class="mf">3.5.1</span>
+<div class="hlcode"><pre>pyenv install 3.5.1
 </pre></div>
 
 
 <ul>
 <li>首先我们创建一个2.7.1的虚拟环境</li>
 </ul>
-<div class="hlcode"><pre><span class="err">$</span><span class="o">:</span><span class="n">pyenv</span> <span class="n">virtualenv</span> <span class="mf">3.5.1</span> <span class="n">env351</span>
+<div class="hlcode"><pre>$:pyenv virtualenv 3.5.1 env351
 </pre></div>
 
 
@@ -69,8 +69,8 @@
 <ul>
 <li>进入虚拟环境</li>
 </ul>
-<div class="hlcode"><pre><span class="cp"># change to python 3.4.3 virtual environment, &quot;deactivate&quot; logout</span>
-<span class="n">pyenv</span> <span class="n">activate</span> <span class="n">env351</span>
+<div class="hlcode"><pre># change to python 3.4.3 virtual environment, &quot;deactivate&quot; logout
+pyenv activate env351
 </pre></div>
 
 
@@ -82,25 +82,25 @@
 <li>删除这个虚拟环境</li>
 </ul>
 <p>只要直接删除它所在的目录就好：</p>
-<div class="hlcode"><pre><span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">~/</span><span class="p">.</span><span class="n">pyenv</span><span class="o">/</span><span class="n">versions</span><span class="o">/</span><span class="n">env271</span><span class="o">/</span>
+<div class="hlcode"><pre>rm -rf ~/.pyenv/versions/env271/
 </pre></div>
 
 
 <h2 id="command-reference">Command Reference</h2>
 <p>Like git, the pyenv command delegates to subcommands based on its first argument.</p>
 <p>The most common subcommands are:</p>
-<div class="hlcode"><pre><span class="n">pyenv</span> <span class="n">commands</span>
-<span class="n">pyenv</span> <span class="n">local</span>
-<span class="n">pyenv</span> <span class="n">global</span>
-<span class="n">pyenv</span> <span class="n">shell</span>
-<span class="n">pyenv</span> <span class="n">install</span>
-<span class="n">pyenv</span> <span class="n">uninstall</span>
-<span class="n">pyenv</span> <span class="n">rehash</span>
-<span class="n">pyenv</span> <span class="n">version</span>
-<span class="n">pyenv</span> <span class="n">versions</span>
-<span class="n">pyenv</span> <span class="n">which</span>
-<span class="n">pyenv</span> <span class="n">whence</span>
-<span class="n">pyenv</span> <span class="n">commands</span>
+<div class="hlcode"><pre>pyenv commands
+pyenv local
+pyenv global
+pyenv shell
+pyenv install
+pyenv uninstall
+pyenv rehash
+pyenv version
+pyenv versions
+pyenv which
+pyenv whence
+pyenv commands
 </pre></div>
 
 
@@ -118,33 +118,33 @@
 </ul>
 <p>You can specify multiple versions as local Python at once.</p>
 <p>Let's say if you have two versions of 2.7.6 and 3.3.3. If you prefer 2.7.6 over 3.3.3,</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">pyenv</span> <span class="n">local</span> <span class="mf">2.7.6</span> <span class="mf">3.3.3</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">versions</span>
-  <span class="n">system</span>
-<span class="o">*</span> <span class="mf">2.7.6</span> <span class="p">(</span><span class="n">set</span> <span class="n">by</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">yyuu</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="p">.</span><span class="n">python</span><span class="o">-</span><span class="n">version</span><span class="p">)</span>
-<span class="o">*</span> <span class="mf">3.3.3</span> <span class="p">(</span><span class="n">set</span> <span class="n">by</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">yyuu</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="p">.</span><span class="n">python</span><span class="o">-</span><span class="n">version</span><span class="p">)</span>
-<span class="err">$</span> <span class="n">python</span> <span class="o">--</span><span class="n">version</span>
-<span class="n">Python</span> <span class="mf">2.7.6</span>
-<span class="err">$</span> <span class="n">python2</span><span class="mf">.7</span> <span class="o">--</span><span class="n">version</span>
-<span class="n">Python</span> <span class="mf">2.7.6</span>
-<span class="err">$</span> <span class="n">python3</span><span class="mf">.3</span> <span class="o">--</span><span class="n">version</span>
-<span class="n">Python</span> <span class="mf">3.3.3</span>
+<div class="hlcode"><pre>$ pyenv <span class="nb">local</span> 2.7.6 3.3.3
+$ pyenv versions
+  system
+* 2.7.6 <span class="o">(</span><span class="nb">set</span> by /Users/yyuu/path/to/project/.python-version<span class="o">)</span>
+* 3.3.3 <span class="o">(</span><span class="nb">set</span> by /Users/yyuu/path/to/project/.python-version<span class="o">)</span>
+$ python --version
+Python 2.7.6
+$ python2.7 --version
+Python 2.7.6
+$ python3.3 --version
+Python 3.3.3
 </pre></div>
 
 
 <p>or, if you prefer 3.3.3 over 2.7.6,</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">pyenv</span> <span class="n">local</span> <span class="mf">3.3.3</span> <span class="mf">2.7.6</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">versions</span>
-  <span class="n">system</span>
-<span class="o">*</span> <span class="mf">2.7.6</span> <span class="p">(</span><span class="n">set</span> <span class="n">by</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">yyuu</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="p">.</span><span class="n">python</span><span class="o">-</span><span class="n">version</span><span class="p">)</span>
-<span class="o">*</span> <span class="mf">3.3.3</span> <span class="p">(</span><span class="n">set</span> <span class="n">by</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">yyuu</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="p">.</span><span class="n">python</span><span class="o">-</span><span class="n">version</span><span class="p">)</span>
-  <span class="n">venv27</span>
-<span class="err">$</span> <span class="n">python</span> <span class="o">--</span><span class="n">version</span>
-<span class="n">Python</span> <span class="mf">3.3.3</span>
-<span class="err">$</span> <span class="n">python2</span><span class="mf">.7</span> <span class="o">--</span><span class="n">version</span>
-<span class="n">Python</span> <span class="mf">2.7.6</span>
-<span class="err">$</span> <span class="n">python3</span><span class="mf">.3</span> <span class="o">--</span><span class="n">version</span>
-<span class="n">Python</span> <span class="mf">3.3.3</span>
+<div class="hlcode"><pre>$ pyenv <span class="nb">local</span> 3.3.3 2.7.6
+$ pyenv versions
+  system
+* 2.7.6 <span class="o">(</span><span class="nb">set</span> by /Users/yyuu/path/to/project/.python-version<span class="o">)</span>
+* 3.3.3 <span class="o">(</span><span class="nb">set</span> by /Users/yyuu/path/to/project/.python-version<span class="o">)</span>
+  venv27
+$ python --version
+Python 3.3.3
+$ python2.7 --version
+Python 2.7.6
+$ python3.3 --version
+Python 3.3.3
 </pre></div>
 
 
@@ -152,7 +152,7 @@
 <li>pyenv global</li>
 </ul>
 <p>Sets the global version of Python to be used in all shells by writing the version name to the ~/.pyenv/version file. This version can be overridden by an application-specific .python-version file, or by setting the PYENV_VERSIONenvironment variable.</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">pyenv</span> <span class="n">global</span> <span class="mf">2.7.6</span>
+<div class="hlcode"><pre>$ pyenv global 2.7.6
 </pre></div>
 
 
@@ -161,33 +161,33 @@
 <p>pyenv global (advanced)</p>
 <p>You can specify multiple versions as global Python at once.</p>
 <p>Let's say if you have two versions of 2.7.6 and 3.3.3. If you prefer 2.7.6 over 3.3.3,</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">pyenv</span> <span class="n">global</span> <span class="mf">2.7.6</span> <span class="mf">3.3.3</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">versions</span>
-  <span class="n">system</span>
-<span class="o">*</span> <span class="mf">2.7.6</span> <span class="p">(</span><span class="n">set</span> <span class="n">by</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">yyuu</span><span class="o">/</span><span class="p">.</span><span class="n">pyenv</span><span class="o">/</span><span class="n">version</span><span class="p">)</span>
-<span class="o">*</span> <span class="mf">3.3.3</span> <span class="p">(</span><span class="n">set</span> <span class="n">by</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">yyuu</span><span class="o">/</span><span class="p">.</span><span class="n">pyenv</span><span class="o">/</span><span class="n">version</span><span class="p">)</span>
-<span class="err">$</span> <span class="n">python</span> <span class="o">--</span><span class="n">version</span>
-<span class="n">Python</span> <span class="mf">2.7.6</span>
-<span class="err">$</span> <span class="n">python2</span><span class="mf">.7</span> <span class="o">--</span><span class="n">version</span>
-<span class="n">Python</span> <span class="mf">2.7.6</span>
-<span class="err">$</span> <span class="n">python3</span><span class="mf">.3</span> <span class="o">--</span><span class="n">version</span>
-<span class="n">Python</span> <span class="mf">3.3.3</span>
+<div class="hlcode"><pre>$ pyenv global 2.7.6 3.3.3
+$ pyenv versions
+  system
+* 2.7.6 <span class="o">(</span><span class="nb">set</span> by /Users/yyuu/.pyenv/version<span class="o">)</span>
+* 3.3.3 <span class="o">(</span><span class="nb">set</span> by /Users/yyuu/.pyenv/version<span class="o">)</span>
+$ python --version
+Python 2.7.6
+$ python2.7 --version
+Python 2.7.6
+$ python3.3 --version
+Python 3.3.3
 </pre></div>
 
 
 <p>or, if you prefer 3.3.3 over 2.7.6,</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">pyenv</span> <span class="n">global</span> <span class="mf">3.3.3</span> <span class="mf">2.7.6</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">versions</span>
-  <span class="n">system</span>
-<span class="o">*</span> <span class="mf">2.7.6</span> <span class="p">(</span><span class="n">set</span> <span class="n">by</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">yyuu</span><span class="o">/</span><span class="p">.</span><span class="n">pyenv</span><span class="o">/</span><span class="n">version</span><span class="p">)</span>
-<span class="o">*</span> <span class="mf">3.3.3</span> <span class="p">(</span><span class="n">set</span> <span class="n">by</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">yyuu</span><span class="o">/</span><span class="p">.</span><span class="n">pyenv</span><span class="o">/</span><span class="n">version</span><span class="p">)</span>
-  <span class="n">venv27</span>
-<span class="err">$</span> <span class="n">python</span> <span class="o">--</span><span class="n">version</span>
-<span class="n">Python</span> <span class="mf">3.3.3</span>
-<span class="err">$</span> <span class="n">python2</span><span class="mf">.7</span> <span class="o">--</span><span class="n">version</span>
-<span class="n">Python</span> <span class="mf">2.7.6</span>
-<span class="err">$</span> <span class="n">python3</span><span class="mf">.3</span> <span class="o">--</span><span class="n">version</span>
-<span class="n">Python</span> <span class="mf">3.3.3</span>
+<div class="hlcode"><pre>$ pyenv global 3.3.3 2.7.6
+$ pyenv versions
+  system
+* 2.7.6 <span class="o">(</span><span class="nb">set</span> by /Users/yyuu/.pyenv/version<span class="o">)</span>
+* 3.3.3 <span class="o">(</span><span class="nb">set</span> by /Users/yyuu/.pyenv/version<span class="o">)</span>
+  venv27
+$ python --version
+Python 3.3.3
+$ python2.7 --version
+Python 2.7.6
+$ python3.3 --version
+Python 3.3.3
 </pre></div>
 
 
@@ -203,33 +203,33 @@
 <p>pyenv shell (advanced)</p>
 <p>You can specify multiple versions via PYENV_VERSION at once.</p>
 <p>Let's say if you have two versions of 2.7.6 and 3.3.3. If you prefer 2.7.6 over 3.3.3,</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">pyenv</span> <span class="n">shell</span> <span class="mf">2.7.6</span> <span class="mf">3.3.3</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">versions</span>
-  <span class="n">system</span>
-<span class="o">*</span> <span class="mf">2.7.6</span> <span class="p">(</span><span class="n">set</span> <span class="n">by</span> <span class="n">PYENV_VERSION</span> <span class="n">environment</span> <span class="n">variable</span><span class="p">)</span>
-<span class="o">*</span> <span class="mf">3.3.3</span> <span class="p">(</span><span class="n">set</span> <span class="n">by</span> <span class="n">PYENV_VERSION</span> <span class="n">environment</span> <span class="n">variable</span><span class="p">)</span>
-<span class="err">$</span> <span class="n">python</span> <span class="o">--</span><span class="n">version</span>
-<span class="n">Python</span> <span class="mf">2.7.6</span>
-<span class="err">$</span> <span class="n">python2</span><span class="mf">.7</span> <span class="o">--</span><span class="n">version</span>
-<span class="n">Python</span> <span class="mf">2.7.6</span>
-<span class="err">$</span> <span class="n">python3</span><span class="mf">.3</span> <span class="o">--</span><span class="n">version</span>
-<span class="n">Python</span> <span class="mf">3.3.3</span>
+<div class="hlcode"><pre>$ pyenv shell 2.7.6 3.3.3
+$ pyenv versions
+  system
+* 2.7.6 <span class="o">(</span><span class="nb">set</span> by PYENV_VERSION environment variable<span class="o">)</span>
+* 3.3.3 <span class="o">(</span><span class="nb">set</span> by PYENV_VERSION environment variable<span class="o">)</span>
+$ python --version
+Python 2.7.6
+$ python2.7 --version
+Python 2.7.6
+$ python3.3 --version
+Python 3.3.3
 </pre></div>
 
 
 <p>or, if you prefer 3.3.3 over 2.7.6,</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">pyenv</span> <span class="n">shell</span> <span class="mf">3.3.3</span> <span class="mf">2.7.6</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">versions</span>
-  <span class="n">system</span>
-<span class="o">*</span> <span class="mf">2.7.6</span> <span class="p">(</span><span class="n">set</span> <span class="n">by</span> <span class="n">PYENV_VERSION</span> <span class="n">environment</span> <span class="n">variable</span><span class="p">)</span>
-<span class="o">*</span> <span class="mf">3.3.3</span> <span class="p">(</span><span class="n">set</span> <span class="n">by</span> <span class="n">PYENV_VERSION</span> <span class="n">environment</span> <span class="n">variable</span><span class="p">)</span>
-  <span class="n">venv27</span>
-<span class="err">$</span> <span class="n">python</span> <span class="o">--</span><span class="n">version</span>
-<span class="n">Python</span> <span class="mf">3.3.3</span>
-<span class="err">$</span> <span class="n">python2</span><span class="mf">.7</span> <span class="o">--</span><span class="n">version</span>
-<span class="n">Python</span> <span class="mf">2.7.6</span>
-<span class="err">$</span> <span class="n">python3</span><span class="mf">.3</span> <span class="o">--</span><span class="n">version</span>
-<span class="n">Python</span> <span class="mf">3.3.3</span>
+<div class="hlcode"><pre>$ pyenv shell 3.3.3 2.7.6
+$ pyenv versions
+  system
+* 2.7.6 <span class="o">(</span><span class="nb">set</span> by PYENV_VERSION environment variable<span class="o">)</span>
+* 3.3.3 <span class="o">(</span><span class="nb">set</span> by PYENV_VERSION environment variable<span class="o">)</span>
+  venv27
+$ python --version
+Python 3.3.3
+$ python2.7 --version
+Python 2.7.6
+$ python3.3 --version
+Python 3.3.3
 </pre></div>
 
 
@@ -279,11 +279,11 @@
 <li>pyenv versions</li>
 </ul>
 <p>Lists all Python versions known to pyenv, and shows an asterisk next to the currently active version.</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">pyenv</span> <span class="n">versions</span>
-<span class="o">*</span> <span class="mf">2.7.6</span> <span class="p">(</span><span class="n">set</span> <span class="n">by</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">yyuu</span><span class="o">/</span><span class="p">.</span><span class="n">pyenv</span><span class="o">/</span><span class="n">version</span><span class="p">)</span>
-  <span class="mf">3.3.3</span>
-  <span class="n">jython</span><span class="o">-</span><span class="mf">2.5.3</span>
-  <span class="n">pypy</span><span class="o">-</span><span class="mf">2.2.1</span>
+<div class="hlcode"><pre>$ pyenv versions
+* 2.7.6 <span class="o">(</span><span class="nb">set</span> by /home/yyuu/.pyenv/version<span class="o">)</span>
+  3.3.3
+  jython-2.5.3
+  pypy-2.2.1
 </pre></div>
 
 
@@ -291,8 +291,8 @@
 <li>pyenv which</li>
 </ul>
 <p>Displays the full path to the executable that pyenv will invoke when you run the given command.</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">pyenv</span> <span class="n">which</span> <span class="n">python3</span><span class="mf">.3</span>
-<span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">yyuu</span><span class="o">/</span><span class="p">.</span><span class="n">pyenv</span><span class="o">/</span><span class="n">versions</span><span class="o">/</span><span class="mf">3.3.3</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">python3</span><span class="mf">.3</span>
+<div class="hlcode"><pre>$ pyenv which python3.3
+/home/yyuu/.pyenv/versions/3.3.3/bin/python3.3
 </pre></div>
 
 
@@ -300,10 +300,10 @@
 <li>pyenv whence</li>
 </ul>
 <p>Lists all Python versions with the given command installed.</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">pyenv</span> <span class="n">whence</span> <span class="mi">2</span><span class="n">to3</span>
-<span class="mf">2.6.8</span>
-<span class="mf">2.7.6</span>
-<span class="mf">3.3.3</span>
+<div class="hlcode"><pre>$ pyenv whence 2to3
+2.6.8
+2.7.6
+3.3.3
 </pre></div>
 
 
@@ -311,12 +311,12 @@
 <li>pyenv install</li>
 </ul>
 <p>Part of Python-build, this installs versions of python</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">pyenv</span> <span class="n">install</span> <span class="mf">2.7.6</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">install</span> <span class="mf">2.6.8</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">versions</span>
-  <span class="n">system</span>
-  <span class="mf">2.6.8</span>
-<span class="o">*</span> <span class="mf">2.7.6</span> <span class="p">(</span><span class="n">set</span> <span class="n">by</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">yyuu</span><span class="o">/</span><span class="p">.</span><span class="n">pyenv</span><span class="o">/</span><span class="n">version</span><span class="p">)</span>
+<div class="hlcode"><pre>$ pyenv install 2.7.6
+$ pyenv install 2.6.8
+$ pyenv versions
+  system
+  2.6.8
+* 2.7.6 <span class="o">(</span><span class="nb">set</span> by /home/yyuu/.pyenv/version<span class="o">)</span>
 </pre></div>
 
 

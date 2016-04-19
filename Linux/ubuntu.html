@@ -21,24 +21,24 @@
   <h1 id="lamp">lamp</h1>
 <p>首先切换到root下</p>
 <p>1.安装mysql5</p>
-<div class="hlcode"><pre><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">mysql</span><span class="o">-</span><span class="n">server</span> <span class="n">mysql</span><span class="o">-</span><span class="n">client</span>
+<div class="hlcode"><pre>apt-get install mysql-server mysql-client
 </pre></div>
 
 
 <p>然后在红色区域设置密码</p>
 <p>2.安装apache2</p>
-<div class="hlcode"><pre><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">apache2</span>
+<div class="hlcode"><pre>apt-get install apache2
 </pre></div>
 
 
 <p>现在,输入localhost,你应该看到apache2的测试页:</p>
 <p>3.安装php5</p>
-<div class="hlcode"><pre><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">php5</span> <span class="n">libapache2</span><span class="o">-</span><span class="n">mod</span><span class="o">-</span><span class="n">php5</span>
+<div class="hlcode"><pre>apt-get install php5 libapache2-mod-php5
 </pre></div>
 
 
 <p>然后重启</p>
-<div class="hlcode"><pre><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">apache2</span> <span class="n">restart</span>
+<div class="hlcode"><pre>/etc/init.d/apache2 restart
 </pre></div>
 
 
@@ -52,34 +52,34 @@
 
 <p>出现123就成功</p>
 <p>5.当然这还不够，php获得MySQL支持</p>
-<div class="hlcode"><pre><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">php5</span><span class="o">-</span><span class="n">mysql</span> <span class="n">php5</span><span class="o">-</span><span class="n">curl</span> <span class="n">php5</span><span class="o">-</span><span class="n">gd</span> <span class="n">php5</span><span class="o">-</span><span class="n">idn</span> <span class="n">php</span><span class="o">-</span><span class="n">pear</span> <span class="n">php5</span><span class="o">-</span><span class="n">imagick</span> <span class="n">php5</span><span class="o">-</span><span class="n">imap</span> <span class="n">php5</span><span class="o">-</span><span class="n">mcrypt</span> <span class="n">php5</span><span class="o">-</span><span class="n">memcache</span> <span class="n">php5</span><span class="o">-</span><span class="n">ming</span> <span class="n">php5</span><span class="o">-</span><span class="n">ps</span> <span class="n">php5</span><span class="o">-</span><span class="n">pspell</span> <span class="n">php5</span><span class="o">-</span><span class="n">recode</span> <span class="n">php5</span><span class="o">-</span><span class="n">snmp</span> <span class="n">php5</span><span class="o">-</span><span class="n">sqlite</span> <span class="n">php5</span><span class="o">-</span><span class="n">tidy</span> <span class="n">php5</span><span class="o">-</span><span class="n">xmlrpc</span> <span class="n">php5</span><span class="o">-</span><span class="n">xsl</span>
+<div class="hlcode"><pre>apt-get install php5-mysql php5-curl php5-gd php5-idn php-pear php5-imagick php5-imap php5-mcrypt php5-memcache php5-ming php5-ps php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl
 </pre></div>
 
 
 <p>重新启动apache:</p>
-<div class="hlcode"><pre><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">apache2</span> <span class="n">restart</span>
+<div class="hlcode"><pre>/etc/init.d/apache2 restart
 </pre></div>
 
 
 <p>6.安装phpmyadmin</p>
-<div class="hlcode"><pre><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">phpmyadmin</span>
+<div class="hlcode"><pre>apt-get install phpmyadmin
 </pre></div>
 
 
 <p>然后将创建一个链接 ：</p>
-<div class="hlcode"><pre><span class="n">ln</span> <span class="o">-</span><span class="n">l</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">phpmyadmin</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span>
+<div class="hlcode"><pre>ln -l /usr/share/phpmyadmin /var/www
 </pre></div>
 
 
 <p>OK了。</p>
 <p>7.最后修改一下根目录</p>
-<div class="hlcode"><pre><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">apache2</span><span class="p">.</span><span class="n">conf</span>
-<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">sites</span><span class="o">-</span><span class="n">available</span><span class="o">/</span><span class="mo">000</span><span class="o">-</span><span class="k">default</span><span class="p">.</span><span class="n">conf</span>
+<div class="hlcode"><pre>/etc/apache2/apache2.conf
+/etc/apache2/sites-available/000-default.conf
 </pre></div>
 
 
 <p>根据自己的需要改下即可。</p>
-<div class="hlcode"><pre><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">apache2</span> <span class="n">restart</span>
+<div class="hlcode"><pre>/etc/init.d/apache2 restart
 </pre></div>
 
 

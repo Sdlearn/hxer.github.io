@@ -27,8 +27,8 @@
 <p>cmd line</p>
 </li>
 </ul>
-<div class="hlcode"><pre><span class="cp"># success for debian, ubuntu, kali</span>
-<span class="n">curl</span> <span class="o">-</span><span class="n">sSL</span> <span class="n">https</span><span class="o">:</span><span class="c1">//get.docker.com/ | sh</span>
+<div class="hlcode"><pre># success for debian, ubuntu, kali
+curl -sSL https://get.docker.com/ | sh
 </pre></div>
 
 
@@ -37,8 +37,8 @@
 <li>-p</li>
 </ul>
 <p>指定端口映射(publish)。将主机的特定端口映射到容器的特定端口。格式为： -p 主机端口:容器端口 。</p>
-<div class="hlcode"><pre><span class="nb">run</span> <span class="na">-p</span> <span class="o">&lt;</span><span class="nx">host_port</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="nx">container_port</span><span class="o">&gt;</span>
-<span class="nx">e.g.</span> <span class="nb">run</span> <span class="na">-p</span> <span class="mi">8000</span><span class="p">:</span><span class="mi">8000</span><span class="p">,</span> <span class="nb">run</span> <span class="na">-p</span> <span class="mf">192.168.0.9</span><span class="p">:</span><span class="mi">80</span><span class="p">:</span><span class="mi">80</span>
+<div class="hlcode"><pre>run -p &lt;host_port&gt;:&lt;container_port&gt;
+e.g. run -p 8000:8000, run -p 192.168.0.9:80:80
 </pre></div>
 
 
@@ -63,14 +63,14 @@
 <li>-v</li>
 </ul>
 <p>挂载数据到容器内指定位置。如果没有指定挂载点，将仅仅生成一个可以被其他容器挂载的目录。可以多次使用 -v 来挂载多个路径。</p>
-<div class="hlcode"><pre><span class="cp"># 添加一个数据卷</span>
-<span class="o">-</span><span class="n">v</span> <span class="n">container_path</span>
+<div class="hlcode"><pre># 添加一个数据卷
+-v container_path
 
-<span class="cp"># 挂载当前主机的一个目录到容器中。如果容器内的挂载点不存在，则会自动创建。目录、文件都可以被挂载，</span>
-<span class="o">-</span><span class="n">v</span> <span class="n">host_path</span><span class="o">:</span><span class="n">container_path</span>
+# 挂载当前主机的一个目录到容器中。如果容器内的挂载点不存在，则会自动创建。目录、文件都可以被挂载，
+-v host_path:container_path
 
-<span class="cp"># 默认挂载卷是可读写的，可以在挂载时指定只读</span>
-<span class="o">-</span><span class="n">v</span> <span class="n">host_path</span><span class="o">:</span><span class="n">container_path</span><span class="o">:</span><span class="n">ro</span>
+# 默认挂载卷是可读写的，可以在挂载时指定只读
+-v host_path:container_path:ro
 </pre></div>
 
 
@@ -92,8 +92,8 @@
 <p>格式为： --link 要连接的容器名:连接名</p>
 <p>连接其他容器，并且为连接指定一个名称。docker 通过网桥来实现容器间的网络互联，因此如果创建容器时添加了此参数，则会自动在容器的 hosts 文件中加上被连接容器的 ip，ip 的别(域)名就是这里的连接名。不指定则默认为容器名称。</p>
 <h2 id="exec">exec</h2>
-<div class="hlcode"><pre><span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">name</span> <span class="n">dubuntu</span> <span class="o">-</span><span class="n">d</span> <span class="n">ubuntu</span>
-<span class="n">docker</span> <span class="n">exec</span> <span class="o">-</span><span class="n">it</span> <span class="n">dubuntu</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+<div class="hlcode"><pre>docker run --name dubuntu -d ubuntu
+docker exec -it dubuntu /bin/bash
 </pre></div>
 </div>
 

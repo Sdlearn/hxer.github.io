@@ -24,19 +24,19 @@
 <p>random.random()用于生成一个0到1的随机符点数: 0 &lt;= n &lt; 1.0</p>
 <h3 id="randomuniform">random.uniform</h3>
 <p>random.uniform的函数原型为：random.uniform(a, b)，用于生成一个指定范围内的随机符点数，两个参数其中一个是上限，一个是下限。如果a &gt; b，则生成的随机数n: b &lt;= n &lt;= a。如果 a &lt; b， 则 a &lt;= n &lt;= b。</p>
-<div class="hlcode"><pre><span class="n">print</span> <span class="n">random</span><span class="p">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
-<span class="n">print</span> <span class="n">random</span><span class="p">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-<span class="cp">#---- 结果（不同机器上的结果不一样）</span>
-<span class="cp">#18.7356606526</span>
-<span class="cp">#12.5798298022</span>
+<div class="hlcode"><pre>print random.uniform(10, 20)
+print random.uniform(20, 10)
+#---- 结果（不同机器上的结果不一样）
+#18.7356606526
+#12.5798298022
 </pre></div>
 
 
 <h3 id="randomrandint">random.randint</h3>
 <p>random.randint()的函数原型为：random.randint(a, b)，用于生成一个指定范围内的整数。其中参数a是下限，参数b是上限，生成的随机数n: a &lt;= n &lt;= b</p>
-<div class="hlcode"><pre><span class="n">print</span> <span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>  <span class="err">#生成的随机数</span><span class="n">n</span><span class="o">:</span> <span class="mi">12</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">20</span>
-<span class="n">print</span> <span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>  <span class="err">#结果永远是</span><span class="mi">20</span>
-<span class="cp"># print random.randint(20, 10)  #该语句是错误的。下限必须小于上限。</span>
+<div class="hlcode"><pre>print random.randint(12, 20)  #生成的随机数n: 12 &lt;= n &lt;= 20
+print random.randint(20, 20)  #结果永远是20
+# print random.randint(20, 10)  #该语句是错误的。下限必须小于上限。
 </pre></div>
 
 
@@ -44,38 +44,38 @@
 <p>random.randrange的函数原型为：random.randrange([start], stop[, step])，从指定范围内，按指定基数递增的集合中 获取一个随机数。如：random.randrange(10, 100, 2)，结果相当于从[10, 12, 14, 16, ... 96, 98]序列中获取一个随机数。random.randrange(10, 100, 2)在结果上与 random.choice(range(10, 100, 2) 等效。</p>
 <h3 id="randomchoice">random.choice</h3>
 <p>random.choice从序列中获取一个随机元素。其函数原型为：random.choice(sequence)。参数sequence表示一个有序类型。这里要说明 一下：sequence在python不是一种特定的类型，而是泛指一系列的类型。list, tuple, 字符串都属于sequence。</p>
-<div class="hlcode"><pre><span class="n">print</span> <span class="n">random</span><span class="p">.</span><span class="n">choice</span><span class="p">(</span><span class="s">&quot;学习Python&quot;</span><span class="p">)</span> 
-<span class="n">print</span> <span class="n">random</span><span class="p">.</span><span class="n">choice</span><span class="p">([</span><span class="s">&quot;JGood&quot;</span><span class="p">,</span> <span class="s">&quot;is&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;handsome&quot;</span><span class="p">,</span> <span class="s">&quot;boy&quot;</span><span class="p">])</span>
-<span class="n">print</span> <span class="n">random</span><span class="p">.</span><span class="n">choice</span><span class="p">((</span><span class="s">&quot;Tuple&quot;</span><span class="p">,</span> <span class="s">&quot;List&quot;</span><span class="p">,</span> <span class="s">&quot;Dict&quot;</span><span class="p">))</span>
+<div class="hlcode"><pre>print random.choice(&quot;学习Python&quot;) 
+print random.choice([&quot;JGood&quot;, &quot;is&quot;, &quot;a&quot;, &quot;handsome&quot;, &quot;boy&quot;])
+print random.choice((&quot;Tuple&quot;, &quot;List&quot;, &quot;Dict&quot;))
 </pre></div>
 
 
 <h3 id="randomshuffle">random.shuffle</h3>
 <p>random.shuffle的函数原型为：random.shuffle(x[, random])，用于将一个列表中的元素打乱。如:</p>
-<div class="hlcode"><pre><span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Python&quot;</span><span class="p">,</span> <span class="s">&quot;is&quot;</span><span class="p">,</span> <span class="s">&quot;powerful&quot;</span><span class="p">,</span> <span class="s">&quot;simple&quot;</span><span class="p">,</span> <span class="s">&quot;and so on...&quot;</span><span class="p">]</span>
-<span class="n">random</span><span class="p">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-<span class="n">print</span> <span class="n">p</span>
-<span class="cp">#---- 结果（不同机器上的结果可能不一样。）</span>
-<span class="cp"># [&#39;powerful&#39;, &#39;simple&#39;, &#39;is&#39;, &#39;Python&#39;, &#39;and so on...&#39;]</span>
+<div class="hlcode"><pre>p = [&quot;Python&quot;, &quot;is&quot;, &quot;powerful&quot;, &quot;simple&quot;, &quot;and so on...&quot;]
+random.shuffle(p)
+print p
+#---- 结果（不同机器上的结果可能不一样。）
+# [&#39;powerful&#39;, &#39;simple&#39;, &#39;is&#39;, &#39;Python&#39;, &#39;and so on...&#39;]
 </pre></div>
 
 
 <h3 id="randomsample">random.sample</h3>
 <p>random.sample的函数原型为：random.sample(sequence, k)，从指定序列中随机获取指定长度的片断。sample函数不会修改原有序列。</p>
-<div class="hlcode"><pre><span class="n">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
-<span class="n">slice</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">sample</span><span class="p">(</span><span class="n">list</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>  <span class="err">#从</span><span class="n">list</span><span class="err">中随机获取</span><span class="mi">5</span><span class="err">个元素，作为一个片断返回</span>
-<span class="n">print</span> <span class="n">slice</span> <span class="err">#</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-<span class="n">print</span> <span class="n">list</span>  <span class="err">#</span> <span class="err">原有序列并没有改变。</span>
+<div class="hlcode"><pre>list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+slice = random.sample(list, 5)  #从list中随机获取5个元素，作为一个片断返回
+print slice # [4, 9, 6, 10, 5]
+print list  # 原有序列并没有改变。
 </pre></div>
 
 
 <h2 id="_1">常用随机化方法</h2>
-<div class="hlcode"><pre><span class="n">def</span> <span class="n">id_generator</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">chars</span><span class="p">)</span><span class="o">:</span>
-    <span class="k">return</span> <span class="err">&#39;&#39;</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">random</span><span class="p">.</span><span class="n">choice</span><span class="p">(</span><span class="n">chars</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="n">in</span> <span class="n">range</span><span class="p">(</span><span class="n">size</span><span class="p">))</span>
+<div class="hlcode"><pre>def id_generator(size, chars):
+    return &#39;&#39;.join(random.choice(chars) for _ in range(size))
 
-<span class="cp"># 随机生成由大写字母和数字组成的字符串</span>
-<span class="n">print</span> <span class="n">id_generator</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">string</span><span class="p">.</span><span class="n">ascii_uppercase</span> <span class="o">+</span> <span class="n">string</span><span class="p">.</span><span class="n">digits</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="err">&#39;</span><span class="n">G5G74W</span><span class="err">&#39;</span>
+# 随机生成由大写字母和数字组成的字符串
+print id_generator(3, string.ascii_uppercase + string.digits)
+&gt;&gt;&gt; &#39;G5G74W&#39;
 </pre></div>
 </div>
 

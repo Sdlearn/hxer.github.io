@@ -20,34 +20,34 @@
   <div id="content">
   <h1 id="simiki">Simiki 快速开始</h1>
 <h3 id="install">install</h3>
-<div class="hlcode"><pre><span class="n">pip</span> <span class="n">isntall</span> <span class="n">simiki</span>
+<div class="hlcode"><pre>pip isntall simiki
 </pre></div>
 
 
 <h3 id="update">update</h3>
-<div class="hlcode"><pre><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">simiki</span>
+<div class="hlcode"><pre>pip install -U simiki
 </pre></div>
 
 
 <h3 id="init-site">Init Site</h3>
-<div class="hlcode"><pre><span class="n">mkdir</span> <span class="n">mywiki</span> <span class="o">&amp;&amp;</span> <span class="n">cd</span> <span class="n">mywiki</span>
+<div class="hlcode"><pre>mkdir mywiki &amp;&amp; cd mywiki
 
-<span class="n">simiki</span> <span class="n">init</span>
+simiki init
 </pre></div>
 
 
 <h3 id="create-a-new-wiki">Create a new wiki</h3>
-<div class="hlcode"><pre><span class="n">simiki</span> <span class="n">new</span> <span class="o">-</span><span class="n">t</span> <span class="s">&quot;start&quot;</span> <span class="o">-</span><span class="n">c</span> <span class="n">Simiki</span>
+<div class="hlcode"><pre>simiki new -t &quot;start&quot; -c Simiki
 </pre></div>
 
 
 <h3 id="generate">Generate</h3>
-<div class="hlcode"><pre><span class="n">simiki</span> <span class="n">generate</span>
+<div class="hlcode"><pre>simiki generate
 </pre></div>
 
 
 <h3 id="preview">Preview</h3>
-<div class="hlcode"><pre><span class="n">simiki</span> <span class="n">preview</span>
+<div class="hlcode"><pre>simiki preview
 </pre></div>
 
 
@@ -61,57 +61,57 @@
 <p>2.切换到你的本地站点，设置输出目录中的主分支：</p>
 </li>
 </ul>
-<div class="hlcode"><pre><span class="nx">cd</span> <span class="nb">output</span>
-<span class="nx">git</span> <span class="nb">init</span>
-<span class="nx">git</span> <span class="nb">add</span> <span class="nx">.</span>
-<span class="nx">git</span> <span class="nx">commit</span> <span class="na">-m</span> <span class="s1">&#39;your comment&#39;</span>
-<span class="err">#</span> <span class="nx">These</span> <span class="nx">steps</span> <span class="nx">will</span> <span class="nx">be</span> <span class="nx">shown</span> <span class="nx">when</span> <span class="nx">you</span> <span class="nb">create</span> <span class="nx">a</span> <span class="n">repo</span> <span class="k">in</span> <span class="nx">Github</span><span class="p">:</span>
-<span class="nx">git</span> <span class="nx">remote</span> <span class="nb">add</span> <span class="nx">origin</span> <span class="nx">git</span><span class="p">@</span><span class="nx">github.com</span><span class="p">:</span><span class="o">&lt;</span><span class="nx">Username</span><span class="o">&gt;/&lt;</span><span class="nx">Username</span><span class="o">&gt;</span><span class="bp">.</span><span class="nx">github.io</span>
-<span class="nx">git</span> <span class="nb">push</span> <span class="na">-u</span> <span class="nx">origin</span> <span class="nx">master</span>
+<div class="hlcode"><pre>cd output
+git init
+git add .
+git commit -m &#39;your comment&#39;
+# These steps will be shown when you create a repo in Github:
+git remote add origin git@github.com:&lt;Username&gt;/&lt;Username&gt;.github.io
+git push -u origin master
 </pre></div>
 
 
 <ul>
 <li>3.回到父目录，并新建.gitignore文件：</li>
 </ul>
-<div class="hlcode"><pre><span class="n">cd</span> <span class="p">..</span><span class="o">/</span>
-<span class="n">touch</span> <span class="p">.</span><span class="n">gitignore</span>
+<div class="hlcode"><pre>cd ../
+touch .gitignore
 </pre></div>
 
 
 <ul>
 <li>4.编辑.gitignore的内容：</li>
 </ul>
-<div class="hlcode"><pre><span class="o">*</span><span class="p">.</span><span class="n">pyc</span>
-<span class="n">output</span>
+<div class="hlcode"><pre>*.pyc
+output
 </pre></div>
 
 
 <ul>
 <li>5.安装源分支：</li>
 </ul>
-<div class="hlcode"><pre><span class="nx">git</span> <span class="nb">init</span>
-<span class="nx">git</span> <span class="nx">checkout</span> <span class="na">-b</span> <span class="nx">wiki</span>
-<span class="nx">git</span> <span class="nb">add</span> <span class="nx">.</span>
-<span class="nx">git</span> <span class="nx">commit</span> <span class="na">-m</span> <span class="s1">&#39;your comment&#39;</span>
-<span class="err">#</span> <span class="nx">These</span> <span class="nx">steps</span> <span class="nx">will</span> <span class="nx">be</span> <span class="nx">shown</span> <span class="nx">when</span> <span class="nx">you</span> <span class="nb">create</span> <span class="nx">a</span> <span class="n">repo</span> <span class="k">in</span> <span class="nx">Github</span><span class="p">:</span>
-<span class="nx">git</span> <span class="nx">remote</span> <span class="nb">add</span> <span class="nx">origin</span> <span class="nx">git</span><span class="p">@</span><span class="nx">github.com</span><span class="p">:</span><span class="o">&lt;</span><span class="nx">Username</span><span class="o">&gt;/&lt;</span><span class="nx">Username</span><span class="o">&gt;</span><span class="bp">.</span><span class="nx">github.io</span>
-<span class="nx">git</span> <span class="nb">push</span> <span class="na">-u</span> <span class="nx">origin</span> <span class="nx">wiki</span>
+<div class="hlcode"><pre>git init
+git checkout -b wiki
+git add .
+git commit -m &#39;your comment&#39;
+# These steps will be shown when you create a repo in Github:
+git remote add origin git@github.com:&lt;Username&gt;/&lt;Username&gt;.github.io
+git push -u origin wiki
 </pre></div>
 
 
 <p>等待一段时间，访问 HTTPS:// <Username> .github.io </p>
 <h1 id="github">在其他地方同步github，并继续写作</h1>
 <div class="hlcode"><pre>mydir mywiki
-<span class="nb">cd </span>mywiki
+<span class="nb">cd</span> mywiki
 git init
 git remote add origin git@github.com:&lt;Username&gt;/&lt;Username&gt;.github.io
-git pull origin wiki:master     <span class="c">#同步的是 wiki 分支, 保存的是源文件</span>
+git pull origin wiki:master     <span class="c1">#同步的是 wiki 分支, 保存的是源文件</span>
 simiki generate
-<span class="nb">cd </span>output
+<span class="nb">cd</span> output
 git init 
 git remote add origin git@github.com:&lt;Username&gt;/&lt;Username&gt;.github.io
-git pull origin master:master     <span class="c">#同步的是 master 分支, 保存的是输出文件</span>
+git pull origin master:master     <span class="c1">#同步的是 master 分支, 保存的是输出文件</span>
 </pre></div>
 
 

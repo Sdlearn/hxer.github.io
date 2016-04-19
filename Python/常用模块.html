@@ -19,35 +19,35 @@
 <div id="title">常用模块</div>
   <div id="content">
   <h2 id="sys">sys</h2>
-<div class="hlcode"><pre><span class="nl">executable:</span> <span class="err">返回</span><span class="n">python</span><span class="err">解释器的路径</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">g</span><span class="p">.</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">python</span><span class="err">&#39;</span>
-<span class="nl">platform:</span> <span class="err">返回操作系统平台</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">g</span><span class="p">.</span> <span class="err">&#39;</span><span class="n">linux2</span><span class="err">&#39;</span>
-<span class="nl">path:</span> <span class="err">模块搜索路径，</span><span class="n">Python</span> <span class="err">在导入期间将在其中的目录列表中寻找模块。最前面的空字符串</span> <span class="err">&#39;&#39;</span> <span class="err">是指当前目录</span>
+<div class="hlcode"><pre>executable: 返回python解释器的路径, e.g. &#39;/usr/bin/python&#39;
+platform: 返回操作系统平台, e.g. &#39;linux2&#39;
+path: 模块搜索路径，Python 在导入期间将在其中的目录列表中寻找模块。最前面的空字符串 &#39;&#39; 是指当前目录
 </pre></div>
 
 
 <h2 id="zbar-decode">zbar -- decode 二维码</h2>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libzbar</span><span class="o">-</span><span class="n">dev</span>
+<div class="hlcode"><pre>$ apt-get install libzbar-dev
 
-<span class="err">$</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">zbar</span>
+$ pip install zbar
 </pre></div>
 
 
 <p>demo:</p>
-<div class="hlcode"><pre><span class="n">png</span> <span class="o">=</span> <span class="err">&#39;</span><span class="n">xx</span><span class="p">.</span><span class="n">png</span><span class="err">&#39;</span>
-<span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">png</span><span class="p">).</span><span class="n">convert</span><span class="p">(</span><span class="sc">&#39;L&#39;</span><span class="p">)</span>
-<span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">img</span><span class="p">.</span><span class="n">size</span>
+<div class="hlcode"><pre>png = &#39;xx.png&#39;
+img = Image.open(png).convert(&#39;L&#39;)
+width, height = img.size
 
-<span class="n">zimage</span> <span class="o">=</span> <span class="n">zbar</span><span class="p">.</span><span class="n">Image</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">Y800</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">img</span><span class="p">.</span><span class="n">tobytes</span><span class="p">())</span>
+zimage = zbar.Image(width, height, &#39;Y800&#39;, img.tobytes())
 
-<span class="n">scanner</span><span class="p">.</span><span class="n">scan</span><span class="p">(</span><span class="n">zimage</span><span class="p">)</span>
+scanner.scan(zimage)
 
-<span class="k">for</span> <span class="n">symbol</span> <span class="n">in</span> <span class="n">zimage</span><span class="o">:</span>
-    <span class="n">print</span> <span class="n">symbol</span><span class="p">.</span><span class="n">type</span><span class="p">,</span> <span class="n">symbol</span><span class="p">.</span><span class="n">data</span>
+for symbol in zimage:
+    print symbol.type, symbol.data
 </pre></div>
 
 
 <h2 id="beautifulsoup">beautifulsoup</h2>
-<div class="hlcode"><pre><span class="n">pip</span> <span class="n">install</span> <span class="n">beautifulsoup4</span>
+<div class="hlcode"><pre>pip install beautifulsoup4
 </pre></div>
 
 
@@ -56,53 +56,53 @@
 <li>argparse</li>
 </ul>
 <p><a href="http://python.usyiyi.cn/python_278/library/argparse.html">argparse 文档</a></p>
-<div class="hlcode"><pre><span class="n">import</span> <span class="n">argparse</span>
+<div class="hlcode"><pre><span class="kn">import</span> <span class="nn">argparse</span>
 
-<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="p">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
-<span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="err">&#39;</span><span class="n">foo</span><span class="err">&#39;</span><span class="p">)</span>
-<span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="p">.</span><span class="n">parse_args</span><span class="p">()</span>
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span>
+<span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
-<span class="n">args</span><span class="p">.</span><span class="n">foo</span>
+<span class="n">args</span><span class="o">.</span><span class="n">foo</span>
 </pre></div>
 
 
-<div class="hlcode"><pre><span class="n">ArgumentParser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="n">name</span> <span class="n">or</span> <span class="n">flags</span><span class="p">...[,</span> <span class="n">action</span><span class="p">][,</span> <span class="n">nargs</span><span class="p">][,</span> <span class="k">const</span><span class="p">][,</span> <span class="k">default</span><span class="p">][,</span> <span class="n">type</span><span class="p">][,</span> <span class="n">choices</span><span class="p">][,</span> <span class="n">required</span><span class="p">][,</span> <span class="n">help</span><span class="p">][,</span> <span class="n">metavar</span><span class="p">][,</span> <span class="n">dest</span><span class="p">])</span>
+<div class="hlcode"><pre>ArgumentParser.add_argument(name or flags...[, action][, nargs][, const][, default][, type][, choices][, required][, help][, metavar][, dest])
 
-<span class="n">name</span> <span class="n">or</span> <span class="n">flags</span> <span class="o">-</span> <span class="err">选项字符串的名字或者列表，例如</span><span class="n">foo</span> <span class="err">或者</span><span class="o">-</span><span class="n">f</span><span class="p">,</span> <span class="o">--</span><span class="n">foo</span><span class="err">。</span>
-<span class="n">action</span> <span class="o">-</span> <span class="err">在命令行遇到该参数时采取的基本动作类型。</span>
-<span class="n">nargs</span> <span class="o">-</span> <span class="err">应该读取的命令行参数数目。</span>
-<span class="k">const</span> <span class="o">-</span> <span class="err">某些</span><span class="n">action</span><span class="err">和</span><span class="n">nargs</span><span class="err">选项要求的常数值。</span>
-<span class="k">default</span> <span class="o">-</span> <span class="err">如果命令行中没有出现该参数时的默认值。</span>
-<span class="n">type</span> <span class="o">-</span> <span class="err">命令行参数应该被转换成的类型。</span>
-<span class="n">choices</span> <span class="o">-</span> <span class="err">参数可允许的值的一个容器。</span>
-<span class="n">required</span> <span class="o">-</span> <span class="err">该命令行选项是否可以省略（只针对可选参数）。</span>
-<span class="n">help</span> <span class="o">-</span> <span class="err">参数的简短描述。</span>
-<span class="n">metavar</span> <span class="o">-</span> <span class="err">参数在帮助信息中的名字。</span>
-<span class="n">dest</span> <span class="o">-</span> <span class="err">给</span><span class="n">parse_args</span><span class="p">()</span><span class="err">返回的对象要添加的属性名称。默认情况下，对于可选参数选取最长的名称，中划线转换为下划线</span>
+name or flags - 选项字符串的名字或者列表，例如foo 或者-f, --foo。
+action - 在命令行遇到该参数时采取的基本动作类型。
+nargs - 应该读取的命令行参数数目。
+const - 某些action和nargs选项要求的常数值。
+default - 如果命令行中没有出现该参数时的默认值。
+type - 命令行参数应该被转换成的类型。
+choices - 参数可允许的值的一个容器。
+required - 该命令行选项是否可以省略（只针对可选参数）。
+help - 参数的简短描述。
+metavar - 参数在帮助信息中的名字。
+dest - 给parse_args()返回的对象要添加的属性名称。默认情况下，对于可选参数选取最长的名称，中划线转换为下划线
 </pre></div>
 
 
-<div class="hlcode"><pre><span class="cp"># bool</span>
-<span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="err">&#39;</span><span class="o">-</span><span class="n">b</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="err">&#39;</span><span class="n">store_true</span><span class="err">&#39;</span><span class="p">)</span>
+<div class="hlcode"><pre># bool
+parser.add_argument(&#39;-b&#39;, action=&#39;store_true&#39;)
 </pre></div>
 
 
 <h2 id="cairosvg-svg-png-pdf">cairosvg --转换 svg 格式 为 png, pdf</h2>
 <p><a href="http://cairosvg.org/documentation/">doc</a></p>
-<div class="hlcode"><pre><span class="n">pip</span> <span class="n">install</span> <span class="n">cairosvg</span>
+<div class="hlcode"><pre>pip install cairosvg
 </pre></div>
 
 
 <ul>
 <li>cairosvg.svg2png</li>
 </ul>
-<div class="hlcode"><pre><span class="kd">function</span> <span class="nx">expect</span> <span class="nx">one</span> <span class="nx">of</span> <span class="nx">these</span> <span class="nx">parameters</span><span class="o">:</span>
+<div class="hlcode"><pre>function expect one of these parameters:
 
-<span class="o">--</span> <span class="nx">bytestring</span><span class="p">,</span> <span class="nx">a</span> <span class="kr">byte</span> <span class="nx">string</span> <span class="nx">containing</span> <span class="nx">SVG</span><span class="p">,</span> <span class="nx">or</span>
-<span class="o">--</span> <span class="nx">url</span><span class="p">,</span> <span class="nx">an</span> <span class="nx">URL</span> <span class="nx">or</span> <span class="nx">a</span> <span class="nx">filename</span><span class="p">,</span> <span class="nx">or</span>
-<span class="o">--</span> <span class="nx">file_obj</span><span class="p">,</span> <span class="nx">a</span> <span class="nx">file</span><span class="o">-</span><span class="nx">like</span> <span class="nx">object</span><span class="p">.</span>
+-- bytestring, a byte string containing SVG, or
+-- url, an URL or a filename, or
+-- file_obj, a file-like object.
 
-<span class="nx">If</span> <span class="nx">the</span> <span class="nx">write_to</span> <span class="nx">argument</span> <span class="nx">is</span> <span class="nx">provided</span> <span class="p">(</span><span class="nx">filename</span> <span class="nx">or</span> <span class="nx">file</span><span class="o">-</span><span class="nx">like</span> <span class="nx">object</span><span class="p">),</span> <span class="nx">the</span> <span class="nx">output</span> <span class="nx">is</span> <span class="nx">written</span> <span class="nx">there</span><span class="p">.</span> <span class="nx">Otherwise</span><span class="p">,</span> <span class="nx">the</span> <span class="kd">function</span> <span class="nx">returns</span> <span class="nx">a</span> <span class="kr">byte</span> <span class="nx">string</span>
+If the write_to argument is provided (filename or file-like object), the output is written there. Otherwise, the function returns a byte string
 </pre></div>
 </div>
 

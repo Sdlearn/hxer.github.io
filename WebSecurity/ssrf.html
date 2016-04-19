@@ -56,7 +56,7 @@
 <div class="hlcode"><pre><span class="cp">&lt;?php</span>
 <span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">])){</span>
     <span class="nv">$content</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">]);</span>
-    <span class="nv">$filename</span> <span class="o">=</span> <span class="s1">&#39;./images/&#39;</span><span class="o">.</span><span class="nx">rand</span><span class="p">()</span><span class="o">.</span><span class="s1">&#39;img.jpg&#39;</span><span class="p">;</span>
+    <span class="nv">$filename</span> <span class="o">=</span> <span class="s1">&#39;./images/&#39;</span><span class="o">.</span><span class="nb">rand</span><span class="p">()</span><span class="o">.</span><span class="s1">&#39;img.jpg&#39;</span><span class="p">;</span>
     <span class="nb">file_put_contents</span><span class="p">(</span><span class="nv">$filename</span><span class="p">,</span> <span class="nv">$content</span><span class="p">);</span>
     <span class="nv">$img</span> <span class="o">=</span> <span class="s2">&quot;&lt;img src=</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="nv">$filename</span><span class="o">.</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">/&gt;&quot;</span><span class="p">;</span>
 <span class="p">}</span>
@@ -67,21 +67,21 @@
 <ul>
 <li>use curl</li>
 </ul>
-<div class="hlcode"><pre><span class="k">if</span> <span class="p">(</span><span class="n">isset</span><span class="p">(</span><span class="err">$</span><span class="n">_POST</span><span class="p">[</span><span class="err">&#39;</span><span class="n">link</span><span class="err">&#39;</span><span class="p">])){</span>                                                          
-    <span class="err">$</span><span class="n">link</span> <span class="o">=</span> <span class="err">$</span><span class="n">_POST</span><span class="p">[</span><span class="err">&#39;</span><span class="n">link</span><span class="err">&#39;</span><span class="p">];</span>                                                          
-    <span class="err">$</span><span class="n">filename</span> <span class="o">=</span> <span class="err">&#39;</span><span class="p">.</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="err">&#39;</span><span class="p">.</span><span class="n">rand</span><span class="p">().</span><span class="err">&#39;</span><span class="p">.</span><span class="n">txt</span><span class="err">&#39;</span><span class="p">;</span>                                                         
-    <span class="err">$</span><span class="n">curlobj</span> <span class="o">=</span> <span class="n">curl_init</span><span class="p">(</span><span class="err">$</span><span class="n">link</span><span class="p">);</span>                                                                                                                
-    <span class="err">$</span><span class="n">fp</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="err">$</span><span class="n">filename</span><span class="p">,</span> <span class="sc">&#39;w&#39;</span><span class="p">);</span>                                                     
-    <span class="n">curl_setopt</span><span class="p">(</span><span class="err">$</span><span class="n">curlobj</span><span class="p">,</span> <span class="n">CURLOPT_FILE</span><span class="p">,</span> <span class="err">$</span><span class="n">fp</span><span class="p">);</span>   <span class="err">#</span><span class="n">output</span>                                        
-    <span class="n">curl_setopt</span><span class="p">(</span><span class="err">$</span><span class="n">curlobj</span><span class="p">,</span> <span class="n">CURLOPT_HEADER</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>   <span class="err">#</span><span class="mi">0</span><span class="o">:</span><span class="err">不显示响应头信息</span>                                  
-    <span class="n">curl_exec</span><span class="p">(</span><span class="err">$</span><span class="n">curlobj</span><span class="p">);</span>                                                             
-    <span class="n">curl_close</span><span class="p">(</span><span class="err">$</span><span class="n">curlobj</span><span class="p">);</span>                                                            
-    <span class="n">fclose</span><span class="p">(</span><span class="err">$</span><span class="n">fp</span><span class="p">);</span>                                                                     
-    <span class="err">$</span><span class="n">fp</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="err">$</span><span class="n">filename</span><span class="p">,</span> <span class="sc">&#39;r&#39;</span><span class="p">);</span>                                                     
-    <span class="err">$</span><span class="n">result</span> <span class="o">=</span> <span class="n">fread</span><span class="p">(</span><span class="err">$</span><span class="n">fp</span><span class="p">,</span> <span class="n">filesize</span><span class="p">(</span><span class="err">$</span><span class="n">filename</span><span class="p">));</span>                                       
-    <span class="n">fclose</span><span class="p">(</span><span class="err">$</span><span class="n">fp</span><span class="p">);</span>                                                                     
-    <span class="n">echo</span> <span class="err">$</span><span class="n">result</span><span class="p">;</span>                                                                    
-<span class="p">}</span> 
+<div class="hlcode"><pre><span class="x">if (isset(</span><span class="p">$</span><span class="nv">_POST</span><span class="x">[&#39;link&#39;]))</span><span class="err">{</span><span class="x">                                                          </span>
+<span class="x">    </span><span class="p">$</span><span class="nv">link</span><span class="x"> = </span><span class="p">$</span><span class="nv">_POST</span><span class="x">[&#39;link&#39;];                                                          </span>
+<span class="x">    </span><span class="p">$</span><span class="nv">filename</span><span class="x"> = &#39;./images/&#39;.rand().&#39;.txt&#39;;                                                         </span>
+<span class="x">    </span><span class="p">$</span><span class="nv">curlobj</span><span class="x"> = curl_init(</span><span class="p">$</span><span class="nv">link</span><span class="x">);                                                                                                                </span>
+<span class="x">    </span><span class="p">$</span><span class="nv">fp</span><span class="x"> = fopen(</span><span class="p">$</span><span class="nv">filename</span><span class="x">, &#39;w&#39;);                                                     </span>
+<span class="x">    curl_setopt(</span><span class="p">$</span><span class="nv">curlobj</span><span class="x">, CURLOPT_FILE, </span><span class="p">$</span><span class="nv">fp</span><span class="x">);   </span><span class="cp">#</span><span class="nf">output</span><span class="x">                                        </span>
+<span class="x">    curl_setopt(</span><span class="p">$</span><span class="nv">curlobj</span><span class="x">, CURLOPT_HEADER, 0);   </span><span class="err">#</span><span class="x">0:不显示响应头信息                                  </span>
+<span class="x">    curl_exec(</span><span class="p">$</span><span class="nv">curlobj</span><span class="x">);                                                             </span>
+<span class="x">    curl_close(</span><span class="p">$</span><span class="nv">curlobj</span><span class="x">);                                                            </span>
+<span class="x">    fclose(</span><span class="p">$</span><span class="nv">fp</span><span class="x">);                                                                     </span>
+<span class="x">    </span><span class="p">$</span><span class="nv">fp</span><span class="x"> = fopen(</span><span class="p">$</span><span class="nv">filename</span><span class="x">, &#39;r&#39;);                                                     </span>
+<span class="x">    </span><span class="p">$</span><span class="nv">result</span><span class="x"> = fread(</span><span class="p">$</span><span class="nv">fp</span><span class="x">, filesize(</span><span class="p">$</span><span class="nv">filename</span><span class="x">));                                       </span>
+<span class="x">    fclose(</span><span class="p">$</span><span class="nv">fp</span><span class="x">);                                                                     </span>
+<span class="x">    echo </span><span class="p">$</span><span class="nv">result</span><span class="x">;                                                                    </span>
+<span class="x">} </span>
 </pre></div>
 
 
@@ -113,19 +113,19 @@
 <ul>
 <li>url key</li>
 </ul>
-<div class="hlcode"><pre><span class="n">share</span>
-<span class="n">wap</span>
-<span class="n">url</span>
-<span class="n">link</span>
-<span class="n">src</span>
-<span class="n">source</span>
-<span class="n">target</span>
-<span class="n">u</span>
-<span class="mi">3</span><span class="n">g</span>
-<span class="n">display</span>
-<span class="n">sourceURI</span>
-<span class="n">imageURL</span>
-<span class="n">domain</span>
+<div class="hlcode"><pre>share
+wap
+url
+link
+src
+source
+target
+u
+3g
+display
+sourceURI
+imageURL
+domain
 </pre></div>
 
 
@@ -151,16 +151,16 @@
 <ul>
 <li>可以指向任意ip的域名:xip.io</li>
 </ul>
-<div class="hlcode"><pre><span class="mf">10.0.0.1</span><span class="p">.</span><span class="n">xip</span><span class="p">.</span><span class="n">io</span>         <span class="mf">10.0.0.1</span>
-<span class="n">www</span><span class="mf">.10.0.0.1</span><span class="p">.</span><span class="n">xip</span><span class="p">.</span><span class="n">io</span>     <span class="mf">10.0.0.1</span>
-<span class="n">mysite</span><span class="mf">.10.0.0.1</span><span class="p">.</span><span class="n">xip</span><span class="p">.</span><span class="n">io</span>  <span class="mf">10.0.0.1</span> 
+<div class="hlcode"><pre>10.0.0.1.xip.io         10.0.0.1
+www.10.0.0.1.xip.io     10.0.0.1
+mysite.10.0.0.1.xip.io  10.0.0.1 
 </pre></div>
 
 
 <ul>
 <li>ip 地址进制转换</li>
 </ul>
-<div class="hlcode"><pre><span class="mf">115.239.210.26</span> <span class="o">=</span> <span class="mi">16373751032</span>    <span class="err">#</span><span class="n">IPy</span><span class="p">.</span><span class="n">IP</span><span class="p">(</span><span class="err">&#39;</span><span class="mf">115.239.210.26</span><span class="err">&#39;</span><span class="p">).</span><span class="kt">int</span><span class="p">()</span>
+<div class="hlcode"><pre>115.239.210.26 = 16373751032    #IPy.IP(&#39;115.239.210.26&#39;).int()
 </pre></div>
 
 

@@ -22,9 +22,9 @@
 <ul>
 <li>查看表结构</li>
 </ul>
-<div class="hlcode"><pre><span class="n">show</span> <span class="n">columns</span> <span class="n">from</span> <span class="n">table_name</span><span class="p">;</span>
+<div class="hlcode"><pre>show columns from table_name;
 
-<span class="n">desc</span> <span class="n">table_name</span><span class="p">;</span>
+desc table_name;
 </pre></div>
 
 
@@ -35,7 +35,7 @@
 <p>如果Key是MUL，那么该列的值可以重复，该列是一个非唯一索引的前导列（第一列）或者是一个唯一性索引的组成部分但是可以含有空值NULL。</p>
 <p>如果对于一个列的定义，同时满足上述4种情况的多种，比如一个列既是PRI，又是UNI，那么"desc 表名"的时候，显示的Key值按照优先级来显示 PRI-&gt;UNI-&gt;MUL。那么此时，显示PRI</p>
 <h2 id="_1">导出文本文件</h2>
-<div class="hlcode"><pre><span class="n">SELECT</span> <span class="err">…</span> <span class="n">INTO</span> <span class="n">OUTFILE</span> <span class="err">‘</span><span class="n">file_name</span><span class="err">’</span>
+<div class="hlcode"><pre>SELECT … INTO OUTFILE ‘file_name’
 </pre></div>
 
 

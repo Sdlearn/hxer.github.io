@@ -25,43 +25,43 @@
 <h2 id="socket">socket</h2>
 <div class="hlcode"><pre><span class="kn">import</span> <span class="nn">socket</span>
 
-<span class="n">boundary</span> <span class="o">=</span> <span class="s">&#39;---------------------------11008921013555437861019615112&#39;</span>
-<span class="n">file_content</span> <span class="o">=</span> <span class="s">&quot;hello&quot;</span>
-<span class="n">host</span> <span class="o">=</span> <span class="s">&#39;127.0.0.1&#39;</span>
+<span class="n">boundary</span> <span class="o">=</span> <span class="s1">&#39;---------------------------11008921013555437861019615112&#39;</span>
+<span class="n">file_content</span> <span class="o">=</span> <span class="s2">&quot;hello&quot;</span>
+<span class="n">host</span> <span class="o">=</span> <span class="s1">&#39;127.0.0.1&#39;</span>
 <span class="n">port</span> <span class="o">=</span> <span class="mi">80</span>
-<span class="n">file_name</span> <span class="o">=</span> <span class="s">&#39;file.txt&#39;</span>
-<span class="n">file_type</span> <span class="o">=</span> <span class="s">&#39;text/plain&#39;</span>
+<span class="n">file_name</span> <span class="o">=</span> <span class="s1">&#39;file.txt&#39;</span>
+<span class="n">file_type</span> <span class="o">=</span> <span class="s1">&#39;text/plain&#39;</span>
 
-<span class="n">req_data</span> <span class="o">=</span> <span class="s">&#39;--{b}</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="n">boundary</span><span class="p">)</span>
-<span class="n">req_data</span> <span class="o">+=</span> <span class="s">&#39;Content-Disposition: form-data; name=&quot;file&quot;; filename={fn}</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fn</span><span class="o">=</span><span class="n">file_name</span><span class="p">)</span>
-<span class="n">req_data</span> <span class="o">+=</span> <span class="s">&#39;Content-Type: {ft}</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ft</span><span class="o">=</span><span class="n">file_type</span><span class="p">)</span>
-<span class="n">req_data</span> <span class="o">+=</span> <span class="s">&#39;</span><span class="se">\r\n</span><span class="s">&#39;</span>
-<span class="n">req_data</span> <span class="o">+=</span> <span class="s">&#39;{file_content}</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">file_content</span><span class="o">=</span><span class="n">file_content</span><span class="p">)</span>
-<span class="n">req_data</span> <span class="o">+=</span> <span class="s">&#39;--{b}--&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="n">boundary</span><span class="p">)</span>
+<span class="n">req_data</span> <span class="o">=</span> <span class="s1">&#39;--{b}</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="n">boundary</span><span class="p">)</span>
+<span class="n">req_data</span> <span class="o">+=</span> <span class="s1">&#39;Content-Disposition: form-data; name=&quot;file&quot;; filename={fn}</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fn</span><span class="o">=</span><span class="n">file_name</span><span class="p">)</span>
+<span class="n">req_data</span> <span class="o">+=</span> <span class="s1">&#39;Content-Type: {ft}</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ft</span><span class="o">=</span><span class="n">file_type</span><span class="p">)</span>
+<span class="n">req_data</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\r\n</span><span class="s1">&#39;</span>
+<span class="n">req_data</span> <span class="o">+=</span> <span class="s1">&#39;{file_content}</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">file_content</span><span class="o">=</span><span class="n">file_content</span><span class="p">)</span>
+<span class="n">req_data</span> <span class="o">+=</span> <span class="s1">&#39;--{b}--&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="n">boundary</span><span class="p">)</span>
 
-<span class="n">req</span> <span class="o">=</span> <span class="s">&#39;POST /upload.php HTTP/1.1</span><span class="se">\r\n</span><span class="s">&#39;</span>
-<span class="n">req</span> <span class="o">+=</span> <span class="s">&#39;Host: {host}</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">)</span>
-<span class="n">req</span> <span class="o">+=</span> <span class="s">&#39;Content-Type: multipart/form-data; boundary={b}</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="n">boundary</span><span class="p">)</span>
-<span class="n">req</span> <span class="o">+=</span> <span class="s">&#39;Content-Length: {l}</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">req_data</span><span class="p">))</span>
-<span class="n">req</span> <span class="o">+=</span> <span class="s">&#39;Connection: close</span><span class="se">\r\n</span><span class="s">&#39;</span>
-<span class="n">req</span> <span class="o">+=</span> <span class="s">&#39;</span><span class="se">\r\n</span><span class="s">&#39;</span>
-<span class="n">req</span> <span class="o">+=</span> <span class="s">&#39;{data}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">req_data</span><span class="p">)</span>
+<span class="n">req</span> <span class="o">=</span> <span class="s1">&#39;POST /upload.php HTTP/1.1</span><span class="se">\r\n</span><span class="s1">&#39;</span>
+<span class="n">req</span> <span class="o">+=</span> <span class="s1">&#39;Host: {host}</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">)</span>
+<span class="n">req</span> <span class="o">+=</span> <span class="s1">&#39;Content-Type: multipart/form-data; boundary={b}</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="n">boundary</span><span class="p">)</span>
+<span class="n">req</span> <span class="o">+=</span> <span class="s1">&#39;Content-Length: {l}</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">req_data</span><span class="p">))</span>
+<span class="n">req</span> <span class="o">+=</span> <span class="s1">&#39;Connection: close</span><span class="se">\r\n</span><span class="s1">&#39;</span>
+<span class="n">req</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\r\n</span><span class="s1">&#39;</span>
+<span class="n">req</span> <span class="o">+=</span> <span class="s1">&#39;{data}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">req_data</span><span class="p">)</span>
 
 <span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
 
 <span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
 <span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
 
-<span class="n">data</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+<span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
     <span class="n">rcv_data</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">4096</span><span class="p">)</span>
 
     <span class="n">data</span> <span class="o">+=</span> <span class="n">rcv_data</span>
-    <span class="k">if</span> <span class="n">rcv_data</span> <span class="o">==</span> <span class="s">&quot;&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">rcv_data</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
         <span class="k">break</span>
 
-    <span class="c"># detect the final chunk</span>
-    <span class="k">if</span> <span class="n">rcv_data</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&quot;0</span><span class="se">\r\n\r\n</span><span class="s">&quot;</span><span class="p">):</span>
+    <span class="c1"># detect the final chunk</span>
+    <span class="k">if</span> <span class="n">rcv_data</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;0</span><span class="se">\r\n\r\n</span><span class="s2">&quot;</span><span class="p">):</span>
         <span class="k">break</span>
 
 <span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -71,52 +71,52 @@
 <h2 id="urllib">urllib</h2>
 <div class="hlcode"><pre><span class="kn">import</span> <span class="nn">urllib2</span>
 
-<span class="n">boundary</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="nb">hex</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1</span><span class="p">))</span>
-<span class="n">fr</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s">r&#39;/var/qr/b.png&#39;</span><span class="p">,</span><span class="s">&#39;rb&#39;</span><span class="p">)</span>
-<span class="n">file_name</span> <span class="o">=</span> <span class="s">&#39;file.txt&#39;</span>
-<span class="n">file_type</span> <span class="o">=</span> <span class="s">&#39;text/plain&#39;</span>
+<span class="n">boundary</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">hex</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">fr</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s1">r&#39;/var/qr/b.png&#39;</span><span class="p">,</span><span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+<span class="n">file_name</span> <span class="o">=</span> <span class="s1">&#39;file.txt&#39;</span>
+<span class="n">file_type</span> <span class="o">=</span> <span class="s1">&#39;text/plain&#39;</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
 
-<span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;--</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">boundary</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;--</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">boundary</span><span class="p">)</span>
 
-<span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;Content-Disposition: form-data; name=&quot;file&quot;; filename=&quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">file_name</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;Content-Type: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">file_type</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;--</span><span class="si">%s</span><span class="s">--&#39;</span> <span class="o">%</span> <span class="n">boundary</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;Content-Disposition: form-data; name=&quot;file&quot;; filename=&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">file_name</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;Content-Type: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">file_type</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;--</span><span class="si">%s</span><span class="s1">--&#39;</span> <span class="o">%</span> <span class="n">boundary</span><span class="p">)</span>
 
 <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fr</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
 <span class="n">fr</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 
-<span class="n">http_url</span><span class="o">=</span><span class="s">&#39;http://127.0.0.1/upload.php&#39;</span>
-<span class="n">http_body</span><span class="o">=</span><span class="s">&#39;</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">http_url</span><span class="o">=</span><span class="s1">&#39;http://127.0.0.1/upload.php&#39;</span>
+<span class="n">http_body</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="k">try</span><span class="p">:</span>
-    <span class="c">#buld http request</span>
+    <span class="c1">#buld http request</span>
     <span class="n">req</span><span class="o">=</span><span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">http_url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">http_body</span><span class="p">)</span>
 
-    <span class="c">#header</span>
-    <span class="n">req</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s">&#39;multipart/form-data; boundary=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">boundary</span><span class="p">)</span>
-    <span class="n">req</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">&#39;Host&#39;</span><span class="p">,</span> <span class="s">&#39;127.0.0.1&#39;</span><span class="p">)</span>
+    <span class="c1">#header</span>
+    <span class="n">req</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;multipart/form-data; boundary=</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">boundary</span><span class="p">)</span>
+    <span class="n">req</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s1">&#39;Host&#39;</span><span class="p">,</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">)</span>
 
-    <span class="c">#post data to server</span>
+    <span class="c1">#post data to server</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 
-    <span class="c">#get response</span>
+    <span class="c1">#get response</span>
     <span class="n">qrcont</span><span class="o">=</span><span class="n">resp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
     <span class="k">print</span> <span class="n">qrcont</span>
 
 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">&#39;{e}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s1">&#39;{e}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
 </pre></div>
 
 
 <h2 id="requests">requests</h2>
 <div class="hlcode"><pre><span class="kn">import</span> <span class="nn">requests</span>
-<span class="n">host</span> <span class="o">=</span> <span class="s">&#39;127.0.0.1&#39;</span>
-<span class="n">url</span> <span class="o">=</span> <span class="s">&#39;http://{ip}/upload.php&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ip</span><span class="o">=</span><span class="n">host</span><span class="p">)</span>
-<span class="n">file_</span> <span class="o">=</span> <span class="s">&#39;/var/www/file.txt&#39;</span>
+<span class="n">host</span> <span class="o">=</span> <span class="s1">&#39;127.0.0.1&#39;</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://{ip}/upload.php&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ip</span><span class="o">=</span><span class="n">host</span><span class="p">)</span>
+<span class="n">file_</span> <span class="o">=</span> <span class="s1">&#39;/var/www/file.txt&#39;</span>
 
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)})</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)})</span>
 
 <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 </pre></div>

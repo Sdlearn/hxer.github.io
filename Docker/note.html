@@ -36,19 +36,19 @@ busybox</p>
 <ul>
 <li>login</li>
 </ul>
-<div class="hlcode"><pre><span class="n">docker</span> <span class="n">login</span>
-<span class="cp"># then input username, email password</span>
+<div class="hlcode"><pre>docker login
+# then input username, email password
 </pre></div>
 
 
 <ul>
 <li>push</li>
 </ul>
-<div class="hlcode"><pre><span class="cp"># build</span>
-<span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">username</span><span class="o">/</span><span class="n">newimage</span><span class="o">:</span><span class="n">tag</span> <span class="p">.</span>
+<div class="hlcode"><pre># build
+docker build -t username/newimage:tag .
 
-<span class="cp"># http:</span><span class="c1">//hub.docker.com &gt; Create Repository </span>
-<span class="n">docker</span> <span class="n">push</span> <span class="n">username</span><span class="o">/</span><span class="n">newimage</span>
+# http://hub.docker.com &gt; Create Repository 
+docker push username/newimage
 </pre></div>
 
 
@@ -58,87 +58,87 @@ docker rm -v 删除容器时添加了 -v 选项
 docker run –rm 运行容器时添加了 –rm 选项
 否则，会在 /var/lib/docker/vfs/dir 目录中遗留很多不明目录。</p>
 <p>Docker的文件系统AUFS，一种“增量文件系统”，用户所做修改以增量的方式保存，决定了其分层存储特性。</p>
-<div class="hlcode"><pre><span class="cp"># 查看环境信息</span>
+<div class="hlcode"><pre><span class="c1"># 查看环境信息</span>
 <span class="n">docker</span> <span class="n">info</span>  
 <span class="n">docker</span> <span class="n">version</span>
 
-<span class="cp"># 在官方仓库中查找镜像</span>
+<span class="c1"># 在官方仓库中查找镜像</span>
 <span class="n">docker</span> <span class="n">search</span> <span class="n">ubuntu</span>
 
-<span class="cp"># 下载获取ubuntu镜像</span>
+<span class="c1"># 下载获取ubuntu镜像</span>
 <span class="n">docker</span> <span class="n">pull</span> <span class="n">ubuntu</span>
 
-<span class="cp"># 列出本机拥有的镜像</span>
+<span class="c1"># 列出本机拥有的镜像</span>
 <span class="n">docker</span> <span class="n">images</span>
 
-<span class="cp"># 列出目前运行的容器</span>
+<span class="c1"># 列出目前运行的容器</span>
 <span class="n">docker</span> <span class="n">ps</span>
 
-<span class="cp"># 列出最近的容器，包含未正在运行的</span>
+<span class="c1"># 列出最近的容器，包含未正在运行的</span>
 <span class="n">docker</span> <span class="n">ps</span> <span class="o">-</span><span class="n">l</span>
 
-<span class="cp"># 挂载一个正在后台运行的容器</span>
+<span class="c1"># 挂载一个正在后台运行的容器</span>
 <span class="n">docker</span> <span class="n">attach</span> <span class="mi">23</span><span class="n">ad234</span>
 
-<span class="cp"># 列出并追踪容器的运行日志</span>
+<span class="c1"># 列出并追踪容器的运行日志</span>
 <span class="n">docker</span> <span class="n">logs</span> <span class="o">-</span><span class="n">f</span> <span class="o">-</span><span class="n">t</span> <span class="mi">23</span><span class="n">ad234</span>
 
-<span class="cp"># 暂停运行的容器</span>
+<span class="c1"># 暂停运行的容器</span>
 <span class="n">docker</span> <span class="n">pause</span> <span class="mi">23</span><span class="n">ad234</span>
 
-<span class="cp"># 恢复暂停的容器</span>
+<span class="c1"># 恢复暂停的容器</span>
 <span class="n">docker</span> <span class="n">unpause</span> <span class="mi">23</span><span class="n">ad234</span>
 
-<span class="cp"># 启动/停止/重启容器(start/stop/restart)</span>
+<span class="c1"># 启动/停止/重启容器(start/stop/restart)</span>
 <span class="n">docker</span> <span class="n">start</span> <span class="mi">23</span><span class="n">ad234</span>
 
-<span class="cp"># 显示容器内运行的进程, 每2s刷新一次</span>
+<span class="c1"># 显示容器内运行的进程, 每2s刷新一次</span>
 <span class="n">docker</span> <span class="n">top</span> <span class="mi">23</span><span class="n">ad234</span> <span class="o">-</span><span class="n">d</span> <span class="mi">2</span>
 
-<span class="cp"># 查看容器运行的详细信息</span>
+<span class="c1"># 查看容器运行的详细信息</span>
 <span class="n">docker</span> <span class="n">inspect</span> <span class="mi">23</span><span class="n">ad234</span>
 
-<span class="cp"># 杀掉正在运行的容器</span>
+<span class="c1"># 杀掉正在运行的容器</span>
 <span class="n">docker</span> <span class="n">kill</span> <span class="mi">23</span><span class="n">ad234</span>
 
-<span class="cp"># 显示容器文件系统的改动</span>
+<span class="c1"># 显示容器文件系统的改动</span>
 <span class="n">docker</span> <span class="n">diff</span> <span class="mi">23</span><span class="n">ad234</span>
 
-<span class="cp"># 复制容器中的文件或文件夹到主机系统中</span>
-<span class="n">docker</span> <span class="n">cp</span> <span class="mi">23</span><span class="n">ad234</span><span class="o">:~/</span><span class="n">test</span><span class="p">.</span><span class="n">txt</span> <span class="p">.</span><span class="o">/</span><span class="n">test</span><span class="p">.</span><span class="n">txt</span>
+<span class="c1"># 复制容器中的文件或文件夹到主机系统中</span>
+<span class="n">docker</span> <span class="n">cp</span> <span class="mi">23</span><span class="n">ad234</span><span class="p">:</span><span class="o">~/</span><span class="n">test</span><span class="o">.</span><span class="n">txt</span> <span class="o">./</span><span class="n">test</span><span class="o">.</span><span class="n">txt</span>
 
-<span class="cp"># 将容器导出为tar包</span>
-<span class="n">docker</span> <span class="n">export</span> <span class="mi">23</span><span class="n">ad234</span> <span class="o">&gt;</span> <span class="n">mytest</span><span class="p">.</span><span class="n">docker</span><span class="p">.</span><span class="n">tar</span>
+<span class="c1"># 将容器导出为tar包</span>
+<span class="n">docker</span> <span class="n">export</span> <span class="mi">23</span><span class="n">ad234</span> <span class="o">&gt;</span> <span class="n">mytest</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">tar</span>
 
-<span class="cp"># 创建一个空容器并导入tar包</span>
-<span class="n">docker</span> <span class="n">import</span> <span class="p">.</span><span class="o">/</span><span class="n">mytest</span><span class="p">.</span><span class="n">docker</span><span class="p">.</span><span class="n">tar</span>
+<span class="c1"># 创建一个空容器并导入tar包</span>
+<span class="n">docker</span> <span class="kn">import</span> <span class="o">./</span><span class="n">mytest</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">tar</span>
 
-<span class="cp"># 将容器改动提交到镜像中</span>
-<span class="n">docker</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="n">mytest</span> <span class="mi">23</span><span class="n">ad234</span> <span class="n">ijse</span><span class="o">/</span><span class="n">test</span><span class="o">:</span><span class="n">mytag</span>
+<span class="c1"># 将容器改动提交到镜像中</span>
+<span class="n">docker</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="n">mytest</span> <span class="mi">23</span><span class="n">ad234</span> <span class="n">ijse</span><span class="o">/</span><span class="n">test</span><span class="p">:</span><span class="n">mytag</span>
 
-<span class="cp"># 列出镜像的历史</span>
-<span class="n">docker</span> <span class="n">history</span> <span class="n">ijse</span><span class="o">/</span><span class="n">test</span><span class="o">:</span><span class="n">mytag</span>
+<span class="c1"># 列出镜像的历史</span>
+<span class="n">docker</span> <span class="n">history</span> <span class="n">ijse</span><span class="o">/</span><span class="n">test</span><span class="p">:</span><span class="n">mytag</span>
 
-<span class="cp"># 登陆官方仓库账户</span>
+<span class="c1"># 登陆官方仓库账户</span>
 <span class="n">docker</span> <span class="n">login</span>
 
-<span class="cp"># 修改本地镜像名称</span>
+<span class="c1"># 修改本地镜像名称</span>
 <span class="n">docker</span> <span class="n">rename</span> <span class="n">ijse</span><span class="o">/</span><span class="n">test</span> <span class="n">ijse</span><span class="o">/</span><span class="n">mytest</span>
 
-<span class="cp"># 将镜像推送到仓库中</span>
-<span class="n">docker</span> <span class="n">push</span> <span class="n">ijse</span><span class="o">/</span><span class="n">mytest</span><span class="o">:</span><span class="n">mytag</span>
+<span class="c1"># 将镜像推送到仓库中</span>
+<span class="n">docker</span> <span class="n">push</span> <span class="n">ijse</span><span class="o">/</span><span class="n">mytest</span><span class="p">:</span><span class="n">mytag</span>
 
-<span class="cp"># 删除一个容器 及其关联的数据卷</span>
+<span class="c1"># 删除一个容器 及其关联的数据卷</span>
 <span class="n">docker</span> <span class="n">rm</span> <span class="o">-</span><span class="n">v</span> <span class="mi">23</span><span class="n">ad234</span>
 
-<span class="cp"># 删除一个镜像</span>
+<span class="c1"># 删除一个镜像</span>
 <span class="n">docker</span> <span class="n">rmi</span> <span class="n">ubuntu</span>
 
-<span class="cp"># 将本机镜像保存为tar包</span>
-<span class="n">docker</span> <span class="n">save</span> <span class="o">-</span><span class="n">o</span> <span class="n">ijse</span><span class="p">.</span><span class="n">test</span><span class="p">.</span><span class="n">tar</span> <span class="n">ijse</span><span class="o">/</span><span class="n">mytest</span>
+<span class="c1"># 将本机镜像保存为tar包</span>
+<span class="n">docker</span> <span class="n">save</span> <span class="o">-</span><span class="n">o</span> <span class="n">ijse</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">tar</span> <span class="n">ijse</span><span class="o">/</span><span class="n">mytest</span>
 
-<span class="cp"># 通过Dockerfile来创建一个镜像</span>
-<span class="n">docker</span> <span class="n">build</span> <span class="p">.</span><span class="o">/</span><span class="n">Dockerfile</span>
+<span class="c1"># 通过Dockerfile来创建一个镜像</span>
+<span class="n">docker</span> <span class="n">build</span> <span class="o">./</span><span class="n">Dockerfile</span>
 </pre></div>
 
 
@@ -174,32 +174,32 @@ Kitematic 集成了 Docker Hub，允许我们搜索、拉取任何需要的镜�
 </blockquote>
 <h2 id="docker-container-support-utf-8">docker container support utf-8</h2>
 <p>write to Dockerfile</p>
-<div class="hlcode"><pre><span class="cp"># Install program to configure locales</span>
-<span class="n">RUN</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span> \
-    <span class="o">&amp;&amp;</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">locales</span> \
-    <span class="o">&amp;&amp;</span> <span class="n">dpkg</span><span class="o">-</span><span class="n">reconfigure</span> <span class="n">locales</span> <span class="o">&amp;&amp;</span> \
-        <span class="n">locale</span><span class="o">-</span><span class="n">gen</span> <span class="n">C</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span> \
-    <span class="o">&amp;&amp;</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">update</span><span class="o">-</span><span class="n">locale</span> <span class="n">LANG</span><span class="o">=</span><span class="n">C</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span>
+<div class="hlcode"><pre># Install program to configure locales
+RUN apt-get update \
+    &amp;&amp; apt-get install -y locales \
+    &amp;&amp; dpkg-reconfigure locales &amp;&amp; \
+        locale-gen C.UTF-8 \
+    &amp;&amp; /usr/sbin/update-locale LANG=C.UTF-8
 
-<span class="cp"># Install needed default locale for Makefly</span>
-<span class="n">RUN</span> <span class="n">echo</span> <span class="err">&#39;</span><span class="n">en_US</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span> <span class="n">UTF</span><span class="o">-</span><span class="mi">8</span><span class="err">&#39;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">locale</span><span class="p">.</span><span class="n">gen</span> \
-    <span class="o">&amp;&amp;</span> <span class="n">locale</span><span class="o">-</span><span class="n">gen</span>
+# Install needed default locale for Makefly
+RUN echo &#39;en_US.UTF-8 UTF-8&#39; &gt;&gt; /etc/locale.gen \
+    &amp;&amp; locale-gen
 
-<span class="cp"># Set default locale for the environment</span>
-<span class="n">ENV</span> <span class="n">LC_ALL</span> <span class="n">C</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span>
-<span class="n">ENV</span> <span class="n">LANG</span> <span class="n">en_US</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span>
-<span class="n">ENV</span> <span class="n">LANGUAGE</span> <span class="n">en_US</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span>
+# Set default locale for the environment
+ENV LC_ALL C.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
 </pre></div>
 
 
 <h2 id="_1">权限</h2>
-<div class="hlcode"><pre><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="p">.</span><span class="n">sock</span>
-<span class="n">srw</span><span class="o">-</span><span class="n">rw</span><span class="o">----</span>  <span class="mi">1</span> <span class="n">root</span>     <span class="n">docker</span>        <span class="mi">0</span> <span class="n">Mar</span> <span class="mi">17</span> <span class="mi">12</span><span class="o">:</span><span class="mi">52</span> <span class="n">docker</span><span class="p">.</span><span class="n">sock</span>
+<div class="hlcode"><pre>/var/run/docker.sock
+srw-rw----  1 root     docker        0 Mar 17 12:52 docker.sock
 </pre></div>
 
 
 <p>用户加入docker用户组中，免去输入sudo语句。</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">usermod</span> <span class="o">-</span><span class="n">aG</span> <span class="n">docker</span> <span class="o">&lt;</span><span class="err">用户名</span><span class="o">&gt;</span>
+<div class="hlcode"><pre>$ sudo usermod -aG docker &lt;用户名&gt;
 </pre></div>
 
 

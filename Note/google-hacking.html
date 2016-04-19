@@ -56,8 +56,8 @@
 <ul>
 <li>intext</li>
 </ul>
-<div class="hlcode"><pre><span class="cp"># scan port</span>
-<span class="nl">inurl:</span><span class="mi">8000</span> <span class="o">-</span><span class="n">intext</span><span class="o">:</span><span class="mi">8000</span>
+<div class="hlcode"><pre># scan port
+inurl:8000 -intext:8000
 </pre></div>
 
 
@@ -117,39 +117,39 @@
 <ul>
 <li>sql dump detction</li>
 </ul>
-<div class="hlcode"><pre><span class="cp"># php-nuke or postnuke CMS dumps</span>
-<span class="nl">inurl:</span><span class="n">nuke</span> <span class="n">filetype</span><span class="o">:</span><span class="n">sql</span>
+<div class="hlcode"><pre># php-nuke or postnuke CMS dumps
+inurl:nuke filetype:sql
 
-<span class="cp"># SQL database dumps or batched SQL</span>
-<span class="nl">filetype:</span><span class="n">sql</span> <span class="n">password</span>
+# SQL database dumps or batched SQL
+filetype:sql password
 
-<span class="cp"># SQL database dumps or batched SQL commands, focus on &quot;IDENTIFIED BY&quot;, which can locate passwords</span>
-<span class="nl">filetype:</span><span class="n">sql</span> <span class="o">+</span><span class="s">&quot;IDENTIFIED BY&quot;</span> <span class="o">-</span><span class="n">cvs</span>
+# SQL database dumps or batched SQL commands, focus on &quot;IDENTIFIED BY&quot;, which can locate passwords
+filetype:sql +&quot;IDENTIFIED BY&quot; -cvs
 
-<span class="cp"># SQL database dumps</span>
-<span class="s">&quot;mysql dump&quot;</span> <span class="n">filetype</span><span class="o">:</span><span class="n">sql</span>
-<span class="s">&quot;# Dumping data for table(username|user|users|password)&quot;</span>
-<span class="s">&quot;# Dumping data for table&quot;</span>
-<span class="s">&quot;# phpMyAdmin MySQL-Dump&quot;</span> <span class="n">filetype</span><span class="o">:</span><span class="n">txt</span>
-<span class="s">&quot;# phpMyAdmin MySQL-Dump&quot;</span> <span class="s">&quot;INSERT INTO&quot;</span> <span class="o">-</span><span class="s">&quot;the&quot;</span>
+# SQL database dumps
+&quot;mysql dump&quot; filetype:sql
+&quot;# Dumping data for table(username|user|users|password)&quot;
+&quot;# Dumping data for table&quot;
+&quot;# phpMyAdmin MySQL-Dump&quot; filetype:txt
+&quot;# phpMyAdmin MySQL-Dump&quot; &quot;INSERT INTO&quot; -&quot;the&quot;
 </pre></div>
 
 
 <ul>
 <li>database detection</li>
 </ul>
-<div class="hlcode"><pre><span class="cp"># ColdFusion source code</span>
-<span class="nl">filetype:</span><span class="n">cfm</span> <span class="s">&quot;cfapplication name&quot;</span> <span class="n">password</span>
+<div class="hlcode"><pre># ColdFusion source code
+filetype:cfm &quot;cfapplication name&quot; password
 
-<span class="cp"># Microsoft Access</span>
-<span class="nl">filetype:</span><span class="n">mdb</span> <span class="n">inurl</span><span class="o">:</span><span class="n">user</span><span class="p">.</span><span class="n">mdb</span>
-<span class="nl">inurl:</span><span class="n">email</span> <span class="n">filetype</span><span class="o">:</span><span class="n">mdb</span>
-<span class="nl">inurl:</span><span class="n">backup</span> <span class="n">filetype</span><span class="o">:</span><span class="n">mdb</span>
-<span class="nl">inurl:</span><span class="n">forum</span> <span class="n">filetype</span><span class="o">:</span><span class="n">mdb</span>
-<span class="nl">inurl:</span><span class="n">profiles</span> <span class="n">filetype</span><span class="o">:</span><span class="n">mdb</span>
-<span class="nl">allinurl:</span><span class="n">admin</span><span class="p">.</span><span class="n">mdb</span>
-<span class="cp"># ASP</span>
-<span class="nl">inurl:</span><span class="o">/</span><span class="n">db</span><span class="o">/</span><span class="n">main</span><span class="p">.</span><span class="n">mdb</span>
+# Microsoft Access
+filetype:mdb inurl:user.mdb
+inurl:email filetype:mdb
+inurl:backup filetype:mdb
+inurl:forum filetype:mdb
+inurl:profiles filetype:mdb
+allinurl:admin.mdb
+# ASP
+inurl:/db/main.mdb
 </pre></div>
 
 
@@ -162,12 +162,12 @@
 <li>intitle:"VNC viewer for Java"</li>
 </ul>
 <h2 id="webcam">WebCam</h2>
-<div class="hlcode"><pre><span class="s">&quot;Active Webcam page&quot;</span> <span class="n">inurl</span><span class="o">:</span><span class="mi">8080</span>
+<div class="hlcode"><pre>&quot;Active Webcam page&quot; inurl:8080
 </pre></div>
 
 
 <h2 id="network-cameras">Network cameras</h2>
-<div class="hlcode"><pre><span class="nl">intitle:</span><span class="s">&quot;toshiba network camera-User Login&quot;</span>
+<div class="hlcode"><pre>intitle:&quot;toshiba network camera-User Login&quot;
 </pre></div>
 </div>
 

@@ -19,26 +19,26 @@
 <div id="title">Dockerfile</div>
   <div id="content">
   <h2 id="dockerfile">Dockerfile 指令选项:</h2>
-<div class="hlcode"><pre><span class="n">FROM</span>
-<span class="n">MAINTAINER</span>
-<span class="n">RUN</span>
-<span class="n">CMD</span>
-<span class="n">EXPOSE</span>
-<span class="n">ENV</span>
-<span class="n">ADD</span>
-<span class="n">COPY</span>
-<span class="n">ENTRYPOINT</span>
-<span class="n">VOLUME</span>
-<span class="n">USER</span>
-<span class="n">WORKDIR</span>
-<span class="n">ONBUILD</span>
+<div class="hlcode"><pre>FROM
+MAINTAINER
+RUN
+CMD
+EXPOSE
+ENV
+ADD
+COPY
+ENTRYPOINT
+VOLUME
+USER
+WORKDIR
+ONBUILD
 </pre></div>
 
 
 <ul>
 <li>FROM </li>
 </ul>
-<div class="hlcode"><pre><span class="nb">FROM</span> <span class="o">&lt;</span><span class="nb">image</span><span class="o">&gt;</span>
+<div class="hlcode"><pre>FROM &lt;image&gt;
 </pre></div>
 
 
@@ -49,14 +49,14 @@
 <ul>
 <li>MAINTAINER </li>
 </ul>
-<div class="hlcode"><pre><span class="nx">MAINTAINER</span> <span class="o">&lt;</span><span class="nb">name</span><span class="o">&gt;</span>  <span class="o">--</span><span class="err">指定创建镜像的用户</span>
+<div class="hlcode"><pre>MAINTAINER &lt;name&gt;  --指定创建镜像的用户
 </pre></div>
 
 
 <ul>
 <li>EXPOSE</li>
 </ul>
-<div class="hlcode"><pre><span class="nb">EXPOSE</span> <span class="o">&lt;</span><span class="nb">port</span><span class="o">&gt;</span> <span class="err">[</span><span class="o">&lt;</span><span class="nb">port</span><span class="o">&gt;</span><span class="nx">...</span><span class="cp">]</span>
+<div class="hlcode"><pre>EXPOSE &lt;port&gt; [&lt;port&gt;...]
 </pre></div>
 
 
@@ -68,22 +68,22 @@
 <ul>
 <li>ENV</li>
 </ul>
-<div class="hlcode"><pre><span class="nb">ENV</span> <span class="o">&lt;</span><span class="nb">key</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="nb">value</span><span class="o">&gt;</span>       <span class="err">#</span> <span class="err">只能设置一个变量</span>
-<span class="nb">ENV</span> <span class="o">&lt;</span><span class="nb">key</span><span class="o">&gt;=&lt;</span><span class="nb">value</span><span class="o">&gt;</span> <span class="nx">...</span>   <span class="err">#</span> <span class="err">允许一次设置多个变量</span>
+<div class="hlcode"><pre>ENV &lt;key&gt; &lt;value&gt;       # 只能设置一个变量
+ENV &lt;key&gt;=&lt;value&gt; ...   # 允许一次设置多个变量
 </pre></div>
 
 
 <p>指定一个环节变量，会被后续 RUN 指令使用，并在容器运行时保留。</p>
 <p>例子:</p>
-<div class="hlcode"><pre><span class="n">ENV</span> <span class="n">myName</span><span class="o">=</span><span class="s">&quot;John Doe&quot;</span> <span class="n">myDog</span><span class="o">=</span><span class="n">Rex</span><span class="err">\</span> <span class="n">The</span><span class="err">\</span> <span class="n">Dog</span> \
-    <span class="n">myCat</span><span class="o">=</span><span class="n">fluffy</span>
+<div class="hlcode"><pre>ENV myName=&quot;John Doe&quot; myDog=Rex\ The\ Dog \
+    myCat=fluffy
 </pre></div>
 
 
 <p>等同于</p>
-<div class="hlcode"><pre><span class="n">ENV</span> <span class="n">myName</span> <span class="n">John</span> <span class="n">Doe</span>
-<span class="n">ENV</span> <span class="n">myDog</span> <span class="n">Rex</span> <span class="n">The</span> <span class="n">Dog</span>
-<span class="n">ENV</span> <span class="n">myCat</span> <span class="n">fluffy</span>
+<div class="hlcode"><pre>ENV myName John Doe
+ENV myDog Rex The Dog
+ENV myCat fluffy
 </pre></div>
 
 
@@ -94,14 +94,14 @@
 <ul>
 <li>ADD</li>
 </ul>
-<div class="hlcode"><pre><span class="nb">ADD</span> <span class="o">&lt;</span><span class="nb">src</span><span class="o">&gt;</span><span class="nx">...</span> <span class="o">&lt;</span><span class="nx">dest</span><span class="o">&gt;</span>
+<div class="hlcode"><pre>ADD &lt;src&gt;... &lt;dest&gt;
 </pre></div>
 
 
 <p>ADD 复制本地主机文件、目录或者远程文件 URLS 从 <src> 并且添加到容器指定路径中 <dest>。</p>
 <p><src> 支持通过 GO 的正则模糊匹配，具体规则可参见 Go filepath.Match</p>
-<div class="hlcode"><pre><span class="n">ADD</span> <span class="n">hom</span><span class="o">*</span> <span class="o">/</span><span class="n">mydir</span><span class="o">/</span>        <span class="err">#</span> <span class="n">adds</span> <span class="n">all</span> <span class="n">files</span> <span class="n">starting</span> <span class="n">with</span> <span class="s">&quot;hom&quot;</span>
-<span class="n">ADD</span> <span class="n">hom</span><span class="o">?</span><span class="p">.</span><span class="n">txt</span> <span class="o">/</span><span class="n">mydir</span><span class="o">/</span>    <span class="err">#</span> <span class="o">?</span> <span class="n">is</span> <span class="n">replaced</span> <span class="n">with</span> <span class="n">any</span> <span class="n">single</span> <span class="n">character</span>
+<div class="hlcode"><pre>ADD hom* /mydir/        # adds all files starting with &quot;hom&quot;
+ADD hom?.txt /mydir/    # ? is replaced with any single character
 </pre></div>
 
 
@@ -115,26 +115,26 @@
 <ul>
 <li>COPY</li>
 </ul>
-<div class="hlcode"><pre><span class="nx">COPY</span> <span class="o">&lt;</span><span class="nb">src</span><span class="o">&gt;</span><span class="nx">...</span> <span class="o">&lt;</span><span class="nx">dest</span><span class="o">&gt;</span>
+<div class="hlcode"><pre>COPY &lt;src&gt;... &lt;dest&gt;
 </pre></div>
 
 
 <p>COPY 复制新文件或者目录从 <src> 添加到容器指定路径中 <dest>。用法同 ADD，唯一的不同是不能指定远程文件 URLS。</p>
 <p>下面一条命令，会出现 ##镜像中文件层次结构错乱的情况##，暂不清楚是什么造成的，仅记之</p>
-<div class="hlcode"><pre><span class="n">COPY</span> <span class="n">code</span><span class="o">/*</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">code</span>  <span class="err">#</span> <span class="n">code</span> <span class="err">目录与</span> <span class="n">Dockerfile</span> <span class="err">位于同一级目录</span>
+<div class="hlcode"><pre>COPY code/* /root/code  # code 目录与 Dockerfile 位于同一级目录
 </pre></div>
 
 
 <p>正确的格式如下：</p>
-<div class="hlcode"><pre><span class="n">COPY</span> <span class="n">code</span><span class="o">/</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">code</span><span class="o">/</span>  
+<div class="hlcode"><pre>COPY code/ /root/code/  
 </pre></div>
 
 
 <ul>
 <li>VOLUME</li>
 </ul>
-<div class="hlcode"><pre><span class="cp"># 在容器内新建 /data 目录</span>
-<span class="n">VOLUME</span> <span class="p">[</span><span class="s">&quot;/data&quot;</span><span class="p">]</span>
+<div class="hlcode"><pre># 在容器内新建 /data 目录
+VOLUME [&quot;/data&quot;]
 </pre></div>
 
 
@@ -147,8 +147,8 @@
 <ul>
 <li>2.apt-get update 和 apt-get install 连接使用，避免缓存问题</li>
 </ul>
-<div class="hlcode"><pre><span class="n">RUN</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span> <span class="o">&amp;&amp;</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> \
-    <span class="n">python</span>   
+<div class="hlcode"><pre>RUN apt-get update &amp;&amp; apt-get install -y \
+    python   
 </pre></div>
 
 

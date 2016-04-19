@@ -21,7 +21,7 @@
   <ul>
 <li>安装 phpmyadmin</li>
 </ul>
-<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">phpmyadmin</span>
+<div class="hlcode"><pre>sudo apt-get install phpmyadmin
 </pre></div>
 
 
@@ -35,31 +35,31 @@
 <p>apache配置文件, 增加一个 alias</p>
 <p>/etc/apache2/mods-enabled/alias.conf</p>
 <p>文件增加</p>
-<div class="hlcode"><pre><span class="nx">Alias</span> <span class="p">/</span><span class="nx">phpmyadmin</span> <span class="p">/</span><span class="nx">usr</span><span class="p">/</span><span class="nx">share</span><span class="p">/</span><span class="nx">phpmyadmin</span>
+<div class="hlcode"><pre>Alias /phpmyadmin /usr/share/phpmyadmin
 
-<span class="o">&lt;</span><span class="nx">Directory</span> <span class="p">/</span><span class="nx">usr</span><span class="p">/</span><span class="nx">share</span><span class="p">/</span><span class="nx">phpmyadmin</span><span class="o">&gt;</span>
-    <span class="nx">Options</span> <span class="nx">FollowSymlinks</span>
-    <span class="nx">DirectoryIndex</span> <span class="nx">index.php</span>
+<span class="nt">&lt;Directory</span> <span class="err">/usr/share/phpmyadmin</span><span class="nt">&gt;</span>
+    Options FollowSymlinks
+    DirectoryIndex index.php
 
-    <span class="o">&lt;</span><span class="nx">IfModule</span> <span class="nx">mod_php5.c</span><span class="o">&gt;</span>
-        <span class="nx">AddType</span> <span class="nx">appliction</span><span class="p">/</span><span class="nx">x</span><span class="na">-httpd-php</span> <span class="bp">.</span><span class="nx">php</span>
+    <span class="nt">&lt;IfModule</span> <span class="err">mod_php5.c</span><span class="nt">&gt;</span>
+        AddType appliction/x-httpd-php .php
 
-        <span class="nx">php_flag</span> <span class="nx">magic_quotes_gpc</span> <span class="nx">Off</span>
-        <span class="nx">php_flag</span> <span class="nx">track_vars</span> <span class="k">On</span>
-        <span class="nx">php_flag</span> <span class="nx">register_globals</span> <span class="nx">Off</span>
-        <span class="nx">php_admin_flag</span> <span class="nx">allow_url_fopen</span> <span class="nx">Off</span>
-        <span class="nx">php_value</span> <span class="nb">include_path</span> <span class="nx">.</span>
-        <span class="nx">php_admin_value</span> <span class="nx">upload_tmp_dir</span> <span class="p">/</span><span class="nb">var</span><span class="p">/</span><span class="nx">lib</span><span class="p">/</span><span class="nx">phpmyadmin</span><span class="p">/</span><span class="nx">tmp</span>
-        <span class="nx">php_admin_value</span> <span class="nx">open_basedir</span> <span class="p">/</span><span class="nx">usr</span><span class="p">/</span><span class="nx">share</span><span class="p">/</span><span class="nx">phpmyadmin</span><span class="o">/</span><span class="p">:/</span><span class="nx">etc</span><span class="p">/</span><span class="nx">phpmyadmin</span><span class="o">/</span><span class="p">:/</span><span class="nb">var</span><span class="p">/</span><span class="nx">lib</span><span class="p">/</span><span class="nx">phpmyadmin</span><span class="o">/</span><span class="p">:/</span><span class="nx">usr</span><span class="p">/</span><span class="nx">share</span><span class="p">/</span><span class="nx">php</span><span class="p">/</span><span class="nx">php</span><span class="na">-gettext</span><span class="o">/</span>
-    <span class="o">&lt;/</span><span class="nx">IfModule</span><span class="o">&gt;</span>
-<span class="o">&lt;/</span><span class="nx">Directory</span><span class="o">&gt;</span>
+        php_flag magic_quotes_gpc Off
+        php_flag track_vars On
+        php_flag register_globals Off
+        php_admin_flag allow_url_fopen Off
+        php_value include_path .
+        php_admin_value upload_tmp_dir /var/lib/phpmyadmin/tmp
+        php_admin_value open_basedir /usr/share/phpmyadmin/:/etc/phpmyadmin/:/var/lib/phpmyadmin/:/usr/share/php/php-gettext/
+    <span class="nt">&lt;/IfModule&gt;</span>
+<span class="nt">&lt;/Directory&gt;</span>
 </pre></div>
 
 
 <ul>
 <li>访问phpmyadmin</li>
 </ul>
-<div class="hlcode"><pre><span class="nl">http:</span><span class="c1">//127.0.0.1/phpmyadmin</span>
+<div class="hlcode"><pre>http://127.0.0.1/phpmyadmin
 </pre></div>
 
 

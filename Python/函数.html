@@ -44,21 +44,21 @@
 <li>*args</li>
 </ul>
 <p>*args 解决参数个数不确定性的问题</p>
-<div class="hlcode"><pre><span class="n">def</span> <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span><span class="o">:</span>
-    <span class="n">print</span><span class="p">(</span><span class="s">&quot;x: {}&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-    <span class="n">print</span><span class="p">(</span><span class="s">&quot;args type: {}&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">type</span><span class="p">(</span><span class="n">args</span><span class="p">)))</span>
-    <span class="n">print</span><span class="p">(</span><span class="s">&quot;args: {}&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+<div class="hlcode"><pre>def func(x, *args):
+    print(&quot;x: {}&quot;.format(x))
+    print(&quot;args type: {}&quot;.format(type(args)))
+    print(&quot;args: {}&quot;.format(args))
 
-<span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
-<span class="nl">x:</span> <span class="mi">1</span>
-<span class="n">args</span> <span class="n">type</span><span class="o">:</span> <span class="o">&lt;</span><span class="n">type</span> <span class="err">&#39;</span><span class="n">tuple</span><span class="err">&#39;</span><span class="o">&gt;</span>
-<span class="nl">args:</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+func(1,2,3,4)
+x: 1
+args type: &lt;type &#39;tuple&#39;&gt;
+args: (2, 3, 4)
 
-<span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">args</span> <span class="o">:</span> <span class="p">(</span><span class="mi">2</span><span class="p">,)</span> <span class="err">#</span> <span class="n">exit</span> <span class="s">&quot;,&quot;</span> <span class="k">if</span> <span class="n">only</span> <span class="n">one</span> <span class="n">value</span> <span class="n">in</span> <span class="n">tuple</span>
+func(1,2)
+args : (2,) # exit &quot;,&quot; if only one value in tuple
 
-<span class="n">fuc</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="nl">args:</span> <span class="p">()</span>    <span class="err">#</span> <span class="n">empty</span>
+fuc(1)
+args: ()    # empty
 </pre></div>
 
 
@@ -66,26 +66,26 @@
 <li>**kargs</li>
 </ul>
 <p>**kargs形式收集值，会得到dict类型的数据，在传值时说明 键和值</p>
-<div class="hlcode"><pre><span class="n">def</span> <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span><span class="o">:</span>
-        <span class="n">print</span><span class="p">(</span><span class="s">&quot;x: {}&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-        <span class="n">print</span><span class="p">(</span><span class="s">&quot;args type: {}&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">type</span><span class="p">(</span><span class="n">kargs</span><span class="p">)))</span>
-        <span class="n">print</span><span class="p">(</span><span class="s">&quot;args: {}&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">kargs</span><span class="p">))</span>
-   <span class="p">....</span><span class="o">:</span>     
+<div class="hlcode"><pre>def func(x, **kargs):
+        print(&quot;x: {}&quot;.format(x))
+        print(&quot;args type: {}&quot;.format(type(kargs)))
+        print(&quot;args: {}&quot;.format(kargs))
+   ....:     
 
-<span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="nl">x:</span> <span class="mi">1</span>
-<span class="n">args</span> <span class="n">type</span><span class="o">:</span> <span class="o">&lt;</span><span class="n">type</span> <span class="err">&#39;</span><span class="n">dict</span><span class="err">&#39;</span><span class="o">&gt;</span>
-<span class="nl">args:</span> <span class="p">{</span><span class="sc">&#39;a&#39;</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="sc">&#39;b&#39;</span><span class="o">:</span> <span class="mi">3</span><span class="p">}</span>
+func(1, a=2, b=3)
+x: 1
+args type: &lt;type &#39;dict&#39;&gt;
+args: {&#39;a&#39;: 2, &#39;b&#39;: 3}
 
-<span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="nl">x:</span> <span class="mi">1</span>
-<span class="n">args</span> <span class="n">type</span><span class="o">:</span> <span class="o">&lt;</span><span class="n">type</span> <span class="err">&#39;</span><span class="n">dict</span><span class="err">&#39;</span><span class="o">&gt;</span>
-<span class="nl">args:</span> <span class="p">{</span><span class="sc">&#39;a&#39;</span><span class="o">:</span> <span class="mi">2</span><span class="p">}</span>
+func(1, a=2)
+x: 1
+args type: &lt;type &#39;dict&#39;&gt;
+args: {&#39;a&#39;: 2}
 
-<span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="nl">x:</span> <span class="mi">1</span>
-<span class="n">args</span> <span class="n">type</span><span class="o">:</span> <span class="o">&lt;</span><span class="n">type</span> <span class="err">&#39;</span><span class="n">dict</span><span class="err">&#39;</span><span class="o">&gt;</span>
-<span class="nl">args:</span> <span class="p">{}</span>
+func(1)
+x: 1
+args type: &lt;type &#39;dict&#39;&gt;
+args: {}
 </pre></div>
 </div>
 

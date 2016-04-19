@@ -22,11 +22,11 @@
 <ul>
 <li>ssh login</li>
 </ul>
-<div class="hlcode"><pre><span class="n">ssh</span> <span class="o">-</span><span class="n">l</span> <span class="n">root</span> <span class="n">ip</span>
+<div class="hlcode"><pre>ssh -l root ip
 
-<span class="n">or</span>
+or
 
-<span class="n">ssh</span> <span class="n">root</span><span class="err">@</span><span class="n">ip</span>
+ssh root@ip
 </pre></div>
 
 
@@ -38,11 +38,11 @@
 <li>ssh 长连接设置</li>
 </ul>
 <p><strong> client </strong></p>
-<div class="hlcode"><pre><span class="n">su</span>
-<span class="n">cd</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssh</span>
-<span class="n">echo</span> <span class="s">&quot;    ServerAliveInterval 60&quot;</span> <span class="o">&gt;&gt;</span> <span class="n">ssh_config</span>
-<span class="n">service</span> <span class="n">ssh</span> <span class="n">restart</span>
-<span class="n">exit</span>
+<div class="hlcode"><pre>su
+cd /etc/ssh
+echo &quot;    ServerAliveInterval 60&quot; &gt;&gt; ssh_config
+service ssh restart
+exit
 </pre></div>
 
 

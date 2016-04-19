@@ -29,35 +29,35 @@
 <li>变量规则</li>
 </ul>
 <p>给URL添加变量部分，可以将特殊的字段标记为&lt; variable_name &gt;,这个部分将会作为命名参数传递到你的函数。规则可以用 &lt; converter:variable_name &gt; 指定一个可选的转换器</p>
-<div class="hlcode"><pre><span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/user/&lt;username&gt;&#39;</span><span class="p">)</span>
+<div class="hlcode"><pre><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/user/&lt;username&gt;&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">show_user_profile</span><span class="p">(</span><span class="n">username</span><span class="p">):</span>
-    <span class="c"># show the user profile for that user</span>
-    <span class="k">return</span> <span class="s">&#39;User </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">username</span>
+    <span class="c1"># show the user profile for that user</span>
+    <span class="k">return</span> <span class="s1">&#39;User </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">username</span>
 
-<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/post/&lt;int:post_id&gt;&#39;</span><span class="p">)</span>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/post/&lt;int:post_id&gt;&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">show_post</span><span class="p">(</span><span class="n">post_id</span><span class="p">):</span>
-    <span class="c"># show the post with the given id, the id is an integer</span>
-    <span class="k">return</span> <span class="s">&#39;Post </span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">post_id</span>
+    <span class="c1"># show the post with the given id, the id is an integer</span>
+    <span class="k">return</span> <span class="s1">&#39;Post </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">post_id</span>
 </pre></div>
 
 
 <p>转换器有下面几种：</p>
-<div class="hlcode"><pre><span class="kt">int</span>     <span class="err">接受整数</span>
-<span class="kt">float</span>   <span class="err">同</span> <span class="kt">int</span> <span class="err">，但是接受浮点数</span>
-<span class="n">path</span>    <span class="err">和默认的相似，但也接受斜线</span>
+<div class="hlcode"><pre>int     接受整数
+float   同 int ，但是接受浮点数
+path    和默认的相似，但也接受斜线
 </pre></div>
 
 
 <p>注:</p>
 <blockquote>
-<p>variable_name 不能为空，否则会报错，只输入一个或多个空格是支持的
-函数参数variable_name默认参数无效，总是从url读取。
-需要支持url variable_name 为空，和参数 variable_name有默认参数，可以参考如下方式</p>
+<p>variable_name 不能为空，否则会报错，只输入一个或多个空格是支持的</p>
+<p>函数参数variable_name默认参数无效，总是从url读取。</p>
+<p>需要支持url variable_name 为空，和参数 variable_name有默认参数，可以参考如下方式</p>
 </blockquote>
-<div class="hlcode"><pre><span class="p">@</span><span class="nx">app.route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
-<span class="p">@</span><span class="nx">app.route</span><span class="p">(</span><span class="s1">&#39;/&lt;name&gt;&#39;</span><span class="p">)</span>
-<span class="nx">def</span> <span class="nx">hello</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="k">return</span> <span class="s1">&#39;hello&#39;</span><span class="o">+</span> <span class="p">(</span><span class="nb">name</span> <span class="k">if</span> <span class="nb">name</span> <span class="k">else</span> <span class="s1">&#39;None&#39;</span><span class="p">)</span>
+<div class="hlcode"><pre>@app.route(&#39;/&#39;)
+@app.route(&#39;/&lt;name&gt;&#39;)
+def hello(name=None):
+    return &#39;hello&#39;+ (name if name else &#39;None&#39;)
 </pre></div>
 
 
@@ -70,7 +70,7 @@
 <h2 id="_3">静态文件</h2>
 <p>在你的包中或是模块的所在目录中创建一个名为 static 的文件夹，在应用中使用 /static 即可访问。</p>
 <p>给静态文件生成 URL ，使用特殊的 'static' 端点名:</p>
-<div class="hlcode"><pre><span class="n">url_for</span><span class="p">(</span><span class="err">&#39;</span><span class="k">static</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="err">&#39;</span><span class="n">style</span><span class="p">.</span><span class="n">css</span><span class="err">&#39;</span><span class="p">)</span>
+<div class="hlcode"><pre>url_for(&#39;static&#39;, filename=&#39;style.css&#39;)
 </pre></div>
 
 
@@ -91,11 +91,11 @@
 <div class="hlcode"><pre><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">request</span>
 <span class="kn">from</span> <span class="nn">werkzeug</span> <span class="kn">import</span> <span class="n">secure_filename</span>
 
-<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/upload&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="s">&#39;POST&#39;</span><span class="p">])</span>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/upload&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">upload_file</span><span class="p">():</span>
-    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&#39;POST&#39;</span><span class="p">:</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">files</span><span class="p">[</span><span class="s">&#39;the_file&#39;</span><span class="p">]</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;/var/www/uploads/&#39;</span> <span class="o">+</span> <span class="n">secure_filename</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">filename</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">files</span><span class="p">[</span><span class="s1">&#39;the_file&#39;</span><span class="p">]</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;/var/www/uploads/&#39;</span> <span class="o">+</span> <span class="n">secure_filename</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">filename</span><span class="p">))</span>
     <span class="o">...</span>
 </pre></div>
 
@@ -114,15 +114,15 @@
 <p>如果你想在视图里操纵上述步骤结果的响应对象，可以使用 make_response() 函数。如有这样一个视图:</p>
 <div class="hlcode"><pre><span class="nd">@app.errorhandler</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">not_found</span><span class="p">(</span><span class="n">error</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&#39;error.html&#39;</span><span class="p">),</span> <span class="mi">404</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;error.html&#39;</span><span class="p">),</span> <span class="mi">404</span>
 </pre></div>
 
 
 <p>只需要把返回值表达式传递给 make_response() ，获取结果对象并修改，然后再返回它:</p>
 <div class="hlcode"><pre><span class="nd">@app.errorhandler</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">not_found</span><span class="p">(</span><span class="n">error</span><span class="p">):</span>
-    <span class="n">resp</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span><span class="n">render_template</span><span class="p">(</span><span class="s">&#39;error.html&#39;</span><span class="p">),</span> <span class="mi">404</span><span class="p">)</span>
-    <span class="n">resp</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&#39;X-Something&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;A value&#39;</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span><span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;error.html&#39;</span><span class="p">),</span> <span class="mi">404</span><span class="p">)</span>
+    <span class="n">resp</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;X-Something&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;A value&#39;</span>
     <span class="k">return</span> <span class="n">resp</span>
 </pre></div>
 
@@ -130,16 +130,16 @@
 <h2 id="_7">会话</h2>
 <p>是在 Cookies 的基础上实现的，并且对 Cookies 进行密钥签名。这意味着用户可以查看你 Cookie 的内容，但却不能修改它，除非用户知道签名的密钥。</p>
 <p>要使用会话，需要设置一个密钥</p>
-<div class="hlcode"><pre><span class="c"># logout</span>
-<span class="n">session</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;username&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+<div class="hlcode"><pre><span class="c1"># logout</span>
+<span class="n">session</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
 </pre></div>
 
 
 <h2 id="_8">日志</h2>
 <p>Flask 就已经预置了日志系统</p>
-<div class="hlcode"><pre><span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;A value for debugging&#39;</span><span class="p">)</span>
-<span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;A warning occurred (</span><span class="si">%d</span><span class="s"> apples)&#39;</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
-<span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&#39;An error occurred&#39;</span><span class="p">)</span>
+<div class="hlcode"><pre><span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;A value for debugging&#39;</span><span class="p">)</span>
+<span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;A warning occurred (</span><span class="si">%d</span><span class="s1"> apples)&#39;</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+<span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;An error occurred&#39;</span><span class="p">)</span>
 </pre></div>
 
 
@@ -158,20 +158,20 @@
 <ul>
 <li>return a requests response object</li>
 </ul>
-<div class="hlcode"><pre><span class="n">import</span> <span class="n">requests</span>
+<div class="hlcode"><pre><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="err">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="sc">&#39;/&#39;</span><span class="p">)</span>
-<span class="n">def</span> <span class="n">index</span><span class="p">()</span><span class="o">:</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="err">&#39;</span><span class="n">xxx</span><span class="err">&#39;</span>
-    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">content</span><span class="p">,</span> <span class="n">resp</span><span class="p">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">resp</span><span class="p">.</span><span class="n">headers</span><span class="p">.</span><span class="n">items</span><span class="p">())</span>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;xxx&#39;</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">resp</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
 </pre></div>
 
 
 <ul>
 <li>Flask instance</li>
 </ul>
-<div class="hlcode"><pre><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<div class="hlcode"><pre>app = Flask(__name__)
 </pre></div>
 
 
