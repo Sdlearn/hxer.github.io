@@ -30,7 +30,7 @@
 
 <h2 id="php">php 开关标签</h2>
 <p>php共有四种开关标签，如下两种总是有效的</p>
-<div class="hlcode"><pre><span class="cp">&lt;?php</span> <span class="cp">?&gt;</span> 
+<div class="hlcode"><pre><span class="cp">&lt;?php ?&gt;</span> 
 <span class="nt">&lt;script</span> <span class="na">language=</span><span class="s">”php”</span><span class="nt">&gt;</span> <span class="nt">&lt;/script&gt;</span>
 </pre></div>
 
@@ -81,7 +81,7 @@
 <p>`(反撇号)</p>
 </li>
 </ul>
-<div class="hlcode"><pre>echo `ls -l`;
+<div class="hlcode"><pre><span class="n">echo</span> <span class="err">`</span><span class="n">ls</span> <span class="o">-</span><span class="n">l</span><span class="err">`</span><span class="p">;</span>
 </pre></div>
 
 
@@ -89,10 +89,10 @@
 <ul>
 <li>php.ini</li>
 </ul>
-<div class="hlcode"><pre>safe_mode = On      #safe mode
-safe_mode_exec_dir = /usr/local/php/bin/    #limit path
+<div class="hlcode"><pre><span class="nx">safe_mode</span> <span class="o">=</span> <span class="nx">On</span>      <span class="err">#</span><span class="nx">safe</span> <span class="nx">mode</span>
+<span class="nx">safe_mode_exec_dir</span> <span class="o">=</span> <span class="err">/usr/local/php/bin/    #limit path</span>
 
-disable_functions=&quot;eval,phpinfo&quot;
+<span class="nx">disable_functions</span><span class="o">=</span><span class="s2">&quot;eval,phpinfo&quot;</span>
 </pre></div>
 
 
@@ -123,7 +123,7 @@ disable_functions=&quot;eval,phpinfo&quot;
 </blockquote>
 <p>支持本地文件，HTTP，FTP</p>
 <p>禁用file_get_contents,修改php.ini</p>
-<div class="hlcode"><pre>allow_url_fopen=Off
+<div class="hlcode"><pre><span class="n">allow_url_fopen</span><span class="o">=</span><span class="n">Off</span>
 </pre></div>
 
 

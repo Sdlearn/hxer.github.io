@@ -29,7 +29,7 @@
 <p>先做 用户注销，然后返回到登录页面，点击关机或重启</p>
 <h2 id="exfat">不能挂载 exfat 格式硬盘</h2>
 <p>solution:</p>
-<div class="hlcode"><pre>sudo apt-get install exfat-fuse exfat-utils
+<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">exfat</span><span class="o">-</span><span class="n">fuse</span> <span class="n">exfat</span><span class="o">-</span><span class="n">utils</span>
 </pre></div>
 
 
@@ -49,42 +49,42 @@
 
 
 <h2 id="_2">安装输入法</h2>
-<div class="hlcode"><pre>apt-get install fcitx fcitx-googlepinyin
+<div class="hlcode"><pre><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">fcitx</span> <span class="n">fcitx</span><span class="o">-</span><span class="n">googlepinyin</span>
 </pre></div>
 
 
 <p>配置：应用程序&gt;常用程序&gt;系统工具&gt;首选项&gt;Fcitx配置 添加拼音</p>
 <p>重启或用户注销</p>
 <h2 id="upgrade-to-kali-rolling">upgrade to kali Rolling</h2>
-<div class="hlcode"><pre>root@kali:# cat &lt;&lt; EOF &gt;/etc/apt/sources.list
-&gt; deb http://http.kali.org/kali kali-rolling main non-free contrib
-&gt; EOF
-root@kali:#apt-get update
-root@kali:#apt-get dist-upgrade
-root@kali:#reboot 
+<div class="hlcode"><pre><span class="n">root</span><span class="err">@</span><span class="n">kali</span><span class="o">:</span><span class="err">#</span> <span class="n">cat</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span> <span class="o">&gt;/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="p">.</span><span class="n">list</span>
+<span class="o">&gt;</span> <span class="n">deb</span> <span class="n">http</span><span class="o">:</span><span class="c1">//http.kali.org/kali kali-rolling main non-free contrib</span>
+<span class="o">&gt;</span> <span class="n">EOF</span>
+<span class="n">root</span><span class="err">@</span><span class="n">kali</span><span class="o">:</span><span class="err">#</span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+<span class="n">root</span><span class="err">@</span><span class="n">kali</span><span class="o">:</span><span class="err">#</span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">dist</span><span class="o">-</span><span class="n">upgrade</span>
+<span class="n">root</span><span class="err">@</span><span class="n">kali</span><span class="o">:</span><span class="err">#</span><span class="n">reboot</span> 
 </pre></div>
 
 
 <h2 id="root">设置 root 密码</h2>
-<div class="hlcode"><pre>sudo passwd
-#输入root密码
-#确认root密码
+<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">passwd</span>
+<span class="cp">#输入root密码</span>
+<span class="cp">#确认root密码</span>
 
-su root
+<span class="n">su</span> <span class="n">root</span>
 </pre></div>
 
 
 <h2 id="_3">安装火狐</h2>
-<div class="hlcode"><pre>apt-get remove iceweasel
-echo -e &quot;\ndeb http://downloads.sourceforge.net/project/ubuntuzilla/mozilla/apt all main&quot; | tee -a /etc/apt/sources.list &gt; /dev/null
-apt-key adv --recv-keys --keyserver keyserver.ubuntu.com C1289A29
-apt-get update
-apt-get install firefox-mozilla-build
+<div class="hlcode"><pre><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">remove</span> <span class="n">iceweasel</span>
+<span class="n">echo</span> <span class="o">-</span><span class="n">e</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">deb http://downloads.sourceforge.net/project/ubuntuzilla/mozilla/apt all main&quot;</span> <span class="o">|</span> <span class="n">tee</span> <span class="o">-</span><span class="n">a</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="p">.</span><span class="n">list</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
+<span class="n">apt</span><span class="o">-</span><span class="n">key</span> <span class="n">adv</span> <span class="o">--</span><span class="n">recv</span><span class="o">-</span><span class="n">keys</span> <span class="o">--</span><span class="n">keyserver</span> <span class="n">keyserver</span><span class="p">.</span><span class="n">ubuntu</span><span class="p">.</span><span class="n">com</span> <span class="n">C1289A29</span>
+<span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+<span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">firefox</span><span class="o">-</span><span class="n">mozilla</span><span class="o">-</span><span class="n">build</span>
 </pre></div>
 
 
 <h2 id="chromium">安装Chromium</h2>
-<div class="hlcode"><pre>sudo apt-get isntall chromium
+<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">isntall</span> <span class="n">chromium</span>
 </pre></div>
 
 
@@ -95,37 +95,37 @@ apt-get install firefox-mozilla-build
 <p>Download Link : http://www.java.com/en/download/linux_manual.jsp</p>
 <p>Java will be saved on Downloads/ folder or save it on /root.</p>
 <p>Uncompress archive:</p>
-<div class="hlcode"><pre>root@k4linux:~# tar -zxvf jre*.tar.gz
+<div class="hlcode"><pre><span class="n">root</span><span class="err">@</span><span class="n">k4linux</span><span class="o">:~</span><span class="err">#</span> <span class="n">tar</span> <span class="o">-</span><span class="n">zxvf</span> <span class="n">jre</span><span class="o">*</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span>
 </pre></div>
 
 
 <p>Move the extracted folder to /opt:</p>
-<div class="hlcode"><pre>root@k4linux:~# mv jre* /opt
+<div class="hlcode"><pre><span class="n">root</span><span class="err">@</span><span class="n">k4linux</span><span class="o">:~</span><span class="err">#</span> <span class="n">mv</span> <span class="n">jre</span><span class="o">*</span> <span class="o">/</span><span class="n">opt</span>
 </pre></div>
 
 
 <p>And go to the folder :</p>
-<div class="hlcode"><pre>root@k4linux:~# cd /opt/jre*
+<div class="hlcode"><pre><span class="n">root</span><span class="err">@</span><span class="n">k4linux</span><span class="o">:~</span><span class="err">#</span> <span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jre</span><span class="o">*</span>
 </pre></div>
 
 
 <h3 id="install-and-register-binaries-of-java">Install and register binaries Of Java :</h3>
 <p>This step registers the downloaded version of Java as an alternative, and switches it to be used as the default:</p>
-<div class="hlcode"><pre>update-alternatives --install /usr/bin/java java /opt/jre*/bin/java 1
-update-alternatives --install /usr/lib/mozilla/plugins/libjavaplugin.s­o mozilla-javaplugin.so /opt/jre*/lib/amd64/libnpjp2.so 1
-update-alternatives --set java /opt/jre*/bin/java
-update-alternatives --set javac /opt/jre*/bin/javac
-update-alternatives --set mozilla-javaplugin.so /opt/jre*/lib/amd64/libnpjp2.so
+<div class="hlcode"><pre><span class="n">update</span><span class="o">-</span><span class="n">alternatives</span> <span class="o">--</span><span class="n">install</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">java</span> <span class="n">java</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jre</span><span class="err">*/</span><span class="n">bin</span><span class="o">/</span><span class="n">java</span> <span class="mi">1</span>
+<span class="n">update</span><span class="o">-</span><span class="n">alternatives</span> <span class="o">--</span><span class="n">install</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mozilla</span><span class="o">/</span><span class="n">plugins</span><span class="o">/</span><span class="n">libjavaplugin</span><span class="p">.</span><span class="n">s</span><span class="err">­</span><span class="n">o</span> <span class="n">mozilla</span><span class="o">-</span><span class="n">javaplugin</span><span class="p">.</span><span class="n">so</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jre</span><span class="err">*/</span><span class="n">lib</span><span class="o">/</span><span class="n">amd64</span><span class="o">/</span><span class="n">libnpjp2</span><span class="p">.</span><span class="n">so</span> <span class="mi">1</span>
+<span class="n">update</span><span class="o">-</span><span class="n">alternatives</span> <span class="o">--</span><span class="n">set</span> <span class="n">java</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jre</span><span class="err">*/</span><span class="n">bin</span><span class="o">/</span><span class="n">java</span>
+<span class="n">update</span><span class="o">-</span><span class="n">alternatives</span> <span class="o">--</span><span class="n">set</span> <span class="n">javac</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jre</span><span class="err">*/</span><span class="n">bin</span><span class="o">/</span><span class="n">javac</span>
+<span class="n">update</span><span class="o">-</span><span class="n">alternatives</span> <span class="o">--</span><span class="n">set</span> <span class="n">mozilla</span><span class="o">-</span><span class="n">javaplugin</span><span class="p">.</span><span class="n">so</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jre</span><span class="err">*/</span><span class="n">lib</span><span class="o">/</span><span class="n">amd64</span><span class="o">/</span><span class="n">libnpjp2</span><span class="p">.</span><span class="n">so</span>
 </pre></div>
 
 
 <p>Testing your installation OF Java on Kali Linux 2.0:</p>
 <p>To check the browser plugin, restart your webrowser, and click “Do I have Java?”</p>
 <p>To check the version of Java you are now running:</p>
-<div class="hlcode"><pre> root@k4linux:~# java -version
-java version &quot;1.8.0_60&quot;
-Java(TM) SE Runtime Environment (build 1.8.0_60-b27)
-Java HotSpot(TM) 64-Bit Server VM (build 25.60-b23, mixed mode)
+<div class="hlcode"><pre> <span class="n">root</span><span class="err">@</span><span class="n">k4linux</span><span class="o">:~</span><span class="err">#</span> <span class="n">java</span> <span class="o">-</span><span class="n">version</span>
+<span class="n">java</span> <span class="n">version</span> <span class="s">&quot;1.8.0_60&quot;</span>
+<span class="n">Java</span><span class="p">(</span><span class="n">TM</span><span class="p">)</span> <span class="n">SE</span> <span class="n">Runtime</span> <span class="n">Environment</span> <span class="p">(</span><span class="n">build</span> <span class="mf">1.8.0</span><span class="n">_60</span><span class="o">-</span><span class="n">b27</span><span class="p">)</span>
+<span class="n">Java</span> <span class="n">HotSpot</span><span class="p">(</span><span class="n">TM</span><span class="p">)</span> <span class="mi">64</span><span class="o">-</span><span class="n">Bit</span> <span class="n">Server</span> <span class="n">VM</span> <span class="p">(</span><span class="n">build</span> <span class="mf">25.60</span><span class="o">-</span><span class="n">b23</span><span class="p">,</span> <span class="n">mixed</span> <span class="n">mode</span><span class="p">)</span>
 </pre></div>
 
 
@@ -134,23 +134,23 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.60-b23, mixed mode)
 <li>shadowsocks</li>
 </ul>
 <p>install</p>
-<div class="hlcode"><pre>pip install shadowsocks
+<div class="hlcode"><pre><span class="n">pip</span> <span class="n">install</span> <span class="n">shadowsocks</span>
 </pre></div>
 
 
 <p>run</p>
-<div class="hlcode"><pre>sslocal -s &lt;remote_ip&gt; -p &lt;remote_port&gt; -k &lt;password&gt; 
+<div class="hlcode"><pre><span class="nx">sslocal</span> <span class="na">-s</span> <span class="o">&lt;</span><span class="nx">remote_ip</span><span class="o">&gt;</span> <span class="na">-p</span> <span class="o">&lt;</span><span class="nx">remote_port</span><span class="o">&gt;</span> <span class="na">-k</span> <span class="o">&lt;</span><span class="nx">password</span><span class="o">&gt;</span> 
 </pre></div>
 
 
 <p>run with user login</p>
-<div class="hlcode"><pre>vim ~/opt/ss.sh
-    sslocal -s &lt;remote_ip&gt; -p &lt;remote_port&gt; -k &lt;password&gt;   #add to ss.sh
+<div class="hlcode"><pre><span class="nx">vim</span> <span class="err">~</span><span class="p">/</span><span class="nx">opt</span><span class="p">/</span><span class="nx">ss.sh</span>
+    <span class="nx">sslocal</span> <span class="na">-s</span> <span class="o">&lt;</span><span class="nx">remote_ip</span><span class="o">&gt;</span> <span class="na">-p</span> <span class="o">&lt;</span><span class="nx">remote_port</span><span class="o">&gt;</span> <span class="na">-k</span> <span class="o">&lt;</span><span class="nx">password</span><span class="o">&gt;</span>   <span class="vi">#add</span> <span class="k">to</span> <span class="nx">ss.sh</span>
 
-chmod u+x ss.sh
+<span class="nb">chmod</span> <span class="nx">u</span><span class="o">+</span><span class="nx">x</span> <span class="nx">ss.sh</span>
 
-vim ~/.profile
-    sh ~/opt/ss.sh 1&gt;/dev/null 2&gt;~/opt/ss.log &amp;     #add to file end, 1:stdout 2:stderr
+<span class="nx">vim</span> <span class="err">~</span><span class="p">/</span><span class="nx">.profile</span>
+    <span class="nx">sh</span> <span class="err">~</span><span class="p">/</span><span class="nx">opt</span><span class="p">/</span><span class="nx">ss.sh</span> <span class="mi">1</span><span class="o">&gt;/</span><span class="nx">dev</span><span class="p">/</span><span class="nb">null</span> <span class="mi">2</span><span class="o">&gt;</span><span class="err">~</span><span class="p">/</span><span class="nx">opt</span><span class="p">/</span><span class="nx">ss.log</span> <span class="o">&amp;</span>     <span class="vi">#add</span> <span class="k">to</span> <span class="nb">file</span> <span class="nb">end</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="nb">stdout</span> <span class="mi">2</span><span class="p">:</span><span class="nx">stderr</span>
 </pre></div>
 
 
@@ -158,12 +158,12 @@ vim ~/.profile
 <li>socks proxy</li>
 </ul>
 <p>1.安装</p>
-<div class="hlcode"><pre>$ sudo apt-get install proxychains
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">proxychains</span>
 </pre></div>
 
 
 <p>2.编辑proxychains配置</p>
-<div class="hlcode"><pre>$ vim /etc/proxychains.conf
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">proxychains</span><span class="p">.</span><span class="n">conf</span>
 </pre></div>
 
 
@@ -174,7 +174,7 @@ vim ~/.profile
 <p>ps: 默认的socks4 127.0.0.1 9095是tor代理，而socks5 127.0.0.1 1080是shadowsocks的代理</p>
 <p>4.使用方法</p>
 <p>在需要代理的命令前加上 proxychains ，如：</p>
-<div class="hlcode"><pre>$ sudo proxychains apt-get update
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">proxychains</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
 </pre></div>
 
 
@@ -184,21 +184,21 @@ vim ~/.profile
 <ul>
 <li>Install dependencies</li>
 </ul>
-<div class="hlcode"><pre><span class="n">gpg2</span> <span class="o">--</span><span class="n">keyserver</span> <span class="n">hkp</span><span class="p">:</span><span class="o">//</span><span class="n">keys</span><span class="o">.</span><span class="n">gnupg</span><span class="o">.</span><span class="n">net</span> <span class="o">--</span><span class="n">recv</span><span class="o">-</span><span class="n">keys</span> <span class="mi">409</span><span class="n">B6B1796C275462A1703113804BB82D39DC0E3</span>
-<span class="ow">or</span> 
-<span class="n">curl</span> <span class="o">-</span><span class="n">sSL</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">rvm</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">mpapis</span><span class="o">.</span><span class="n">asc</span> <span class="o">|</span> <span class="n">gpg2</span> <span class="o">--</span><span class="kn">import</span> <span class="o">-</span>
+<div class="hlcode"><pre><span class="n">gpg2</span> <span class="o">--</span><span class="n">keyserver</span> <span class="n">hkp</span><span class="o">:</span><span class="c1">//keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3</span>
+<span class="n">or</span> 
+<span class="n">curl</span> <span class="o">-</span><span class="n">sSL</span> <span class="n">https</span><span class="o">:</span><span class="c1">//rvm.io/mpapis.asc | gpg2 --import -</span>
 
 <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
 <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">curl</span> <span class="n">git</span>
-<span class="n">curl</span> <span class="o">-</span><span class="n">sSL</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">raw</span><span class="o">.</span><span class="n">githubusercontent</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">wayneeseguin</span><span class="o">/</span><span class="n">rvm</span><span class="o">/</span><span class="n">master</span><span class="o">/</span><span class="n">binscripts</span><span class="o">/</span><span class="n">rvm</span><span class="o">-</span><span class="n">installer</span> <span class="o">|</span> <span class="n">bash</span> <span class="o">-</span><span class="n">s</span> <span class="n">stable</span>
-<span class="n">source</span> <span class="o">~/.</span><span class="n">rvm</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">rvm</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">sSL</span> <span class="n">https</span><span class="o">:</span><span class="c1">//raw.githubusercontent.com/wayneeseguin/rvm/master/binscripts/rvm-installer | bash -s stable</span>
+<span class="n">source</span> <span class="o">~/</span><span class="p">.</span><span class="n">rvm</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">rvm</span>
 
-<span class="c1"># openssl patch, because openssl update that affects 2.1.5 compiling</span>
-<span class="n">curl</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">ruby</span><span class="o">/</span><span class="n">ruby</span><span class="o">/</span><span class="n">commit</span><span class="o">/</span><span class="mf">801e1</span><span class="n">fe46d83c856844ba18ae4751478c59af0d1</span><span class="o">.</span><span class="n">diff</span> <span class="o">&gt;</span> <span class="n">openssl</span><span class="o">.</span><span class="n">patch</span>
-<span class="n">rvm</span> <span class="n">install</span> <span class="o">--</span><span class="n">patch</span> <span class="o">./</span><span class="n">openssl</span><span class="o">.</span><span class="n">patch</span> <span class="mf">2.0</span><span class="o">.</span><span class="mi">0</span>
+<span class="cp"># openssl patch, because openssl update that affects 2.1.5 compiling</span>
+<span class="n">curl</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/ruby/ruby/commit/801e1fe46d83c856844ba18ae4751478c59af0d1.diff &gt; openssl.patch</span>
+<span class="n">rvm</span> <span class="n">install</span> <span class="o">--</span><span class="n">patch</span> <span class="p">.</span><span class="o">/</span><span class="n">openssl</span><span class="p">.</span><span class="n">patch</span> <span class="mf">2.0.0</span>
 
-<span class="n">rvm</span> <span class="n">install</span> <span class="mf">2.1</span><span class="o">.</span><span class="mi">5</span>
-<span class="n">rvm</span> <span class="n">use</span> <span class="mf">2.1</span><span class="o">.</span><span class="mi">5</span> <span class="o">--</span> <span class="n">default</span>
+<span class="n">rvm</span> <span class="n">install</span> <span class="mf">2.1.5</span>
+<span class="n">rvm</span> <span class="n">use</span> <span class="mf">2.1.5</span> <span class="o">--</span> <span class="k">default</span>
 <span class="n">gem</span> <span class="n">install</span> <span class="n">bundler</span>
 </pre></div>
 
@@ -207,30 +207,30 @@ vim ~/.profile
 <ul>
 <li>Download BeEF</li>
 </ul>
-<div class="hlcode"><pre>git clone git://github.com/beefproject/beef.git
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="o">:</span><span class="c1">//github.com/beefproject/beef.git</span>
 </pre></div>
 
 
 <ul>
 <li>Install gems and launch</li>
 </ul>
-<div class="hlcode"><pre>cd beef
-bundle install
-./beef
+<div class="hlcode"><pre><span class="n">cd</span> <span class="n">beef</span>
+<span class="n">bundle</span> <span class="n">install</span>
+<span class="p">.</span><span class="o">/</span><span class="n">beef</span>
 </pre></div>
 
 
 <h2 id="install-docker">install docker</h2>
-<div class="hlcode"><pre><span class="err">sudo</span> <span class="err">vim</span> <span class="err">/etc/apt/sources.list</span>
-    <span class="c"># add follow line in the file</span>
-    <span class="err">deb</span> <span class="err">http://http.debian.net/debian</span> <span class="err">jessie-backports</span> <span class="err">main</span>
+<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="p">.</span><span class="n">list</span>
+    <span class="err">#</span> <span class="n">add</span> <span class="n">follow</span> <span class="n">line</span> <span class="n">in</span> <span class="n">the</span> <span class="n">file</span>
+    <span class="n">deb</span> <span class="n">http</span><span class="o">:</span><span class="c1">//http.debian.net/debian jessie-backports main</span>
 
-<span class="err">sudo</span> <span class="err">apt-get</span> <span class="err">update</span>
-<span class="err">sudo</span> <span class="err">apt-get</span> <span class="err">install</span> <span class="err">docker.io</span>      
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">docker</span><span class="p">.</span><span class="n">io</span>      
 
-<span class="err">or</span>
+<span class="n">or</span>
 
-<span class="err">curl</span> <span class="err">-sSL</span> <span class="err">https://get.docker.com/</span> <span class="err">|</span> <span class="err">sh</span> 
+<span class="n">curl</span> <span class="o">-</span><span class="n">sSL</span> <span class="n">https</span><span class="o">:</span><span class="c1">//get.docker.com/ | sh </span>
 </pre></div>
 
 
@@ -238,14 +238,14 @@ bundle install
 <ul>
 <li>irssi</li>
 </ul>
-<div class="hlcode"><pre>sudo apt-get install irssi 
+<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">irssi</span> 
 </pre></div>
 
 
 <h2 id="zbar-decode">zbar -- decode 二维码</h2>
-<div class="hlcode"><pre>$ apt-get install libzbar-dev
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libzbar</span><span class="o">-</span><span class="n">dev</span>
 
-$ pip install zbar
+<span class="err">$</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">zbar</span>
 </pre></div>
 
 
@@ -253,60 +253,60 @@ $ pip install zbar
 <ul>
 <li>openvpn</li>
 </ul>
-<div class="hlcode"><pre>apt-get install -y openvpn
+<div class="hlcode"><pre><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">openvpn</span>
 </pre></div>
 
 
 <p>配置</p>
-<div class="hlcode"><pre>vim ovpn.sh
+<div class="hlcode"><pre><span class="n">vim</span> <span class="n">ovpn</span><span class="p">.</span><span class="n">sh</span>
 
-=== ovpn.sh ===
-#!/bin/bash
+<span class="o">===</span> <span class="n">ovpn</span><span class="p">.</span><span class="n">sh</span> <span class="o">===</span>
+<span class="cp">#!/bin/bash</span>
 
-# run openvpn with configuration
-# need root privilige
-openvpn --config clientname.ovpn 1&gt;ovpn_info.log 2&gt;ovpn_error.log &amp;
-================
+<span class="cp"># run openvpn with configuration</span>
+<span class="cp"># need root privilige</span>
+<span class="n">openvpn</span> <span class="o">--</span><span class="n">config</span> <span class="n">clientname</span><span class="p">.</span><span class="n">ovpn</span> <span class="mi">1</span><span class="o">&gt;</span><span class="n">ovpn_info</span><span class="p">.</span><span class="n">log</span> <span class="mi">2</span><span class="o">&gt;</span><span class="n">ovpn_error</span><span class="p">.</span><span class="n">log</span> <span class="o">&amp;</span>
+<span class="o">================</span>
 
-chmod u+x ovpn.sh
+<span class="n">chmod</span> <span class="n">u</span><span class="o">+</span><span class="n">x</span> <span class="n">ovpn</span><span class="p">.</span><span class="n">sh</span>
 
-# run 
-sudo ./ovpn.sh
+<span class="cp"># run </span>
+<span class="n">sudo</span> <span class="p">.</span><span class="o">/</span><span class="n">ovpn</span><span class="p">.</span><span class="n">sh</span>
 </pre></div>
 
 
 <h2 id="_4">新增用户</h2>
-<div class="hlcode"><pre>useradd -m username
-passwd username
-usermod -a -G sudo username
-chsh -s /bin/bash username
-id username         #查看配置
+<div class="hlcode"><pre><span class="n">useradd</span> <span class="o">-</span><span class="n">m</span> <span class="n">username</span>
+<span class="n">passwd</span> <span class="n">username</span>
+<span class="n">usermod</span> <span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">G</span> <span class="n">sudo</span> <span class="n">username</span>
+<span class="n">chsh</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span> <span class="n">username</span>
+<span class="n">id</span> <span class="n">username</span>         <span class="err">#查看配置</span>
 </pre></div>
 
 
 <h2 id="ssh">开启SSH服务</h2>
-<div class="hlcode"><pre>#vi /etc/ssh/sshd_config   
+<div class="hlcode"><pre><span class="c">#vi /etc/ssh/sshd_config   </span>
 </pre></div>
 
 
 <p>将#PasswordAuthentication no的注释去掉，并且将NO修改为YES
 将#PermitRootLogin yes的注释去掉</p>
 <p>启动SSH服务</p>
-<div class="hlcode"><pre>#/etc/init.d/ssh start    //or service ssh start
+<div class="hlcode"><pre><span class="c">#/etc/init.d/ssh start    //or service ssh start</span>
 </pre></div>
 
 
 <p>验证SSH服务状态</p>
-<div class="hlcode"><pre>#/etc/init.d/ssh status
+<div class="hlcode"><pre><span class="c">#/etc/init.d/ssh status</span>
 </pre></div>
 
 
 <h2 id="_5">开机自启动</h2>
-<div class="hlcode"><pre># vi /etc/rc.local
+<div class="hlcode"><pre><span class="cp"># vi /etc/rc.local</span>
 
-/etc/init.d/apache2 start
-/etc/init.d/mysql start
-exit 0
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">apache2</span> <span class="n">start</span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">mysql</span> <span class="n">start</span>
+<span class="n">exit</span> <span class="mi">0</span>
 </pre></div>
 
 
@@ -361,7 +361,7 @@ $ [sudo] make install
 
 
 <p>To test if Node.js was built correctly:</p>
-<div class="hlcode"><pre>$ node -e <span class="s2">&quot;console.log(&#39;Hello from Node.js &#39; + process.version)&quot;</span>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">node</span> <span class="o">-</span><span class="n">e</span> <span class="s">&quot;console.log(&#39;Hello from Node.js &#39; + process.version)&quot;</span>
 </pre></div>
 
 
@@ -372,16 +372,16 @@ $ [sudo] make install
 </ul>
 <p>1.intall nodejs </p>
 <p>then </p>
-<div class="hlcode"><pre># 下载仓库
-git clone https://github.com/geeeeeeeeek/electronic-wechat.git
+<div class="hlcode"><pre><span class="cp"># 下载仓库</span>
+<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/geeeeeeeeek/electronic-wechat.git</span>
 
-# 进入仓库
-cd electronic-wechat
+<span class="cp"># 进入仓库</span>
+<span class="n">cd</span> <span class="n">electronic</span><span class="o">-</span><span class="n">wechat</span>
 
-# 安装依赖, 运行应用
-npm install -g
+<span class="cp"># 安装依赖, 运行应用</span>
+<span class="n">npm</span> <span class="n">install</span> <span class="o">-</span><span class="n">g</span>
 
-npm start
+<span class="n">npm</span> <span class="n">start</span>
 </pre></div>
 
 
@@ -391,9 +391,9 @@ npm start
 <li>use ~/.profile instead of ~/.bash_profile</li>
 </ul>
 <h2 id="flash">flash</h2>
-<div class="hlcode"><pre>su root
-apt-get install flashplugin-nonfree
-update-flashplugin-nonfree --install 
+<div class="hlcode"><pre><span class="n">su</span> <span class="n">root</span>
+<span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">flashplugin</span><span class="o">-</span><span class="n">nonfree</span>
+<span class="n">update</span><span class="o">-</span><span class="n">flashplugin</span><span class="o">-</span><span class="n">nonfree</span> <span class="o">--</span><span class="n">install</span> 
 </pre></div>
 
 
@@ -402,17 +402,17 @@ update-flashplugin-nonfree --install
 </ul>
 <p>首先先git一下：https://github.com/LiuLang/bcloud-packages</p>
 <p>然后安装自己对应版本（32bit or 64bit） </p>
-<div class="hlcode"><pre>dpkg -i bcloud-x.x.x.deb
-apt-get -f install
+<div class="hlcode"><pre><span class="n">dpkg</span> <span class="o">-</span><span class="n">i</span> <span class="n">bcloud</span><span class="o">-</span><span class="n">x</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">deb</span>
+<span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">f</span> <span class="n">install</span>
 </pre></div>
 
 
 <ul>
 <li>安装网易云音乐</li>
 </ul>
-<div class="hlcode"><pre>git clone https://github.com/cosven/FeelUOwn.git
-cd FeelUOwn
-./install.sh
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/cosven/FeelUOwn.git</span>
+<span class="n">cd</span> <span class="n">FeelUOwn</span>
+<span class="p">.</span><span class="o">/</span><span class="n">install</span><span class="p">.</span><span class="n">sh</span>
 </pre></div>
 
 
@@ -424,57 +424,57 @@ cd FeelUOwn
 <li>vsftp</li>
 </ul>
 <p>install</p>
-<div class="hlcode"><pre><span class="p">$</span><span class="nv">apt</span><span class="x">-get install vsftpd</span>
+<div class="hlcode"><pre><span class="err">$</span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">vsftpd</span>
 </pre></div>
 
 
 <p>config</p>
-<div class="hlcode"><pre><span class="p">$</span><span class="nv">vim</span><span class="x"> /etc/vsftpd.conf</span>
-<span class="x">    Write_enable=YES 将前面的</span><span class="err">#</span><span class="x">去掉</span>
-<span class="x">    chroot_local_user=YES 将前面的</span><span class="err">#</span><span class="x">去掉</span>
-<span class="p">$</span><span class="nv">mkdir</span><span class="x"> /home/hx/ftp</span>
-<span class="p">$</span><span class="nv">chmod</span><span class="x"> -R 777 ftp</span>
-<span class="p">$</span><span class="nv">chmod</span><span class="x"> a-w ftp</span>
-<span class="p">$</span><span class="nv">sudo</span><span class="x"> useradd -g ftp -d /home/hx/ftp/ &lt;user&gt;</span>
-<span class="p">$</span><span class="nv">sudo</span><span class="x"> passwd &lt;user&gt;</span>
-<span class="p">$</span><span class="nv">sudo</span><span class="x"> service vsftpd restart</span>
+<div class="hlcode"><pre><span class="nv">$vim</span> <span class="p">/</span><span class="nx">etc</span><span class="p">/</span><span class="nx">vsftpd.conf</span>
+    <span class="n">Write_enable</span><span class="o">=</span><span class="nx">YES</span> <span class="err">将前面的#去掉</span>
+    <span class="n">chroot_local_user</span><span class="o">=</span><span class="nx">YES</span> <span class="err">将前面的#去掉</span>
+<span class="nv">$mkdir</span> <span class="p">/</span><span class="nb">home</span><span class="p">/</span><span class="nx">hx</span><span class="p">/</span><span class="nx">ftp</span>
+<span class="nv">$chmod</span> <span class="na">-R</span> <span class="mi">777</span> <span class="nx">ftp</span>
+<span class="nv">$chmod</span> <span class="nx">a</span><span class="na">-w</span> <span class="nx">ftp</span>
+<span class="nv">$sudo</span> <span class="nx">useradd</span> <span class="na">-g</span> <span class="nx">ftp</span> <span class="na">-d</span> <span class="p">/</span><span class="nb">home</span><span class="p">/</span><span class="nx">hx</span><span class="p">/</span><span class="nx">ftp</span><span class="o">/</span> <span class="o">&lt;</span><span class="nb">user</span><span class="o">&gt;</span>
+<span class="nv">$sudo</span> <span class="nx">passwd</span> <span class="o">&lt;</span><span class="nb">user</span><span class="o">&gt;</span>
+<span class="nv">$sudo</span> <span class="nx">service</span> <span class="nx">vsftpd</span> <span class="nb">restart</span>
 </pre></div>
 
 
 <h2 id="weblamp">web环境(LAMP)配置</h2>
 <p>1.apache 服务启动     </p>
-<div class="hlcode"><pre>sudo service apache2 start
+<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">service</span> <span class="n">apache2</span> <span class="n">start</span>
 </pre></div>
 
 
 <p>2.修改网站默认打开路径 </p>
-<div class="hlcode"><pre>/etc/apache2/sites-enabled/000-default.conf    
-        修改“DocumentRoot /var/www/html&quot; to &quot;DocumentRoot yourpath&quot;     这是修改80端口
-/etc/apache2/sites-available/default*
-        修改“DocumentRoot /var/www/html&quot; to &quot;DocumentRoot yourpath&quot;     这是修改443端口（可选）
-/etc/apache2/apache2.conf
-        增加如下内容--进入权限
-        <span class="nt">&lt;Directory</span> <span class="err">yourpath</span><span class="nt">&gt;</span>
-            Options Indexes FollowSymLinks
-            AllowOverride None
-            Require all granted
-        <span class="nt">&lt;/Directory&gt;</span>
+<div class="hlcode"><pre><span class="p">/</span><span class="nx">etc</span><span class="p">/</span><span class="nx">apache2</span><span class="p">/</span><span class="nx">sites</span><span class="na">-enabled</span><span class="p">/</span><span class="nx">000</span><span class="na">-default.conf</span>    
+        <span class="err">修改“</span><span class="nb">DocumentRoot</span> <span class="p">/</span><span class="nb">var</span><span class="p">/</span><span class="nx">www</span><span class="p">/</span><span class="nx">html</span><span class="s2">&quot; to &quot;</span><span class="nb">DocumentRoot</span> <span class="nx">yourpath</span><span class="s2">&quot;     这是修改80端口</span>
+<span class="s2">/etc/apache2/sites-available/default*</span>
+<span class="s2">        修改“DocumentRoot /var/www/html&quot;</span> <span class="k">to</span> <span class="s2">&quot;DocumentRoot yourpath&quot;</span>     <span class="err">这是修改</span><span class="mi">443</span><span class="err">端口（可选）</span>
+<span class="p">/</span><span class="nx">etc</span><span class="p">/</span><span class="nx">apache2</span><span class="p">/</span><span class="nx">apache2.conf</span>
+        <span class="err">增加如下内容</span><span class="o">--</span><span class="err">进入权限</span>
+        <span class="o">&lt;</span><span class="nx">Directory</span> <span class="nx">yourpath</span><span class="o">&gt;</span>
+            <span class="nx">Options</span> <span class="nx">Indexes</span> <span class="nx">FollowSymLinks</span>
+            <span class="nx">AllowOverride</span> <span class="kc">None</span>
+            <span class="k">Require</span> <span class="n">all</span> <span class="nx">granted</span>
+        <span class="o">&lt;/</span><span class="nx">Directory</span><span class="o">&gt;</span>
 </pre></div>
 
 
 <p>2.mysql 服务启动    </p>
-<div class="hlcode"><pre>sudo service mysql start
+<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">service</span> <span class="n">mysql</span> <span class="n">start</span>
 </pre></div>
 
 
 <ul>
 <li>mysql root 默认无密码，设置密码</li>
 </ul>
-<div class="hlcode"><pre>mysql -u root
-&gt;use mysql;
-&gt;UPDATE user SET Password=PASSWORD(&#39;&lt;passwd&gt;&#39;) WHERE User=&#39;root&#39;;
-&gt;flush privileges;
-&gt;exit; 
+<div class="hlcode"><pre><span class="nx">mysql</span> <span class="na">-u</span> <span class="nb">root</span>
+<span class="o">&gt;</span><span class="nx">use</span> <span class="nx">mysql</span><span class="p">;</span>
+<span class="o">&gt;</span><span class="nx">UPDATE</span> <span class="nb">user</span> <span class="nb">SET</span> <span class="n">Password</span><span class="o">=</span><span class="nx">PASSWORD</span><span class="p">(</span><span class="s1">&#39;&lt;passwd&gt;&#39;</span><span class="p">)</span> <span class="k">WHERE</span> <span class="n">User</span><span class="o">=</span><span class="s1">&#39;root&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span><span class="nb">flush</span> <span class="nx">privileges</span><span class="p">;</span>
+<span class="o">&gt;</span><span class="nx">exit</span><span class="p">;</span> 
 </pre></div>
 
 
@@ -484,7 +484,7 @@ cd FeelUOwn
 <p>4.织梦模板</p>
 <p>下载织梦源码包，解压，按要求操作！
 a.安装GD扩展库：     </p>
-<div class="hlcode"><pre>apt-get install php5-gd
+<div class="hlcode"><pre><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">php5</span><span class="o">-</span><span class="n">gd</span>
 </pre></div>
 
 
@@ -494,19 +494,19 @@ a.安装GD扩展库：     </p>
 <li>1.fuck</li>
 </ul>
 <p>install</p>
-<div class="hlcode"><pre>$ wget -O - https://raw.githubusercontent.com/nvbn/thefuck/master/install.sh <span class="p">|</span> sh - <span class="o">&amp;&amp;</span> <span class="nv">$0</span>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">wget</span> <span class="o">-</span><span class="n">O</span> <span class="o">-</span> <span class="n">https</span><span class="o">:</span><span class="c1">//raw.githubusercontent.com/nvbn/thefuck/master/install.sh | sh - &amp;&amp; $0</span>
 </pre></div>
 
 
 <p>use</p>
-<div class="hlcode"><pre>$ fuck
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">fuck</span>
 </pre></div>
 
 
 <h2 id="_6">命令行锁屏</h2>
-<div class="hlcode"><pre># apt-get install gnome-screensaver
-$ gnome-screensaver-command -l     #lock
-$ gnome-screensaver-command -a     #active
+<div class="hlcode"><pre><span class="cp"># apt-get install gnome-screensaver</span>
+<span class="err">$</span> <span class="n">gnome</span><span class="o">-</span><span class="n">screensaver</span><span class="o">-</span><span class="n">command</span> <span class="o">-</span><span class="n">l</span>     <span class="err">#</span><span class="n">lock</span>
+<span class="err">$</span> <span class="n">gnome</span><span class="o">-</span><span class="n">screensaver</span><span class="o">-</span><span class="n">command</span> <span class="o">-</span><span class="n">a</span>     <span class="err">#</span><span class="n">active</span>
 </pre></div>
 
 
@@ -521,7 +521,7 @@ $ gnome-screensaver-command -a     #active
 <ul>
 <li>设置屏幕刷新率</li>
 </ul>
-<div class="hlcode"><pre><span class="p">$</span><span class="nv">xrandr</span><span class="x"> -r 60</span>
+<div class="hlcode"><pre><span class="err">$</span><span class="n">xrandr</span> <span class="o">-</span><span class="n">r</span> <span class="mi">60</span>
 </pre></div>
 
 
@@ -529,7 +529,7 @@ $ gnome-screensaver-command -a     #active
 <ol>
 <li>Install linux-headers-$(uname -r)</li>
 </ol>
-<div class="hlcode"><pre>apt-get install linux-headers-$(uname -r)
+<div class="hlcode"><pre><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">linux</span><span class="o">-</span><span class="n">headers</span><span class="o">-</span><span class="err">$</span><span class="p">(</span><span class="n">uname</span> <span class="o">-</span><span class="n">r</span><span class="p">)</span>
 </pre></div>
 
 
@@ -541,31 +541,31 @@ $ gnome-screensaver-command -a     #active
 <p>Patch for Kernel 4.0</p>
 </li>
 </ol>
-<div class="hlcode"><pre>$ curl http://pastie.org/pastes/9934018/download -o /tmp/vmnet-3.19.patch
-Extract the vmnet module sources:
-$ <span class="nb">cd</span> /usr/lib/vmware/modules/source
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">curl</span> <span class="n">http</span><span class="o">:</span><span class="c1">//pastie.org/pastes/9934018/download -o /tmp/vmnet-3.19.patch</span>
+<span class="n">Extract</span> <span class="n">the</span> <span class="n">vmnet</span> <span class="n">module</span> <span class="n">sources</span><span class="o">:</span>
+<span class="err">$</span> <span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">vmware</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="n">source</span>
 
 
-<span class="c1"># tar -xf vmnet.tar</span>
-Apply the patch:
-<span class="c1"># patch -p0 -i /tmp/vmnet-3.19.patch</span>
-Recreate the archive:
-<span class="c1"># tar -cf vmnet.tar vmnet-only</span>
-Remove leftover:
-<span class="c1"># rm -r -only</span>
-Rebuild modules:
-<span class="c1"># vmware-modconfig --console --install-all</span>
+<span class="cp"># tar -xf vmnet.tar</span>
+<span class="n">Apply</span> <span class="n">the</span> <span class="n">patch</span><span class="o">:</span>
+<span class="cp"># patch -p0 -i /tmp/vmnet-3.19.patch</span>
+<span class="n">Recreate</span> <span class="n">the</span> <span class="n">archive</span><span class="o">:</span>
+<span class="cp"># tar -cf vmnet.tar vmnet-only</span>
+<span class="n">Remove</span> <span class="n">leftover</span><span class="o">:</span>
+<span class="cp"># rm -r -only</span>
+<span class="n">Rebuild</span> <span class="n">modules</span><span class="o">:</span>
+<span class="cp"># vmware-modconfig --console --install-all</span>
 
-Fix network vitural not complie
-<span class="c1"># - as root user</span>
-$ <span class="nb">cd</span> /usr/lib/vmware/modules/source
-$ tar -xvf vmnet.tar
-<span class="c1"># - edit the file vmnet-only/netif.c and replace the line that looks like</span>
-<span class="nv">dev</span> <span class="o">=</span> allocnetdev<span class="o">(</span>sizeof netIf, deviceName, VNetNetIfSetup<span class="o">)</span><span class="p">;</span>
-to
-<span class="nv">dev</span> <span class="o">=</span> allocnetdev<span class="o">(</span>sizeof netIf, deviceName, NETNAMEUNKNOWN, VNetNetIfSetup<span class="o">)</span><span class="p">;</span>
-$ tar -cvf vmnet.tar vmnet-only/
-$ rm -rf vmnet-only/
+<span class="n">Fix</span> <span class="n">network</span> <span class="n">vitural</span> <span class="n">not</span> <span class="n">complie</span>
+<span class="cp"># - as root user</span>
+<span class="err">$</span> <span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">vmware</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="n">source</span>
+<span class="err">$</span> <span class="n">tar</span> <span class="o">-</span><span class="n">xvf</span> <span class="n">vmnet</span><span class="p">.</span><span class="n">tar</span>
+<span class="cp"># - edit the file vmnet-only/netif.c and replace the line that looks like</span>
+<span class="n">dev</span> <span class="o">=</span> <span class="n">allocnetdev</span><span class="p">(</span><span class="k">sizeof</span> <span class="n">netIf</span><span class="p">,</span> <span class="n">deviceName</span><span class="p">,</span> <span class="n">VNetNetIfSetup</span><span class="p">);</span>
+<span class="n">to</span>
+<span class="n">dev</span> <span class="o">=</span> <span class="n">allocnetdev</span><span class="p">(</span><span class="k">sizeof</span> <span class="n">netIf</span><span class="p">,</span> <span class="n">deviceName</span><span class="p">,</span> <span class="n">NETNAMEUNKNOWN</span><span class="p">,</span> <span class="n">VNetNetIfSetup</span><span class="p">);</span>
+<span class="err">$</span> <span class="n">tar</span> <span class="o">-</span><span class="n">cvf</span> <span class="n">vmnet</span><span class="p">.</span><span class="n">tar</span> <span class="n">vmnet</span><span class="o">-</span><span class="n">only</span><span class="o">/</span>
+<span class="err">$</span> <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="n">vmnet</span><span class="o">-</span><span class="n">only</span><span class="o">/</span>
 </pre></div>
 
 
@@ -599,35 +599,35 @@ $ rm -rf vmnet-only/
 <p>vi /etc/profile 设置全局变量</p>
 </li>
 </ul>
-<div class="hlcode"><pre><span class="x">M2_HOME=/usr/local/apache-maven-3.2.3 </span>
-<span class="x">export M2_HOME </span>
-<span class="x">PATH=</span><span class="p">$</span><span class="nv">PATH</span><span class="x">:</span><span class="p">$</span><span class="nv">M2_HOME</span><span class="x">/bin </span>
-<span class="x">export PATH</span>
+<div class="hlcode"><pre><span class="n">M2_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">apache</span><span class="o">-</span><span class="n">maven</span><span class="o">-</span><span class="mf">3.2.3</span> 
+<span class="n">export</span> <span class="n">M2_HOME</span> 
+<span class="n">PATH</span><span class="o">=</span><span class="err">$</span><span class="n">PATH</span><span class="o">:</span><span class="err">$</span><span class="n">M2_HOME</span><span class="o">/</span><span class="n">bin</span> 
+<span class="n">export</span> <span class="n">PATH</span>
 </pre></div>
 
 
-<div class="hlcode"><pre>#source /etc/profile  生效
+<div class="hlcode"><pre><span class="c">#source /etc/profile  生效</span>
 </pre></div>
 
 
 <p>测试是否成功</p>
-<div class="hlcode"><pre>#mvn -v
+<div class="hlcode"><pre><span class="c">#mvn -v</span>
 </pre></div>
 
 
 <p>maven 修建项目</p>
-<div class="hlcode"><pre>#cd webgoat* #(webgoat 源码解压目录),
-#mvn clean package
-#mvn tomcat:run-war
+<div class="hlcode"><pre><span class="c">#cd webgoat* #(webgoat 源码解压目录),</span>
+<span class="c">#mvn clean package</span>
+<span class="c">#mvn tomcat:run-war</span>
 </pre></div>
 
 
 <p>选用eclipse，安装maven插件，</p>
-<div class="hlcode"><pre>name为：m2e,
+<div class="hlcode"><pre><span class="n">name</span><span class="err">为：</span><span class="n">m2e</span><span class="p">,</span>
 
-location为：http://download.eclipse.org/technology/m2e/releases
+<span class="n">location</span><span class="err">为：</span><span class="n">http</span><span class="o">:</span><span class="c1">//download.eclipse.org/technology/m2e/releases</span>
 
-当这样安装插件时会报错，原因是m2e插件和eclipse版本不匹配导致，location改为：http://download.eclipse.org/technology/m2e/releases/1.4 即可。
+<span class="err">当这样安装插件时会报错，原因是</span><span class="n">m2e</span><span class="err">插件和</span><span class="n">eclipse</span><span class="err">版本不匹配导致，</span><span class="n">location</span><span class="err">改为：</span><span class="n">http</span><span class="o">:</span><span class="c1">//download.eclipse.org/technology/m2e/releases/1.4 即可。</span>
 </pre></div>
 </div>
 

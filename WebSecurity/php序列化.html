@@ -20,10 +20,10 @@
   <div id="content">
   <h2 id="_1">序列化机制</h2>
 <p>PHP中的配置文件php.ini中含有几项配置项</p>
-<div class="hlcode"><pre>session.save_path=&quot;&quot;   --设置session的存储路径
-session_set_save_handler=&quot;&quot; --设定用户自定义存储函数，如果想使用PHP内置会话存储机制之外的可以使用本函数(数据库等方式)
-session.auto_start   boolen --指定会话模块是否在请求开始时启动一个会话,默认为0不启动
-session.serialize_handler   string --定义用来序列化/反序列化的处理器名字。默认使用php
+<div class="hlcode"><pre><span class="n">session</span><span class="p">.</span><span class="n">save_path</span><span class="o">=</span><span class="s">&quot;&quot;</span>   <span class="o">--</span><span class="err">设置</span><span class="n">session</span><span class="err">的存储路径</span>
+<span class="n">session_set_save_handler</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="o">--</span><span class="err">设定用户自定义存储函数，如果想使用</span><span class="n">PHP</span><span class="err">内置会话存储机制之外的可以使用本函数</span><span class="p">(</span><span class="err">数据库等方式</span><span class="p">)</span>
+<span class="n">session</span><span class="p">.</span><span class="n">auto_start</span>   <span class="n">boolen</span> <span class="o">--</span><span class="err">指定会话模块是否在请求开始时启动一个会话</span><span class="p">,</span><span class="err">默认为</span><span class="mi">0</span><span class="err">不启动</span>
+<span class="n">session</span><span class="p">.</span><span class="n">serialize_handler</span>   <span class="n">string</span> <span class="o">--</span><span class="err">定义用来序列化</span><span class="o">/</span><span class="err">反序列化的处理器名字。默认使用</span><span class="n">php</span>
 </pre></div>
 
 
@@ -55,10 +55,10 @@ session.serialize_handler   string --定义用来序列化/反序列化的处理
 </tbody>
 </table>
 <p>php处理器序列化过的值</p>
-<div class="hlcode"><pre><span class="nt">name</span><span class="o">|</span><span class="nt">s</span><span class="nd">:6</span><span class="o">:</span><span class="s2">&quot;whoami&quot;</span><span class="o">;</span><span class="nt">address</span><span class="o">|</span><span class="nt">s</span><span class="nd">:7</span><span class="o">:</span><span class="s2">&quot;beijing&quot;</span><span class="o">;</span>
+<div class="hlcode"><pre><span class="n">name</span><span class="o">|</span><span class="n">s</span><span class="o">:</span><span class="mi">6</span><span class="o">:</span><span class="s">&quot;whoami&quot;</span><span class="p">;</span><span class="n">address</span><span class="o">|</span><span class="n">s</span><span class="o">:</span><span class="mi">7</span><span class="o">:</span><span class="s">&quot;beijing&quot;</span><span class="p">;</span>
 
-<span class="err">#</span> <span class="err">其中每个</span><span class="nt">session</span><span class="err">值是以</span><span class="s2">&quot;;&quot;</span><span class="err">分割开来，例如</span>
-<span class="nt">name</span><span class="o">|</span><span class="nt">s</span><span class="nd">:6</span><span class="o">:</span><span class="s2">&quot;whoami&quot;</span><span class="o">;</span>
+<span class="cp"># 其中每个session值是以&quot;;&quot;分割开来，例如</span>
+<span class="n">name</span><span class="o">|</span><span class="n">s</span><span class="o">:</span><span class="mi">6</span><span class="o">:</span><span class="s">&quot;whoami&quot;</span><span class="p">;</span>
 </pre></div>
 
 

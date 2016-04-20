@@ -24,28 +24,28 @@
 </ul>
 <p>互联网上使用的分布型的文件搜集获取网络协议。</p>
 <p>gopher支持多行</p>
-<div class="hlcode"><pre>$ curl gopher://localhost:2222/hi%0anewline%0athere
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">curl</span> <span class="n">gopher</span><span class="o">:</span><span class="c1">//localhost:2222/hi%0anewline%0athere</span>
 </pre></div>
 
 
-<div class="hlcode"><pre>$ nc -lvp 2222
-listening on <span class="o">[</span>any<span class="o">]</span> <span class="m">2222</span> ...
-connect to <span class="o">[</span>127.0.0.1<span class="o">]</span> from localhost <span class="o">[</span>127.0.0.1<span class="o">]</span> 34116
-i
-newline
-there
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">nc</span> <span class="o">-</span><span class="n">lvp</span> <span class="mi">2222</span>
+<span class="n">listening</span> <span class="n">on</span> <span class="p">[</span><span class="n">any</span><span class="p">]</span> <span class="mi">2222</span> <span class="p">...</span>
+<span class="n">connect</span> <span class="n">to</span> <span class="p">[</span><span class="mf">127.0.0.1</span><span class="p">]</span> <span class="n">from</span> <span class="n">localhost</span> <span class="p">[</span><span class="mf">127.0.0.1</span><span class="p">]</span> <span class="mi">34116</span>
+<span class="n">i</span>
+<span class="n">newline</span>
+<span class="n">there</span>
 </pre></div>
 
 
 <p>通过nc回显可以发现，数据换行了， 然而 hi 只回显了 i ，也就是说 h "被吃了", 因此要在传输的数据前家一个无用字符</p>
-<div class="hlcode"><pre>$ curl gopher://localhost:2222/_hi%0anewline%0athere
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">curl</span> <span class="n">gopher</span><span class="o">:</span><span class="c1">//localhost:2222/_hi%0anewline%0athere</span>
 </pre></div>
 
 
 <ul>
 <li>格式</li>
 </ul>
-<div class="hlcode"><pre>gopher://www.xxx.com/path/[file]
+<div class="hlcode"><pre><span class="nl">gopher:</span><span class="c1">//www.xxx.com/path/[file]</span>
 </pre></div>
 
 
@@ -79,7 +79,7 @@ there
 <ul>
 <li>格式</li>
 </ul>
-<div class="hlcode"><pre>ftp://www.xxx.com/path/file
+<div class="hlcode"><pre><span class="nl">ftp:</span><span class="c1">//www.xxx.com/path/file</span>
 </pre></div>
 
 
@@ -140,48 +140,48 @@ there
 <ul>
 <li>Quick Staart</li>
 </ul>
-<div class="hlcode"><pre>$ ping www.dict.org
-PING dictionary-server.dict.org <span class="o">(</span>216.18.20.172<span class="o">)</span> 56<span class="o">(</span>84<span class="o">)</span> bytes of data.
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">ping</span> <span class="n">www</span><span class="p">.</span><span class="n">dict</span><span class="p">.</span><span class="n">org</span>
+<span class="n">PING</span> <span class="n">dictionary</span><span class="o">-</span><span class="n">server</span><span class="p">.</span><span class="n">dict</span><span class="p">.</span><span class="n">org</span> <span class="p">(</span><span class="mf">216.18.20.172</span><span class="p">)</span> <span class="mi">56</span><span class="p">(</span><span class="mi">84</span><span class="p">)</span> <span class="n">bytes</span> <span class="n">of</span> <span class="n">data</span><span class="p">.</span>
 
-$ telnet 216.18.20.172 2628
-Trying 216.18.20.172...
-Connected to 216.18.20.172.
-Escape character is <span class="s1">&#39;^]&#39;</span>.
-<span class="m">220</span> pan.alephnull.com dictd 1.12.1/rf on Linux 4.4.0-1-amd64 &lt;auth.mime&gt; &lt;1388509.31530.1458785926@pan.alephnull.com&gt;
+<span class="err">$</span> <span class="n">telnet</span> <span class="mf">216.18.20.172</span> <span class="mi">2628</span>
+<span class="n">Trying</span> <span class="mf">216.18.20.172</span><span class="p">...</span>
+<span class="n">Connected</span> <span class="n">to</span> <span class="mf">216.18.20.172</span><span class="p">.</span>
+<span class="n">Escape</span> <span class="n">character</span> <span class="n">is</span> <span class="err">&#39;</span><span class="o">^</span><span class="p">]</span><span class="err">&#39;</span><span class="p">.</span>
+<span class="mi">220</span> <span class="n">pan</span><span class="p">.</span><span class="n">alephnull</span><span class="p">.</span><span class="n">com</span> <span class="n">dictd</span> <span class="mf">1.12.1</span><span class="o">/</span><span class="n">rf</span> <span class="n">on</span> <span class="n">Linux</span> <span class="mf">4.4.0</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">amd64</span> <span class="o">&lt;</span><span class="n">auth</span><span class="p">.</span><span class="n">mime</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="mf">1388509.31530.1458785926</span><span class="err">@</span><span class="n">pan</span><span class="p">.</span><span class="n">alephnull</span><span class="p">.</span><span class="n">com</span><span class="o">&gt;</span>
 
-<span class="nb">help</span>
+<span class="n">help</span>
 
-<span class="m">113</span> <span class="nb">help</span> text follows
-DEFINE database word         -- look up word in database
-MATCH database strategy word -- match word in database using strategy
-SHOW DB                      -- list all accessible databases
-SHOW DATABASES               -- list all accessible databases
-SHOW STRAT                   -- list available matching strategies
-SHOW STRATEGIES              -- list available matching strategies
-SHOW INFO database           -- provide information about the database
-SHOW SERVER                  -- provide site-specific information
-OPTION MIME                  -- use MIME headers
-CLIENT info                  -- identify client to server
-AUTH user string             -- provide authentication information
-STATUS                       -- display timing information
-HELP                         -- display this <span class="nb">help</span> information
-QUIT                         -- terminate connection
+<span class="mi">113</span> <span class="n">help</span> <span class="n">text</span> <span class="n">follows</span>
+<span class="n">DEFINE</span> <span class="n">database</span> <span class="n">word</span>         <span class="o">--</span> <span class="n">look</span> <span class="n">up</span> <span class="n">word</span> <span class="n">in</span> <span class="n">database</span>
+<span class="n">MATCH</span> <span class="n">database</span> <span class="n">strategy</span> <span class="n">word</span> <span class="o">--</span> <span class="n">match</span> <span class="n">word</span> <span class="n">in</span> <span class="n">database</span> <span class="n">using</span> <span class="n">strategy</span>
+<span class="n">SHOW</span> <span class="n">DB</span>                      <span class="o">--</span> <span class="n">list</span> <span class="n">all</span> <span class="n">accessible</span> <span class="n">databases</span>
+<span class="n">SHOW</span> <span class="n">DATABASES</span>               <span class="o">--</span> <span class="n">list</span> <span class="n">all</span> <span class="n">accessible</span> <span class="n">databases</span>
+<span class="n">SHOW</span> <span class="n">STRAT</span>                   <span class="o">--</span> <span class="n">list</span> <span class="n">available</span> <span class="n">matching</span> <span class="n">strategies</span>
+<span class="n">SHOW</span> <span class="n">STRATEGIES</span>              <span class="o">--</span> <span class="n">list</span> <span class="n">available</span> <span class="n">matching</span> <span class="n">strategies</span>
+<span class="n">SHOW</span> <span class="n">INFO</span> <span class="n">database</span>           <span class="o">--</span> <span class="n">provide</span> <span class="n">information</span> <span class="n">about</span> <span class="n">the</span> <span class="n">database</span>
+<span class="n">SHOW</span> <span class="n">SERVER</span>                  <span class="o">--</span> <span class="n">provide</span> <span class="n">site</span><span class="o">-</span><span class="n">specific</span> <span class="n">information</span>
+<span class="n">OPTION</span> <span class="n">MIME</span>                  <span class="o">--</span> <span class="n">use</span> <span class="n">MIME</span> <span class="n">headers</span>
+<span class="n">CLIENT</span> <span class="n">info</span>                  <span class="o">--</span> <span class="n">identify</span> <span class="n">client</span> <span class="n">to</span> <span class="n">server</span>
+<span class="n">AUTH</span> <span class="n">user</span> <span class="n">string</span>             <span class="o">--</span> <span class="n">provide</span> <span class="n">authentication</span> <span class="n">information</span>
+<span class="n">STATUS</span>                       <span class="o">--</span> <span class="n">display</span> <span class="n">timing</span> <span class="n">information</span>
+<span class="n">HELP</span>                         <span class="o">--</span> <span class="n">display</span> <span class="n">this</span> <span class="n">help</span> <span class="n">information</span>
+<span class="n">QUIT</span>                         <span class="o">--</span> <span class="n">terminate</span> <span class="n">connection</span>
 
-The following commands are unofficial server extensions <span class="k">for</span> debugging
-only.  You may find them useful <span class="k">if</span> you are using telnet as a client.
-If you are writing a client, you MUST NOT use these commands, since
-they won<span class="err">&#39;</span>t be supported on any other server!
+<span class="n">The</span> <span class="n">following</span> <span class="n">commands</span> <span class="n">are</span> <span class="n">unofficial</span> <span class="n">server</span> <span class="n">extensions</span> <span class="k">for</span> <span class="n">debugging</span>
+<span class="n">only</span><span class="p">.</span>  <span class="n">You</span> <span class="n">may</span> <span class="n">find</span> <span class="n">them</span> <span class="n">useful</span> <span class="k">if</span> <span class="n">you</span> <span class="n">are</span> <span class="n">using</span> <span class="n">telnet</span> <span class="n">as</span> <span class="n">a</span> <span class="n">client</span><span class="p">.</span>
+<span class="n">If</span> <span class="n">you</span> <span class="n">are</span> <span class="n">writing</span> <span class="n">a</span> <span class="n">client</span><span class="p">,</span> <span class="n">you</span> <span class="n">MUST</span> <span class="n">NOT</span> <span class="n">use</span> <span class="n">these</span> <span class="n">commands</span><span class="p">,</span> <span class="n">since</span>
+<span class="n">they</span> <span class="n">won</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">be</span> <span class="n">supported</span> <span class="n">on</span> <span class="n">any</span> <span class="n">other</span> <span class="n">server</span><span class="o">!</span>
 
-D word                       -- DEFINE * word
-D database word              -- DEFINE database word
-M word                       -- MATCH * . word
-M strategy word              -- MATCH * strategy word
-M database strategy word     -- MATCH database strategy word
-S                            -- STATUS
-H                            -- HELP
-Q                            -- QUIT
-.
-<span class="m">250</span> ok
+<span class="n">D</span> <span class="n">word</span>                       <span class="o">--</span> <span class="n">DEFINE</span> <span class="o">*</span> <span class="n">word</span>
+<span class="n">D</span> <span class="n">database</span> <span class="n">word</span>              <span class="o">--</span> <span class="n">DEFINE</span> <span class="n">database</span> <span class="n">word</span>
+<span class="n">M</span> <span class="n">word</span>                       <span class="o">--</span> <span class="n">MATCH</span> <span class="o">*</span> <span class="p">.</span> <span class="n">word</span>
+<span class="n">M</span> <span class="n">strategy</span> <span class="n">word</span>              <span class="o">--</span> <span class="n">MATCH</span> <span class="o">*</span> <span class="n">strategy</span> <span class="n">word</span>
+<span class="n">M</span> <span class="n">database</span> <span class="n">strategy</span> <span class="n">word</span>     <span class="o">--</span> <span class="n">MATCH</span> <span class="n">database</span> <span class="n">strategy</span> <span class="n">word</span>
+<span class="n">S</span>                            <span class="o">--</span> <span class="n">STATUS</span>
+<span class="n">H</span>                            <span class="o">--</span> <span class="n">HELP</span>
+<span class="n">Q</span>                            <span class="o">--</span> <span class="n">QUIT</span>
+<span class="p">.</span>
+<span class="mi">250</span> <span class="n">ok</span>
 </pre></div>
 
 

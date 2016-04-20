@@ -37,7 +37,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span>
         <span class="k">return</span> <span class="n">flib</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">flibs</span> <span class="o">=</span> <span class="n">Flibs</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
     <span class="k">print</span> <span class="nb">list</span><span class="p">(</span><span class="n">fibs</span><span class="p">)</span> 
 
@@ -70,12 +70,12 @@
 
 
 <p>这和列表推导 [x*x for x in range(4)] 是不一样的，列表推导返回的是一个列表对象。可以多次打印，看上面的例子可以发现，第二次打印没有结果。这是迭代器所具有的，迭代器（生成器是迭代器）的优势在于少占内存</p>
-<div class="hlcode"><pre># sum里面不需要再加一层括号
-sum(i*i for i in range(10))
+<div class="hlcode"><pre><span class="cp"># sum里面不需要再加一层括号</span>
+<span class="n">sum</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="n">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
 
-not 
+<span class="n">not</span> 
 
-sum([i*i for i in range(10)])
+<span class="n">sum</span><span class="p">([</span><span class="n">i</span><span class="o">*</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="n">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)])</span>
 </pre></div>
 
 
@@ -83,17 +83,17 @@ sum([i*i for i in range(10)])
 <li>yield</li>
 </ul>
 <p>yield是生成器的标志， 含有yield语句的函数称为生成器。生成器是一种用普通函数语法定义的迭代器，在定义过程中并没有像迭代器那样写 <strong>iter</strong>() 和 next(), 只是用了yiel语句，函数就成了生成器，具备迭代器的功能特性。</p>
-<div class="hlcode"><pre>def g():
-    yield 0
-    yield 1
-    yield 2
+<div class="hlcode"><pre><span class="n">def</span> <span class="n">g</span><span class="p">()</span><span class="o">:</span>
+    <span class="n">yield</span> <span class="mi">0</span>
+    <span class="n">yield</span> <span class="mi">1</span>
+    <span class="n">yield</span> <span class="mi">2</span>
 
-for i in g():
-    print i
+<span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="n">g</span><span class="p">()</span><span class="o">:</span>
+    <span class="n">print</span> <span class="n">i</span>
 
-0
-1
-2
+<span class="mi">0</span>
+<span class="mi">1</span>
+<span class="mi">2</span>
 </pre></div>
 </div>
 

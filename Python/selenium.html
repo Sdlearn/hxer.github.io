@@ -23,7 +23,7 @@
 <li><a href="http://selenium-python.readthedocs.org/getting-started.html">selenium-python doc</a></li>
 </ul>
 <h2 id="install">install</h2>
-<div class="hlcode"><pre>pip install selenium
+<div class="hlcode"><pre><span class="n">pip</span> <span class="n">install</span> <span class="n">selenium</span>
 </pre></div>
 
 
@@ -39,17 +39,17 @@
 
     <span class="k">def</span> <span class="nf">test_search_in_python_org</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">driver</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span>
-        <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;http://www.python.org&quot;</span><span class="p">)</span>     <span class="c1">#visit url</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s2">&quot;Python&quot;</span><span class="p">,</span> <span class="n">driver</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>   <span class="c1"># confirm</span>
-        <span class="n">elem</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">)</span>
-        <span class="n">elem</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s2">&quot;pycon&quot;</span><span class="p">)</span>         <span class="c1">#input</span>
+        <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://www.python.org&quot;</span><span class="p">)</span>     <span class="c">#visit url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s">&quot;Python&quot;</span><span class="p">,</span> <span class="n">driver</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>   <span class="c"># confirm</span>
+        <span class="n">elem</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s">&quot;q&quot;</span><span class="p">)</span>
+        <span class="n">elem</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s">&quot;pycon&quot;</span><span class="p">)</span>         <span class="c">#input</span>
         <span class="n">elem</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">Keys</span><span class="o">.</span><span class="n">RETURN</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="s2">&quot;No results found.&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">driver</span><span class="o">.</span><span class="n">page_source</span>
+        <span class="k">assert</span> <span class="s">&quot;No results found.&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">driver</span><span class="o">.</span><span class="n">page_source</span>
 
     <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>     <span class="c1">#close browser</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>     <span class="c">#close browser</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
 </pre></div>
 
@@ -184,10 +184,10 @@ driver.delete_all_cookies()
 <p>It is an X11 server that performs all graphical operations in memory, not showing any screen output</p>
 <p>Only a network layer is necessary.</p>
 <h2 id="install_1">install</h2>
-<div class="hlcode"><pre>System Requirements:
+<div class="hlcode"><pre><span class="n">System</span> <span class="n">Requirements</span><span class="o">:</span>
 
-sudo apt-get install xvfb   # or similar)
-pip install xvfbwrapper
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">xvfb</span>   <span class="err">#</span> <span class="n">or</span> <span class="n">similar</span><span class="p">)</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">xvfbwrapper</span>
 </pre></div>
 
 
@@ -208,10 +208,10 @@ pip install xvfbwrapper
         <span class="bp">self</span><span class="o">.</span><span class="n">addCleanup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">browser</span><span class="o">.</span><span class="n">quit</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">testUbuntuHomepage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">browser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://www.ubuntu.com&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;Ubuntu&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">browser</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">browser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;http://www.ubuntu.com&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s">&#39;Ubuntu&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">browser</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">verbosity</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>

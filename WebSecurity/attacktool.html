@@ -22,7 +22,7 @@
 <p>Nikto Web Scanner is a Web server scanner that tests Web servers for dangerous files/CGIs, outdated server software and other problems.</p>
 <h1 id="brute-force">Brute Force</h1>
 <h2 id="_1">字典</h2>
-<div class="hlcode"><pre>metasploit  /usr/share/metasploit-framework/data/john/wordlists/password.lst
+<div class="hlcode"><pre><span class="n">metasploit</span>  <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">metasploit</span><span class="o">-</span><span class="n">framework</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">john</span><span class="o">/</span><span class="n">wordlists</span><span class="o">/</span><span class="n">password</span><span class="p">.</span><span class="n">lst</span>
 </pre></div>
 
 
@@ -39,28 +39,28 @@
 <ul>
 <li>option</li>
 </ul>
-<div class="hlcode"><pre>-R          继续从上一次进度接着破解
--S          采用SSL链接
--s &lt;PORT&gt;   可通过这个参数指定非默认端口
--l &lt;LOGIN&gt;  指定破解的用户，对特定用户破解
--L &lt;FILE&gt;   指定用户名字典
--p &lt;PASS&gt;   指定密码破解，少用，一般是采用密码字典
--P &lt;FILE&gt;   指定密码字典
--e &lt;nsr&gt;     额外可选选项，n (空密碼，即不指定密碼)， s (將帳號同時當成密碼用)，r (將帳號/密碼調換使用)
--C &lt;FILE&gt;   使用冒号分割格式，例如“登录名:密码”来代替-L/-P参数
--M &lt;FILE&gt;   指定目标列表文件一行一条
--o &lt;FILE&gt;   指定结果输出文件
--f          在使用-M参数以后，找到第一对登录名或者密码的时候中止破解
--t &lt;TASKS&gt;  同时运行的线程数，默认为16
--w &lt;TIME&gt;   设置最大超时的时间，单位秒，默认是30s
--v / -V     显示详细过程
--SuvVd46：是多個選項的組合，分別表示：
-    S：使用SSL連線
-    u：每一組密碼都用帳號輪流測試，而不是每一組帳號用密碼輪流測試。
-    v V d U 是訊息的詳細度
-    4 6 是 IP address 格式(IPv4 或 IPv6)
-server      目标ip
-service     指定服务名，支持的服务和协议：telnet ftp pop3[-ntlm] imap[-ntlm] smb smbnt http[s]-{head|get} http-{get|post}-form http-proxy cisco cisco-enable vnc ldap2 ldap3 mssql mysql oracle-listener postgres nntp socks5 rexec rlogin pcnfs snmp rsh cvs svn icq sapr3 ssh2 smtp-auth[-ntlm] pcanywhere teamspeak sip vmauthd firebird ncp afp等等
+<div class="hlcode"><pre><span class="na">-R</span>          <span class="err">继续从上一次进度接着破解</span>
+<span class="na">-S</span>          <span class="err">采用</span><span class="nx">SSL</span><span class="err">链接</span>
+<span class="na">-s</span> <span class="o">&lt;</span><span class="nb">PORT</span><span class="o">&gt;</span>   <span class="err">可通过这个参数指定非默认端口</span>
+<span class="na">-l</span> <span class="o">&lt;</span><span class="nx">LOGIN</span><span class="o">&gt;</span>  <span class="err">指定破解的用户，对特定用户破解</span>
+<span class="na">-L</span> <span class="o">&lt;</span><span class="nb">FILE</span><span class="o">&gt;</span>   <span class="err">指定用户名字典</span>
+<span class="na">-p</span> <span class="o">&lt;</span><span class="nb">PASS</span><span class="o">&gt;</span>   <span class="err">指定密码破解，少用，一般是采用密码字典</span>
+<span class="na">-P</span> <span class="o">&lt;</span><span class="nb">FILE</span><span class="o">&gt;</span>   <span class="err">指定密码字典</span>
+<span class="na">-e</span> <span class="o">&lt;</span><span class="nx">nsr</span><span class="o">&gt;</span>     <span class="err">额外可选选项，</span><span class="nb">n</span> <span class="p">(</span><span class="err">空密碼，即不指定密碼</span><span class="p">)</span><span class="err">，</span> <span class="nb">s</span> <span class="p">(</span><span class="err">將帳號同時當成密碼用</span><span class="p">)</span><span class="err">，</span><span class="nb">r</span> <span class="p">(</span><span class="err">將帳號</span><span class="o">/</span><span class="err">密碼調換使用</span><span class="p">)</span>
+<span class="na">-C</span> <span class="o">&lt;</span><span class="nb">FILE</span><span class="o">&gt;</span>   <span class="err">使用冒号分割格式，例如“登录名</span><span class="p">:</span><span class="err">密码”来代替</span><span class="na">-L</span><span class="o">/-</span><span class="nx">P</span><span class="err">参数</span>
+<span class="na">-M</span> <span class="o">&lt;</span><span class="nb">FILE</span><span class="o">&gt;</span>   <span class="err">指定目标列表文件一行一条</span>
+<span class="na">-o</span> <span class="o">&lt;</span><span class="nb">FILE</span><span class="o">&gt;</span>   <span class="err">指定结果输出文件</span>
+<span class="na">-f</span>          <span class="err">在使用</span><span class="na">-M</span><span class="err">参数以后，找到第一对登录名或者密码的时候中止破解</span>
+<span class="na">-t</span> <span class="o">&lt;</span><span class="nb">TASKS</span><span class="o">&gt;</span>  <span class="err">同时运行的线程数，默认为</span><span class="mi">16</span>
+<span class="na">-w</span> <span class="o">&lt;</span><span class="nb">TIME</span><span class="o">&gt;</span>   <span class="err">设置最大超时的时间，单位秒，默认是</span><span class="mi">30</span><span class="nb">s</span>
+<span class="na">-v</span> <span class="o">/</span> <span class="na">-V</span>     <span class="err">显示详细过程</span>
+<span class="na">-SuvVd46</span><span class="err">：是多個選項的組合，分別表示：</span>
+    <span class="nb">S</span><span class="err">：使用</span><span class="nx">SSL</span><span class="err">連線</span>
+    <span class="nx">u</span><span class="err">：每一組密碼都用帳號輪流測試，而不是每一組帳號用密碼輪流測試。</span>
+    <span class="nx">v</span> <span class="nx">V</span> <span class="nb">d</span> <span class="nx">U</span> <span class="err">是訊息的詳細度</span>
+    <span class="mi">4</span> <span class="mi">6</span> <span class="err">是</span> <span class="nx">IP</span> <span class="nx">address</span> <span class="err">格式</span><span class="p">(</span><span class="nx">IPv4</span> <span class="err">或</span> <span class="nx">IPv6</span><span class="p">)</span>
+<span class="nx">server</span>      <span class="err">目标</span><span class="nx">ip</span>
+<span class="nx">service</span>     <span class="err">指定服务名，支持的服务和协议：</span><span class="nx">telnet</span> <span class="nx">ftp</span> <span class="nx">pop3</span><span class="err">[</span><span class="na">-ntlm</span><span class="cp">]</span> imap<span class="cp">[</span><span class="na">-ntlm</span><span class="cp">]</span> smb smbnt http<span class="cp">[</span><span class="nb">s</span><span class="cp">]</span>-{head|get} http-{get|post}-form http-proxy cisco cisco-enable vnc ldap2 ldap3 mssql mysql oracle-listener postgres nntp socks5 rexec rlogin pcnfs snmp rsh cvs svn icq sapr3 ssh2 smtp-auth<span class="cp">[</span><span class="na">-ntlm</span><span class="cp">]</span> pcanywhere teamspeak sip vmauthd firebird ncp afp等等
 </pre></div>
 
 
@@ -68,7 +68,7 @@ service     指定服务名，支持的服务和协议：telnet ftp pop3[-ntlm] 
 <li>use</li>
 </ul>
 <p>http post form attack</p>
-<div class="hlcode"><pre><span class="nt">hydra</span> <span class="nt">-l</span> <span class="nt">admin</span> <span class="nt">-P</span> <span class="nt">pass</span><span class="nc">.lst</span> <span class="nt">-o</span> <span class="nt">ok</span><span class="nc">.lst</span> <span class="nt">-t</span> <span class="nt">1</span> <span class="nt">-f</span> <span class="nt">127</span><span class="nc">.0.0.1</span> <span class="nt">http-post-form</span> <span class="err">“</span><span class="o">/</span><span class="nt">login</span><span class="nc">.php</span><span class="nd">:name</span><span class="o">=^</span><span class="nt">USER</span><span class="o">^&amp;</span><span class="nt">pwd</span><span class="o">=^</span><span class="nt">PASS</span><span class="o">^</span><span class="nd">:incorrect:H</span><span class="o">=</span><span class="nt">Cookie</span><span class="o">:</span> <span class="nt">security</span><span class="o">=</span><span class="nt">low</span><span class="o">;</span> <span class="nt">PHPSESSID</span><span class="o">=</span><span class="nt">o7qiqd9fc1d003u9d38k64t0f4</span><span class="err">”</span>
+<div class="hlcode"><pre><span class="n">hydra</span> <span class="o">-</span><span class="n">l</span> <span class="n">admin</span> <span class="o">-</span><span class="n">P</span> <span class="n">pass</span><span class="p">.</span><span class="n">lst</span> <span class="o">-</span><span class="n">o</span> <span class="n">ok</span><span class="p">.</span><span class="n">lst</span> <span class="o">-</span><span class="n">t</span> <span class="mi">1</span> <span class="o">-</span><span class="n">f</span> <span class="mf">127.0.0.1</span> <span class="n">http</span><span class="o">-</span><span class="n">post</span><span class="o">-</span><span class="n">form</span> <span class="err">“</span><span class="o">/</span><span class="n">login</span><span class="p">.</span><span class="n">php</span><span class="o">:</span><span class="n">name</span><span class="o">=^</span><span class="n">USER</span><span class="o">^&amp;</span><span class="n">pwd</span><span class="o">=^</span><span class="n">PASS</span><span class="o">^:</span><span class="n">incorrect</span><span class="o">:</span><span class="n">H</span><span class="o">=</span><span class="n">Cookie</span><span class="o">:</span> <span class="n">security</span><span class="o">=</span><span class="n">low</span><span class="p">;</span> <span class="n">PHPSESSID</span><span class="o">=</span><span class="n">o7qiqd9fc1d003u9d38k64t0f4</span><span class="err">”</span>
 </pre></div>
 
 
@@ -82,12 +82,12 @@ service     指定服务名，支持的服务和协议：telnet ftp pop3[-ntlm] 
 <ul>
 <li>install</li>
 </ul>
-<div class="hlcode"><pre>cd ~/ctf
-git clone https://github.com/lijiejie/htpwdScan.git
-cd htpwdScan
-chmod u+x
-sudo ln -s ~/ctf/htpwdScan/htpwdScan.py /usr/local/bin/htpwdscan    #cofirm htpwdScan.py begin with &quot;#!/usr/bin/env python&quot;
-htpwdscan -h    # to run
+<div class="hlcode"><pre><span class="n">cd</span> <span class="o">~/</span><span class="n">ctf</span>
+<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/lijiejie/htpwdScan.git</span>
+<span class="n">cd</span> <span class="n">htpwdScan</span>
+<span class="n">chmod</span> <span class="n">u</span><span class="o">+</span><span class="n">x</span>
+<span class="n">sudo</span> <span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">~/</span><span class="n">ctf</span><span class="o">/</span><span class="n">htpwdScan</span><span class="o">/</span><span class="n">htpwdScan</span><span class="p">.</span><span class="n">py</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">htpwdscan</span>    <span class="err">#</span><span class="n">cofirm</span> <span class="n">htpwdScan</span><span class="p">.</span><span class="n">py</span> <span class="n">begin</span> <span class="n">with</span> <span class="s">&quot;#!/usr/bin/env python&quot;</span>
+<span class="n">htpwdscan</span> <span class="o">-</span><span class="n">h</span>    <span class="err">#</span> <span class="n">to</span> <span class="n">run</span>
 </pre></div>
 
 
@@ -98,30 +98,30 @@ htpwdscan -h    # to run
 <p>htpwdScan.py 默认使用 htpp post method， if use get, use -get</p>
 <p>脚本会自动替换\r \n \t等空白字符</p>
 <p><strong>http get crack</strong></p>
-<div class="hlcode"><pre>htpwdscan -f http_get.txt -d username=top_shortlist_name.txt password=10k_most_common_passwd.txt -get -err=&quot;Username and/or password incorrect&quot;
+<div class="hlcode"><pre><span class="n">htpwdscan</span> <span class="o">-</span><span class="n">f</span> <span class="n">http_get</span><span class="p">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">d</span> <span class="n">username</span><span class="o">=</span><span class="n">top_shortlist_name</span><span class="p">.</span><span class="n">txt</span> <span class="n">password</span><span class="o">=</span><span class="mi">10</span><span class="n">k_most_common_passwd</span><span class="p">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">err</span><span class="o">=</span><span class="s">&quot;Username and/or password incorrect&quot;</span>
 </pre></div>
 
 
 <blockquote>
 <p>http_get.txt -- use brupsuite get http request, save to file</p>
 </blockquote>
-<div class="hlcode"><pre><span class="nf">GET</span> <span class="nn">/dvwa/vulnerabilities/brute/?Login=Login</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
-<span class="na">Host</span><span class="o">:</span> <span class="l">localhost</span>
-<span class="na">User-Agent</span><span class="o">:</span> <span class="l">Mozilla/5.0 (X11; Linux x86_64; rv:43.0) Gecko/20100101 Firefox/43.0</span>
-<span class="na">Accept</span><span class="o">:</span> <span class="l">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span>
-<span class="na">Accept-Language</span><span class="o">:</span> <span class="l">en-US,en;q=0.5</span>
-<span class="na">Accept-Encoding</span><span class="o">:</span> <span class="l">gzip, deflate</span>
-<span class="na">Referer</span><span class="o">:</span> <span class="l">http://localhost/dvwa/vulnerabilities/brute/</span>
-<span class="na">Cookie</span><span class="o">:</span> <span class="l">security=low; PHPSESSID=ij8gd7u55olpvsd39r0ki35cb1</span>
-<span class="na">Connection</span><span class="o">:</span> <span class="l">close</span>
+<div class="hlcode"><pre><span class="n">GET</span> <span class="o">/</span><span class="n">dvwa</span><span class="o">/</span><span class="n">vulnerabilities</span><span class="o">/</span><span class="n">brute</span><span class="o">/?</span><span class="n">Login</span><span class="o">=</span><span class="n">Login</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<span class="nl">Host:</span> <span class="n">localhost</span>
+<span class="n">User</span><span class="o">-</span><span class="n">Agent</span><span class="o">:</span> <span class="n">Mozilla</span><span class="o">/</span><span class="mf">5.0</span> <span class="p">(</span><span class="n">X11</span><span class="p">;</span> <span class="n">Linux</span> <span class="n">x86_64</span><span class="p">;</span> <span class="n">rv</span><span class="o">:</span><span class="mf">43.0</span><span class="p">)</span> <span class="n">Gecko</span><span class="o">/</span><span class="mi">20100101</span> <span class="n">Firefox</span><span class="o">/</span><span class="mf">43.0</span>
+<span class="nl">Accept:</span> <span class="n">text</span><span class="o">/</span><span class="n">html</span><span class="p">,</span><span class="n">application</span><span class="o">/</span><span class="n">xhtml</span><span class="o">+</span><span class="n">xml</span><span class="p">,</span><span class="n">application</span><span class="o">/</span><span class="n">xml</span><span class="p">;</span><span class="n">q</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span><span class="err">*/</span><span class="o">*</span><span class="p">;</span><span class="n">q</span><span class="o">=</span><span class="mf">0.8</span>
+<span class="n">Accept</span><span class="o">-</span><span class="n">Language</span><span class="o">:</span> <span class="n">en</span><span class="o">-</span><span class="n">US</span><span class="p">,</span><span class="n">en</span><span class="p">;</span><span class="n">q</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="n">Accept</span><span class="o">-</span><span class="n">Encoding</span><span class="o">:</span> <span class="n">gzip</span><span class="p">,</span> <span class="n">deflate</span>
+<span class="nl">Referer:</span> <span class="n">http</span><span class="o">:</span><span class="c1">//localhost/dvwa/vulnerabilities/brute/</span>
+<span class="nl">Cookie:</span> <span class="n">security</span><span class="o">=</span><span class="n">low</span><span class="p">;</span> <span class="n">PHPSESSID</span><span class="o">=</span><span class="n">ij8gd7u55olpvsd39r0ki35cb1</span>
+<span class="nl">Connection:</span> <span class="n">close</span>
 </pre></div>
 
 
 <p>http proxy check</p>
-<div class="hlcode"><pre>htpwdscan -u=http://www.baidu.com -get -proxylist=available.txt -checkproxy -suc=&quot;百度一下&quot;
+<div class="hlcode"><pre><span class="n">htpwdscan</span> <span class="o">-</span><span class="n">u</span><span class="o">=</span><span class="n">http</span><span class="o">:</span><span class="c1">//www.baidu.com -get -proxylist=available.txt -checkproxy -suc=&quot;百度一下&quot;</span>
 
-# or check by website that to crack
-htpwdscan -f=post.txt -proxylist=proxies.txt -checkproxy -suc=&quot;用户名或密码错误&quot; 
+<span class="cp"># or check by website that to crack</span>
+<span class="n">htpwdscan</span> <span class="o">-</span><span class="n">f</span><span class="o">=</span><span class="n">post</span><span class="p">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">proxylist</span><span class="o">=</span><span class="n">proxies</span><span class="p">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">checkproxy</span> <span class="o">-</span><span class="n">suc</span><span class="o">=</span><span class="s">&quot;用户名或密码错误&quot;</span> 
 </pre></div>
 
 
@@ -129,25 +129,25 @@ htpwdscan -f=post.txt -proxylist=proxies.txt -checkproxy -suc=&quot;用户名或
 <p><a href="http://drops.wooyun.org/tools/1548">乌云 Brup使用介绍</a></p>
 <p>检测模式</p>
 <p>sniper  -- payload 数为1</p>
-<div class="hlcode"><pre>----- username/password -------- sniper {%username%---表示测试变量，也就是字典值}
------%username%/password
------username/%password%
+<div class="hlcode"><pre><span class="o">-----</span> <span class="n">username</span><span class="o">/</span><span class="n">password</span> <span class="o">--------</span> <span class="n">sniper</span> <span class="p">{</span><span class="o">%</span><span class="n">username</span><span class="o">%---</span><span class="err">表示测试变量，也就是字典值</span><span class="p">}</span>
+<span class="o">-----%</span><span class="n">username</span><span class="o">%/</span><span class="n">password</span>
+<span class="o">-----</span><span class="n">username</span><span class="o">/%</span><span class="n">password</span><span class="o">%</span>
 </pre></div>
 
 
 <p>battering ram -- payload 数为1    </p>
-<div class="hlcode"><pre>------username/password ------- battering ram 测试
-------%username%=%password%
+<div class="hlcode"><pre><span class="o">------</span><span class="n">username</span><span class="o">/</span><span class="n">password</span> <span class="o">-------</span> <span class="n">battering</span> <span class="n">ram</span> <span class="err">测试</span>
+<span class="o">------%</span><span class="n">username</span><span class="o">%=%</span><span class="n">password</span><span class="o">%</span>
 </pre></div>
 
 
 <p>pitchfork</p>
-<div class="hlcode"><pre>-----username/password ------- pitchfork 测试
+<div class="hlcode"><pre><span class="o">-----</span><span class="n">username</span><span class="o">/</span><span class="n">password</span> <span class="o">-------</span> <span class="n">pitchfork</span> <span class="err">测试</span>
 </pre></div>
 
 
 <p>cluster bomb</p>
-<div class="hlcode"><pre>-------username/password ---------- cluster bomb 测试
+<div class="hlcode"><pre><span class="o">-------</span><span class="n">username</span><span class="o">/</span><span class="n">password</span> <span class="o">----------</span> <span class="n">cluster</span> <span class="n">bomb</span> <span class="err">测试</span>
 </pre></div>
 
 
@@ -165,23 +165,23 @@ sqlmap.py -u url --dbms "数据库名" --dump  -C "字段,字段"  -T "表名" -
 <ul>
 <li>option</li>
 </ul>
-<div class="hlcode"><pre>-r &lt;filename&gt;
-&gt; sqlmap -r login.txt
+<div class="hlcode"><pre><span class="na">-r</span> <span class="o">&lt;</span><span class="nb">filename</span><span class="o">&gt;</span>
+<span class="o">&gt;</span> <span class="nx">sqlmap</span> <span class="na">-r</span> <span class="nx">login.txt</span>
 </pre></div>
 
 
 <p>txt文件</p>
-<div class="hlcode"><pre>+ burpsuite 保存的文件
+<div class="hlcode"><pre><span class="o">+</span> <span class="n">burpsuite</span> <span class="err">保存的文件</span>
 
-+ 自己构造
+<span class="o">+</span> <span class="err">自己构造</span>
 
-```
-POST /vuln.php HTTP/1.1
-Host: www.target.com
-User-Agent: Mozilla/4.0
+<span class="err">```</span>
+<span class="n">POST</span> <span class="o">/</span><span class="n">vuln</span><span class="p">.</span><span class="n">php</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<span class="nl">Host:</span> <span class="n">www</span><span class="p">.</span><span class="n">target</span><span class="p">.</span><span class="n">com</span>
+<span class="n">User</span><span class="o">-</span><span class="n">Agent</span><span class="o">:</span> <span class="n">Mozilla</span><span class="o">/</span><span class="mf">4.0</span>
 
-id=1
-```
+<span class="n">id</span><span class="o">=</span><span class="mi">1</span>
+<span class="err">```</span>
 </pre></div>
 
 

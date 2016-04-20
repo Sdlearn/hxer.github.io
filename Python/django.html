@@ -55,25 +55,25 @@
 <div class="hlcode"><pre><span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="kn">import</span> <span class="n">ugettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
 
 <span class="n">LANGUAGES</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">(</span><span class="s1">&#39;zh-hans&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Simplified Chinese&#39;</span><span class="p">)),</span>  <span class="c1"># zh-cn is deprecated</span>
-    <span class="p">(</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;English&#39;</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s">&#39;zh-hans&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s">&#39;Simplified Chinese&#39;</span><span class="p">)),</span>  <span class="c"># zh-cn is deprecated</span>
+    <span class="p">(</span><span class="s">&#39;en&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s">&#39;English&#39;</span><span class="p">)),</span>
 <span class="p">]</span>
 
-<span class="n">LOCALE_PATHS</span> <span class="o">=</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s1">&#39;locale/&#39;</span><span class="p">),)</span>  <span class="c1">#[must be tuple]</span>
+<span class="n">LOCALE_PATHS</span> <span class="o">=</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s">&#39;locale/&#39;</span><span class="p">),)</span>  <span class="c">#[must be tuple]</span>
 
 <span class="n">MIDDLEWARE_CLASSES</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s1">&#39;django.contrib.sessions.middleware.SessionMiddleware&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;django.middleware.locale.LocaleMiddleware&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;django.middleware.common.CommonMiddleware&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.sessions.middleware.SessionMiddleware&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.middleware.locale.LocaleMiddleware&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.middleware.common.CommonMiddleware&#39;</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">TEMPLATES</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span>
         <span class="o">...</span>
-        <span class="s1">&#39;OPTIONS&#39;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s1">&#39;context_processors&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s">&#39;OPTIONS&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&#39;context_processors&#39;</span><span class="p">:</span> <span class="p">[</span>
                 <span class="o">...</span>
-                <span class="s1">&#39;django.template.context_processors.i18n&#39;</span><span class="p">,</span>
+                <span class="s">&#39;django.template.context_processors.i18n&#39;</span><span class="p">,</span>
             <span class="p">],</span>
         <span class="p">},</span>
     <span class="p">},</span>
@@ -203,14 +203,14 @@ Django会尝试头部中的每一个语种直到它发现一个可用的翻译�
 </ul>
 <div class="hlcode"><pre># Template: A.html
 
-<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
         {% block hello %}
             HELLO
         {% endblock %}
-    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
 
 # Template B.html
 {% extends &quot;A.html&quot; %}
@@ -219,12 +219,12 @@ World
 {% endblock %}
 
 # Rendered Template B
-<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
 World
-    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
 
 # Template C
 {% extends &quot;A.html&quot; %}
@@ -233,12 +233,12 @@ World
 {% endblock %}
 
 # Rendered Template C
-<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
 Hello World
-    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
 </pre></div>
 
 

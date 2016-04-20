@@ -40,23 +40,23 @@
 <h2 id="cookie">Cookie</h2>
 <p>Cookie 是服务器写入浏览器的一小段信息，只有同源的网页才能共享。但是，两个网页一级域名相同，只是二级域名不同，浏览器允许通过设置document.domain共享 Cookie。</p>
 <p>举例来说，A网页是 http:// w1.example.com/a.html， B网页是 http:// w2.example.com/b.html， 那么只要设置相同的document.domain，两个网页就可以共享Cookie。</p>
-<div class="hlcode"><pre>document.domain = &#39;example.com&#39;;
+<div class="hlcode"><pre><span class="n">document</span><span class="p">.</span><span class="n">domain</span> <span class="o">=</span> <span class="err">&#39;</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="err">&#39;</span><span class="p">;</span>
 </pre></div>
 
 
 <p>现在，A网页通过脚本设置一个 Cookie。</p>
-<div class="hlcode"><pre>document.cookie = &quot;test1=hello&quot;;
+<div class="hlcode"><pre><span class="n">document</span><span class="p">.</span><span class="n">cookie</span> <span class="o">=</span> <span class="s">&quot;test1=hello&quot;</span><span class="p">;</span>
 </pre></div>
 
 
 <p>B网页就可以读到这个 Cookie。</p>
-<div class="hlcode"><pre>var allCookie = document.cookie;
+<div class="hlcode"><pre><span class="n">var</span> <span class="n">allCookie</span> <span class="o">=</span> <span class="n">document</span><span class="p">.</span><span class="n">cookie</span><span class="p">;</span>
 </pre></div>
 
 
 <p>注意，这种方法只适用于 Cookie 和 iframe 窗口，LocalStorage 和 IndexDB 无法通过这种方法，规避同源政策，而要使用下文介绍的PostMessage API。</p>
 <p>另外，服务器也可以在设置Cookie的时候，指定Cookie的所属域名为一级域名，比如.example.com。</p>
-<div class="hlcode"><pre><span class="nt">Set-Cookie</span><span class="o">:</span> <span class="nt">key</span><span class="o">=</span><span class="nt">value</span><span class="o">;</span> <span class="nt">domain</span><span class="o">=</span><span class="nc">.example.com</span><span class="o">;</span> <span class="nt">path</span><span class="o">=/</span>
+<div class="hlcode"><pre><span class="n">Set</span><span class="o">-</span><span class="n">Cookie</span><span class="o">:</span> <span class="n">key</span><span class="o">=</span><span class="n">value</span><span class="p">;</span> <span class="n">domain</span><span class="o">=</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">;</span> <span class="n">path</span><span class="o">=/</span>
 </pre></div>
 
 
@@ -64,15 +64,15 @@
 <h2 id="iframe">iframe</h2>
 <p>如果两个网页不同源，就无法拿到对方的DOM。典型的例子是iframe窗口和window.open方法打开的窗口，它们与父窗口无法通信。</p>
 <p>比如，父窗口运行下面的命令，如果iframe窗口不是同源，就会报错。</p>
-<div class="hlcode"><pre>document.getElementById(&quot;myIFrame&quot;).contentWindow.document
-// Uncaught DOMException: Blocked a frame from accessing a cross-origin frame.
+<div class="hlcode"><pre><span class="n">document</span><span class="p">.</span><span class="n">getElementById</span><span class="p">(</span><span class="s">&quot;myIFrame&quot;</span><span class="p">).</span><span class="n">contentWindow</span><span class="p">.</span><span class="n">document</span>
+<span class="c1">// Uncaught DOMException: Blocked a frame from accessing a cross-origin frame.</span>
 </pre></div>
 
 
 <p>上面命令中，父窗口想获取子窗口的DOM，因为跨源导致报错。</p>
 <p>反之亦然，子窗口获取主窗口的DOM也会报错。</p>
-<div class="hlcode"><pre>window.parent.document.body
-// 报错
+<div class="hlcode"><pre><span class="n">window</span><span class="p">.</span><span class="n">parent</span><span class="p">.</span><span class="n">document</span><span class="p">.</span><span class="n">body</span>
+<span class="c1">// 报错</span>
 </pre></div>
 
 
@@ -86,40 +86,40 @@
 <h3 id="_6">片段识别符</h3>
 <p>片段标识符（fragment identifier）指的是，URL的#号后面的部分，比如http:// example.com/x.html#fragment的#fragment。如果只是改变片段标识符，页面不会重新刷新。</p>
 <p>父窗口可以把信息，写入子窗口的片段标识符。</p>
-<div class="hlcode"><pre>var src = originURL + &#39;#&#39; + data;
-document.getElementById(&#39;myIFrame&#39;).src = src;
+<div class="hlcode"><pre><span class="n">var</span> <span class="n">src</span> <span class="o">=</span> <span class="n">originURL</span> <span class="o">+</span> <span class="sc">&#39;#&#39;</span> <span class="o">+</span> <span class="n">data</span><span class="p">;</span>
+<span class="n">document</span><span class="p">.</span><span class="n">getElementById</span><span class="p">(</span><span class="err">&#39;</span><span class="n">myIFrame</span><span class="err">&#39;</span><span class="p">).</span><span class="n">src</span> <span class="o">=</span> <span class="n">src</span><span class="p">;</span>
 </pre></div>
 
 
 <p>子窗口通过监听hashchange事件得到通知。</p>
-<div class="hlcode"><pre>window.onhashchange = checkMessage;
+<div class="hlcode"><pre><span class="nb">window</span><span class="p">.</span><span class="nx">onhashchange</span> <span class="o">=</span> <span class="nx">checkMessage</span><span class="p">;</span>
 
-function checkMessage() {
-  var message = window.location.hash;
-  // ...
-}
+<span class="kd">function</span> <span class="nx">checkMessage</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">hash</span><span class="p">;</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
 </pre></div>
 
 
 <p>同样的，子窗口也可以改变父窗口的片段标识符。</p>
-<div class="hlcode"><pre>parent.location.href= target + &quot;#&quot; + hash;
+<div class="hlcode"><pre><span class="n">parent</span><span class="p">.</span><span class="n">location</span><span class="p">.</span><span class="n">href</span><span class="o">=</span> <span class="n">target</span> <span class="o">+</span> <span class="s">&quot;#&quot;</span> <span class="o">+</span> <span class="n">hash</span><span class="p">;</span>
 </pre></div>
 
 
 <h3 id="windowname">window.name</h3>
 <p>浏览器窗口有window.name属性。这个属性的最大特点是，无论是否同源，只要在同一个窗口里，前一个网页设置了这个属性，后一个网页可以读取它。</p>
 <p>父窗口先打开一个子窗口，载入一个不同源的网页，该网页将信息写入window.name属性。</p>
-<div class="hlcode"><pre>window.name = data;
+<div class="hlcode"><pre><span class="n">window</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">data</span><span class="p">;</span>
 </pre></div>
 
 
 <p>接着，子窗口跳回一个与主窗口同域的网址。</p>
-<div class="hlcode"><pre><span class="nt">location</span> <span class="o">=</span> <span class="s1">&#39;http://parent.url.com/xxx.html&#39;</span><span class="o">;</span>
+<div class="hlcode"><pre><span class="n">location</span> <span class="o">=</span> <span class="err">&#39;</span><span class="n">http</span><span class="o">:</span><span class="c1">//parent.url.com/xxx.html&#39;;</span>
 </pre></div>
 
 
 <p>然后，主窗口就可以读取子窗口的window.name了。</p>
-<div class="hlcode"><pre>var data = document.getElementById(&#39;myFrame&#39;).contentWindow.name;
+<div class="hlcode"><pre><span class="n">var</span> <span class="n">data</span> <span class="o">=</span> <span class="n">document</span><span class="p">.</span><span class="n">getElementById</span><span class="p">(</span><span class="err">&#39;</span><span class="n">myFrame</span><span class="err">&#39;</span><span class="p">).</span><span class="n">contentWindow</span><span class="p">.</span><span class="n">name</span><span class="p">;</span>
 </pre></div>
 
 
@@ -128,21 +128,21 @@ function checkMessage() {
 <p>上面两种方法都属于破解，HTML5为了解决这个问题，引入了一个全新的API：跨文档通信 API（Cross-document messaging）。
 这个API为window对象新增了一个window.postMessage方法，允许跨窗口通信，不论这两个窗口是否同源。
 举例来说，父窗口 http: //aaa.com 向子窗口 http: //bbb.com发消息，调用postMessage方法就可以了。</p>
-<div class="hlcode"><pre><span class="nt">var</span> <span class="nt">popup</span> <span class="o">=</span> <span class="nt">window</span><span class="nc">.open</span><span class="o">(</span><span class="s1">&#39;http://bbb.com&#39;</span><span class="o">,</span> <span class="s1">&#39;title&#39;</span><span class="o">);</span>
-<span class="nt">popup</span><span class="nc">.postMessage</span><span class="o">(</span><span class="s1">&#39;Hello World!&#39;</span><span class="o">,</span> <span class="s1">&#39;http://bbb.com&#39;</span><span class="o">);</span>
+<div class="hlcode"><pre><span class="n">var</span> <span class="n">popup</span> <span class="o">=</span> <span class="n">window</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="err">&#39;</span><span class="n">http</span><span class="o">:</span><span class="c1">//bbb.com&#39;, &#39;title&#39;);</span>
+<span class="n">popup</span><span class="p">.</span><span class="n">postMessage</span><span class="p">(</span><span class="err">&#39;</span><span class="n">Hello</span> <span class="n">World</span><span class="o">!</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">http</span><span class="o">:</span><span class="c1">//bbb.com&#39;);</span>
 </pre></div>
 
 
 <p>postMessage方法的第一个参数是具体的信息内容，第二个参数是接收消息的窗口的源（origin），即"协议 + 域名 + 端口"。也可以设为*，表示不限制域名，向所有窗口发送。</p>
 <p>子窗口向父窗口发送消息的写法类似。</p>
-<div class="hlcode"><pre><span class="nt">window</span><span class="nc">.opener.postMessage</span><span class="o">(</span><span class="s1">&#39;Nice to see you&#39;</span><span class="o">,</span> <span class="s1">&#39;http://aaa.com&#39;</span><span class="o">);</span>
+<div class="hlcode"><pre><span class="n">window</span><span class="p">.</span><span class="n">opener</span><span class="p">.</span><span class="n">postMessage</span><span class="p">(</span><span class="err">&#39;</span><span class="n">Nice</span> <span class="n">to</span> <span class="n">see</span> <span class="n">you</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">http</span><span class="o">:</span><span class="c1">//aaa.com&#39;);</span>
 </pre></div>
 
 
 <p>父窗口和子窗口都可以通过message事件，监听对方的消息。</p>
-<div class="hlcode"><pre>window.addEventListener(&#39;message&#39;, function(e) {
-  console.log(e.data);
-},false);
+<div class="hlcode"><pre><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">},</span><span class="kc">false</span><span class="p">);</span>
 </pre></div>
 
 
@@ -153,23 +153,23 @@ function checkMessage() {
 <li>event.data: 消息内容</li>
 </ul>
 <p>下面的例子是，子窗口通过event.source属性引用父窗口，然后发送消息。</p>
-<div class="hlcode"><pre>window.addEventListener(&#39;message&#39;, receiveMessage);
-function receiveMessage(event) {
-  event.source.postMessage(&#39;Nice to see you!&#39;, &#39;*&#39;);
-}
+<div class="hlcode"><pre><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="nx">receiveMessage</span><span class="p">);</span>
+<span class="kd">function</span> <span class="nx">receiveMessage</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">event</span><span class="p">.</span><span class="nx">source</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="s1">&#39;Nice to see you!&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 
 
 <p>event.origin属性可以过滤不是发给本窗口的消息。</p>
-<div class="hlcode"><pre><span class="nt">window</span><span class="nc">.addEventListener</span><span class="o">(</span><span class="s1">&#39;message&#39;</span><span class="o">,</span> <span class="nt">receiveMessage</span><span class="o">);</span>
-<span class="nt">function</span> <span class="nt">receiveMessage</span><span class="o">(</span><span class="nt">event</span><span class="o">)</span> <span class="p">{</span>
-  <span class="n">if</span> <span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">origin</span> <span class="o">!==</span> <span class="s1">&#39;http://bbb.com&#39;</span><span class="p">)</span> <span class="n">return</span><span class="p">;</span>
-  <span class="n">if</span> <span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">data</span> <span class="o">===</span> <span class="s1">&#39;Hello World&#39;</span><span class="p">)</span> <span class="err">{</span>
-      <span class="n">event</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">postMessage</span><span class="p">(</span><span class="s1">&#39;Hello&#39;</span><span class="o">,</span> <span class="n">event</span><span class="o">.</span><span class="n">origin</span><span class="p">);</span>
-  <span class="p">}</span> <span class="nt">else</span> <span class="p">{</span>
-    <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">data</span><span class="p">);</span>
+<div class="hlcode"><pre><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="nx">receiveMessage</span><span class="p">);</span>
+<span class="kd">function</span> <span class="nx">receiveMessage</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">origin</span> <span class="o">!==</span> <span class="s1">&#39;http://bbb.com&#39;</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">data</span> <span class="o">===</span> <span class="s1">&#39;Hello World&#39;</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">event</span><span class="p">.</span><span class="nx">source</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="s1">&#39;Hello&#39;</span><span class="p">,</span> <span class="nx">event</span><span class="p">.</span><span class="nx">origin</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
   <span class="p">}</span>
-<span class="err">}</span>
+<span class="p">}</span>
 </pre></div>
 
 
@@ -178,114 +178,114 @@ function receiveMessage(event) {
 </ul>
 <p>source.html:</p>
 <div class="hlcode"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
-<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-    <span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>   
-        <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;send&#39;</span><span class="p">).</span><span class="nx">onclick</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>   
-        <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;msg&#39;</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>   
-        <span class="kd">var</span> <span class="nx">iframeWindow</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;iframe&#39;</span><span class="p">).</span><span class="nx">contentWindow</span><span class="p">;</span>   
-        <span class="nx">iframeWindow</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="nx">msg</span><span class="p">,</span><span class="s2">&quot;http://127.0.0.1:5000/target.html&quot;</span><span class="p">);</span>   
-        <span class="p">}</span>   
-    <span class="p">}</span> 
-    <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>  
-<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;iframe&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;http://127.0.0.1:5000/target.html&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>  
-    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;msg&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">&quot;message&quot;</span><span class="p">&gt;</span>  
-    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;send&quot;</span><span class="p">&gt;</span>send<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span> 
-<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+    window.onload =function() {   
+        document.getElementById(&#39;send&#39;).onclick = function() {   
+        var msg = document.getElementById(&#39;msg&#39;).value;   
+        var iframeWindow = document.getElementById(&#39;iframe&#39;).contentWindow;   
+        iframeWindow.postMessage(msg,&quot;http://127.0.0.1:5000/target.html&quot;);   
+        }   
+    } 
+    <span class="nt">&lt;/script&gt;</span>  
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;iframe</span> <span class="na">id=</span><span class="s">&quot;iframe&quot;</span> <span class="na">src=</span><span class="s">&quot;http://127.0.0.1:5000/target.html&quot;</span><span class="nt">&gt;&lt;/iframe&gt;</span>  
+    <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">&quot;msg&quot;</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">placeholder=</span><span class="s">&quot;message&quot;</span><span class="nt">&gt;</span>  
+    <span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">&quot;send&quot;</span><span class="nt">&gt;</span>send<span class="nt">&lt;/button&gt;</span> 
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
 </pre></div>
 
 
 <p>target.html:</p>
 <div class="hlcode"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
-<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-    <span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>   
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+    window.onload = function() {   
 
-        <span class="k">if</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">){</span>   
-            <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="nx">handleMessage</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>   
-        <span class="p">}</span>   
-        <span class="k">else</span><span class="p">{</span>   
-            <span class="nb">window</span><span class="p">.</span><span class="nx">attachEvent</span><span class="p">(</span><span class="s2">&quot;onmessage&quot;</span><span class="p">,</span> <span class="nx">handleMessage</span><span class="p">);</span>   
-        <span class="p">}</span>     
+        if(window.addEventListener){   
+            window.addEventListener(&quot;message&quot;, handleMessage, false);   
+        }   
+        else{   
+            window.attachEvent(&quot;onmessage&quot;, handleMessage);   
+        }     
 
-        <span class="kd">function</span> <span class="nx">handleMessage</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>   
-            <span class="nx">event</span> <span class="o">=</span> <span class="nx">event</span> <span class="o">||</span> <span class="nb">window</span><span class="p">.</span><span class="nx">event</span><span class="p">;</span>   
-            <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;msg&#39;</span><span class="p">).</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>      
-        <span class="p">}</span>   
-    <span class="p">}</span>   
-    <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>  
-   <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>target.html,receive:<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>  
-    <span class="p">&lt;</span><span class="nt">section</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;msg&quot;</span><span class="p">&gt;</span>  
+        function handleMessage(event) {   
+            event = event || window.event;   
+            document.getElementById(&#39;msg&#39;).innerHTML = event.data;      
+        }   
+    }   
+    <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div&gt;</span>  
+   <span class="nt">&lt;h2&gt;</span>target.html,receive:<span class="nt">&lt;/h2&gt;</span>  
+    <span class="nt">&lt;section</span> <span class="na">id=</span><span class="s">&quot;msg&quot;</span><span class="nt">&gt;</span>  
 
-    <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>  
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>  
-<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+    <span class="nt">&lt;/section&gt;</span>  
+<span class="nt">&lt;/div&gt;</span>  
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
 </pre></div>
 
 
 <h3 id="localstorage">LocalStorage</h3>
 <p>通过window.postMessage，读写其他窗口的 LocalStorage 也成为了可能。</p>
 <p>下面是一个例子，父窗口写入iframe子窗口的localStorage。</p>
-<div class="hlcode"><pre>window.onmessage = function(e) {
-  if (e.origin !== &#39;http://bbb.com&#39;) {
-    return;
-  }
-  var payload = JSON.parse(e.data);
-  localStorage.setItem(payload.key, JSON.stringify(payload.data));
-};
+<div class="hlcode"><pre><span class="nb">window</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">origin</span> <span class="o">!==</span> <span class="s1">&#39;http://bbb.com&#39;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="kd">var</span> <span class="nx">payload</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+  <span class="nx">localStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">key</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">data</span><span class="p">));</span>
+<span class="p">};</span>
 </pre></div>
 
 
 <p>上面代码中，子窗口将父窗口发来的消息，写入自己的LocalStorage。
 父窗口发送消息的代码如下。</p>
-<div class="hlcode"><pre><span class="nt">var</span> <span class="nt">win</span> <span class="o">=</span> <span class="nt">document</span><span class="nc">.getElementsByTagName</span><span class="o">(</span><span class="s1">&#39;iframe&#39;</span><span class="o">)</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="nc">.contentWindow</span><span class="o">;</span>
-<span class="nt">var</span> <span class="nt">obj</span> <span class="o">=</span> <span class="p">{</span> <span class="n">name</span><span class="o">:</span> <span class="s1">&#39;Jack&#39;</span> <span class="p">}</span><span class="o">;</span>
-<span class="nt">win</span><span class="nc">.postMessage</span><span class="o">(</span><span class="nt">JSON</span><span class="nc">.stringify</span><span class="o">(</span><span class="p">{</span><span class="n">key</span><span class="o">:</span> <span class="s1">&#39;storage&#39;</span><span class="o">,</span> <span class="n">data</span><span class="o">:</span> <span class="n">obj</span><span class="p">}</span><span class="o">),</span> <span class="s1">&#39;http://bbb.com&#39;</span><span class="o">);</span>
+<div class="hlcode"><pre><span class="n">var</span> <span class="n">win</span> <span class="o">=</span> <span class="n">document</span><span class="p">.</span><span class="n">getElementsByTagName</span><span class="p">(</span><span class="err">&#39;</span><span class="n">iframe</span><span class="err">&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="n">contentWindow</span><span class="p">;</span>
+<span class="n">var</span> <span class="n">obj</span> <span class="o">=</span> <span class="p">{</span> <span class="n">name</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">Jack</span><span class="err">&#39;</span> <span class="p">};</span>
+<span class="n">win</span><span class="p">.</span><span class="n">postMessage</span><span class="p">(</span><span class="n">JSON</span><span class="p">.</span><span class="n">stringify</span><span class="p">({</span><span class="n">key</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">storage</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">:</span> <span class="n">obj</span><span class="p">}),</span> <span class="err">&#39;</span><span class="n">http</span><span class="o">:</span><span class="c1">//bbb.com&#39;);</span>
 </pre></div>
 
 
 <p>加强版的子窗口接收消息的代码如下。</p>
-<div class="hlcode"><pre><span class="nt">window</span><span class="nc">.onmessage</span> <span class="o">=</span> <span class="nt">function</span><span class="o">(</span><span class="nt">e</span><span class="o">)</span> <span class="p">{</span>
-  <span class="n">if</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">origin</span> <span class="o">!==</span> <span class="s1">&#39;http://bbb.com&#39;</span><span class="p">)</span> <span class="n">return</span><span class="p">;</span>
-  <span class="n">var</span> <span class="n">payload</span> <span class="o">=</span> <span class="n">JSON</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">data</span><span class="p">);</span>
-  <span class="n">switch</span> <span class="p">(</span><span class="n">payload</span><span class="o">.</span><span class="n">method</span><span class="p">)</span> <span class="err">{</span>
-    <span class="n">case</span> <span class="s1">&#39;set&#39;</span><span class="o">:</span>
-      <span class="n">localStorage</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">payload</span><span class="o">.</span><span class="n">key</span><span class="o">,</span> <span class="n">JSON</span><span class="o">.</span><span class="n">stringify</span><span class="p">(</span><span class="n">payload</span><span class="o">.</span><span class="n">data</span><span class="p">));</span>
-      <span class="n">break</span><span class="p">;</span>
-    <span class="n">case</span> <span class="s1">&#39;get&#39;</span><span class="o">:</span>
-      <span class="n">var</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">parent</span><span class="p">;</span>
-      <span class="n">var</span> <span class="n">data</span> <span class="o">=</span> <span class="n">localStorage</span><span class="o">.</span><span class="n">getItem</span><span class="p">(</span><span class="n">payload</span><span class="o">.</span><span class="n">key</span><span class="p">);</span>
-      <span class="n">parent</span><span class="o">.</span><span class="n">postMessage</span><span class="p">(</span><span class="n">data</span><span class="o">,</span> <span class="s1">&#39;http://aaa.com&#39;</span><span class="p">);</span>
-      <span class="n">break</span><span class="p">;</span>
-    <span class="n">case</span> <span class="s1">&#39;remove&#39;</span><span class="o">:</span>
-      <span class="n">localStorage</span><span class="o">.</span><span class="n">removeItem</span><span class="p">(</span><span class="n">payload</span><span class="o">.</span><span class="n">key</span><span class="p">);</span>
-      <span class="n">break</span><span class="p">;</span>
+<div class="hlcode"><pre><span class="nb">window</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">origin</span> <span class="o">!==</span> <span class="s1">&#39;http://bbb.com&#39;</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">payload</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">method</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="s1">&#39;set&#39;</span><span class="o">:</span>
+      <span class="nx">localStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">key</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">data</span><span class="p">));</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="s1">&#39;get&#39;</span><span class="o">:</span>
+      <span class="kd">var</span> <span class="nx">parent</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">parent</span><span class="p">;</span>
+      <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">localStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">key</span><span class="p">);</span>
+      <span class="nx">parent</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="s1">&#39;http://aaa.com&#39;</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="s1">&#39;remove&#39;</span><span class="o">:</span>
+      <span class="nx">localStorage</span><span class="p">.</span><span class="nx">removeItem</span><span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">key</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
   <span class="p">}</span>
-<span class="err">}</span><span class="o">;</span>
+<span class="p">};</span>
 </pre></div>
 
 
 <p>加强版的父窗口发送消息代码如下。</p>
-<div class="hlcode"><pre><span class="nt">var</span> <span class="nt">win</span> <span class="o">=</span> <span class="nt">document</span><span class="nc">.getElementsByTagName</span><span class="o">(</span><span class="s1">&#39;iframe&#39;</span><span class="o">)</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="nc">.contentWindow</span><span class="o">;</span>
-<span class="nt">var</span> <span class="nt">obj</span> <span class="o">=</span> <span class="p">{</span> <span class="n">name</span><span class="o">:</span> <span class="s1">&#39;Jack&#39;</span> <span class="p">}</span><span class="o">;</span>
-<span class="o">//</span> <span class="err">存入对象</span>
-<span class="nt">win</span><span class="nc">.postMessage</span><span class="o">(</span><span class="nt">JSON</span><span class="nc">.stringify</span><span class="o">(</span><span class="p">{</span><span class="n">key</span><span class="o">:</span> <span class="s1">&#39;storage&#39;</span><span class="o">,</span> <span class="n">method</span><span class="o">:</span> <span class="s1">&#39;set&#39;</span><span class="o">,</span> <span class="n">data</span><span class="o">:</span> <span class="n">obj</span><span class="p">}</span><span class="o">),</span> <span class="s1">&#39;http://bbb.com&#39;</span><span class="o">);</span>
-<span class="o">//</span> <span class="err">读取对象</span>
-<span class="nt">win</span><span class="nc">.postMessage</span><span class="o">(</span><span class="nt">JSON</span><span class="nc">.stringify</span><span class="o">(</span><span class="p">{</span><span class="n">key</span><span class="o">:</span> <span class="s1">&#39;storage&#39;</span><span class="o">,</span> <span class="n">method</span><span class="o">:</span> <span class="s2">&quot;get&quot;</span><span class="p">}</span><span class="o">),</span> <span class="s2">&quot;*&quot;</span><span class="o">);</span>
-<span class="nt">window</span><span class="nc">.onmessage</span> <span class="o">=</span> <span class="nt">function</span><span class="o">(</span><span class="nt">e</span><span class="o">)</span> <span class="p">{</span>
-  <span class="n">if</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">origin</span> <span class="o">!=</span> <span class="s1">&#39;http://aaa.com&#39;</span><span class="p">)</span> <span class="n">return</span><span class="p">;</span>
-  <span class="o">//</span> <span class="s2">&quot;Jack&quot;</span>
-  <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">JSON</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">);</span>
-<span class="p">}</span><span class="o">;</span>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">win</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;iframe&#39;</span><span class="p">)</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="p">.</span><span class="nx">contentWindow</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Jack&#39;</span> <span class="p">};</span>
+<span class="c1">// 存入对象</span>
+<span class="nx">win</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;storage&#39;</span><span class="p">,</span> <span class="nx">method</span><span class="o">:</span> <span class="s1">&#39;set&#39;</span><span class="p">,</span> <span class="nx">data</span><span class="o">:</span> <span class="nx">obj</span><span class="p">}),</span> <span class="s1">&#39;http://bbb.com&#39;</span><span class="p">);</span>
+<span class="c1">// 读取对象</span>
+<span class="nx">win</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;storage&#39;</span><span class="p">,</span> <span class="nx">method</span><span class="o">:</span> <span class="s2">&quot;get&quot;</span><span class="p">}),</span> <span class="s2">&quot;*&quot;</span><span class="p">);</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">origin</span> <span class="o">!=</span> <span class="s1">&#39;http://aaa.com&#39;</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+  <span class="c1">// &quot;Jack&quot;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">).</span><span class="nx">name</span><span class="p">);</span>
+<span class="p">};</span>
 </pre></div>
 
 
@@ -301,28 +301,28 @@ function receiveMessage(event) {
 <p>JSONP是服务器与客户端跨源通信的常用方法, 利用可以引用不同域上的js脚本的特性，请求数据。最大特点就是简单适用，老式浏览器全部支持，服务器改造非常小。</p>
 <p>它的基本思想是，网页通过添加一个&lt; script >元素，向服务器请求JSON数据，这种做法不受同源政策限制；服务器收到请求后，将数据放在一个指定名字的回调函数里传回来。</p>
 <p>首先，网页动态插入&lt; script &gt;元素，由它向跨源网址发出请求。</p>
-<div class="hlcode"><pre><span class="nt">function</span> <span class="nt">addScriptTag</span><span class="o">(</span><span class="nt">src</span><span class="o">)</span> <span class="p">{</span>
-  <span class="n">var</span> <span class="n">script</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span>
-  <span class="n">script</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="o">,</span><span class="s2">&quot;text/javascript&quot;</span><span class="p">);</span>
-  <span class="n">script</span><span class="o">.</span><span class="n">src</span> <span class="o">=</span> <span class="n">src</span><span class="p">;</span>
-  <span class="n">document</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">script</span><span class="p">);</span>
+<div class="hlcode"><pre><span class="kd">function</span> <span class="nx">addScriptTag</span><span class="p">(</span><span class="nx">src</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">script</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span>
+  <span class="nx">script</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span><span class="s2">&quot;text/javascript&quot;</span><span class="p">);</span>
+  <span class="nx">script</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="nx">src</span><span class="p">;</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">script</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="nt">window</span><span class="nc">.onload</span> <span class="o">=</span> <span class="nt">function</span> <span class="o">()</span> <span class="p">{</span>
-  <span class="n">addScriptTag</span><span class="p">(</span><span class="s1">&#39;http://example.com/ip?callback=foo&#39;</span><span class="p">);</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">addScriptTag</span><span class="p">(</span><span class="s1">&#39;http://example.com/ip?callback=foo&#39;</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="nt">function</span> <span class="nt">foo</span><span class="o">(</span><span class="nt">data</span><span class="o">)</span> <span class="p">{</span>
-  <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;Your public IP address is: &#39;</span> <span class="o">+</span> <span class="n">data</span><span class="o">.</span><span class="n">ip</span><span class="p">);</span>
-<span class="p">}</span><span class="o">;</span>
+<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Your public IP address is: &#39;</span> <span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">ip</span><span class="p">);</span>
+<span class="p">};</span>
 </pre></div>
 
 
 <p>上面代码通过动态添加&lt; script &gt;元素，向服务器example.com发出请求。注意，该请求的查询字符串有一个callback参数，用来指定回调函数的名字，这对于JSONP是必需的。</p>
 <p>服务器收到这个请求以后，会将数据放在回调函数的参数位置返回。</p>
-<div class="hlcode"><pre>foo({
-  &quot;ip&quot;: &quot;8.8.8.8&quot;
-});
+<div class="hlcode"><pre><span class="n">foo</span><span class="p">({</span>
+  <span class="s">&quot;ip&quot;</span><span class="o">:</span> <span class="s">&quot;8.8.8.8&quot;</span>
+<span class="p">});</span>
 </pre></div>
 
 
@@ -330,24 +330,24 @@ function receiveMessage(event) {
 <h3 id="websocket">WebSocket</h3>
 <p>WebSocket是一种通信协议，使用ws://（非加密） 和 wss://（加密）作为协议前缀。该协议不实行同源政策，只要服务器支持，就可以通过它进行跨源通信。</p>
 <p>下面是一个例子，浏览器发出的WebSocket请求的头信息（摘自维基百科）。</p>
-<div class="hlcode"><pre><span class="nf">GET</span> <span class="nn">/chat</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
-<span class="na">Host</span><span class="o">:</span> <span class="l">server.example.com</span>
-<span class="na">Upgrade</span><span class="o">:</span> <span class="l">websocket</span>
-<span class="na">Connection</span><span class="o">:</span> <span class="l">Upgrade</span>
-<span class="na">Sec-WebSocket-Key</span><span class="o">:</span> <span class="l">x3JJHMbDL1EzLkh9GBhXDw==</span>
-<span class="na">Sec-WebSocket-Protocol</span><span class="o">:</span> <span class="l">chat, superchat</span>
-<span class="na">Sec-WebSocket-Version</span><span class="o">:</span> <span class="l">13</span>
-<span class="na">Origin</span><span class="o">:</span> <span class="l">http://example.com</span>
+<div class="hlcode"><pre><span class="n">GET</span> <span class="o">/</span><span class="n">chat</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<span class="nl">Host:</span> <span class="n">server</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span>
+<span class="nl">Upgrade:</span> <span class="n">websocket</span>
+<span class="nl">Connection:</span> <span class="n">Upgrade</span>
+<span class="n">Sec</span><span class="o">-</span><span class="n">WebSocket</span><span class="o">-</span><span class="n">Key</span><span class="o">:</span> <span class="n">x3JJHMbDL1EzLkh9GBhXDw</span><span class="o">==</span>
+<span class="n">Sec</span><span class="o">-</span><span class="n">WebSocket</span><span class="o">-</span><span class="n">Protocol</span><span class="o">:</span> <span class="n">chat</span><span class="p">,</span> <span class="n">superchat</span>
+<span class="n">Sec</span><span class="o">-</span><span class="n">WebSocket</span><span class="o">-</span><span class="n">Version</span><span class="o">:</span> <span class="mi">13</span>
+<span class="nl">Origin:</span> <span class="n">http</span><span class="o">:</span><span class="c1">//example.com</span>
 </pre></div>
 
 
 <p>上面代码中，有一个字段是Origin，表示该请求的请求源（origin），即发自哪个域名。</p>
 <p>正是因为有了Origin这个字段，所以WebSocket才没有实行同源政策。因为服务器可以根据这个字段，判断是否许可本次通信。如果该域名在白名单内，服务器就会做出如下回应。</p>
-<div class="hlcode"><pre>HTTP/1.1 101 Switching Protocols
-Upgrade: websocket
-Connection: Upgrade
-Sec-WebSocket-Accept: HSmrc0sMlYUkAGmm5OPpG2HaGWk=
-Sec-WebSocket-Protocol: chat
+<div class="hlcode"><pre><span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="mi">101</span> <span class="n">Switching</span> <span class="n">Protocols</span>
+<span class="nl">Upgrade:</span> <span class="n">websocket</span>
+<span class="nl">Connection:</span> <span class="n">Upgrade</span>
+<span class="n">Sec</span><span class="o">-</span><span class="n">WebSocket</span><span class="o">-</span><span class="n">Accept</span><span class="o">:</span> <span class="n">HSmrc0sMlYUkAGmm5OPpG2HaGWk</span><span class="o">=</span>
+<span class="n">Sec</span><span class="o">-</span><span class="n">WebSocket</span><span class="o">-</span><span class="n">Protocol</span><span class="o">:</span> <span class="n">chat</span>
 </pre></div>
 
 

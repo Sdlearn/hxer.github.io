@@ -21,59 +21,59 @@
   <h2 id="wget">wget</h2>
 <p>常用命令:</p>
 <p>需要下载某个目录下面的所有文件。</p>
-<div class="hlcode"><pre>wget -c -r -np -k -L -p www.xxx.org/pub/path/
+<div class="hlcode"><pre><span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="o">-</span><span class="n">r</span> <span class="o">-</span><span class="n">np</span> <span class="o">-</span><span class="n">k</span> <span class="o">-</span><span class="n">L</span> <span class="o">-</span><span class="n">p</span> <span class="n">www</span><span class="p">.</span><span class="n">xxx</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">path</span><span class="o">/</span>
 </pre></div>
 
 
 <p>在下载时。有用到外部域名的图片或连接。如果需要同时下载就要用-H参数。</p>
-<div class="hlcode"><pre>wget -np -nH -r --span-hosts www.xxx.org/pub/path/
+<div class="hlcode"><pre><span class="n">wget</span> <span class="o">-</span><span class="n">np</span> <span class="o">-</span><span class="n">nH</span> <span class="o">-</span><span class="n">r</span> <span class="o">--</span><span class="n">span</span><span class="o">-</span><span class="n">hosts</span> <span class="n">www</span><span class="p">.</span><span class="n">xxx</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">path</span><span class="o">/</span>
 </pre></div>
 
 
 <p>参数：</p>
-<div class="hlcode"><pre>-c 断点续传
--r 递归下载，下载指定网页某一目录下（包括子目录）的所有文件
--nd 递归下载时不创建一层一层的目录，把所有的文件下载到当前目录
--np 递归下载时不搜索上层目录，如wget -c -r www.xxx.org/pub/path/
-没有加参数-np，就会同时下载path的上一级目录pub下的其它文件
--k 将绝对链接转为相对链接，下载整个站点后脱机浏览网页，最好加上这个参数
--L 递归时不进入其它主机，如wget -c -r www.xxx.org/ 
--p 下载网页所需的所有文件，如图片等
--A 指定要下载的文件样式列表，多个样式用逗号分隔
--i 后面跟一个文件，文件内指明要下载的URL
+<div class="hlcode"><pre><span class="o">-</span><span class="n">c</span> <span class="err">断点续传</span>
+<span class="o">-</span><span class="n">r</span> <span class="err">递归下载，下载指定网页某一目录下（包括子目录）的所有文件</span>
+<span class="o">-</span><span class="n">nd</span> <span class="err">递归下载时不创建一层一层的目录，把所有的文件下载到当前目录</span>
+<span class="o">-</span><span class="n">np</span> <span class="err">递归下载时不搜索上层目录，如</span><span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="o">-</span><span class="n">r</span> <span class="n">www</span><span class="p">.</span><span class="n">xxx</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">path</span><span class="o">/</span>
+<span class="err">没有加参数</span><span class="o">-</span><span class="n">np</span><span class="err">，就会同时下载</span><span class="n">path</span><span class="err">的上一级目录</span><span class="n">pub</span><span class="err">下的其它文件</span>
+<span class="o">-</span><span class="n">k</span> <span class="err">将绝对链接转为相对链接，下载整个站点后脱机浏览网页，最好加上这个参数</span>
+<span class="o">-</span><span class="n">L</span> <span class="err">递归时不进入其它主机，如</span><span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="o">-</span><span class="n">r</span> <span class="n">www</span><span class="p">.</span><span class="n">xxx</span><span class="p">.</span><span class="n">org</span><span class="o">/</span> 
+<span class="o">-</span><span class="n">p</span> <span class="err">下载网页所需的所有文件，如图片等</span>
+<span class="o">-</span><span class="n">A</span> <span class="err">指定要下载的文件样式列表，多个样式用逗号分隔</span>
+<span class="o">-</span><span class="n">i</span> <span class="err">后面跟一个文件，文件内指明要下载的</span><span class="n">URL</span>
 </pre></div>
 
 
 <h2 id="curl">curl</h2>
 <p>参数</p>
-<div class="hlcode"><pre>-X/--request [GET|POST|PUT|DELETE|…]  使用指定的http method发出 http request
--H/--header                           设定header
--i/--include                          显示response的header
--d/--data                             设定 http parameters 
--v/--verbose                          显示详细信息
--u/--user                             使用者帐号，密码
--b/--cookie                           cookie
+<div class="hlcode"><pre><span class="o">-</span><span class="n">X</span><span class="o">/--</span><span class="n">request</span> <span class="p">[</span><span class="n">GET</span><span class="o">|</span><span class="n">POST</span><span class="o">|</span><span class="n">PUT</span><span class="o">|</span><span class="n">DELETE</span><span class="o">|</span><span class="err">…</span><span class="p">]</span>  <span class="err">使用指定的</span><span class="n">http</span> <span class="n">method</span><span class="err">发出</span> <span class="n">http</span> <span class="n">request</span>
+<span class="o">-</span><span class="n">H</span><span class="o">/--</span><span class="n">header</span>                           <span class="err">设定</span><span class="n">header</span>
+<span class="o">-</span><span class="n">i</span><span class="o">/--</span><span class="n">include</span>                          <span class="err">显示</span><span class="n">response</span><span class="err">的</span><span class="n">header</span>
+<span class="o">-</span><span class="n">d</span><span class="o">/--</span><span class="n">data</span>                             <span class="err">设定</span> <span class="n">http</span> <span class="n">parameters</span> 
+<span class="o">-</span><span class="n">v</span><span class="o">/--</span><span class="n">verbose</span>                          <span class="err">显示详细信息</span>
+<span class="o">-</span><span class="n">u</span><span class="o">/--</span><span class="n">user</span>                             <span class="err">使用者帐号，密码</span>
+<span class="o">-</span><span class="n">b</span><span class="o">/--</span><span class="n">cookie</span>                           <span class="n">cookie</span>
 </pre></div>
 
 
 <ul>
 <li>sample</li>
 </ul>
-<div class="hlcode"><pre># set header
-curl -v -i -H &quot;Content-Type: application/json&quot; http://www.example.com/users
+<div class="hlcode"><pre><span class="cp"># set header</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">v</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">H</span> <span class="s">&quot;Content-Type: application/json&quot;</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www.example.com/users</span>
 
-# post params
-curl -X POST -d &quot;param1=value1&amp;param2=value2&quot;
-curl -X POST -d &quot;param1=value1&quot; -d &quot;param2=value2&quot;
+<span class="cp"># post params</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">X</span> <span class="n">POST</span> <span class="o">-</span><span class="n">d</span> <span class="s">&quot;param1=value1&amp;param2=value2&quot;</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">X</span> <span class="n">POST</span> <span class="o">-</span><span class="n">d</span> <span class="s">&quot;param1=value1&quot;</span> <span class="o">-</span><span class="n">d</span> <span class="s">&quot;param2=value2&quot;</span>
 
-# 存cookie
-curl -i -X POST -d username=kent -d password=kent123 -c  ~/cookie.txt  http://www.rest.com/auth
+<span class="cp"># 存cookie</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">X</span> <span class="n">POST</span> <span class="o">-</span><span class="n">d</span> <span class="n">username</span><span class="o">=</span><span class="n">kent</span> <span class="o">-</span><span class="n">d</span> <span class="n">password</span><span class="o">=</span><span class="n">kent123</span> <span class="o">-</span><span class="n">c</span>  <span class="o">~/</span><span class="n">cookie</span><span class="p">.</span><span class="n">txt</span>  <span class="n">http</span><span class="o">:</span><span class="c1">//www.rest.com/auth</span>
 
-# 载入cookie
-curl -i --header &quot;Accept:application/json&quot; -X GET -b ~/cookie.txt http://www.rest.com/users/1
+<span class="cp"># 载入cookie</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">i</span> <span class="o">--</span><span class="n">header</span> <span class="s">&quot;Accept:application/json&quot;</span> <span class="o">-</span><span class="n">X</span> <span class="n">GET</span> <span class="o">-</span><span class="n">b</span> <span class="o">~/</span><span class="n">cookie</span><span class="p">.</span><span class="n">txt</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www.rest.com/users/1</span>
 
-# HTTP Basic Authentication
-curl -i --user kent:secret http://www.rest.com/api/foo&#39;
+<span class="cp"># HTTP Basic Authentication</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">i</span> <span class="o">--</span><span class="n">user</span> <span class="n">kent</span><span class="o">:</span><span class="n">secret</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www.rest.com/api/foo&#39;</span>
 </pre></div>
 </div>
 

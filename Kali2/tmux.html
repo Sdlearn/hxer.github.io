@@ -35,7 +35,7 @@
 </ul>
 <p>pane为一个window分隔出来的各个间隔，即window中的终端。</p>
 <h2 id="install">install</h2>
-<div class="hlcode"><pre>apt-get install tmux
+<div class="hlcode"><pre><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">tmux</span>
 </pre></div>
 
 
@@ -47,8 +47,8 @@
 <ul>
 <li>复制粘贴</li>
 </ul>
-<div class="hlcode"><pre>[   : 进入复制模式。
-]   : 粘贴
+<div class="hlcode"><pre><span class="p">[</span>   <span class="o">:</span> <span class="err">进入复制模式。</span>
+<span class="p">]</span>   <span class="o">:</span> <span class="err">粘贴</span>
 </pre></div>
 
 
@@ -56,26 +56,26 @@
 <ul>
 <li>session操作</li>
 </ul>
-<div class="hlcode"><pre>s   : 列出当前 Tmux 中的会话
-d   : deattch当前session。输入tmux attach [-t sessionname]重新进入该session。
-$   : 重命名当前session
+<div class="hlcode"><pre><span class="n">s</span>   <span class="o">:</span> <span class="err">列出当前</span> <span class="n">Tmux</span> <span class="err">中的会话</span>
+<span class="n">d</span>   <span class="o">:</span> <span class="n">deattch</span><span class="err">当前</span><span class="n">session</span><span class="err">。输入</span><span class="n">tmux</span> <span class="n">attach</span> <span class="p">[</span><span class="o">-</span><span class="n">t</span> <span class="n">sessionname</span><span class="p">]</span><span class="err">重新进入该</span><span class="n">session</span><span class="err">。</span>
+<span class="err">$</span>   <span class="o">:</span> <span class="err">重命名当前</span><span class="n">session</span>
 
-&lt;c-z&gt; : 挂起当前session
+<span class="o">&lt;</span><span class="n">c</span><span class="o">-</span><span class="n">z</span><span class="o">&gt;</span> <span class="o">:</span> <span class="err">挂起当前</span><span class="n">session</span>
 </pre></div>
 
 
 <ul>
 <li>window操作</li>
 </ul>
-<div class="hlcode"><pre>c   : 创建一个新的window
-b   : 重命名当前window
-&amp;   : 关闭当前window
-n   : 移动到下一个窗口
-p   : 移动到前一个窗口
-l   : 切换到上一个窗口
-w   : 列出所有窗口编号,并进行选择切换编号,移动到指定编号的窗口。
-.   : 修改窗口编号，相当于排序。
-f   : 搜索所有的窗
+<div class="hlcode"><pre><span class="n">c</span>   <span class="o">:</span> <span class="err">创建一个新的</span><span class="n">window</span>
+<span class="n">b</span>   <span class="o">:</span> <span class="err">重命名当前</span><span class="n">window</span>
+<span class="o">&amp;</span>   <span class="o">:</span> <span class="err">关闭当前</span><span class="n">window</span>
+<span class="n">n</span>   <span class="o">:</span> <span class="err">移动到下一个窗口</span>
+<span class="n">p</span>   <span class="o">:</span> <span class="err">移动到前一个窗口</span>
+<span class="n">l</span>   <span class="o">:</span> <span class="err">切换到上一个窗口</span>
+<span class="n">w</span>   <span class="o">:</span> <span class="err">列出所有窗口编号</span><span class="p">,</span><span class="err">并进行选择切换编号</span><span class="p">,</span><span class="err">移动到指定编号的窗口。</span>
+<span class="p">.</span>   <span class="o">:</span> <span class="err">修改窗口编号，相当于排序。</span>
+<span class="n">f</span>   <span class="o">:</span> <span class="err">搜索所有的窗</span>
 </pre></div>
 
 
@@ -83,15 +83,15 @@ f   : 搜索所有的窗
 <ul>
 <li>pane操作</li>
 </ul>
-<div class="hlcode"><pre>&quot;   : 横向分割
-%   : 纵向分割
-方向键 : 在pane直接移动
-o   : 到下一个pane
-opt+方向键 : 调整pane大小
-{ / } : 左右pane交换
-空格 : 横竖切换
-q   : 显示pane的编号
-x   : 关闭当前pane
+<div class="hlcode"><pre><span class="s">&quot;   : 横向分割</span>
+<span class="o">%</span>   <span class="o">:</span> <span class="err">纵向分割</span>
+<span class="err">方向键</span> <span class="o">:</span> <span class="err">在</span><span class="n">pane</span><span class="err">直接移动</span>
+<span class="n">o</span>   <span class="o">:</span> <span class="err">到下一个</span><span class="n">pane</span>
+<span class="n">opt</span><span class="o">+</span><span class="err">方向键</span> <span class="o">:</span> <span class="err">调整</span><span class="n">pane</span><span class="err">大小</span>
+<span class="p">{</span> <span class="o">/</span> <span class="p">}</span> <span class="o">:</span> <span class="err">左右</span><span class="n">pane</span><span class="err">交换</span>
+<span class="err">空格</span> <span class="o">:</span> <span class="err">横竖切换</span>
+<span class="n">q</span>   <span class="o">:</span> <span class="err">显示</span><span class="n">pane</span><span class="err">的编号</span>
+<span class="n">x</span>   <span class="o">:</span> <span class="err">关闭当前</span><span class="n">pane</span>
 </pre></div>
 
 
@@ -99,30 +99,30 @@ x   : 关闭当前pane
 <ul>
 <li>reload conf</li>
 </ul>
-<div class="hlcode"><pre># bind a reload key r
-bind r source-file ~/.tmux.conf ; display-message &quot;Config reloaded..&quot;
+<div class="hlcode"><pre><span class="cp"># bind a reload key r</span>
+<span class="n">bind</span> <span class="n">r</span> <span class="n">source</span><span class="o">-</span><span class="n">file</span> <span class="o">~/</span><span class="p">.</span><span class="n">tmux</span><span class="p">.</span><span class="n">conf</span> <span class="p">;</span> <span class="n">display</span><span class="o">-</span><span class="n">message</span> <span class="s">&quot;Config reloaded..&quot;</span>
 </pre></div>
 
 
 <ul>
 <li>vim</li>
 </ul>
-<div class="hlcode"><pre>set -g status-keys vi
-setw -g mode-keys vi
+<div class="hlcode"><pre><span class="n">set</span> <span class="o">-</span><span class="n">g</span> <span class="n">status</span><span class="o">-</span><span class="n">keys</span> <span class="n">vi</span>
+<span class="n">setw</span> <span class="o">-</span><span class="n">g</span> <span class="n">mode</span><span class="o">-</span><span class="n">keys</span> <span class="n">vi</span>
 </pre></div>
 
 
 <ul>
 <li>复制粘贴</li>
 </ul>
-<div class="hlcode"><pre># Copy and paste like in vim
-unbind [
-unbind ]
-bind Escape copy-mode
-unbind p
-bind p paste-buffer
-bind -t vi-copy &#39;v&#39; begin-selection
-bind -t vi-copy &#39;y&#39; copy-selection
+<div class="hlcode"><pre><span class="err">#</span> <span class="nt">Copy</span> <span class="nt">and</span> <span class="nt">paste</span> <span class="nt">like</span> <span class="nt">in</span> <span class="nt">vim</span>
+<span class="nt">unbind</span> <span class="cp">[</span>
+<span class="nx">unbind</span> <span class="cp">]</span>
+<span class="nt">bind</span> <span class="nt">Escape</span> <span class="nt">copy-mode</span>
+<span class="nt">unbind</span> <span class="nt">p</span>
+<span class="nt">bind</span> <span class="nt">p</span> <span class="nt">paste-buffer</span>
+<span class="nt">bind</span> <span class="nt">-t</span> <span class="nt">vi-copy</span> <span class="s1">&#39;v&#39;</span> <span class="nt">begin-selection</span>
+<span class="nt">bind</span> <span class="nt">-t</span> <span class="nt">vi-copy</span> <span class="s1">&#39;y&#39;</span> <span class="nt">copy-selection</span>
 </pre></div>
 
 
@@ -130,157 +130,157 @@ bind -t vi-copy &#39;y&#39; copy-selection
 <p>所有的复制都会被记录到缓冲区，输入#或者 tmux list-buffers查看缓冲区,同时也进入了复制模式。也可以使用”=”来选择并粘贴缓冲区内容</p>
 <p>在默认情况下，当从 Tmux 中复制文本时，复制下来的文本只能粘贴到同一个 Tmux 会话中。若要使复制下来的文本可以粘贴到任何位置，就需要让 Tmux 将文本复制到系统的剪贴板</p>
 <p>使用 xclip 同样键入y复制buffer中最新的内容到系统剪贴板，配置如下</p>
-<div class="hlcode"><pre>bind y run-shell &quot;tmux show-buffer | xclip -sel clip -i&quot; \; display-message &quot;Copied tmux buffer to system clipboard&quot;
+<div class="hlcode"><pre><span class="n">bind</span> <span class="n">y</span> <span class="n">run</span><span class="o">-</span><span class="n">shell</span> <span class="s">&quot;tmux show-buffer | xclip -sel clip -i&quot;</span> <span class="err">\</span><span class="p">;</span> <span class="n">display</span><span class="o">-</span><span class="n">message</span> <span class="s">&quot;Copied tmux buffer to system clipboard&quot;</span>
 </pre></div>
 
 
 <ul>
 <li>状态栏</li>
 </ul>
-<div class="hlcode"><pre># 状态栏
+<div class="hlcode"><pre><span class="cp"># 状态栏</span>
 
-# 颜色
-  set -g status-bg black
-  set -g status-fg white
+<span class="cp"># 颜色</span>
+  <span class="n">set</span> <span class="o">-</span><span class="n">g</span> <span class="n">status</span><span class="o">-</span><span class="n">bg</span> <span class="n">black</span>
+  <span class="n">set</span> <span class="o">-</span><span class="n">g</span> <span class="n">status</span><span class="o">-</span><span class="n">fg</span> <span class="n">white</span>
 
-# 对齐方式
-  set-option -g status-justify centre
+<span class="cp"># 对齐方式</span>
+  <span class="n">set</span><span class="o">-</span><span class="n">option</span> <span class="o">-</span><span class="n">g</span> <span class="n">status</span><span class="o">-</span><span class="n">justify</span> <span class="n">centre</span>
 
-# 左下角
-  set-option -g status-left &#39;#[bg=black,fg=green][#[fg=cyan]#S#[fg=green]]&#39;
-  set-option -g status-left-length 20
+<span class="cp"># 左下角</span>
+  <span class="n">set</span><span class="o">-</span><span class="n">option</span> <span class="o">-</span><span class="n">g</span> <span class="n">status</span><span class="o">-</span><span class="n">left</span> <span class="err">&#39;#</span><span class="p">[</span><span class="n">bg</span><span class="o">=</span><span class="n">black</span><span class="p">,</span><span class="n">fg</span><span class="o">=</span><span class="n">green</span><span class="p">][</span><span class="err">#</span><span class="p">[</span><span class="n">fg</span><span class="o">=</span><span class="n">cyan</span><span class="p">]</span><span class="err">#</span><span class="n">S</span><span class="err">#</span><span class="p">[</span><span class="n">fg</span><span class="o">=</span><span class="n">green</span><span class="p">]]</span><span class="err">&#39;</span>
+  <span class="n">set</span><span class="o">-</span><span class="n">option</span> <span class="o">-</span><span class="n">g</span> <span class="n">status</span><span class="o">-</span><span class="n">left</span><span class="o">-</span><span class="n">length</span> <span class="mi">20</span>
 
-# 窗口列表
-  setw -g automatic-rename on
-  set-window-option -g window-status-format &#39;#[dim]#I:#[default]#W#[fg=grey,dim]&#39;
-  set-window-option -g window-status-current-format &#39;#[fg=cyan,bold]#I#[fg=blue]:#[fg=cyan]#W#[fg=dim]&#39;
+<span class="cp"># 窗口列表</span>
+  <span class="n">setw</span> <span class="o">-</span><span class="n">g</span> <span class="n">automatic</span><span class="o">-</span><span class="n">rename</span> <span class="n">on</span>
+  <span class="n">set</span><span class="o">-</span><span class="n">window</span><span class="o">-</span><span class="n">option</span> <span class="o">-</span><span class="n">g</span> <span class="n">window</span><span class="o">-</span><span class="n">status</span><span class="o">-</span><span class="n">format</span> <span class="err">&#39;#</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span><span class="err">#</span><span class="n">I</span><span class="o">:</span><span class="err">#</span><span class="p">[</span><span class="k">default</span><span class="p">]</span><span class="err">#</span><span class="n">W</span><span class="err">#</span><span class="p">[</span><span class="n">fg</span><span class="o">=</span><span class="n">grey</span><span class="p">,</span><span class="n">dim</span><span class="p">]</span><span class="err">&#39;</span>
+  <span class="n">set</span><span class="o">-</span><span class="n">window</span><span class="o">-</span><span class="n">option</span> <span class="o">-</span><span class="n">g</span> <span class="n">window</span><span class="o">-</span><span class="n">status</span><span class="o">-</span><span class="n">current</span><span class="o">-</span><span class="n">format</span> <span class="err">&#39;#</span><span class="p">[</span><span class="n">fg</span><span class="o">=</span><span class="n">cyan</span><span class="p">,</span><span class="n">bold</span><span class="p">]</span><span class="err">#</span><span class="n">I</span><span class="err">#</span><span class="p">[</span><span class="n">fg</span><span class="o">=</span><span class="n">blue</span><span class="p">]</span><span class="o">:</span><span class="err">#</span><span class="p">[</span><span class="n">fg</span><span class="o">=</span><span class="n">cyan</span><span class="p">]</span><span class="err">#</span><span class="n">W</span><span class="err">#</span><span class="p">[</span><span class="n">fg</span><span class="o">=</span><span class="n">dim</span><span class="p">]</span><span class="err">&#39;</span>
 
-# 右下角
-  set -g status-right &#39;#[fg=green][#[fg=cyan]%Y-%m-%d#[fg=green]]&#39;
+<span class="cp"># 右下角</span>
+  <span class="n">set</span> <span class="o">-</span><span class="n">g</span> <span class="n">status</span><span class="o">-</span><span class="n">right</span> <span class="err">&#39;#</span><span class="p">[</span><span class="n">fg</span><span class="o">=</span><span class="n">green</span><span class="p">][</span><span class="err">#</span><span class="p">[</span><span class="n">fg</span><span class="o">=</span><span class="n">cyan</span><span class="p">]</span><span class="o">%</span><span class="n">Y</span><span class="o">-%</span><span class="n">m</span><span class="o">-%</span><span class="n">d</span><span class="err">#</span><span class="p">[</span><span class="n">fg</span><span class="o">=</span><span class="n">green</span><span class="p">]]</span><span class="err">&#39;</span>
 </pre></div>
 
 
 <h2 id="tmux">tmux命令</h2>
-<div class="hlcode"><pre><span class="p">$</span><span class="nv">tmux</span><span class="x"> --h</span>
-<span class="x">usage: tmux [-2CluvV] [-c shell-command] [-f file] [-L socket-name]</span>
-<span class="x">            [-S socket-path] [command [flags]]</span>
+<div class="hlcode"><pre><span class="err">$</span><span class="n">tmux</span> <span class="o">--</span><span class="n">h</span>
+<span class="nl">usage:</span> <span class="n">tmux</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="n">CluvV</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span> <span class="n">shell</span><span class="o">-</span><span class="n">command</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">f</span> <span class="n">file</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="n">socket</span><span class="o">-</span><span class="n">name</span><span class="p">]</span>
+            <span class="p">[</span><span class="o">-</span><span class="n">S</span> <span class="n">socket</span><span class="o">-</span><span class="n">path</span><span class="p">]</span> <span class="p">[</span><span class="n">command</span> <span class="p">[</span><span class="n">flags</span><span class="p">]]</span>
 </pre></div>
 
 
 <ul>
 <li>会话</li>
 </ul>
-<div class="hlcode"><pre>tmux new -s session
-tmux new -s session -d #在后台建立会话
-tmux ls #列出会话
-tmux attach -t session #进入某个会话
+<div class="hlcode"><pre><span class="n">tmux</span> <span class="n">new</span> <span class="o">-</span><span class="n">s</span> <span class="n">session</span>
+<span class="n">tmux</span> <span class="n">new</span> <span class="o">-</span><span class="n">s</span> <span class="n">session</span> <span class="o">-</span><span class="n">d</span> <span class="err">#在后台建立会话</span>
+<span class="n">tmux</span> <span class="n">ls</span> <span class="err">#列出会话</span>
+<span class="n">tmux</span> <span class="n">attach</span> <span class="o">-</span><span class="n">t</span> <span class="n">session</span> <span class="err">#进入某个会话</span>
 </pre></div>
 
 
 <p>tmux中创建一个新的会话，只需要按下 Ctrl-b : ，然后输入如下的命令：</p>
-<div class="hlcode"><pre>new -s &lt;name-of-my-new-session&gt;
+<div class="hlcode"><pre><span class="n">new</span> <span class="o">-</span><span class="n">s</span> <span class="o">&lt;</span><span class="n">name</span><span class="o">-</span><span class="n">of</span><span class="o">-</span><span class="n">my</span><span class="o">-</span><span class="n">new</span><span class="o">-</span><span class="n">session</span><span class="o">&gt;</span>
 </pre></div>
 
 
 <h2 id="_4">配置</h2>
 <p>~/.tmux.conf</p>
-<div class="hlcode"><pre>#-- base settings --#
-set -g default-terminal &quot;screen-256color&quot;
-set -g display-time 3000
-set -g escape-time 0
-set -g history-limit 65535
-set -g base-index 1
-set -g pane-base-index 1
+<div class="hlcode"><pre><span class="nf">#--</span> <span class="nt">base</span> <span class="nt">settings</span> <span class="nt">--</span><span class="err">#</span>
+<span class="nt">set</span> <span class="nt">-g</span> <span class="nt">default-terminal</span> <span class="s2">&quot;screen-256color&quot;</span>
+<span class="nt">set</span> <span class="nt">-g</span> <span class="nt">display-time</span> <span class="nt">3000</span>
+<span class="nt">set</span> <span class="nt">-g</span> <span class="nt">escape-time</span> <span class="nt">0</span>
+<span class="nt">set</span> <span class="nt">-g</span> <span class="nt">history-limit</span> <span class="nt">65535</span>
+<span class="nt">set</span> <span class="nt">-g</span> <span class="nt">base-index</span> <span class="nt">1</span>
+<span class="nt">set</span> <span class="nt">-g</span> <span class="nt">pane-base-index</span> <span class="nt">1</span>
 
-# vi mode
-set -g status-keys vi
-setw -g mode-keys vi
+<span class="err">#</span> <span class="nt">vi</span> <span class="nt">mode</span>
+<span class="nt">set</span> <span class="nt">-g</span> <span class="nt">status-keys</span> <span class="nt">vi</span>
+<span class="nt">setw</span> <span class="nt">-g</span> <span class="nt">mode-keys</span> <span class="nt">vi</span>
 
-# 开启status-bar uft-8支持
-set -g status-utf8 on
+<span class="err">#</span> <span class="err">开启</span><span class="nt">status-bar</span> <span class="nt">uft-8</span><span class="err">支持</span>
+<span class="nt">set</span> <span class="nt">-g</span> <span class="nt">status-utf8</span> <span class="nt">on</span>
 
-set -g status-interval 1
+<span class="nt">set</span> <span class="nt">-g</span> <span class="nt">status-interval</span> <span class="nt">1</span>
 
-set -g visual-activity on
-setw -g monitor-activity on
+<span class="nt">set</span> <span class="nt">-g</span> <span class="nt">visual-activity</span> <span class="nt">on</span>
+<span class="nt">setw</span> <span class="nt">-g</span> <span class="nt">monitor-activity</span> <span class="nt">on</span>
 
-# 状态栏
+<span class="err">#</span> <span class="err">状态栏</span>
 
-# 颜色
-  set -g status-bg black
-  set -g status-fg white
+<span class="err">#</span> <span class="err">颜色</span>
+  <span class="nt">set</span> <span class="nt">-g</span> <span class="nt">status-bg</span> <span class="nt">black</span>
+  <span class="nt">set</span> <span class="nt">-g</span> <span class="nt">status-fg</span> <span class="nt">white</span>
 
-# 对齐方式
-  set-option -g status-justify centre
+<span class="err">#</span> <span class="err">对齐方式</span>
+  <span class="nt">set-option</span> <span class="nt">-g</span> <span class="nt">status-justify</span> <span class="nt">centre</span>
 
-# 左下角
-  # set-option -g status-left &#39;#[bg=black,fg=green][#[fg=cyan]#S#[fg=green]]&#39;
-  set-option -g status-left &quot;#[fg=green]s#S:w#I.p#P#[default]&quot;
-  set-option -g status-left-length 20
+<span class="err">#</span> <span class="err">左下角</span>
+  <span class="err">#</span> <span class="nt">set-option</span> <span class="nt">-g</span> <span class="nt">status-left</span> <span class="s1">&#39;#</span><span class="cp">[</span><span class="n">bg</span><span class="o">=</span><span class="nx">black</span><span class="p">,</span><span class="n">fg</span><span class="o">=</span><span class="nx">green</span><span class="cp">][</span><span class="err">#[</span><span class="n">fg</span><span class="o">=</span><span class="nx">cyan</span><span class="cp">]</span><span class="s1">#S#</span><span class="cp">[</span><span class="n">fg</span><span class="o">=</span><span class="nx">green</span><span class="cp">]</span><span class="s1">]&#39;</span>
+  <span class="nt">set-option</span> <span class="nt">-g</span> <span class="nt">status-left</span> <span class="s2">&quot;#</span><span class="cp">[</span><span class="n">fg</span><span class="o">=</span><span class="nx">green</span><span class="cp">]</span><span class="s2">s#S:w#I.p#P#</span><span class="cp">[</span><span class="nb">default</span><span class="cp">]</span><span class="s2">&quot;</span>
+  <span class="nt">set-option</span> <span class="nt">-g</span> <span class="nt">status-left-length</span> <span class="nt">20</span>
 
-# 窗口列表
-  setw -g automatic-rename on
-  set-window-option -g window-status-format &#39;#[dim]#I:#[default]#W#[fg=grey,dim]&#39;
-  set-window-option -g window-status-current-format &#39;#[fg=cyan,bold]#I#[fg=blue]:#[fg=cyan]#W#[fg=dim]&#39;
+<span class="err">#</span> <span class="err">窗口列表</span>
+  <span class="nt">setw</span> <span class="nt">-g</span> <span class="nt">automatic-rename</span> <span class="nt">on</span>
+  <span class="nt">set-window-option</span> <span class="nt">-g</span> <span class="nt">window-status-format</span> <span class="s1">&#39;#</span><span class="cp">[</span><span class="nx">dim</span><span class="cp">]</span><span class="s1">#I:#</span><span class="cp">[</span><span class="nb">default</span><span class="cp">]</span><span class="s1">#W#</span><span class="cp">[</span><span class="n">fg</span><span class="o">=</span><span class="nx">grey</span><span class="p">,</span><span class="nx">dim</span><span class="cp">]</span><span class="s1">&#39;</span>
+  <span class="nt">set-window-option</span> <span class="nt">-g</span> <span class="nt">window-status-current-format</span> <span class="s1">&#39;#</span><span class="cp">[</span><span class="n">fg</span><span class="o">=</span><span class="nx">cyan</span><span class="p">,</span><span class="nx">bold</span><span class="cp">]</span><span class="s1">#I#</span><span class="cp">[</span><span class="n">fg</span><span class="o">=</span><span class="nx">blue</span><span class="cp">]</span><span class="s1">:#</span><span class="cp">[</span><span class="n">fg</span><span class="o">=</span><span class="nx">cyan</span><span class="cp">]</span><span class="s1">#W#</span><span class="cp">[</span><span class="n">fg</span><span class="o">=</span><span class="nx">dim</span><span class="cp">]</span><span class="s1">&#39;</span>
 
-# 右下角
-  set -g status-right &#39;#[fg=green][#[fg=cyan]%Y-%m-%d#[fg=green]]&#39;
-
-
-
-# prefix C-x
-unbind C-b
-set -g prefix C-x
-
-# Copy and paste like in vim
-unbind [
-unbind ]
-bind Escape copy-mode
-unbind p
-bind p paste-buffer
-bind -t vi-copy &#39;v&#39; begin-selection
-bind -t vi-copy &#39;y&#39; copy-selection
-
-bind y run-shell &quot;tmux show-buffer | xclip -sel clip -i&quot; \; display-message &quot;Copied tmux buffer to system clipboard&quot;
+<span class="err">#</span> <span class="err">右下角</span>
+  <span class="nt">set</span> <span class="nt">-g</span> <span class="nt">status-right</span> <span class="s1">&#39;#</span><span class="cp">[</span><span class="n">fg</span><span class="o">=</span><span class="nx">green</span><span class="cp">][</span><span class="err">#[</span><span class="n">fg</span><span class="o">=</span><span class="nx">cyan</span><span class="cp">]</span><span class="s1">%Y-%m-%d#</span><span class="cp">[</span><span class="n">fg</span><span class="o">=</span><span class="nx">green</span><span class="cp">]</span><span class="s1">]&#39;</span>
 
 
-unbind %
-bind | splitw -h # horizontal split (prefix |)
 
-# bind a reload key r
-bind r source-file ~/.tmux.conf ; display-message &quot;Config reloaded..&quot;
+<span class="err">#</span> <span class="nt">prefix</span> <span class="nt">C-x</span>
+<span class="nt">unbind</span> <span class="nt">C-b</span>
+<span class="nt">set</span> <span class="nt">-g</span> <span class="nt">prefix</span> <span class="nt">C-x</span>
 
-# 同一个窗口中的面板操作--------------
-#up
-bind-key k select-pane -U
-#down
-bind-key j select-pane -D
-#left
-bind-key h select-pane -L
-#right
-bind-key l select-pane -R
+<span class="err">#</span> <span class="nt">Copy</span> <span class="nt">and</span> <span class="nt">paste</span> <span class="nt">like</span> <span class="nt">in</span> <span class="nt">vim</span>
+<span class="nt">unbind</span> <span class="cp">[</span>
+<span class="nx">unbind</span> <span class="cp">]</span>
+<span class="nt">bind</span> <span class="nt">Escape</span> <span class="nt">copy-mode</span>
+<span class="nt">unbind</span> <span class="nt">p</span>
+<span class="nt">bind</span> <span class="nt">p</span> <span class="nt">paste-buffer</span>
+<span class="nt">bind</span> <span class="nt">-t</span> <span class="nt">vi-copy</span> <span class="s1">&#39;v&#39;</span> <span class="nt">begin-selection</span>
+<span class="nt">bind</span> <span class="nt">-t</span> <span class="nt">vi-copy</span> <span class="s1">&#39;y&#39;</span> <span class="nt">copy-selection</span>
 
-# swap panes
-bind ^u swapp -U
-bind ^d swapp -D
+<span class="nt">bind</span> <span class="nt">y</span> <span class="nt">run-shell</span> <span class="s2">&quot;tmux show-buffer | xclip -sel clip -i&quot;</span> <span class="err">\</span><span class="o">;</span> <span class="nt">display-message</span> <span class="s2">&quot;Copied tmux buffer to system clipboard&quot;</span>
 
 
-# window --------------------------
+<span class="nt">unbind</span> <span class="o">%</span>
+<span class="nt">bind</span> <span class="o">|</span> <span class="nt">splitw</span> <span class="nt">-h</span> <span class="err">#</span> <span class="nt">horizontal</span> <span class="nt">split</span> <span class="o">(</span><span class="nt">prefix</span> <span class="o">|)</span>
 
-#select last window
-bind-key C-l select-window -l
+<span class="err">#</span> <span class="nt">bind</span> <span class="nt">a</span> <span class="nt">reload</span> <span class="nt">key</span> <span class="nt">r</span>
+<span class="nt">bind</span> <span class="nt">r</span> <span class="nt">source-file</span> <span class="o">~/</span><span class="nc">.tmux.conf</span> <span class="o">;</span> <span class="nt">display-message</span> <span class="s2">&quot;Config reloaded..&quot;</span>
 
-bind-key D source-file ~/.tmux/layout
+<span class="err">#</span> <span class="err">同一个窗口中的面板操作</span><span class="nt">--------------</span>
+<span class="nf">#up</span>
+<span class="nt">bind-key</span> <span class="nt">k</span> <span class="nt">select-pane</span> <span class="nt">-U</span>
+<span class="nf">#down</span>
+<span class="nt">bind-key</span> <span class="nt">j</span> <span class="nt">select-pane</span> <span class="nt">-D</span>
+<span class="nf">#left</span>
+<span class="nt">bind-key</span> <span class="nt">h</span> <span class="nt">select-pane</span> <span class="nt">-L</span>
+<span class="nf">#right</span>
+<span class="nt">bind-key</span> <span class="nt">l</span> <span class="nt">select-pane</span> <span class="nt">-R</span>
+
+<span class="err">#</span> <span class="nt">swap</span> <span class="nt">panes</span>
+<span class="nt">bind</span> <span class="o">^</span><span class="nt">u</span> <span class="nt">swapp</span> <span class="nt">-U</span>
+<span class="nt">bind</span> <span class="o">^</span><span class="nt">d</span> <span class="nt">swapp</span> <span class="nt">-D</span>
+
+
+<span class="err">#</span> <span class="nt">window</span> <span class="nt">--------------------------</span>
+
+<span class="nf">#select</span> <span class="nt">last</span> <span class="nt">window</span>
+<span class="nt">bind-key</span> <span class="nt">C-l</span> <span class="nt">select-window</span> <span class="nt">-l</span>
+
+<span class="nt">bind-key</span> <span class="nt">D</span> <span class="nt">source-file</span> <span class="o">~/</span><span class="nc">.tmux</span><span class="o">/</span><span class="nt">layout</span>
 </pre></div>
 
 
 <p>键入 Ctrl + b D (D是大写，要按shrift)，即会自动执行layout脚本</p>
 <p>~/.tmux/layout</p>
-<div class="hlcode"><pre>selectp -t 1     #选中第0个窗格
-splitw -h -p 50  #将其分成左右两个
-selectp -t 2     #选中第一个，也就是右边那个
-splitw -v -p 50  #将其分成上下两个，这样就变成了图中的布局了
-selectp -t 1     #选回第一个
+<div class="hlcode"><pre><span class="n">selectp</span> <span class="o">-</span><span class="n">t</span> <span class="mi">1</span>     <span class="err">#选中第</span><span class="mi">0</span><span class="err">个窗格</span>
+<span class="n">splitw</span> <span class="o">-</span><span class="n">h</span> <span class="o">-</span><span class="n">p</span> <span class="mi">50</span>  <span class="err">#将其分成左右两个</span>
+<span class="n">selectp</span> <span class="o">-</span><span class="n">t</span> <span class="mi">2</span>     <span class="err">#选中第一个，也就是右边那个</span>
+<span class="n">splitw</span> <span class="o">-</span><span class="n">v</span> <span class="o">-</span><span class="n">p</span> <span class="mi">50</span>  <span class="err">#将其分成上下两个，这样就变成了图中的布局了</span>
+<span class="n">selectp</span> <span class="o">-</span><span class="n">t</span> <span class="mi">1</span>     <span class="err">#选回第一个</span>
 </pre></div>
 </div>
 

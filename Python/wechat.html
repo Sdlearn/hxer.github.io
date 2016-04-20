@@ -22,10 +22,10 @@
 <h3 id="_1">开发者认证配置</h3>
 <p><a href="http://mp.weixin.qq.com/wiki/8/f9a0b8382e0b77d87b3bcc1ce6fbc104.html">接入指南, 成为开发者</a></p>
 <p>开发者通过检验signature对请求进行校验。若确认此次GET请求来自微信服务器，请原样返回echostr参数内容，则接入生效，成为开发者成功，否则接入失败。</p>
-<div class="hlcode"><pre>加密/校验流程如下：
-1. 将token、timestamp、nonce三个参数进行字典序排序
-2. 将三个参数字符串拼接成一个字符串进行sha1加密
-3. 开发者获得加密后的字符串可与signature对比，标识该请求来源于微信
+<div class="hlcode"><pre><span class="err">加密</span><span class="o">/</span><span class="err">校验流程如下：</span>
+<span class="mf">1.</span> <span class="err">将</span><span class="n">token</span><span class="err">、</span><span class="n">timestamp</span><span class="err">、</span><span class="n">nonce</span><span class="err">三个参数进行字典序排序</span>
+<span class="mf">2.</span> <span class="err">将三个参数字符串拼接成一个字符串进行</span><span class="n">sha1</span><span class="err">加密</span>
+<span class="mf">3.</span> <span class="err">开发者获得加密后的字符串可与</span><span class="n">signature</span><span class="err">对比，标识该请求来源于微信</span>
 </pre></div>
 
 
@@ -36,53 +36,53 @@
 <span class="kn">from</span> <span class="nn">wechat_sdk</span> <span class="kn">import</span> <span class="n">WechatBasic</span>
 
 <span class="n">conf</span> <span class="o">=</span> <span class="n">WechatConf</span><span class="p">(</span>
-    <span class="n">token</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-    <span class="n">appid</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-    <span class="n">appsecret</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-    <span class="n">encrypt_mode</span><span class="o">=</span><span class="s1">&#39;safe&#39;</span><span class="p">,</span>
-    <span class="n">encoding_aes_key</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">token</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">appid</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">appsecret</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">encrypt_mode</span><span class="o">=</span><span class="s">&#39;safe&#39;</span><span class="p">,</span>
+    <span class="n">encoding_aes_key</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">wechat</span> <span class="o">=</span> <span class="n">WechatBasic</span><span class="p">(</span><span class="n">conf</span><span class="o">=</span><span class="n">conf</span><span class="p">)</span>
 
 <span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
-<span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/weixin&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/weixin&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;GET&#39;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">check</span><span class="p">():</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span>
-    <span class="n">signature</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;signature&#39;</span><span class="p">)</span>
-    <span class="n">timestamp</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;timestamp&#39;</span><span class="p">)</span>
-    <span class="n">nonce</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nonce&#39;</span><span class="p">)</span>
-    <span class="n">echostr</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;echostr&#39;</span><span class="p">)</span>
+    <span class="n">signature</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;signature&#39;</span><span class="p">)</span>
+    <span class="n">timestamp</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;timestamp&#39;</span><span class="p">)</span>
+    <span class="n">nonce</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;nonce&#39;</span><span class="p">)</span>
+    <span class="n">echostr</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;echostr&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">all</span><span class="p">([</span><span class="n">signature</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">nonce</span><span class="p">,</span> <span class="n">echostr</span><span class="p">])</span> <span class="ow">and</span> <span class="n">wechat</span><span class="o">.</span><span class="n">check_signature</span><span class="p">(</span><span class="n">signature</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">nonce</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">echostr</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;error&#39;</span>
+        <span class="k">return</span> <span class="s">&#39;error&#39;</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
 </pre></div>
 
 
 <h2 id="_2">微信请求</h2>
 <h3 id="_3">格式</h3>
-<div class="hlcode"><pre><span class="err">POST /weixin?signature=92db6dae514eaec009a55926df68734815d450e9&amp;timestamp=1461049146&amp;nonce=12030128&amp;encrypt_type=aes&amp;msg_signature=20b4e1f1a0e59d4cb670bc082ad2256157cad3d3</span>
+<div class="hlcode"><pre><span class="nx">POST</span> <span class="p">/</span><span class="nx">weixin</span><span class="o">?</span><span class="n">signature</span><span class="o">=</span><span class="mi">92</span><span class="nx">db6dae514eaec009a55926df68734815d450e9</span><span class="o">&amp;</span><span class="n">timestamp</span><span class="o">=</span><span class="mi">1461049146</span><span class="o">&amp;</span><span class="n">nonce</span><span class="o">=</span><span class="mi">12030128</span><span class="o">&amp;</span><span class="n">encrypt_type</span><span class="o">=</span><span class="nx">aes</span><span class="o">&amp;</span><span class="n">msg_signature</span><span class="o">=</span><span class="mi">20</span><span class="nx">b4e1f1a0e59d4cb670bc082ad2256157cad3d3</span>
 
-<span class="err">&lt;xml&gt;&lt;ToUserName&gt;&lt;![CDATA[gh_e712ef998048]]&gt;&lt;/ToUserName&gt;</span>
-<span class="err">&lt;FromUserName&gt;&lt;![CDATA[ojNiswfpvDLPxYinSkmqI3T0vDdA]]&gt;&lt;/FromUserName&gt;</span>
-<span class="err">&lt;CreateTime&gt;1461049145&lt;/CreateTime&gt;</span>
-<span class="err">&lt;MsgType&gt;&lt;![CDATA[text]]&gt;&lt;/MsgType&gt;</span>
-<span class="err">&lt;Content&gt;&lt;![CDATA[hi]]&gt;&lt;/Content&gt;</span>
-<span class="err">&lt;MsgId&gt;6275158296027149334&lt;/MsgId&gt;</span>
-<span class="err">&lt;/xml&gt;</span>
+<span class="o">&lt;</span><span class="kt">xml</span><span class="o">&gt;&lt;</span><span class="nx">ToUserName</span><span class="o">&gt;&lt;!</span><span class="err">[</span><span class="nx">CDATA</span><span class="err">[</span><span class="nx">gh_e712ef998048</span><span class="cp">]</span>]&gt;<span class="nt">&lt;/ToUserName&gt;</span>
+<span class="nt">&lt;FromUserName&gt;</span><span class="cp">&lt;![</span><span class="nx">CDATA</span><span class="err">[</span><span class="nx">ojNiswfpvDLPxYinSkmqI3T0vDdA</span><span class="cp">]]&gt;</span><span class="nt">&lt;/FromUserName&gt;</span>
+<span class="nt">&lt;CreateTime&gt;</span>1461049145<span class="nt">&lt;/CreateTime&gt;</span>
+<span class="nt">&lt;MsgType&gt;</span><span class="cp">&lt;![</span><span class="nx">CDATA</span><span class="err">[</span><span class="nx">text</span><span class="cp">]]&gt;</span><span class="nt">&lt;/MsgType&gt;</span>
+<span class="nt">&lt;Content&gt;</span><span class="cp">&lt;![</span><span class="nx">CDATA</span><span class="err">[</span><span class="nx">hi</span><span class="cp">]]&gt;</span><span class="nt">&lt;/Content&gt;</span>
+<span class="nt">&lt;MsgId&gt;</span>6275158296027149334<span class="nt">&lt;/MsgId&gt;</span>
+<span class="nt">&lt;/xml&gt;</span>
 </pre></div>
 
 
 <h3 id="_4">解析请求</h3>
 <p><a href="http://wechat-python-sdk.com/official/message/">wechat sdk 消息管理接口</a></p>
-<div class="hlcode"><pre><span class="n">err_msg</span> <span class="o">=</span> <span class="s1">&#39;error&#39;</span>
+<div class="hlcode"><pre><span class="n">err_msg</span> <span class="o">=</span> <span class="s">&#39;error&#39;</span>
 <span class="n">args</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span>
-<span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&#39;POST&#39;</span><span class="p">:</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">data</span>
     <span class="k">print</span> <span class="n">args</span>
     <span class="k">print</span> <span class="n">data</span>
@@ -90,13 +90,13 @@
         <span class="k">return</span> <span class="n">err_msg</span>
 
 <span class="k">def</span> <span class="nf">parse_request</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-    <span class="n">msg_signature</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;msg_signature&#39;</span><span class="p">)</span>
-    <span class="n">timestamp</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">]</span>
-    <span class="n">nonce</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;nonce&#39;</span><span class="p">]</span>
+    <span class="n">msg_signature</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;msg_signature&#39;</span><span class="p">)</span>
+    <span class="n">timestamp</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;timestamp&#39;</span><span class="p">]</span>
+    <span class="n">nonce</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;nonce&#39;</span><span class="p">]</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">wechat</span><span class="o">.</span><span class="n">parse_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">msg_signature</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">nonce</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">Parse_Error</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s1">&#39;Parse Error&#39;</span>
+        <span class="k">print</span> <span class="s">&#39;Parse Error&#39;</span>
         <span class="k">return</span> <span class="bp">False</span>
     <span class="k">return</span> <span class="bp">True</span>
 </pre></div>
@@ -104,12 +104,12 @@
 
 <h3 id="-">被动回复消息 -- 文本消息</h3>
 <p>将文字信息组装为符合微信服务器要求的响应数据</p>
-<div class="hlcode"><pre>调用方法：.response_text(content, escape=False)
+<div class="hlcode"><pre><span class="err">调用方法：</span><span class="p">.</span><span class="n">response_text</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">escape</span><span class="o">=</span><span class="n">False</span><span class="p">)</span>
 
-参数说明：
+<span class="err">参数说明：</span>
 
-content: 回复文字
-escape: 是否转义该文本内容 (默认不转义)
+<span class="nl">content:</span> <span class="err">回复文字</span>
+<span class="nl">escape:</span> <span class="err">是否转义该文本内容</span> <span class="p">(</span><span class="err">默认不转义</span><span class="p">)</span>
 </pre></div>
 </div>
 
