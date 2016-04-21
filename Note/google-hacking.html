@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>Google Hacking - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Note">Note</a>&nbsp;»&nbsp;Google Hacking</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">Google Hacking</div>
+  <div id="content">
+  <h2 id="_1">常用搜索技巧</h2>
+<ul>
+<li>site</li>
+</ul>
+<p>search specific site</p>
+<blockquote>
+<p>can not search port</p>
+</blockquote>
+<div class="hlcode"><pre><span class="n">site</span><span class="o">:</span><span class="n">github</span><span class="o">.</span><span class="na">com</span>
+</pre></div>
+
+
+<ul>
+<li>inurl</li>
+</ul>
+<p>search url</p>
+<blockquote>
+<p>can search the whole URL, including port and filetype</p>
+</blockquote>
+<div class="hlcode"><pre><span class="n">inurl</span><span class="o">:</span><span class="n">admin</span>
+<span class="n">inurl</span><span class="o">:</span><span class="n">admin</span><span class="o">.</span><span class="na">php</span>
+</pre></div>
+
+
+<ul>
+<li>filetype</li>
+</ul>
+<p>search secific files</p>
+<blockquote>
+<p>only search file extension</p>
+</blockquote>
+<div class="hlcode"><pre><span class="n">filetype</span><span class="o">:</span><span class="n">php</span>
+</pre></div>
+
+
+<ul>
+<li>intext</li>
+</ul>
+<div class="hlcode"><pre><span class="cp"># scan port</span>
+<span class="nl">inurl:</span><span class="mi">8000</span> <span class="o">-</span><span class="n">intext</span><span class="o">:</span><span class="mi">8000</span>
+</pre></div>
+
+
+<ul>
+<li>
+<p>intitle</p>
+</li>
+<li>
+<p>link</p>
+</li>
+<li>
+<p>author</p>
+</li>
+<li>
+<p>daterange</p>
+</li>
+<li>
+<p>numrange</p>
+</li>
+</ul>
+<h2 id="special-characters">special characters</h2>
+<ul>
+<li>+</li>
+</ul>
+<p>force inclusion of something common</p>
+<ul>
+<li>-</li>
+</ul>
+<p>exclude a search term</p>
+<ul>
+<li>"</li>
+</ul>
+<p>use quotes around search phrases</p>
+<ul>
+<li>.</li>
+</ul>
+<p>a single-character wildcard</p>
+<ul>
+<li>*</li>
+</ul>
+<p>any word</p>
+<ul>
+<li>|</li>
+</ul>
+<p>boolean 'OR'</p>
+<h2 id="digging-sql">digging SQL</h2>
+<ul>
+<li>password</li>
+</ul>
+<div class="hlcode"><pre><span class="n">filetype</span><span class="o">:</span><span class="n">inc</span> <span class="n">intext</span><span class="o">:</span><span class="n">mysql_connect</span>
+<span class="n">filetype</span><span class="o">:</span><span class="n">inc</span> <span class="n">intext</span><span class="o">:</span><span class="n">password</span>
+<span class="n">filetype</span><span class="o">:</span><span class="n">sql</span> <span class="o">+</span><span class="s2">&quot;IDENTIFIED BY&quot;</span> <span class="o">-</span><span class="n">cvs</span>
+<span class="n">filetype</span><span class="o">:</span><span class="n">sql</span> <span class="o">+</span><span class="s2">&quot;IDENTIFIED BY&quot;</span> <span class="o">(</span><span class="s2">&quot;Grant * on *&quot;</span> <span class="o">|</span> <span class="s2">&quot;create user&quot;</span><span class="o">)</span>
+</pre></div>
+
+
+<ul>
+<li>sql dump detction</li>
+</ul>
+<div class="hlcode"><pre><span class="cp"># php-nuke or postnuke CMS dumps</span>
+<span class="nl">inurl:</span><span class="n">nuke</span> <span class="n">filetype</span><span class="o">:</span><span class="n">sql</span>
+
+<span class="cp"># SQL database dumps or batched SQL</span>
+<span class="nl">filetype:</span><span class="n">sql</span> <span class="n">password</span>
+
+<span class="cp"># SQL database dumps or batched SQL commands, focus on &quot;IDENTIFIED BY&quot;, which can locate passwords</span>
+<span class="nl">filetype:</span><span class="n">sql</span> <span class="o">+</span><span class="s">&quot;IDENTIFIED BY&quot;</span> <span class="o">-</span><span class="n">cvs</span>
+
+<span class="cp"># SQL database dumps</span>
+<span class="s">&quot;mysql dump&quot;</span> <span class="n">filetype</span><span class="o">:</span><span class="n">sql</span>
+<span class="s">&quot;# Dumping data for table(username|user|users|password)&quot;</span>
+<span class="s">&quot;# Dumping data for table&quot;</span>
+<span class="s">&quot;# phpMyAdmin MySQL-Dump&quot;</span> <span class="n">filetype</span><span class="o">:</span><span class="n">txt</span>
+<span class="s">&quot;# phpMyAdmin MySQL-Dump&quot;</span> <span class="s">&quot;INSERT INTO&quot;</span> <span class="o">-</span><span class="s">&quot;the&quot;</span>
+</pre></div>
+
+
+<ul>
+<li>database detection</li>
+</ul>
+<div class="hlcode"><pre><span class="cp"># ColdFusion source code</span>
+<span class="nl">filetype:</span><span class="n">cfm</span> <span class="s">&quot;cfapplication name&quot;</span> <span class="n">password</span>
+
+<span class="cp"># Microsoft Access</span>
+<span class="nl">filetype:</span><span class="n">mdb</span> <span class="n">inurl</span><span class="o">:</span><span class="n">user</span><span class="p">.</span><span class="n">mdb</span>
+<span class="nl">inurl:</span><span class="n">email</span> <span class="n">filetype</span><span class="o">:</span><span class="n">mdb</span>
+<span class="nl">inurl:</span><span class="n">backup</span> <span class="n">filetype</span><span class="o">:</span><span class="n">mdb</span>
+<span class="nl">inurl:</span><span class="n">forum</span> <span class="n">filetype</span><span class="o">:</span><span class="n">mdb</span>
+<span class="nl">inurl:</span><span class="n">profiles</span> <span class="n">filetype</span><span class="o">:</span><span class="n">mdb</span>
+<span class="nl">allinurl:</span><span class="n">admin</span><span class="p">.</span><span class="n">mdb</span>
+<span class="cp"># ASP</span>
+<span class="nl">inurl:</span><span class="o">/</span><span class="n">db</span><span class="o">/</span><span class="n">main</span><span class="p">.</span><span class="n">mdb</span>
+</pre></div>
+
+
+<h2 id="web-file-browser">Web File Browser</h2>
+<ul>
+<li>"Web File Browser" "Use regular experssion"</li>
+</ul>
+<h2 id="vnc">VNC</h2>
+<ul>
+<li>intitle:"VNC viewer for Java"</li>
+</ul>
+<h2 id="webcam">WebCam</h2>
+<div class="hlcode"><pre><span class="s">&quot;Active Webcam page&quot;</span> <span class="n">inurl</span><span class="o">:</span><span class="mi">8080</span>
+</pre></div>
+
+
+<h2 id="network-cameras">Network cameras</h2>
+<div class="hlcode"><pre><span class="nl">intitle:</span><span class="s">&quot;toshiba network camera-User Login&quot;</span>
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

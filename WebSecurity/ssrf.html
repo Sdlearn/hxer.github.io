@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>ssrf - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#WebSecurity">WebSecurity</a>&nbsp;»&nbsp;ssrf</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">ssrf</div>
+  <div id="content">
+  <h1 id="ssrf">SSRF</h1>
+<h2 id="ssrf_1">SSRF 概述</h2>
+<p>SSRF(Server-Side Request Forgery:服务器端请求伪造) 是一种由攻击者构造形成由服务端发起请求的一个安全漏洞。一般情况下，SSRF攻击的目标是从外网无法访问的内部系统。（正是因为它是由服务端发起的，所以它能够请求到与它相连而与外网隔离的内部系统）</p>
+<p>SSRF 形成的原因大都是由于服务端提供了从其他服务器应用获取数据的功能且没有对目标地址做过滤与限制。比如从指定URL地址获取网页文本内容，加载指定地址的图片，下载等等。</p>
+<ul>
+<li>攻击者利用ssrf可以实现的攻击主要有5种：</li>
+</ul>
+<p>1.可以对外网、服务器所在内网、本地进行端口扫描，获取一些服务的banner信息;</p>
+<p>2.攻击运行在内网或本地的应用程序（比如溢出）;</p>
+<p>3.对内网web应用进行指纹识别，通过访问默认文件实现;</p>
+<p>4.攻击内外网的web应用，主要是使用get参数就可以实现的攻击（比如struts2，sqli等）;</p>
+<p>5.利用file协议读取本地文件等。</p>
+<h2 id="ssrf_2">SSRF 漏洞的寻找</h2>
+<ul>
+<li>
+<p>1.web功能寻找</p>
+<ul>
+<li>分享：通过URL地址分享网页内容</li>
+<li>转码服务：通过URL地址把原地址的网页内容调优使其适合手机屏幕浏览</li>
+<li>线翻译：通过URL地址翻译对应文本的内容</li>
+<li>图片加载与下载：通过URL地址加载或下载图片</li>
+<li>图片、文章收藏功能</li>
+<li>未公开的api实现以及其他调用URL的功能</li>
+</ul>
+<p>详情参考：<a href="https://sobug.com/article/detail/11">SSRF漏洞的挖掘经验</a></p>
+</li>
+</ul>
+<h2 id="_1">实例</h2>
+<ul>
+<li><a href="http://www.freebuf.com/articles/web/20407.html">SSRF攻击实例解析</a></li>
+</ul>
+<h2 id="common-example">common example</h2>
+<ul>
+<li>get image and save</li>
+</ul>
+<div class="hlcode"><pre><span class="cp">&lt;?php</span>
+<span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">])){</span>
+    <span class="nv">$content</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">]);</span>
+    <span class="nv">$filename</span> <span class="o">=</span> <span class="s1">&#39;./images/&#39;</span><span class="o">.</span><span class="nx">rand</span><span class="p">()</span><span class="o">.</span><span class="s1">&#39;img.jpg&#39;</span><span class="p">;</span>
+    <span class="nb">file_put_contents</span><span class="p">(</span><span class="nv">$filename</span><span class="p">,</span> <span class="nv">$content</span><span class="p">);</span>
+    <span class="nv">$img</span> <span class="o">=</span> <span class="s2">&quot;&lt;img src=</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="nv">$filename</span><span class="o">.</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">/&gt;&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">echo</span> <span class="nv">$img</span><span class="p">;</span>
+</pre></div>
+
+
+<ul>
+<li>use curl</li>
+</ul>
+<div class="hlcode"><pre><span class="k">if</span> <span class="p">(</span><span class="n">isset</span><span class="p">(</span><span class="err">$</span><span class="n">_POST</span><span class="p">[</span><span class="err">&#39;</span><span class="n">link</span><span class="err">&#39;</span><span class="p">])){</span>                                                          
+    <span class="err">$</span><span class="n">link</span> <span class="o">=</span> <span class="err">$</span><span class="n">_POST</span><span class="p">[</span><span class="err">&#39;</span><span class="n">link</span><span class="err">&#39;</span><span class="p">];</span>                                                          
+    <span class="err">$</span><span class="n">filename</span> <span class="o">=</span> <span class="err">&#39;</span><span class="p">.</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="err">&#39;</span><span class="p">.</span><span class="n">rand</span><span class="p">().</span><span class="err">&#39;</span><span class="p">.</span><span class="n">txt</span><span class="err">&#39;</span><span class="p">;</span>                                                         
+    <span class="err">$</span><span class="n">curlobj</span> <span class="o">=</span> <span class="n">curl_init</span><span class="p">(</span><span class="err">$</span><span class="n">link</span><span class="p">);</span>                                                                                                                
+    <span class="err">$</span><span class="n">fp</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="err">$</span><span class="n">filename</span><span class="p">,</span> <span class="sc">&#39;w&#39;</span><span class="p">);</span>                                                     
+    <span class="n">curl_setopt</span><span class="p">(</span><span class="err">$</span><span class="n">curlobj</span><span class="p">,</span> <span class="n">CURLOPT_FILE</span><span class="p">,</span> <span class="err">$</span><span class="n">fp</span><span class="p">);</span>   <span class="err">#</span><span class="n">output</span>                                        
+    <span class="n">curl_setopt</span><span class="p">(</span><span class="err">$</span><span class="n">curlobj</span><span class="p">,</span> <span class="n">CURLOPT_HEADER</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>   <span class="err">#</span><span class="mi">0</span><span class="o">:</span><span class="err">不显示响应头信息</span>                                  
+    <span class="n">curl_exec</span><span class="p">(</span><span class="err">$</span><span class="n">curlobj</span><span class="p">);</span>                                                             
+    <span class="n">curl_close</span><span class="p">(</span><span class="err">$</span><span class="n">curlobj</span><span class="p">);</span>                                                            
+    <span class="n">fclose</span><span class="p">(</span><span class="err">$</span><span class="n">fp</span><span class="p">);</span>                                                                     
+    <span class="err">$</span><span class="n">fp</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="err">$</span><span class="n">filename</span><span class="p">,</span> <span class="sc">&#39;r&#39;</span><span class="p">);</span>                                                     
+    <span class="err">$</span><span class="n">result</span> <span class="o">=</span> <span class="n">fread</span><span class="p">(</span><span class="err">$</span><span class="n">fp</span><span class="p">,</span> <span class="n">filesize</span><span class="p">(</span><span class="err">$</span><span class="n">filename</span><span class="p">));</span>                                       
+    <span class="n">fclose</span><span class="p">(</span><span class="err">$</span><span class="n">fp</span><span class="p">);</span>                                                                     
+    <span class="n">echo</span> <span class="err">$</span><span class="n">result</span><span class="p">;</span>                                                                    
+<span class="p">}</span> 
+</pre></div>
+
+
+<p>可以用来扫端口</p>
+<ul>
+<li>post: link=http:127.0.0.1:22/</li>
+</ul>
+<p>output banner:</p>
+<blockquote>
+<p>SSH-2.0-OpenSSH_7.1p2 Debian-2 Protocol mismatch. </p>
+</blockquote>
+<ul>
+<li>post: link=http:127.0.0.1:25/</li>
+</ul>
+<p>error port ,output warning</p>
+<blockquote>
+<p>Warning: fread(): Length parameter must be greater than 0 in /var/www/ssrf.php on line 22</p>
+</blockquote>
+<p><strong> 危害 </strong></p>
+<ul>
+<li>
+<p>扫描主机，端口</p>
+</li>
+<li>
+<p>访问本地文件，或外网不可达的地址，内网弱口令多</p>
+</li>
+</ul>
+<p><strong> search ssrf </strong></p>
+<ul>
+<li>url key</li>
+</ul>
+<div class="hlcode"><pre><span class="n">share</span>
+<span class="n">wap</span>
+<span class="n">url</span>
+<span class="n">link</span>
+<span class="n">src</span>
+<span class="n">source</span>
+<span class="n">target</span>
+<span class="n">u</span>
+<span class="mi">3</span><span class="n">g</span>
+<span class="n">display</span>
+<span class="n">sourceURI</span>
+<span class="n">imageURL</span>
+<span class="n">domain</span>
+</pre></div>
+
+
+<p><strong> bypass </strong></p>
+<ul>
+<li>@</li>
+</ul>
+<blockquote>
+<p>http://abc@127.0.0.1</p>
+</blockquote>
+<ul>
+<li>add port</li>
+</ul>
+<blockquote>
+<p>http://127.0.0.1:8000</p>
+</blockquote>
+<ul>
+<li>short url</li>
+</ul>
+<blockquote>
+<p>http://dwz.cn//11SMa </p>
+</blockquote>
+<ul>
+<li>可以指向任意ip的域名:xip.io</li>
+</ul>
+<div class="hlcode"><pre><span class="mf">10.0.0.1</span><span class="p">.</span><span class="n">xip</span><span class="p">.</span><span class="n">io</span>         <span class="mf">10.0.0.1</span>
+<span class="n">www</span><span class="mf">.10.0.0.1</span><span class="p">.</span><span class="n">xip</span><span class="p">.</span><span class="n">io</span>     <span class="mf">10.0.0.1</span>
+<span class="n">mysite</span><span class="mf">.10.0.0.1</span><span class="p">.</span><span class="n">xip</span><span class="p">.</span><span class="n">io</span>  <span class="mf">10.0.0.1</span> 
+</pre></div>
+
+
+<ul>
+<li>ip 地址进制转换</li>
+</ul>
+<div class="hlcode"><pre><span class="mf">115.239.210.26</span> <span class="o">=</span> <span class="mi">16373751032</span>    <span class="err">#</span><span class="n">IPy</span><span class="p">.</span><span class="n">IP</span><span class="p">(</span><span class="err">&#39;</span><span class="mf">115.239.210.26</span><span class="err">&#39;</span><span class="p">).</span><span class="kt">int</span><span class="p">()</span>
+</pre></div>
+
+
+<p>** http://www.baidu.com@10.10.10.10 与 http://10.10.10.10 请求是相同的</p>
+<p><strong> 防御 </strong></p>
+<ul>
+<li>
+<p>过滤返回信息，验证远程服务器对请求的响应是比较容易的方法。如果web应用是去获取某一种类型的文件。那么在把返回结果展示给用户之前先验证返回的信息是否符合标准。</p>
+</li>
+<li>
+<p>统一错误信息，避免用户可以根据错误信息来判断远端服务器的端口状态。</p>
+</li>
+<li>
+<p>限制请求的端口为http常用的端口，比如，80,443,8080,8090。</p>
+</li>
+<li>
+<p>黑名单内网ip。避免应用被用来获取获取内网数据，攻击内网。</p>
+</li>
+<li>
+<p>禁用不需要的协议。仅仅允许http和https请求。可以防止类似于file:///,gopher://,ftp:// 等引起的问题。</p>
+</li>
+</ul>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

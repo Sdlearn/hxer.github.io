@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>安装和基本命令 - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Docker">Docker</a>&nbsp;»&nbsp;安装和基本命令</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">安装和基本命令</div>
+  <div id="content">
+  <h2 id="install-docker">install docker</h2>
+<ul>
+<li>
+<p><a href="https://docs.docker.com/engine/installation/"> 官方安装教程 </a></p>
+</li>
+<li>
+<p>cmd line</p>
+</li>
+</ul>
+<div class="hlcode"><pre><span class="cp"># success for debian, ubuntu, kali</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">sSL</span> <span class="n">https</span><span class="o">:</span><span class="c1">//get.docker.com/ | sh</span>
+</pre></div>
+
+
+<h2 id="run">run 参数 镜像 创建后要运行的命令</h2>
+<ul>
+<li>-p</li>
+</ul>
+<p>指定端口映射(publish)。将主机的特定端口映射到容器的特定端口。格式为： -p 主机端口:容器端口 。</p>
+<div class="hlcode"><pre><span class="nb">run</span> <span class="na">-p</span> <span class="o">&lt;</span><span class="nx">host_port</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="nx">container_port</span><span class="o">&gt;</span>
+<span class="nx">e.g.</span> <span class="nb">run</span> <span class="na">-p</span> <span class="mi">8000</span><span class="p">:</span><span class="mi">8000</span><span class="p">,</span> <span class="nb">run</span> <span class="na">-p</span> <span class="mf">192.168.0.9</span><span class="p">:</span><span class="mi">80</span><span class="p">:</span><span class="mi">80</span>
+</pre></div>
+
+
+<p>如果有多个端口需要映射，可以写多次 -p 参数, docker run -p -p -p</p>
+<ul>
+<li>-P</li>
+</ul>
+<p>将主机任意端口映射到容器使用的端口。</p>
+<ul>
+<li>-d</li>
+</ul>
+<p>创建后在后台运行(detach)，这样运行程序时就不会占用当前终端 。</p>
+<ul>
+<li>-e</li>
+</ul>
+<p>设置容器运行时的环境变量，常用来注入一些需要动态改变的运行参数。</p>
+<ul>
+<li>-it</li>
+</ul>
+<p>-i 和 -t 是两个不同的参数，前者以交互模式(interactive)运行命令，后者则为命令分配一个伪终端</p>
+<ul>
+<li>-v</li>
+</ul>
+<p>挂载数据到容器内指定位置。如果没有指定挂载点，将仅仅生成一个可以被其他容器挂载的目录。可以多次使用 -v 来挂载多个路径。</p>
+<div class="hlcode"><pre><span class="cp"># 添加一个数据卷</span>
+<span class="o">-</span><span class="n">v</span> <span class="n">container_path</span>
+
+<span class="cp"># 挂载当前主机的一个目录到容器中。如果容器内的挂载点不存在，则会自动创建。目录、文件都可以被挂载，</span>
+<span class="o">-</span><span class="n">v</span> <span class="n">host_path</span><span class="o">:</span><span class="n">container_path</span>
+
+<span class="cp"># 默认挂载卷是可读写的，可以在挂载时指定只读</span>
+<span class="o">-</span><span class="n">v</span> <span class="n">host_path</span><span class="o">:</span><span class="n">container_path</span><span class="o">:</span><span class="n">ro</span>
+</pre></div>
+
+
+<ul>
+<li>-w</li>
+</ul>
+<p>执行命令时所在的目录(working dir)。</p>
+<ul>
+<li>--rm</li>
+</ul>
+<p>当要运行的命令结束后立即删除容器，常用于测试。</p>
+<ul>
+<li>--name</li>
+</ul>
+<p>为容器分配一个名字，如果没有添加此参数，将生成一个随机名称。这个名称在操作容器时需要用到。</p>
+<ul>
+<li>--link</li>
+</ul>
+<p>格式为： --link 要连接的容器名:连接名</p>
+<p>连接其他容器，并且为连接指定一个名称。docker 通过网桥来实现容器间的网络互联，因此如果创建容器时添加了此参数，则会自动在容器的 hosts 文件中加上被连接容器的 ip，ip 的别(域)名就是这里的连接名。不指定则默认为容器名称。</p>
+<h2 id="exec">exec</h2>
+<div class="hlcode"><pre><span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">name</span> <span class="n">dubuntu</span> <span class="o">-</span><span class="n">d</span> <span class="n">ubuntu</span>
+<span class="n">docker</span> <span class="n">exec</span> <span class="o">-</span><span class="n">it</span> <span class="n">dubuntu</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

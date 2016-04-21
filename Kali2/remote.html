@@ -46,6 +46,44 @@
 </pre></div>
 
 
+<h3 id="ssh_1">SSH断开后 进程仍然在后台运行</h3>
+<p>当用户注销（logout）或者网络断开时，终端会收到 HUP（hangup）信号从而关闭其所有子进程, 而bash 是 sshd 的子进程，当 ssh 断开连接时，HUP 信号会影响到它下面的所有子进程</p>
+<h4 id="_1">解决思路</h4>
+<ul>
+<li>
+<p>让进程运行在新的session(会话)里即不属于此终端的子进程。</p>
+</li>
+<li>
+<p>可以实现让进程忽略HUP信号</p>
+</li>
+</ul>
+<h4 id="_2">解决方法</h4>
+<ul>
+<li>nohup命令</li>
+</ul>
+<p>功能：不挂断地运行命令，忽略HUP信号。</p>
+<p>语法：nohup command &amp;</p>
+<ul>
+<li>setsid命令</li>
+</ul>
+<p>功能：run a program in a new session在新的会话中运行程序</p>
+<div class="hlcode"><pre><span class="n">setsid</span> <span class="n">ping</span> <span class="n">www</span><span class="p">.</span><span class="n">baidu</span><span class="p">.</span><span class="n">com</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> 
+</pre></div>
+
+
+<p>进程的父ID(PPID)是init</p>
+<ul>
+<li>() 内执行命令</li>
+</ul>
+<div class="hlcode"><pre><span class="p">(</span><span class="n">ping</span> <span class="n">www</span><span class="p">.</span><span class="n">baidu</span><span class="p">.</span><span class="n">com</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="o">&amp;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>进程的父ID(PPID)是init</p>
+<ul>
+<li>screen命令</li>
+</ul>
+<p>screen 是 init（PID为1）的子进程</p>
 <h2 id="rdesktop">rdesktop</h2>
 <p>rdesktop is an implementation of a client software for Microsoft's proprietary Remote Desktop Protocol (RDP). Rdesktop is free and open-source software, </p>
 </div>

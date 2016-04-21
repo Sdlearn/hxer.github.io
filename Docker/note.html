@@ -1,0 +1,223 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>note - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Docker">Docker</a>&nbsp;»&nbsp;note</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">note</div>
+  <div id="content">
+  <ul>
+<li>docker 镜像</li>
+</ul>
+<p>ubuntu
+debian
+alpine  体积小，内置完整的包管理器(apk)
+busybox</p>
+<ul>
+<li>read</li>
+</ul>
+<p><a href="https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/">Dockerfile 最佳实践</a></p>
+<p><a href="http://dockone.io/article/783">10张图带你深入理解Docker容器和镜像</a></p>
+<h2 id="daocloud"><a href="https://account.daocloud.io/signup"> Daocloud </a></h2>
+<p><a href="http://blog.saymagic.cn/2015/06/01/learning-docker.html">docker 简明教程</a></p>
+<h2 id="docker-hub"><a href="https://hub.docker.com/"> Docker Hub </a></h2>
+<ul>
+<li>login</li>
+</ul>
+<div class="hlcode"><pre><span class="n">docker</span> <span class="n">login</span>
+<span class="cp"># then input username, email password</span>
+</pre></div>
+
+
+<ul>
+<li>push</li>
+</ul>
+<div class="hlcode"><pre><span class="cp"># build</span>
+<span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">username</span><span class="o">/</span><span class="n">newimage</span><span class="o">:</span><span class="n">tag</span> <span class="p">.</span>
+
+<span class="cp"># http:</span><span class="c1">//hub.docker.com &gt; Create Repository </span>
+<span class="n">docker</span> <span class="n">push</span> <span class="n">username</span><span class="o">/</span><span class="n">newimage</span>
+</pre></div>
+
+
+<p>删除 Volumes
+Volume 只有在下列情况下才能被删除：
+docker rm -v 删除容器时添加了 -v 选项
+docker run –rm 运行容器时添加了 –rm 选项
+否则，会在 /var/lib/docker/vfs/dir 目录中遗留很多不明目录。</p>
+<p>Docker的文件系统AUFS，一种“增量文件系统”，用户所做修改以增量的方式保存，决定了其分层存储特性。</p>
+<div class="hlcode"><pre><span class="cp"># 查看环境信息</span>
+<span class="n">docker</span> <span class="n">info</span>  
+<span class="n">docker</span> <span class="n">version</span>
+
+<span class="cp"># 在官方仓库中查找镜像</span>
+<span class="n">docker</span> <span class="n">search</span> <span class="n">ubuntu</span>
+
+<span class="cp"># 下载获取ubuntu镜像</span>
+<span class="n">docker</span> <span class="n">pull</span> <span class="n">ubuntu</span>
+
+<span class="cp"># 列出本机拥有的镜像</span>
+<span class="n">docker</span> <span class="n">images</span>
+
+<span class="cp"># 列出目前运行的容器</span>
+<span class="n">docker</span> <span class="n">ps</span>
+
+<span class="cp"># 列出最近的容器，包含未正在运行的</span>
+<span class="n">docker</span> <span class="n">ps</span> <span class="o">-</span><span class="n">l</span>
+
+<span class="cp"># 挂载一个正在后台运行的容器</span>
+<span class="n">docker</span> <span class="n">attach</span> <span class="mi">23</span><span class="n">ad234</span>
+
+<span class="cp"># 列出并追踪容器的运行日志</span>
+<span class="n">docker</span> <span class="n">logs</span> <span class="o">-</span><span class="n">f</span> <span class="o">-</span><span class="n">t</span> <span class="mi">23</span><span class="n">ad234</span>
+
+<span class="cp"># 暂停运行的容器</span>
+<span class="n">docker</span> <span class="n">pause</span> <span class="mi">23</span><span class="n">ad234</span>
+
+<span class="cp"># 恢复暂停的容器</span>
+<span class="n">docker</span> <span class="n">unpause</span> <span class="mi">23</span><span class="n">ad234</span>
+
+<span class="cp"># 启动/停止/重启容器(start/stop/restart)</span>
+<span class="n">docker</span> <span class="n">start</span> <span class="mi">23</span><span class="n">ad234</span>
+
+<span class="cp"># 显示容器内运行的进程, 每2s刷新一次</span>
+<span class="n">docker</span> <span class="n">top</span> <span class="mi">23</span><span class="n">ad234</span> <span class="o">-</span><span class="n">d</span> <span class="mi">2</span>
+
+<span class="cp"># 查看容器运行的详细信息</span>
+<span class="n">docker</span> <span class="n">inspect</span> <span class="mi">23</span><span class="n">ad234</span>
+
+<span class="cp"># 杀掉正在运行的容器</span>
+<span class="n">docker</span> <span class="n">kill</span> <span class="mi">23</span><span class="n">ad234</span>
+
+<span class="cp"># 显示容器文件系统的改动</span>
+<span class="n">docker</span> <span class="n">diff</span> <span class="mi">23</span><span class="n">ad234</span>
+
+<span class="cp"># 复制容器中的文件或文件夹到主机系统中</span>
+<span class="n">docker</span> <span class="n">cp</span> <span class="mi">23</span><span class="n">ad234</span><span class="o">:~/</span><span class="n">test</span><span class="p">.</span><span class="n">txt</span> <span class="p">.</span><span class="o">/</span><span class="n">test</span><span class="p">.</span><span class="n">txt</span>
+
+<span class="cp"># 将容器导出为tar包</span>
+<span class="n">docker</span> <span class="n">export</span> <span class="mi">23</span><span class="n">ad234</span> <span class="o">&gt;</span> <span class="n">mytest</span><span class="p">.</span><span class="n">docker</span><span class="p">.</span><span class="n">tar</span>
+
+<span class="cp"># 创建一个空容器并导入tar包</span>
+<span class="n">docker</span> <span class="n">import</span> <span class="p">.</span><span class="o">/</span><span class="n">mytest</span><span class="p">.</span><span class="n">docker</span><span class="p">.</span><span class="n">tar</span>
+
+<span class="cp"># 将容器改动提交到镜像中</span>
+<span class="n">docker</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="n">mytest</span> <span class="mi">23</span><span class="n">ad234</span> <span class="n">ijse</span><span class="o">/</span><span class="n">test</span><span class="o">:</span><span class="n">mytag</span>
+
+<span class="cp"># 列出镜像的历史</span>
+<span class="n">docker</span> <span class="n">history</span> <span class="n">ijse</span><span class="o">/</span><span class="n">test</span><span class="o">:</span><span class="n">mytag</span>
+
+<span class="cp"># 登陆官方仓库账户</span>
+<span class="n">docker</span> <span class="n">login</span>
+
+<span class="cp"># 修改本地镜像名称</span>
+<span class="n">docker</span> <span class="n">rename</span> <span class="n">ijse</span><span class="o">/</span><span class="n">test</span> <span class="n">ijse</span><span class="o">/</span><span class="n">mytest</span>
+
+<span class="cp"># 将镜像推送到仓库中</span>
+<span class="n">docker</span> <span class="n">push</span> <span class="n">ijse</span><span class="o">/</span><span class="n">mytest</span><span class="o">:</span><span class="n">mytag</span>
+
+<span class="cp"># 删除一个容器 及其关联的数据卷</span>
+<span class="n">docker</span> <span class="n">rm</span> <span class="o">-</span><span class="n">v</span> <span class="mi">23</span><span class="n">ad234</span>
+
+<span class="cp"># 删除一个镜像</span>
+<span class="n">docker</span> <span class="n">rmi</span> <span class="n">ubuntu</span>
+
+<span class="cp"># 将本机镜像保存为tar包</span>
+<span class="n">docker</span> <span class="n">save</span> <span class="o">-</span><span class="n">o</span> <span class="n">ijse</span><span class="p">.</span><span class="n">test</span><span class="p">.</span><span class="n">tar</span> <span class="n">ijse</span><span class="o">/</span><span class="n">mytest</span>
+
+<span class="cp"># 通过Dockerfile来创建一个镜像</span>
+<span class="n">docker</span> <span class="n">build</span> <span class="p">.</span><span class="o">/</span><span class="n">Dockerfile</span>
+</pre></div>
+
+
+<p>Docker相关术语
+LXC
+LXC（Linux Container）Linux Container容器是一种内核虚拟化技术，可以提供轻量级的虚拟化，以便隔离进程和资源，而且不需要提供指令解释机制以及全虚拟化的其他复杂性。相当于C++中的NameSpace。容器有效地将由单个操作系统管理的资源划分到孤立的组中，以更好地在孤立的组之间平衡有冲突的资源使用需求。与传统虚拟化技术相比，它的优势在于：
+（1）与宿主机使用同一个内核，性能损耗小；
+（2）不需要指令级模拟；
+（3）不需要即时(Just-in-time)编译；
+（4）容器可以在CPU核心的本地运行指令，不需要任何专门的解释机制；
+（5）避免了准虚拟化和系统调用替换中的复杂性；
+（6）轻量级隔离，在隔离的同时还提供共享机制，以实现容器与宿主机的资源共享。
+总结：Linux Container是一种轻量级的虚拟化的手段。
+Linux Container提供了在单一可控主机节点上支持多个相互隔离的server container同时执行的机制。Linux Container有点像chroot，提供了一个拥有自己进程和网络空间的虚拟环境，但又有别于虚拟机，因为lxc是一种操作系统层次上的资源的虚拟化。</p>
+<p>Hypervisor
+Hypervisor是一种运行在物理服务器和操作系统之间的中间软件层,可允许多个操作系统和应用共享一套基础物理硬件，因此也可以看作是虚拟环境中的“元”操作系统，它可以协调访问服务器上的所有物理设备和虚拟机，也叫虚拟机监视器（Virtual Machine Monitor）。Hypervisor是所有虚拟化技术的核心。非中断地支持多工作负载迁移的能力是Hypervisor的基本功能。当服务器启动并执行Hypervisor时，它会给每一台虚拟机分配适量的内存、CPU、网络和磁盘，并加载所有虚拟机的客户操作系统。</p>
+<p>容器VS 虚拟机
+容器会比虚拟机更高效，因为它们能够分享一个内核和分享应用程序库。相比虚拟机系统，这也将使得 Docker使用的内存更小，即便虚拟机利用了内存超量使用的技术。部署容器时共享底层的镜像层也可以减少存储占用。IBM 的 Boden Russel 已经做了一些基准测试来说明两者之间的不同。</p>
+<p>相比虚拟机系统，容器具有较低系统开销的优势，所以在容器中，应用程序的运行效率将会等效于在同样的应用程序在虚拟机中运行，甚至效果更佳。</p>
+<h2 id="git-docker">利用git仓库， docker镜像更新自动化</h2>
+<p><a href="http://www.infoq.com/cn/news/2015/04/several-docker-practice">镜像管理</a></p>
+<blockquote>
+<p>镜像制作方面，应该坚持三个原则，第一是坚持镜像总是从Dockerfile生成。这样做最大的好处是可以通过Dockerfile“阅读”镜像，在后续的协作、升级维护等方面会带来巨大的便利。第二是镜像之间应该避免依赖过深，建议为三层，这三层分别是基础的操作系统镜像、中间件镜像和应用镜像。第三是坚持所有镜像都应该有对应的Git仓库，以方便后续的更新。
+镜像的更新需要一个自动化的流程，这可以通过SCM和CI系统自动触发实现。具体的流程如下图所示。开发者首先将代码和Dockerfile提交到Git仓库，然后Git通过webhook方式触发Jenkins的主动获取代码和Dockerfile文件，Jenkins再通过Docker相关的插件生成镜像并推送镜像到私有的Registry。这样，在服务器上就可以通过拉取新的镜像部署容器。</p>
+</blockquote>
+<h2 id="docker">Docker方案</h2>
+<ul>
+<li><a href="https://github.com/docker/kitematic">Kitematic</a></li>
+</ul>
+<blockquote>
+<p>Kitematic 是一个具有现代化的界面设计的自由开源软件，它可以让我们在 Docker 中交互式执行任务。Kitematic 设计的非常漂亮、界面美观。使用它，我们可以简单快速地开箱搭建我们的容器而不需要输入命令，可以在图形用户界面中通过简单的点击从而在容器上部署我们的应用。
+Kitematic 集成了 Docker Hub，允许我们搜索、拉取任何需要的镜像，并在上面部署应用。它同时也能很好地切换到命令行用户接口模式。目前，它包括了自动映射端口、可视化更改环境变量、配置卷、流式日志以及其它功能。</p>
+</blockquote>
+<h2 id="docker-container-support-utf-8">docker container support utf-8</h2>
+<p>write to Dockerfile</p>
+<div class="hlcode"><pre><span class="cp"># Install program to configure locales</span>
+<span class="n">RUN</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span> \
+    <span class="o">&amp;&amp;</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">locales</span> \
+    <span class="o">&amp;&amp;</span> <span class="n">dpkg</span><span class="o">-</span><span class="n">reconfigure</span> <span class="n">locales</span> <span class="o">&amp;&amp;</span> \
+        <span class="n">locale</span><span class="o">-</span><span class="n">gen</span> <span class="n">C</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span> \
+    <span class="o">&amp;&amp;</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">update</span><span class="o">-</span><span class="n">locale</span> <span class="n">LANG</span><span class="o">=</span><span class="n">C</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span>
+
+<span class="cp"># Install needed default locale for Makefly</span>
+<span class="n">RUN</span> <span class="n">echo</span> <span class="err">&#39;</span><span class="n">en_US</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span> <span class="n">UTF</span><span class="o">-</span><span class="mi">8</span><span class="err">&#39;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">locale</span><span class="p">.</span><span class="n">gen</span> \
+    <span class="o">&amp;&amp;</span> <span class="n">locale</span><span class="o">-</span><span class="n">gen</span>
+
+<span class="cp"># Set default locale for the environment</span>
+<span class="n">ENV</span> <span class="n">LC_ALL</span> <span class="n">C</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span>
+<span class="n">ENV</span> <span class="n">LANG</span> <span class="n">en_US</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span>
+<span class="n">ENV</span> <span class="n">LANGUAGE</span> <span class="n">en_US</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span>
+</pre></div>
+
+
+<h2 id="_1">权限</h2>
+<div class="hlcode"><pre><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="p">.</span><span class="n">sock</span>
+<span class="n">srw</span><span class="o">-</span><span class="n">rw</span><span class="o">----</span>  <span class="mi">1</span> <span class="n">root</span>     <span class="n">docker</span>        <span class="mi">0</span> <span class="n">Mar</span> <span class="mi">17</span> <span class="mi">12</span><span class="o">:</span><span class="mi">52</span> <span class="n">docker</span><span class="p">.</span><span class="n">sock</span>
+</pre></div>
+
+
+<p>用户加入docker用户组中，免去输入sudo语句。</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">usermod</span> <span class="o">-</span><span class="n">aG</span> <span class="n">docker</span> <span class="o">&lt;</span><span class="err">用户名</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<blockquote>
+<p>注意：这条语句需要重新登陆终端才能生效</p>
+<p>注意：docker用户组的权限等同于root用户组，在生产环境中这样做可能会导致安全问题!</p>
+</blockquote>
+<h2 id="docker_1">docker 实战</h2>
+<p><a href="http://dockone.io/article/217">http://dockone.io/article/217</a></p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
