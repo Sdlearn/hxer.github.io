@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>Sql - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Note">Note</a>&nbsp;»&nbsp;Sql</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">Sql</div>
+  <div id="content">
+  <h2 id="_1">匹配符</h2>
+<table>
+<thead>
+<tr>
+<th>通配符</th>
+<th>描述</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%</td>
+<td>包含零个或更多字符的任意字符串。</td>
+<td>WHERE title LIKE '%computer%' 将查找任意位置包含单词 computer</td>
+</tr>
+<tr>
+<td>_</td>
+<td>任何单个字符。</td>
+<td>WHERE au_fname LIKE '_ean' 将查找以 ean 结尾的所有 4 个字母</td>
+</tr>
+<tr>
+<td>[ ]</td>
+<td>指定范围 ([a-f]) 或集合 ([abcdef]) 中的任何单个字符。</td>
+<td>WHERE au_lname LIKE '[C-P]arsen'</td>
+</tr>
+<tr>
+<td>[^]</td>
+<td>不属于指定范围 ([a-f]) 或集合 ([abcdef]) 的任何单个字符。</td>
+<td>WHERE au_lname LIKE 'de[^l]%' 将查找以 de 开始且其后的字母不为 l</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
