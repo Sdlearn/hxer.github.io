@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>Function - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#PHP">PHP</a>&nbsp;»&nbsp;Function</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">Function</div>
+  <div id="content">
+  <h2 id="file">file</h2>
+<h3 id="is_file">is_file</h3>
+<blockquote>
+<p>bool is_file ( string $filename )</p>
+</blockquote>
+<p>判断给定文件名是否为一个正常的文件。</p>
+<div class="hlcode"><pre><span class="err">参数</span> 
+
+<span class="nl">filename:</span> <span class="err">文件的路径</span>
+</pre></div>
+
+
+<ul>
+<li>测试环境</li>
+</ul>
+<div class="hlcode"><pre><span class="err">路径</span>
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span>
+    <span class="mi">123</span><span class="o">/</span>
+        <span class="n">test</span><span class="p">.</span><span class="n">php</span>
+        <span class="mi">45</span><span class="o">/</span>
+            <span class="n">robot</span><span class="p">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p>test.php </p>
+<div class="hlcode"><pre><span class="c1">// test.php</span>
+<span class="o">&lt;?</span><span class="n">php</span>
+<span class="err">$</span><span class="n">file</span> <span class="o">=</span> <span class="err">$</span><span class="no">_GET</span><span class="p">[&#39;</span><span class="n">file</span><span class="p">&#39;];</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="n">is_file</span><span class="p">(</span><span class="err">$</span><span class="n">file</span><span class="p">)){</span>
+    <span class="n">echo</span> <span class="s">&quot;exist&quot;</span><span class="p">;</span>
+<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+    <span class="n">echo</span> <span class="s">&quot;not exist&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="o">?&gt;</span>
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="nl">http:</span><span class="c1">//localhost/123/test.php?file=test.php --&gt; exitst</span>
+
+<span class="o">/</span><span class="mi">123</span><span class="o">/</span><span class="n">test</span><span class="p">.</span><span class="n">php</span> <span class="o">--&gt;</span> <span class="n">not</span> <span class="n">exitst</span>
+<span class="o">/</span><span class="n">test</span><span class="p">.</span><span class="n">php</span> <span class="o">--&gt;</span> <span class="n">not</span> <span class="n">exitst</span>
+<span class="p">.</span><span class="o">/</span><span class="n">test</span><span class="p">.</span><span class="n">php</span> <span class="o">--&gt;</span> <span class="n">exitst</span>
+<span class="mi">45</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="n">test</span><span class="p">.</span><span class="n">php</span> <span class="o">--&gt;</span> <span class="n">exitst</span>
+<span class="mi">46</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="n">test</span><span class="p">.</span><span class="n">php</span> <span class="o">--&gt;</span> <span class="n">not</span> <span class="n">exist</span>
+</pre></div>
+
+
+<p>从上面结果可以猜测出， is_file 判断文件是否存在时，文件路径为 该php文件的路径 + 带路径的参数$filename，并且当某个目录不存在时，返回false</p>
+<div class="hlcode"><pre><span class="cp"># 跟路径 /var/www/</span>
+
+<span class="n">test</span><span class="p">.</span><span class="n">php</span> <span class="o">-&gt;</span> <span class="mi">123</span><span class="o">/</span> <span class="o">+</span> <span class="n">test</span><span class="p">.</span><span class="n">php</span> <span class="o">=</span> <span class="mi">123</span><span class="o">/</span><span class="n">test</span><span class="p">.</span><span class="n">php</span> <span class="o">--&gt;</span> <span class="n">exist</span>
+<span class="o">/</span><span class="mi">123</span><span class="o">/</span><span class="n">test</span><span class="p">.</span><span class="n">php</span> <span class="o">-&gt;</span> <span class="mi">123</span><span class="o">/</span><span class="mi">123</span><span class="o">/</span><span class="n">test</span><span class="p">.</span><span class="n">php</span> <span class="o">--&gt;</span> <span class="n">not</span> <span class="n">exitst</span>
+<span class="o">/</span><span class="n">test</span><span class="p">.</span><span class="n">php</span> <span class="mi">123</span><span class="c1">//test.php --&gt; not exitst</span>
+<span class="p">.</span><span class="o">/</span><span class="n">test</span><span class="p">.</span><span class="n">php</span> <span class="mi">123</span><span class="o">/</span><span class="p">.</span><span class="o">/</span><span class="n">test</span><span class="p">.</span><span class="n">php</span> <span class="o">--&gt;</span> <span class="n">exitst</span>
+<span class="mi">45</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="n">test</span><span class="p">.</span><span class="n">php</span> <span class="o">-&gt;</span> <span class="mi">123</span><span class="o">/</span><span class="mi">45</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="n">test</span><span class="p">.</span><span class="n">php</span> <span class="o">--&gt;</span> <span class="n">exitst</span>
+<span class="mi">46</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="n">test</span><span class="p">.</span><span class="n">php</span> <span class="o">-&gt;</span> <span class="mi">123</span><span class="o">/</span><span class="mi">46</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="n">test</span><span class="p">.</span><span class="n">php</span> <span class="o">--&gt;</span> <span class="n">not</span> <span class="n">exist</span>
+</pre></div>
+
+
+<p>当 46 文件夹不存在时, is_file返回的是false, 这个特性可以用作 <strong> php 文件的过滤绕过 </strong></p>
+<p>另外， is_file存在缓存机制，第一次调用is_file函数的时候，PHP会把文件的属性（file stat）保存下来，当再次调用is_file的时候，如果文件名更第一次的一样，那么就会直接返回缓存，即使文件已经删除了。</p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
