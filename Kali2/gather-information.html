@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>Gather Information - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Kali2">Kali2</a>&nbsp;»&nbsp;Gather Information</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">Gather Information</div>
+  <div id="content">
+  <h2 id="_1">参考</h2>
+<p><a href="http://www.freebuf.com/articles/system/58096.html">Freebuf Kali Linux在渗透测试中信息收集</a></p>
+<h2 id="_2">一句话介绍</h2>
+<h3 id="_3">域名信息</h3>
+<div class="hlcode"><pre><span class="n">whois</span>     <span class="err">通过</span><span class="n">Whoist</span><span class="err">据库查询域名的注册信息，</span><span class="n">Whois</span><span class="err">数据库是提供域名的注册人信息，包括联系方式，管理员名字，管理员邮箱等等，其中也包括</span><span class="n">DNS</span><span class="err">服务器的信息</span><span class="p">.</span>
+<span class="n">host</span>      <span class="err">简单的</span> <span class="n">dns</span> <span class="err">查询</span>
+<span class="n">nslookup</span>
+<span class="n">dig</span>       <span class="n">dns</span> <span class="err">查询，</span> <span class="err">具有更灵活和清晰的显示信息</span>
+<span class="n">dnsenum</span>   <span class="err">查询主机</span><span class="n">IP</span><span class="err">地址</span><span class="p">,</span> <span class="err">该域名的</span><span class="n">DNS</span><span class="err">服务器，</span> <span class="err">该域名的</span><span class="n">MX</span><span class="err">记录</span>
+<span class="n">dnsdict6</span>
+<span class="n">fierce</span>
+<span class="n">dMitry</span>
+</pre></div>
+
+
+<h3 id="_4">域名信息</h3>
+<ul>
+<li>nslookup<blockquote>
+<p>查询DNS的记录，查看域名解析是否正常</p>
+</blockquote>
+</li>
+</ul>
+<div class="hlcode"><pre><span class="cp"># 直接查询， 返回 A 记录</span>
+<span class="n">nslookup</span> <span class="n">domain</span> <span class="p">[</span><span class="n">dns</span><span class="o">-</span><span class="n">server</span><span class="p">]</span>
+
+<span class="n">nslookup</span> <span class="o">-</span><span class="n">q</span><span class="o">=</span><span class="n">type</span> <span class="n">domain</span> <span class="p">[</span><span class="n">dns</span><span class="o">-</span><span class="n">server</span><span class="p">]</span>
+<span class="cp"># type 类型</span>
+<span class="n">A</span> <span class="err">地址记录</span> <span class="o">--</span><span class="err">创建到</span><span class="n">IP</span><span class="err">地址的记录</span>
+<span class="n">AAAA</span> <span class="err">地址记录</span> 
+<span class="n">AFSDB</span> <span class="n">Andrew</span><span class="err">文件系统数据库服务器记录</span> 
+<span class="n">ATMA</span> <span class="n">ATM</span><span class="err">地址记录</span> 
+<span class="n">CNAME</span> <span class="err">别名记录</span> <span class="o">--</span><span class="err">别名记录，它允许将多个记录映射到同一台计算机</span>
+<span class="n">HINFO</span> <span class="err">硬件配置记录，包括</span><span class="n">CPU</span><span class="err">、操作系统信息</span> 
+<span class="n">ISDN</span> <span class="err">域名对应的</span><span class="n">ISDN</span><span class="err">号码</span> 
+<span class="n">MB</span> <span class="err">存放指定邮箱的服务器</span> 
+<span class="n">MG</span> <span class="err">邮件组记录</span> 
+<span class="n">MINFO</span> <span class="err">邮件组和邮箱的信息记录</span> 
+<span class="n">MR</span> <span class="err">改名的邮箱记录</span> 
+<span class="n">MX</span> <span class="err">邮件服务器记录</span> 
+<span class="n">NS</span> <span class="err">名字服务器记录</span> 
+<span class="n">PTR</span> <span class="err">反向记录</span> 
+<span class="n">RP</span> <span class="err">负责人记录</span> 
+<span class="n">RT</span> <span class="err">路由穿透记录</span> 
+<span class="n">SRV</span> <span class="n">TCP</span><span class="err">服务器信息记录</span> 
+<span class="n">TXT</span> <span class="err">域名对应的文本信息</span> 
+<span class="n">X25</span> <span class="err">域名对应的</span><span class="n">X</span><span class="mf">.25</span><span class="err">地址记录</span>
+</pre></div>
+
+
+<p>若没指定dns-server，用系统默认的dns服务器</p>
+<p>[2016 cctf dns 查询注入]</p>
+<div class="hlcode"><pre><span class="n">nslookup</span> <span class="o">-</span><span class="n">q</span><span class="o">=</span><span class="n">txt</span> <span class="s">&quot;loli.club&quot;</span> <span class="n">ns</span><span class="p">.</span><span class="n">loli</span><span class="p">.</span><span class="n">club</span>
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
