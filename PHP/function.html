@@ -80,6 +80,61 @@
 
 <p>当 46 文件夹不存在时, is_file返回的是false, 这个特性可以用作 <strong> php 文件的过滤绕过 </strong></p>
 <p>另外， is_file存在缓存机制，第一次调用is_file函数的时候，PHP会把文件的属性（file stat）保存下来，当再次调用is_file的时候，如果文件名更第一次的一样，那么就会直接返回缓存，即使文件已经删除了。</p>
+<h2 id="php">php字符过滤</h2>
+<ul>
+<li>htmlspecialchars</li>
+</ul>
+<blockquote>
+<p>将与、单双引号、大于和小于号化成HTML格式</p>
+</blockquote>
+<div class="hlcode"><pre><span class="o">&amp;</span>   <span class="err">转成</span> 
+<span class="s">&quot;   转成 </span>
+<span class="err">&#39;</span>   <span class="err">转成</span> 
+<span class="o">&lt;</span>   <span class="err">转成</span> 
+</pre></div>
+
+
+<ul>
+<li>htmlentities()</li>
+</ul>
+<blockquote>
+<p>所有字符都转成HTML格式, 除上面htmlspecialchars字符外，还包括双字节字符显示成编码等。</p>
+</blockquote>
+<ul>
+<li>addslashes</li>
+</ul>
+<blockquote>
+<p>单双引号、反斜线及NULL加上反斜线转义</p>
+</blockquote>
+<p>被改的字符包括单引号(')、双引号(")、反斜线backslash () 以及空字符NULL。</p>
+<ul>
+<li>stripslashes</li>
+</ul>
+<blockquote>
+<p>去掉反斜线字符</p>
+</blockquote>
+<p>去掉字符串中的反斜线字符。若是连续二个反斜线，则去掉一个，留下一个。若只有一个反斜线，就直接去掉。</p>
+<ul>
+<li>quotemeta</li>
+</ul>
+<blockquote>
+<p>加入引用符号</p>
+</blockquote>
+<p>将字符串中含有. \ + * ? [ ^ ] ( $ ) 等字符的前面加入反斜线"\" 符号。</p>
+<ul>
+<li>strip_tags</li>
+</ul>
+<blockquote>
+<p>去掉HTML及PHP标记</p>
+</blockquote>
+<p>去掉字符串中任何HTML标记和PHP标记，包括标记封堵之间的内容。注意如果字符串HTML及PHP标签存在错误，也会返回错误。</p>
+<ul>
+<li>mysql_real_escape_string</li>
+</ul>
+<blockquote>
+<p>转义SQL字符串中的特殊字符</p>
+</blockquote>
+<p>转义\x00 \n \r 空格 \ ' " \x1a，针对多字节字符处理很有效。mysql_real_escape_string会判断字符集，mysql_escape_string则不用考虑。</p>
 </div>
 
         </div>
