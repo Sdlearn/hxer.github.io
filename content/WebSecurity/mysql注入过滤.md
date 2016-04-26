@@ -162,18 +162,9 @@ select#foo
 MySQL Inline Comments：
 
 ```
-绕过：http://www.90jishuwang.com/news.php?id=1/X391X!UnIoN*/SeLecT+1,2,3 --
-```
-
-### 注释绕过
-
-```
-select/*comment*/user/*zzsdsdsf*/from mysql.user;
-
-# 内联注释绕过
 /*!12345select*//*!12345user*/ from mysql.user;
+绕过：http://www.90jishuwang.com/news.php?id=1/*!12345!UnIoN*/SeLecT+1,2,3 --
 ```
-
 
 ### 双编码
 
