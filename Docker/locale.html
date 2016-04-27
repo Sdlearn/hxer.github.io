@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>locale - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Docker">Docker</a>&nbsp;»&nbsp;locale</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">locale</div>
+  <div id="content">
+  <h1 id="dockerfile">Dockerfile</h1>
+<h2 id="debian">debian</h2>
+<div class="hlcode"><pre><span class="cp"># Install program to configure locales</span>
+<span class="n">RUN</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span> \
+    <span class="o">&amp;&amp;</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">locales</span> \
+    <span class="o">&amp;&amp;</span> <span class="n">dpkg</span><span class="o">-</span><span class="n">reconfigure</span> <span class="n">locales</span> <span class="o">&amp;&amp;</span> \
+        <span class="n">locale</span><span class="o">-</span><span class="n">gen</span> <span class="n">C</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span> \
+    <span class="o">&amp;&amp;</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">update</span><span class="o">-</span><span class="n">locale</span> <span class="n">LANG</span><span class="o">=</span><span class="n">C</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span>
+
+<span class="cp"># Install needed default locale for Makefly</span>
+<span class="n">RUN</span> <span class="n">echo</span> <span class="err">&#39;</span><span class="n">en_US</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span> <span class="n">UTF</span><span class="o">-</span><span class="mi">8</span><span class="err">&#39;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">locale</span><span class="p">.</span><span class="n">gen</span> \
+    <span class="o">&amp;&amp;</span> <span class="n">locale</span><span class="o">-</span><span class="n">gen</span>
+
+<span class="cp"># Set default locale for the environment</span>
+<span class="n">ENV</span> <span class="n">LC_ALL</span> <span class="n">C</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span>
+<span class="n">ENV</span> <span class="n">LANG</span> <span class="n">en_US</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span>
+<span class="n">ENV</span> <span class="n">LANGUAGE</span> <span class="n">en_US</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span>
+</pre></div>
+
+
+<h2 id="ubuntu">ubuntu</h2>
+<div class="hlcode"><pre><span class="cp"># Set default locale for the environment</span>
+<span class="n">RUN</span> <span class="n">locale</span><span class="o">-</span><span class="n">gen</span> <span class="n">en_US</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span>
+<span class="n">ENV</span> <span class="n">LANG</span> <span class="n">en_US</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span>
+<span class="n">ENV</span> <span class="n">LANGUAGE</span> <span class="n">en_US</span><span class="o">:</span><span class="n">en</span>
+<span class="n">ENV</span> <span class="n">LC_ALL</span> <span class="n">en_US</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span>
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
