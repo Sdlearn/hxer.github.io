@@ -368,6 +368,20 @@ Edit menu -> Preferences
 [wps][12]
 [12]: http://wps-community.org/download.html
 
+
+## gdb
+
+kali2 默认安装好了gdb
+
+#### peda 
+
+* install
+
+```
+git clone https://github.com/longld/peda.git ~/peda
+echo "source ~/peda/peda.py" >> ~/.gdbinit
+```
+
 ## nodejs
 
 ## source install ##

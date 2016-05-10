@@ -274,7 +274,7 @@ bind-key D source-file ~/.tmux/layout
 
 ```         
 
-键入 Ctrl + b D (D是大写，要按shrift)，即会自动执行layout脚本
+键入 Ctrl + x D (D是大写)，即会自动执行layout脚本
 
 ~/.tmux/layout
 
