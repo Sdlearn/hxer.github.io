@@ -18,7 +18,20 @@
 <div class="clearfix"></div>
 <div id="title">cmdline</div>
   <div id="content">
-  <h2 id="wget">wget</h2>
+  <h2 id="zip">zip</h2>
+<div class="hlcode"><pre><span class="n">zip</span>  <span class="p">[</span><span class="o">-</span><span class="n">aABcdDeEfFghjklLmoqrRSTuvVwXyz</span><span class="o">!</span><span class="err">@$</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">longoption</span> <span class="p">...]</span>  <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">path</span><span class="p">]</span>
+       <span class="p">[</span><span class="o">-</span><span class="n">n</span> <span class="n">suffixes</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">t</span> <span class="n">date</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">tt</span> <span class="n">date</span><span class="p">]</span> <span class="p">[</span><span class="n">zipfile</span> <span class="p">[</span><span class="n">file</span> <span class="p">...]]</span>  <span class="p">[</span><span class="o">-</span><span class="n">xi</span> <span class="n">list</span><span class="p">]</span>
+
+<span class="o">-</span><span class="mi">0</span>  <span class="n">store</span> <span class="n">only</span>
+<span class="o">-</span><span class="mi">1</span> <span class="n">compress</span> <span class="n">faster</span>
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="n">zip</span> <span class="n">test</span><span class="p">.</span><span class="n">zip</span> <span class="n">test</span>
+</pre></div>
+
+
+<h2 id="wget">wget</h2>
 <p>常用命令:</p>
 <p>需要下载某个目录下面的所有文件。</p>
 <div class="hlcode"><pre><span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="o">-</span><span class="n">r</span> <span class="o">-</span><span class="n">np</span> <span class="o">-</span><span class="n">k</span> <span class="o">-</span><span class="n">L</span> <span class="o">-</span><span class="n">p</span> <span class="n">www</span><span class="p">.</span><span class="n">xxx</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">path</span><span class="o">/</span>
@@ -41,6 +54,11 @@
 <span class="o">-</span><span class="n">p</span> <span class="err">下载网页所需的所有文件，如图片等</span>
 <span class="o">-</span><span class="n">A</span> <span class="err">指定要下载的文件样式列表，多个样式用逗号分隔</span>
 <span class="o">-</span><span class="n">i</span> <span class="err">后面跟一个文件，文件内指明要下载的</span><span class="n">URL</span>
+
+<span class="o">--</span><span class="n">header</span> <span class="err">设置请求头</span>
+
+<span class="o">-</span><span class="n">O</span> <span class="err">将文件下载到指定的目录中</span>
+<span class="o">-</span><span class="n">P</span> <span class="err">保存文件之前先创建指定名称的目录</span>
 </pre></div>
 
 

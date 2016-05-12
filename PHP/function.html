@@ -80,6 +80,74 @@
 
 <p>当 46 文件夹不存在时, is_file返回的是false, 这个特性可以用作 <strong> php 文件的过滤绕过 </strong></p>
 <p>另外， is_file存在缓存机制，第一次调用is_file函数的时候，PHP会把文件的属性（file stat）保存下来，当再次调用is_file的时候，如果文件名更第一次的一样，那么就会直接返回缓存，即使文件已经删除了。</p>
+<h2 id="is_numeric">is_numeric  理解</h2>
+<p>简单翻看is_numeric实现代码，is_numeric对输入的参数，先做了样式判断如果是整型、浮点型就直接返回true，如果是字符串则进入is_numeric_string函数进行判断</p>
+<div class="hlcode"><pre><span class="k">switch</span> <span class="p">(</span><span class="n">Z_TYPE_P</span><span class="p">(</span><span class="n">arg</span><span class="p">))</span> <span class="p">{</span> 
+        <span class="k">case</span> <span class="n">IS_LONG</span>: 
+        <span class="k">case</span> <span class="n">IS_DOUBLE</span>: 
+            <span class="n">RETURN_TRUE</span><span class="p">;</span> 
+            <span class="k">break</span><span class="p">;</span> 
+        <span class="k">case</span> <span class="n">IS_STRING</span>: 
+            <span class="k">if</span> <span class="p">(</span><span class="n">is_numeric_string</span><span class="p">(</span><span class="n">Z_STRVAL_P</span><span class="p">(</span><span class="n">arg</span><span class="p">),</span> <span class="n">Z_STRLEN_P</span><span class="p">(</span><span class="n">arg</span><span class="p">),</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="p">{</span> 
+                <span class="n">RETURN_TRUE</span><span class="p">;</span> 
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> 
+                <span class="n">RETURN_FALSE</span><span class="p">;</span> 
+            <span class="p">}</span> 
+            <span class="k">break</span><span class="p">;</span> 
+        <span class="k">default</span><span class="o">:</span> 
+            <span class="n">RETURN_FALSE</span><span class="p">;</span> 
+            <span class="k">break</span><span class="p">;</span>
+</pre></div>
+
+
+<p>经过查找，找到真正的处理函数_is_numeric_string_ex,省略一些代码，我们只用知道哪些字符能够出现在is_numeric的参数中，很明显可以看出， 
+空格、\t、\n、\r、\v、\f、+、-能够出现在参数开头，“点”能够在参数任何位置，E、e只能出现在参数中间。 </p>
+<div class="hlcode"><pre><span class="nx">ZEND_API</span> <span class="nx">zend_uchar</span> <span class="nx">ZEND_FASTCALL</span> <span class="nx">_is_numeric_string_ex</span><span class="p">(......)</span> <span class="cm">/* {{{ */</span> 
+<span class="p">{</span>   
+    <span class="p">......</span> 
+    <span class="cm">/* Skip any whitespace </span>
+<span class="cm">     * This is much faster than the isspace() function */</span> 
+    <span class="k">while</span> <span class="p">(</span><span class="o">*</span><span class="nx">str</span> <span class="o">==</span> <span class="s1">&#39; &#39;</span> <span class="o">||</span> <span class="o">*</span><span class="nx">str</span> <span class="o">==</span> <span class="s1">&#39;\t&#39;</span> <span class="o">||</span> <span class="o">*</span><span class="nx">str</span> <span class="o">==</span> <span class="s1">&#39;\n&#39;</span> <span class="o">||</span> <span class="o">*</span><span class="nx">str</span> <span class="o">==</span> <span class="s1">&#39;\r&#39;</span> <span class="o">||</span> <span class="o">*</span><span class="nx">str</span> <span class="o">==</span> <span class="s1">&#39;\v&#39;</span> <span class="o">||</span> <span class="o">*</span><span class="nx">str</span> <span class="o">==</span> <span class="s1">&#39;\f&#39;</span><span class="p">)</span> <span class="p">{</span> 
+        <span class="nx">str</span><span class="o">++</span><span class="p">;</span> 
+        <span class="nx">length</span><span class="o">--</span><span class="p">;</span> 
+    <span class="p">}</span> 
+    <span class="nx">ptr</span> <span class="o">=</span> <span class="nx">str</span><span class="p">;</span> 
+    <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="nx">ptr</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span> <span class="p">{</span> 
+        <span class="nx">neg</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> 
+        <span class="nx">ptr</span><span class="o">++</span><span class="p">;</span> 
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="nx">ptr</span> <span class="o">==</span> <span class="s1">&#39;+&#39;</span><span class="p">)</span> <span class="p">{</span> 
+        <span class="nx">ptr</span><span class="o">++</span><span class="p">;</span> 
+    <span class="p">}</span> 
+    <span class="k">if</span> <span class="p">(</span><span class="nx">ZEND_IS_DIGIT</span><span class="p">(</span><span class="o">*</span><span class="nx">ptr</span><span class="p">))</span> <span class="p">{</span> 
+        <span class="cm">/* Skip any leading 0s */</span> 
+        <span class="k">while</span> <span class="p">(</span><span class="o">*</span><span class="nx">ptr</span> <span class="o">==</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span> <span class="p">{</span> 
+            <span class="nx">ptr</span><span class="o">++</span><span class="p">;</span> 
+        <span class="p">}</span> 
+<span class="p">....</span> 
+        <span class="k">for</span> <span class="p">(</span><span class="nx">type</span> <span class="o">=</span> <span class="nx">IS_LONG</span><span class="p">;</span> <span class="o">!</span><span class="p">(</span><span class="nx">digits</span> <span class="o">&gt;=</span> <span class="nx">MAX_LENGTH_OF_LONG</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">dval</span> <span class="o">||</span> <span class="nx">allow_errors</span> <span class="o">==</span> <span class="mi">1</span><span class="p">));</span> <span class="nx">digits</span><span class="o">++</span><span class="p">,</span> <span class="nx">ptr</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span> 
+<span class="nx">check_digits</span><span class="o">:</span> 
+            <span class="k">if</span> <span class="p">(</span><span class="nx">ZEND_IS_DIGIT</span><span class="p">(</span><span class="o">*</span><span class="nx">ptr</span><span class="p">))</span> <span class="p">{</span> 
+                <span class="nx">tmp_lval</span> <span class="o">=</span> <span class="nx">tmp_lval</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="p">(</span><span class="o">*</span><span class="nx">ptr</span><span class="p">)</span> <span class="o">-</span> <span class="s1">&#39;0&#39;</span><span class="p">;</span> 
+                <span class="k">continue</span><span class="p">;</span> 
+            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="nx">ptr</span> <span class="o">==</span> <span class="s1">&#39;.&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">dp_or_e</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span> 
+                <span class="kr">goto</span> <span class="nx">process_double</span><span class="p">;</span> 
+            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">((</span><span class="o">*</span><span class="nx">ptr</span> <span class="o">==</span> <span class="s1">&#39;e&#39;</span> <span class="o">||</span> <span class="o">*</span><span class="nx">ptr</span> <span class="o">==</span> <span class="s1">&#39;E&#39;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">dp_or_e</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span> 
+                <span class="kr">const</span> <span class="kr">char</span> <span class="o">*</span><span class="nx">e</span> <span class="o">=</span> <span class="nx">ptr</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> 
+                <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="nx">e</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span> <span class="o">||</span> <span class="o">*</span><span class="nx">e</span> <span class="o">==</span> <span class="s1">&#39;+&#39;</span><span class="p">)</span> <span class="p">{</span> 
+                    <span class="nx">ptr</span> <span class="o">=</span> <span class="nx">e</span><span class="o">++</span><span class="p">;</span> 
+                <span class="p">}</span> 
+                <span class="k">if</span> <span class="p">(</span><span class="nx">ZEND_IS_DIGIT</span><span class="p">(</span><span class="o">*</span><span class="nx">e</span><span class="p">))</span> <span class="p">{</span> 
+                    <span class="kr">goto</span> <span class="nx">process_double</span><span class="p">;</span> 
+                <span class="p">}</span> 
+            <span class="p">}</span> 
+            <span class="k">break</span><span class="p">;</span> 
+        <span class="p">}</span> 
+<span class="p">......</span> 
+    <span class="p">}</span> 
+<span class="p">}</span>
+</pre></div>
+
+
 <h2 id="php">php字符过滤</h2>
 <ul>
 <li>htmlspecialchars</li>

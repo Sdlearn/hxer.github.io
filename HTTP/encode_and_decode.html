@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>Encode and Decode - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#HTTP">HTTP</a>&nbsp;»&nbsp;Encode and Decode</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">Encode and Decode</div>
+  <div id="content">
+  <h1 id="js">JS</h1>
+<h2 id="jsfuck">JSFuck</h2>
+<h3 id="encode">encode</h3>
+<p><a href="http://www.jsfuck.com/">jsfuck.com</a></p>
+<h3 id="decode">decode</h3>
+<p>chrome(firefox) console input follow</p>
+<div class="hlcode"><pre><span class="n">alert</span><span class="p">(</span><span class="o">/</span><span class="p">.</span><span class="o">+</span><span class="p">(</span><span class="o">?=</span><span class="err">\</span><span class="n">n</span><span class="p">})</span><span class="o">/</span><span class="p">.</span><span class="n">exec</span><span class="p">(</span><span class="n">eval</span><span class="p">(</span><span class="n">prompt</span><span class="p">().</span><span class="n">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">))))</span>
+</pre></div>
+
+
+<p>or</p>
+<div class="hlcode"><pre><span class="n">alert</span><span class="p">(</span><span class="o">/</span><span class="err">\</span><span class="n">n</span><span class="p">(.</span><span class="o">+</span><span class="p">)</span><span class="o">/</span><span class="p">.</span><span class="n">exec</span><span class="p">(</span><span class="n">eval</span><span class="p">(</span><span class="n">prompt</span><span class="p">().</span><span class="n">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">)))[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+
+
+<p>运行，然后在弹出框中输入 jsfuck 编码的代码，即可得到解码后的代码</p>
+<p>解析：</p>
+<div class="hlcode"><pre><span class="nx">alert</span><span class="p">(</span>
+    <span class="sr">/\n(.+)/</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span>                 <span class="c1">// regex to extract code from inside outer function braces {}</span>
+        <span class="nb">eval</span><span class="p">(</span><span class="nx">prompt</span><span class="p">().</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span> <span class="c1">// remove the final set of parens () and evaluate the code</span>
+                                   <span class="c1">// this results in a function, which will be converted to a string as &#39;exec&#39; expects a string</span>
+    <span class="p">)</span><span class="cp">[</span><span class="mi">1</span><span class="cp">]</span>                           <span class="c1">// get the first capture group</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

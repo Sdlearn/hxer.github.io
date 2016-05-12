@@ -218,21 +218,21 @@ name(<span class="cp">[</span><span class="nx">node</span><span class="na">-set<
 count(node-set)  返回参数node-set中的节点个数
     count(//test/child::node())，将会返回和test处于兄弟节点的全部子节点的总数 --&gt; 7
 
-string(<span class="cp">[</span><span class="nx">onject</span><span class="cp">]</span>)  返回对象转换的字符串
+string(<span class="cp">[</span><span class="nb">object</span><span class="cp">]</span>)  返回对象转换的字符串
     string(1) --&gt; &quot;1&quot;
     string(//test/item) --&gt; &quot;Apple&quot;
     string(//test) --&gt; 43字符的字符串 ...
 
 string-length(string)  取字符串的长度，如果参数被省略则计算上下文节点的string-value值的长度
-    stringlength(//user<span class="cp">[</span><span class="nb">position</span><span class="p">()</span><span class="o">=</span><span class="mi">1</span><span class="cp">]</span>/child::node()<span class="cp">[</span><span class="nb">position</span><span class="p">()</span><span class="o">=</span><span class="mi">1</span><span class="cp">]</span>)，将会返回user的第一个节点包含的一个字符串的长度
+    string-length(//book<span class="cp">[</span><span class="nb">position</span><span class="p">()</span><span class="o">=</span><span class="mi">1</span><span class="cp">]</span>/title)，将会返回user的第一个节点包含的一个字符串的长度 --&gt; 12
 
 substring(string, start <span class="cp">[</span><span class="p">,</span><span class="nb">length</span><span class="cp">]</span>)  取子字符串，注意字符串的位置从1开始
-    substring((//user<span class="cp">[</span><span class="nb">position</span><span class="p">()</span><span class="o">=</span><span class="mi">1</span><span class="cp">]</span>/child::node()<span class="cp">[</span><span class="nb">position</span><span class="p">()</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="err">，将会返回</span><span class="nb">user</span><span class="err">的第一个节点（</span><span class="nb">name</span><span class="err">）的第二个字母</span>
+    substring((//book<span class="cp">[</span><span class="nb">position</span><span class="p">()</span><span class="o">=</span><span class="mi">1</span><span class="cp">]</span>/title), 1, 1)，将会返回book的第一个节点（title）的第1个字母 --&gt; H
 
-<span class="nx">translate</span><span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">)</span> <span class="err">返回第一个字符串，</span> <span class="err">第一个字符串中出现第二个参数字符串中的字符的位置，替换为第三个参数字符串中对应位置的字符</span>
-    <span class="nx">translate</span><span class="p">(</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="s2">&quot;abc&quot;</span><span class="p">,</span> <span class="s2">&quot;ABC&quot;</span><span class="p">)</span> <span class="o">--&gt;</span> <span class="nx">BAr</span>
+translate(string, string, string) 返回第一个字符串， 第一个字符串中出现第二个参数字符串中的字符的位置，替换为第三个参数字符串中对应位置的字符
+    translate(&quot;bar&quot;, &quot;abc&quot;, &quot;ABC&quot;) --&gt; BAr
 
-<span class="nx">concat</span><span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span> <span class="err">[</span><span class="p">,</span> <span class="kt">string</span><span class="cp">]</span>*)  返回参数的串联， 如果参数不是字符串类型，将先使用string()函数转换为字符串，然后计算转换的结果
+concat(string, string <span class="cp">[</span><span class="p">,</span> <span class="kt">string</span><span class="cp">]</span>*)  返回参数的串联， 如果参数不是字符串类型，将先使用string()函数转换为字符串，然后计算转换的结果
     concat(&quot;ab&quot;, 3, &quot;ef&quot;, &quot;g&quot;) --&gt; &quot;ab3efg&quot;
 
 contains(string1, string2)  返回 true, 当第一个参数字符串包含第二个参数字符串， 否则返回 false

