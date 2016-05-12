@@ -3,6 +3,20 @@ title: "cmdline"
 date: 2016-03-11 14:57
 ---
 
+## zip
+
+```
+zip  [-aABcdDeEfFghjklLmoqrRSTuvVwXyz!@$] [--longoption ...]  [-b path]
+       [-n suffixes] [-t date] [-tt date] [zipfile [file ...]]  [-xi list]
+
+-0  store only
+-1 compress faster
+```
+
+```
+zip test.zip test
+```
+
 ## wget
 
 常用命令:
@@ -32,6 +46,11 @@ wget -np -nH -r --span-hosts www.xxx.org/pub/path/
 -p 下载网页所需的所有文件，如图片等
 -A 指定要下载的文件样式列表，多个样式用逗号分隔
 -i 后面跟一个文件，文件内指明要下载的URL
+
+--header 设置请求头
+
+-O 将文件下载到指定的目录中
+-P 保存文件之前先创建指定名称的目录
 ```
 
 ## curl 

@@ -70,6 +70,78 @@ test.php -> 123/ + test.php = 123/test.php --> exist
 
 另外， is_file存在缓存机制，第一次调用is_file函数的时候，PHP会把文件的属性（file stat）保存下来，当再次调用is_file的时候，如果文件名更第一次的一样，那么就会直接返回缓存，即使文件已经删除了。
 
+
+## is_numeric  理解 
+
+简单翻看is_numeric实现代码，is_numeric对输入的参数，先做了样式判断如果是整型、浮点型就直接返回true，如果是字符串则进入is_numeric_string函数进行判断
+ 
+```
+switch (Z_TYPE_P(arg)) { 
+        case IS_LONG: 
+        case IS_DOUBLE: 
+            RETURN_TRUE; 
+            break; 
+        case IS_STRING: 
+            if (is_numeric_string(Z_STRVAL_P(arg), Z_STRLEN_P(arg), NULL, NULL, 0)) { 
+                RETURN_TRUE; 
+            } else { 
+                RETURN_FALSE; 
+            } 
+            break; 
+        default: 
+            RETURN_FALSE; 
+            break;
+```
+
+经过查找，找到真正的处理函数_is_numeric_string_ex,省略一些代码，我们只用知道哪些字符能够出现在is_numeric的参数中，很明显可以看出， 
+空格、\t、\n、\r、\v、\f、+、-能够出现在参数开头，“点”能够在参数任何位置，E、e只能出现在参数中间。 
+
+```
+ZEND_API zend_uchar ZEND_FASTCALL _is_numeric_string_ex(......) /* {{{ */ 
+{   
+    ...... 
+    /* Skip any whitespace 
+     * This is much faster than the isspace() function */ 
+    while (*str == ' ' || *str == '\t' || *str == '\n' || *str == '\r' || *str == '\v' || *str == '\f') { 
+        str++; 
+        length--; 
+    } 
+    ptr = str; 
+    if (*ptr == '-') { 
+        neg = 1; 
+        ptr++; 
+    } else if (*ptr == '+') { 
+        ptr++; 
+    } 
+    if (ZEND_IS_DIGIT(*ptr)) { 
+        /* Skip any leading 0s */ 
+        while (*ptr == '0') { 
+            ptr++; 
+        } 
+.... 
+        for (type = IS_LONG; !(digits >= MAX_LENGTH_OF_LONG && (dval || allow_errors == 1)); digits++, ptr++) { 
+check_digits: 
+            if (ZEND_IS_DIGIT(*ptr)) { 
+                tmp_lval = tmp_lval * 10 + (*ptr) - '0'; 
+                continue; 
+            } else if (*ptr == '.' && dp_or_e < 1) { 
+                goto process_double; 
+            } else if ((*ptr == 'e' || *ptr == 'E') && dp_or_e < 2) { 
+                const char *e = ptr + 1; 
+                if (*e == '-' || *e == '+') { 
+                    ptr = e++; 
+                } 
+                if (ZEND_IS_DIGIT(*e)) { 
+                    goto process_double; 
+                } 
+            } 
+            break; 
+        } 
+...... 
+    } 
+}
+```
+
 ## php字符过滤
 
 

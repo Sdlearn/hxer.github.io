@@ -217,16 +217,16 @@ name([node-set])  返回节点的名字(string)
 count(node-set)  返回参数node-set中的节点个数
     count(//test/child::node())，将会返回和test处于兄弟节点的全部子节点的总数 --> 7
 
-string([onject])  返回对象转换的字符串
+string([object])  返回对象转换的字符串
     string(1) --> "1"
     string(//test/item) --> "Apple"
     string(//test) --> 43字符的字符串 ...
 
 string-length(string)  取字符串的长度，如果参数被省略则计算上下文节点的string-value值的长度
-    stringlength(//user[position()=1]/child::node()[position()=1])，将会返回user的第一个节点包含的一个字符串的长度
+    string-length(//book[position()=1]/title)，将会返回user的第一个节点包含的一个字符串的长度 --> 12
 
 substring(string, start [,length])  取子字符串，注意字符串的位置从1开始
-    substring((//user[position()=1]/child::node()[position()=1), 2, 1)，将会返回user的第一个节点（name）的第二个字母
+    substring((//book[position()=1]/title), 1, 1)，将会返回book的第一个节点（title）的第1个字母 --> H
 
 translate(string, string, string) 返回第一个字符串， 第一个字符串中出现第二个参数字符串中的字符的位置，替换为第三个参数字符串中对应位置的字符
     translate("bar", "abc", "ABC") --> BAr
