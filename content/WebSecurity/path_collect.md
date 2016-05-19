@@ -174,6 +174,27 @@ date: 2016-05-12 15:37
 /usr/local/share/examples/php/php.ini
 ```
 
+## history
+
+```
+~/.bash_history
+
+~/.mysql_history
+```
+
+## nginx
+
+```
+/etc/nginx/nginx.conf
+
+/var/log/nginx/error.log
+/var/log/nginx/nginx_error.log
+/usr/local/nginx/logs/error.log
+/var/log/nginx/access.log
+
+
+```
+
 ## LINUX常见路径：
 
 ```

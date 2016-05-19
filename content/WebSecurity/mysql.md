@@ -3,21 +3,6 @@ title: "mysql"
 date: 2016-01-26 18:49
 ---
 
-# database
-
-## mysql 独立的数据库
-
-保存MySQL的各种设置参数
-
-## user表段 ##
-
-其中user表段设置了MySQL中数据库用户的部分信息。
-
-* user字段为用户登陆名，可以有相同的名字重复
-* password字段为登陆密码哈希，是40位的密文，类似于md5
-* host字段设置的是这个用户可以在哪些机器上登陆，localhost表示只能是本机登陆，host可以是数据库ip也可以是数据库服务器的名称，例如“mysqldbserver”之类。
-* file_priv字段规定了这个用户是不是可以读取硬盘里面的文件，设置为Y则表示允许，设置为N则表示禁止。
-
 
 # MySQL注入中常用的一些参数。
 
@@ -27,22 +12,7 @@ date: 2016-01-26 18:49
 ```mysql
 union+select+1,2,3,XO,4,...n+from+XXOO
 ```
-* user()
 
-数据库的用户，格式为 user @ server 例如 root@ localhost 
-所有的user，都会在mysql数据库的user表段中记录，用于设置权限等
-
-* database()
-
-当前数据库名，网站建设者任意给予的数据库的名称
-
-* version()
-
-当前使用的数据库的版本，版本最后通常会表明系统的版本，例如5.x.x-nt表示nt(windows)系统下使用的mysql版本
-
-* @@datadir
-
-数据路径。windows常用，通常用于load_file时猜测网站路径等。例如c:\program files\mysql5\data\
 
 * concat()
 

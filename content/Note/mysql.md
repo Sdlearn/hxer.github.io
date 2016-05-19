@@ -3,6 +3,41 @@ title: "mysql"
 date: 2016-04-09 11:23
 ---
 
+## basic operation
+
+### create user
+
+[create user][1]
+
+```
+Create Users	CREATE USER test1 IDENTIFIED BY ‘pass1′; — priv
+Delete Users	DROP USER test1; — priv
+```
+
+## basic database
+
+
+
+### mysql
+
+#### user
+
+设置了MySQL中数据库用户的部分信息。
+
+* user字段为用户登陆名，可以有相同的名字重复
+* password字段为登陆密码哈希，是40位的密文，类似于md5
+* host字段设置的是这个用户可以在哪些机器上登陆，localhost表示只能是本机登陆，host可以是数据库ip也可以是数据库服务器的名称，例如“mysqldbserver”之类。
+* file_priv字段规定了这个用户是不是可以读取硬盘里面的文件，设置为Y则表示允许，设置为N则表示禁止。
+
+
+### information_schema
+
+#### USER_PRIVILEGES
+
+The USER_PRIVILEGES table provides information about global privileges. This information comes from the mysql.user grant table.
+
+* privilege_type    FILE--是否有读mysql.user表的权限
+
 ## information
 
 * 查看表结构
@@ -32,3 +67,5 @@ SELECT … INTO OUTFILE ‘file_name’
 ```
 
 SELECT 把被选择的行写入一个文件中。该文件被创建到服务器主机上，因此必须拥有FILE权限。
+
+[1]: http://dev.mysql.com/doc/refman/5.7/en/create-user.html
