@@ -18,7 +18,31 @@
 <div class="clearfix"></div>
 <div id="title">mysql</div>
   <div id="content">
-  <h2 id="information">information</h2>
+  <h2 id="basic-operation">basic operation</h2>
+<h3 id="create-user">create user</h3>
+<p><a href="http://dev.mysql.com/doc/refman/5.7/en/create-user.html">create user</a></p>
+<div class="hlcode"><pre><span class="n">Create</span> <span class="n">Users</span>    <span class="n">CREATE</span> <span class="n">USER</span> <span class="n">test1</span> <span class="n">IDENTIFIED</span> <span class="n">BY</span> <span class="err">‘</span><span class="n">pass1</span><span class="err">′</span><span class="p">;</span> <span class="err">—</span> <span class="n">priv</span>
+<span class="n">Delete</span> <span class="n">Users</span>    <span class="n">DROP</span> <span class="n">USER</span> <span class="n">test1</span><span class="p">;</span> <span class="err">—</span> <span class="n">priv</span>
+</pre></div>
+
+
+<h2 id="basic-database">basic database</h2>
+<h3 id="mysql">mysql</h3>
+<h4 id="user">user</h4>
+<p>设置了MySQL中数据库用户的部分信息。</p>
+<ul>
+<li>user字段为用户登陆名，可以有相同的名字重复</li>
+<li>password字段为登陆密码哈希，是40位的密文，类似于md5</li>
+<li>host字段设置的是这个用户可以在哪些机器上登陆，localhost表示只能是本机登陆，host可以是数据库ip也可以是数据库服务器的名称，例如“mysqldbserver”之类。</li>
+<li>file_priv字段规定了这个用户是不是可以读取硬盘里面的文件，设置为Y则表示允许，设置为N则表示禁止。</li>
+</ul>
+<h3 id="information_schema">information_schema</h3>
+<h4 id="user_privileges">USER_PRIVILEGES</h4>
+<p>The USER_PRIVILEGES table provides information about global privileges. This information comes from the mysql.user grant table.</p>
+<ul>
+<li>privilege_type    FILE--是否有读mysql.user表的权限</li>
+</ul>
+<h2 id="information">information</h2>
 <ul>
 <li>查看表结构</li>
 </ul>

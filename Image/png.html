@@ -1,0 +1,312 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>PNG - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Image">Image</a>&nbsp;»&nbsp;PNG</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">PNG</div>
+  <div id="content">
+  <h2 id="png-image-type">png image type</h2>
+<p>png支持三种图像类型：索引彩色图像(index-color)，灰度图像(grayscale)，真彩色图像(true-color)</p>
+<h3 id="palette-based">Palette-Based</h3>
+<p>Palette-based images, also known as colormapped or index-color images, use the PLTE chunk and are supported in four pixel depths: 1, 2, 4, and 8 bits, corresponding to a maximum of 2, 4, 16, or 256 palette entries</p>
+<h2 id="png">png 文件结构</h2>
+<p>标准的png文件结构如下</p>
+<div class="hlcode"><pre><span class="n">png</span> <span class="n">signature</span> <span class="o">|</span> <span class="n">png</span> <span class="n">chunk</span> <span class="o">|</span> <span class="n">png</span> <span class="n">chunk</span> <span class="o">|</span> <span class="p">...</span> <span class="o">|</span> <span class="n">png</span> <span class="n">chunk</span>
+</pre></div>
+
+
+<h2 id="png-signature">png signature</h2>
+<p>png signature 8 bytes.</p>
+<div class="hlcode"><pre><span class="mi">89</span> <span class="mi">50</span> <span class="mi">4</span><span class="n">E</span> <span class="mi">47</span> <span class="n">OD</span> <span class="mi">0</span><span class="n">A</span> <span class="mi">1</span><span class="n">A</span> <span class="mi">0</span><span class="n">A</span>
+</pre></div>
+
+
+<h2 id="chunk">chunk</h2>
+<p>PNG定义了两种类型的数据块，一种是称为关键数据块(critical chunk)，标准的数据块; 另一种叫做辅助数据块(ancillary chunks)，可选的数据块。关键数据块定义了3个标准数据块，每个PNG文件都必须包含它们。3个标准数据块为: IHDR， IDAT， IEND.</p>
+<ul>
+<li>PNG文件格式中的数据块</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>数据块符号</th>
+<th>数据块名称</th>
+<th>多数据块</th>
+<th>可选否</th>
+<th>位置限制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IHDR</td>
+<td>文件头数据块</td>
+<td>否</td>
+<td>否</td>
+<td>第一块</td>
+</tr>
+<tr>
+<td>cHRM</td>
+<td>基色和白色点数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在PLTE和IDAT之前</td>
+</tr>
+<tr>
+<td>gAMA</td>
+<td>图像γ数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在PLTE和IDAT之前</td>
+</tr>
+<tr>
+<td>sBIT</td>
+<td>样本有效位数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在PLTE和IDAT之前</td>
+</tr>
+<tr>
+<td>PLTE</td>
+<td>调色板数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在IDAT之前</td>
+</tr>
+<tr>
+<td>bKGD</td>
+<td>背景颜色数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在PLTE之后IDAT之前</td>
+</tr>
+<tr>
+<td>hIST</td>
+<td>图像直方图数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在PLTE之后IDAT之前</td>
+</tr>
+<tr>
+<td>tRNS</td>
+<td>图像透明数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在PLTE之后IDAT之前</td>
+</tr>
+<tr>
+<td>oFFs</td>
+<td>(专用公共数据块)</td>
+<td>否</td>
+<td>是</td>
+<td>在IDAT之前</td>
+</tr>
+<tr>
+<td>pHYs</td>
+<td>物理像素尺寸数据块</td>
+<td>否</td>
+<td>是</td>
+<td>在IDAT之前</td>
+</tr>
+<tr>
+<td>sCAL</td>
+<td>(专用公共数据块)</td>
+<td>否</td>
+<td>是</td>
+<td>在IDAT之前</td>
+</tr>
+<tr>
+<td>IDAT</td>
+<td>图像数据块</td>
+<td>是</td>
+<td>否</td>
+<td>与其他IDAT连续</td>
+</tr>
+<tr>
+<td>tIME</td>
+<td>图像最后修改时间数据块</td>
+<td>否</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>tEXt</td>
+<td>文本信息数据块</td>
+<td>是</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>zTXt</td>
+<td>压缩文本数据块</td>
+<td>是</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>fRAc</td>
+<td>(专用公共数据块)</td>
+<td>是</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>gIFg</td>
+<td>(专用公共数据块)</td>
+<td>是</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>gIFt</td>
+<td>(专用公共数据块)</td>
+<td>是</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>gIFx</td>
+<td>(专用公共数据块)</td>
+<td>是</td>
+<td>是</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>IEND</td>
+<td>图像结束数据</td>
+<td>否</td>
+<td>否</td>
+<td>最后一个数据块</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>数据块结构</li>
+</ul>
+<p>PNG文件中，每个数据块由4个部分组成</p>
+<div class="hlcode"><pre><span class="n">length</span> <span class="o">|</span> <span class="n">type</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">|</span> <span class="n">data</span> <span class="o">|</span> <span class="n">CRC</span>
+
+<span class="nl">length:</span> <span class="mi">4</span> <span class="n">bytes</span><span class="err">，</span> <span class="n">just</span> <span class="n">length</span> <span class="n">of</span> <span class="n">the</span> <span class="n">data</span><span class="p">,</span> <span class="n">not</span> <span class="n">include</span> <span class="n">type</span> <span class="n">and</span> <span class="n">CRC</span>  
+<span class="nl">type:</span> <span class="mi">4</span> <span class="n">bytes</span><span class="p">,</span> <span class="n">ASCII</span> <span class="n">letters</span><span class="p">([</span><span class="n">A</span><span class="o">-</span><span class="n">Z</span><span class="p">,</span><span class="n">a</span><span class="o">-</span><span class="n">z</span><span class="p">])</span>
+<span class="nl">CRC:</span> <span class="mi">4</span><span class="n">bytes</span>
+</pre></div>
+
+
+<p>CRC(cyclic redundancy check)域中的值是对Chunk Type Code域和Chunk Data域中的数据进行计算得到的。CRC具体算法定义在ISO 3309和ITU-T V.42中，其值按下面的CRC码生成多项式进行计算： x<sup>32</sup>+x<sup>26</sup>+x<sup>23</sup>+x<sup>22</sup>+x<sup>16</sup>+x<sup>12</sup>+x<sup>11</sup>+x<sup>10</sup>+x<sup>8</sup>+x<sup>7</sup>+x<sup>5</sup>+x<sup>4</sup>+x<sup>2</sup>+x+1</p>
+<h3 id="ihdr">IHDR</h3>
+<p>文件头数据块IHDR(header chunk)：它包含有PNG文件中存储的图像数据的基本信息，并要作为第一个数据块出现在PNG数据流中，而且一个PNG数据流中只能有一个文件头数据块。</p>
+<p>文件头数据块由13字节组成，它的如下所示</p>
+<table>
+<thead>
+<tr>
+<th>域的名称</th>
+<th>字节数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Width</td>
+<td>4 bytes</td>
+<td>图像宽度，以像素为单位</td>
+</tr>
+<tr>
+<td>Height</td>
+<td>4 bytes</td>
+<td>图像高度，以像素为单位</td>
+</tr>
+<tr>
+<td>Bit depth</td>
+<td>1 byte</td>
+<td>图像深度.</br> 索引彩色图像： 1，2，4或8 </br> 灰度图像： 1，2，4，8或16 </br> 真彩色图像： 8或16</td>
+</tr>
+<tr>
+<td>ColorType</td>
+<td>1 byte</td>
+<td>颜色类型. </br> 0：灰度图像, 1，2，4，8或16 </br> 2：真彩色图像，8或16 </br> 3：索引彩色图像，1，2，4或8 </br> 4：带α通道数据的灰度图像，8或16 </br> 6：带α通道数据的真彩色图像，8或16</td>
+</tr>
+<tr>
+<td>Compression method</td>
+<td>1 byte</td>
+<td>压缩方法(LZ77派生算法)</td>
+</tr>
+<tr>
+<td>Filter method</td>
+<td>1 byte</td>
+<td>滤波器方法</td>
+</tr>
+<tr>
+<td>Interlace method</td>
+<td>1 byte</td>
+<td>隔行扫描方法. </br> 0：非隔行扫描 </br> 1： Adam7(由Adam M. Costello开发的7遍隔行扫描方法)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="plte">PLTE</h3>
+<p>调色板数据块PLTE(palette chunk)包含有与索引彩色图像(indexed-color image)相关的彩色变换数据，它仅与索引彩色图像有关，而且要放在图像数据块(image data chunk)之前。</p>
+<p>PLTE数据块是定义图像的调色板信息，PLTE可以包含1~256个调色板信息，每一个调色板信息由3个字节组成：</p>
+<table>
+<thead>
+<tr>
+<th>颜色</th>
+<th>字节</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Red</td>
+<td>1 byte</td>
+<td>0 = 黑色, 255 = 红</td>
+</tr>
+<tr>
+<td>Green</td>
+<td>1 byte</td>
+<td>0 = 黑色, 255 = 绿色</td>
+</tr>
+<tr>
+<td>Blue</td>
+<td>1 byte</td>
+<td>0 = 黑色, 255 = 蓝色</td>
+</tr>
+</tbody>
+</table>
+<p>因此，调色板的长度应该是3的倍数，否则，这将是一个非法的调色板。</p>
+<p><strong> 颜色数 = length/3 </strong></p>
+<p>对于索引图像，调色板信息是必须的，调色板的颜色索引从0开始编号，然后是1、2……，调色板的颜色数不能超过色深中规定的颜色数（如图像色深为4的时候，调色板中的颜色数不可以超过2^4=16），否则，这将导致PNG图像不合法。</p>
+<p>真彩色图像和带α通道数据的真彩色图像也可以有调色板数据块，目的是便于非真彩色显示程序用它来量化图像数据，从而显示该图像。</p>
+<h3 id="idat">IDAT</h3>
+<p>图像数据块IDAT(image data chunk)：它存储实际的数据，在数据流中可包含多个连续顺序的图像数据块。</p>
+<p>IDAT存放着图像真正的数据信息</p>
+<h3 id="iend">IEND</h3>
+<p>图像结束数据IEND(image trailer chunk)：它用来标记PNG文件或者数据流已经结束，并且必须要放在文件的尾部。</p>
+<p>PNG文件的结尾12个字符应该是这样的：</p>
+<div class="hlcode"><pre><span class="mo">00</span> <span class="mo">00</span> <span class="mo">00</span> <span class="mo">00</span> <span class="mi">49</span> <span class="mi">45</span> <span class="mi">4</span><span class="n">E</span> <span class="mi">44</span> <span class="n">AE</span> <span class="mi">42</span> <span class="mi">60</span> <span class="mi">82</span>
+</pre></div>
+
+
+<p>由于数据块结构的定义，IEND数据块的长度总是0（00 00 00 00，除非人为加入信息），数据标识总是IEND（49 45 4E 44），因此，CRC码也总是AE 42 60 82</p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

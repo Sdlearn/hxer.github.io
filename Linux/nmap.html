@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>nmap - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Linux">Linux</a>&nbsp;»&nbsp;nmap</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">nmap</div>
+  <div id="content">
+  <h2 id="_1">参数</h2>
+<div class="hlcode"><pre><span class="o">-</span><span class="n">sS</span>     <span class="n">TCP</span> <span class="n">SYN</span> <span class="err">扫描</span> <span class="p">(</span><span class="err">又称半开放</span><span class="p">,</span><span class="err">或隐身扫描</span><span class="p">)</span>
+<span class="o">-</span><span class="n">P0</span>     <span class="err">允许你关闭</span> <span class="n">ICMP</span> <span class="n">pings</span><span class="p">.</span>
+<span class="o">-</span><span class="n">sV</span>     <span class="err">打开系统版本检测</span>
+<span class="o">-</span><span class="n">O</span>      <span class="err">尝试识别远程操作系统</span>
+
+<span class="o">-</span><span class="n">A</span>      <span class="err">同时打开操作系统指纹和版本检测</span>
+<span class="o">-</span><span class="n">v</span>      <span class="err">详细输出扫描情况</span><span class="p">.</span>
+</pre></div>
+
+
+<h2 id="_2">常用命令</h2>
+<div class="hlcode"><pre><span class="err">#</span> <span class="err">获取远程主机的系统类型及开放端口</span>
+<span class="nx">nmap</span> <span class="na">-sS</span> <span class="na">-P0</span> <span class="na">-sV</span> <span class="na">-O</span> <span class="o">&lt;</span><span class="nb">target</span><span class="o">&gt;</span>
+<span class="nx">nmap</span> <span class="na">-sS</span> <span class="na">-P0</span> <span class="na">-A</span> <span class="na">-v</span> <span class="o">&lt;</span><span class="nb">target</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

