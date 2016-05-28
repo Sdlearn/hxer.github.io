@@ -1,0 +1,383 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>BurpSuite - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Kali2">Kali2</a>&nbsp;»&nbsp;BurpSuite</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">BurpSuite</div>
+  <div id="content">
+  <p><a href="http://drops.wooyun.org/tools/1548">乌云 Brup使用介绍</a></p>
+<h2 id="intruder">Intruder</h2>
+<h3 id="attack-type">attack type</h3>
+<p>四种模式<code>sniper, battering ram, pitchfork, cluster bomb</code></p>
+<ul>
+<li>sniper(狙击手) </li>
+</ul>
+<p>使用一套单一的payloads。它的目标依次在每个有效载荷的位置，并把每个有效载荷送入依次那个位置。</p>
+<p>攻击中生成的请求的总数是位置的数目和在有效载荷中设定的有效载荷的数量的乘积。</p>
+<ul>
+<li>Battering ram(撞击物) </li>
+</ul>
+<p>使用一组payload。通过迭代的有效载荷方式，并将相同的payloads再一次填充到所有已定义的有效载荷。当其中一个攻击需要相同的输入将被插入在多个地方在请求中,对这种攻击类型是非常有用的。例如生成一组数字1-9，则就是1-1 ，2-2，3-3这种形式</p>
+<p>在攻击中生成的请求的总数是有效载荷的有效载荷中设定的数目</p>
+<ul>
+<li>Pitchfork(相交叉) </li>
+</ul>
+<p>使用多个payloads集。对每个定义的位置（最多20个）赋予不同的有效载荷。通过设置所有有效载荷的攻击迭代的方式，并将一个有效载荷传到所定义的位置。例如设置多个payload，每个payload设置一个字典，则就是1-1-1，2-2-2，3-3-3这种形式</p>
+<p>在攻击中生成的请求的总数是有效载荷中的最小有效载荷组的数目。</p>
+<ul>
+<li>Cluster bomb(集束炸弹)</li>
+</ul>
+<p>使用多个Payload sets。对每个定义的Positions（最多20个）设置不同的payload set。通过每个有效载荷的攻击迭代依次设置，使有效载荷组合的所有排列进行测试。例如设置三个字典都是10个数，则总共有1000总匹配的模式</p>
+<p>在攻击中生成的请求的总数是在所有定义的有效载荷的有效载荷集的数目的乘积</p>
+<h3 id="payloads-types">Payloads Types</h3>
+<p>Burp Intruder包含以下几种attack type:</p>
+<table>
+<thead>
+<tr>
+<th>名词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Simple list</td>
+<td>简单字典</td>
+</tr>
+<tr>
+<td>Runtime file</td>
+<td>运行文件</td>
+</tr>
+<tr>
+<td>Custom iterator</td>
+<td>自定义迭代器</td>
+</tr>
+<tr>
+<td>Character substitution</td>
+<td>字符替换</td>
+</tr>
+<tr>
+<td>Case modification</td>
+<td></td>
+</tr>
+<tr>
+<td>Recursive grep</td>
+<td>递归grep</td>
+</tr>
+<tr>
+<td>Illegal Unicode</td>
+<td>非法的Unicode</td>
+</tr>
+<tr>
+<td>Character blocks</td>
+<td>字符块</td>
+</tr>
+<tr>
+<td>Numbers</td>
+<td>数字</td>
+</tr>
+<tr>
+<td>Dates</td>
+<td>日期</td>
+</tr>
+<tr>
+<td>Brute forcer</td>
+<td>暴力</td>
+</tr>
+<tr>
+<td>Null payloads</td>
+<td>空的有效负载</td>
+</tr>
+<tr>
+<td>haracter frobber</td>
+<td></td>
+</tr>
+<tr>
+<td>Bit flipper</td>
+<td>位翻转</td>
+</tr>
+<tr>
+<td>Username generator</td>
+<td>用户名生成器</td>
+</tr>
+<tr>
+<td>ECB block shuffler</td>
+<td>欧洲央行座洗牌</td>
+</tr>
+<tr>
+<td>Extension-generated</td>
+<td>扩展生成</td>
+</tr>
+<tr>
+<td>Copy other payload</td>
+<td>复制其它有效负载</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Character substitution</li>
+</ul>
+<p>配置一个字符串列表，并应用各种字符替换到每个项目。<strong> 在密码猜测攻击非常有用 </strong>，用来产生在字典中的单词常见的变化。 用户界面允许您配置了一些字符替换。当执行攻击，有效载荷类型工程通过逐一配置的列表项。对于每个项目，它产生一个数的有效载荷，根据所定义的取代基包括取代的字符的所有排列。例如，默认替换规则（其中包括e&gt;3且t&gt;7），该项目“peter”将产生以下的有效载荷：</p>
+<div class="hlcode"><pre><span class="n">peter</span>
+<span class="n">p3ter</span>
+<span class="n">pe7er</span>
+<span class="n">p37er</span>
+<span class="n">pet3r</span>
+<span class="n">p3t3r</span>
+<span class="n">pe73r</span>
+<span class="n">p373r</span>
+</pre></div>
+
+
+<ul>
+<li>Case modification</li>
+</ul>
+<p>配置一个字符串列表，并应用各种情况下修改每个项目。<strong> 密码猜测攻击非常有用 </strong>，用来产生在字典中的单词的情况下的变化。 可以选择以下的情况下修改规则：</p>
+<div class="hlcode"><pre><span class="n">No</span> <span class="n">change</span> <span class="o">-</span> <span class="err">这个项目可以用不被修改。</span> 
+<span class="n">To</span> <span class="n">lower</span> <span class="k">case</span><span class="o">-</span> <span class="err">在该项目的所有字母转换为小写。</span> 
+<span class="n">To</span> <span class="n">upper</span> <span class="k">case</span> <span class="o">-</span> <span class="err">在该项目的所有字母转换为大写。</span> 
+<span class="n">To</span> <span class="n">Propername</span> <span class="o">-</span> <span class="err">在该项目的第一个字母转换为大写，以及随后的字母转换为小写。</span> 
+<span class="n">To</span> <span class="n">ProperName</span> <span class="o">-</span> <span class="err">在该项目的第一个字母转换为大写，以及随后的字母都不会改变。</span>
+</pre></div>
+
+
+<p>例如：</p>
+<div class="hlcode"><pre><span class="n">Peter</span> <span class="n">Wiener</span>
+<span class="n">peter</span> <span class="n">wiener</span>
+<span class="n">PETER</span> <span class="n">WIENER</span>
+<span class="n">Peter</span> <span class="n">wiener</span>
+</pre></div>
+
+
+<h3 id="payload-processing">Payload Processing</h3>
+<p>使用各种有效载荷的处理规则和编码，操纵配置的有效载荷。 在使用有效载荷之前， 可以定义多种规则处理每个有效载荷，定义的规则按顺序执行。</p>
+<p>Payload Processing Rules：</p>
+<div class="hlcode"><pre><span class="n">Add</span> <span class="n">prefix</span> <span class="o">-</span> <span class="err">添加一个文字前缀</span>
+<span class="n">Add</span> <span class="n">suffix</span> <span class="o">-</span> <span class="err">添加一个文字后缀</span>
+<span class="n">Match</span><span class="o">/</span><span class="n">replace</span> <span class="o">-</span> <span class="err">将替换匹配特定正则表达式的有效载荷的任何部位，用一个文字字符串表示。</span>
+<span class="n">Substring</span> <span class="o">-</span> <span class="err">提取的有效载荷的子部分中，从指定的偏移量（</span><span class="mi">0</span><span class="o">-</span><span class="err">索引）和至所指定的长度开始。</span>
+<span class="n">Reverse</span> <span class="n">substring</span> <span class="o">-</span> <span class="err">对于子规则来说，最终的偏移量指定的有效载荷的末尾向后计数，并且长度从端部向后偏移计数。</span>
+<span class="n">Modify</span> <span class="k">case</span> <span class="o">-</span> <span class="err">这个修改了的有效载荷的情况下，如果适用的话。同样的选项作为的情况下修改有效载荷类型。</span>
+<span class="n">Encode</span> <span class="o">-</span> <span class="n">URL</span><span class="err">，</span><span class="n">HTML</span><span class="err">，</span><span class="n">Base64</span><span class="err">的，</span><span class="n">ASCII</span><span class="err">码或十六进制字符串构建各种平台：采用不同的计划，该编码的有效载荷。</span>
+<span class="n">Hash</span> <span class="o">-</span> <span class="n">hash</span>
+<span class="n">Add</span> <span class="n">raw</span> <span class="n">payload</span> <span class="o">-</span> <span class="err">这之前或之后，在当前处理的值增加了原始负载值。它可以是有用的，例如，如果你需要提交相同的有效载荷在</span><span class="n">raw</span><span class="err">和哈希表。</span>
+<span class="n">Skip</span> <span class="n">raw</span> <span class="n">payload</span> <span class="o">-</span> <span class="err">将检查是否当前处理的值匹配指定的正则表达式，如果是这样，跳过有效载荷和移动到下一个。这可能是有用的，例如，如果知道一个参数值必须有一个最小长度和要跳过的一个列表，比这更短的长度的任何值。</span>
+<span class="n">Invoke</span> <span class="n">Burp</span> <span class="n">extension</span> <span class="o">-</span> <span class="err">调用一个</span><span class="n">Burp</span> <span class="n">exxtension</span><span class="p">(</span><span class="err">扩展</span><span class="p">)</span><span class="err">来处理负载。扩展名必须已注册入侵者有效载荷处理器。您可以从已注册的当前加载的扩展可用的处理器列表中选择所需的处理器。</span>
+</pre></div>
+
+
+<h3 id="optins">Optins</h3>
+<ul>
+<li>Request Headers</li>
+</ul>
+<p>控制在攻击Intruder(入侵者)是否更新配置请求头。</p>
+<p>Update Content-length header(更新Content-Length头) - 此选项使Intruder(入侵者)添加或更新的Content-Length头的每个请求，与该特定请求的HTTP体的长度正确的值。此功能通常用于该插入可变长度的有效载荷送入模板的HTTP请求的主体的攻击至关重要。如果未指定正确的值，则目标服务器可能会返回一个错误，可能不完全响应请求，或者可能无限期地等待在请求继续接收数据。</p>
+<p>Set Connection:close(设置连接：关闭) - 此选项使Intruder(入侵者)添加或更新连接头的值为“close(关闭)” 。在某些情况下（当服务器本身并不返回一个有效的Content-Length或Transfer-Encoding头） ，这个选项可以让攻击更快速地执行。</p>
+<ul>
+<li>Request Engine</li>
+</ul>
+<p>设置控制用于发出HTTP请求中的Intruder(入侵者)攻击的Engine(引擎)。下列选项可用：</p>
+<div class="hlcode"><pre><span class="n">Number</span> <span class="n">of</span> <span class="n">threads</span><span class="p">(</span><span class="err">执行进程数</span><span class="p">)</span> <span class="o">-</span> <span class="p">[</span><span class="err">专业版</span><span class="p">]</span><span class="err">该选项控制并发请求数的攻击。</span>
+<span class="n">Number</span> <span class="n">of</span> <span class="n">retries</span> <span class="n">on</span> <span class="n">network</span> <span class="n">failure</span><span class="p">(</span><span class="err">网络故障的重试次数</span><span class="p">)</span> <span class="o">-</span> <span class="err">如果出现连接错误或其他网络问题，</span><span class="n">Burp</span><span class="err">会放弃和移动之前重试的请求指定的次数。测试时间歇性网络故障是常见的，所以最好是在发生故障时重试该请求了好几次。</span>
+<span class="n">Pause</span> <span class="n">before</span> <span class="n">retry</span><span class="p">(</span><span class="err">重试前暂停</span><span class="p">)</span> <span class="o">-</span> <span class="err">当重试失败的请求，</span><span class="n">Burp</span><span class="err">会等待指定的时间（以毫秒为单位）</span> <span class="err">，然后重试失败以下。如果服务器被宕机，繁忙，或间歇性的问题发生，最好是等待很短的时间，然后重试。</span>
+<span class="n">Throttle</span> <span class="n">between</span> <span class="n">requests</span><span class="p">(</span><span class="err">请求之间的节流</span><span class="p">)</span> <span class="o">-</span> <span class="n">Burp</span><span class="err">可以在每次请求之前等待一个指定的延迟（以毫秒为单位）</span> <span class="err">。此选项很有用，以避免超载应用程序，或者是更隐蔽。或者，您可以配置一个可变延迟（与给定的初始值和增量）</span> <span class="err">。这个选项可以是有用的测试应用程序执行的会话超时时间间隔。</span>
+<span class="n">Start</span> <span class="n">time</span><span class="p">(</span><span class="err">开始时间</span><span class="p">)</span> <span class="o">-</span> <span class="err">此选项允许您配置攻击立即启动，或在指定的延迟后，或开始处于暂停状态。如果攻击被配置，将在未来的某个时刻以供将来使用被执行，或保存这些替代品可能是有用的。</span>
+</pre></div>
+
+
+<ul>
+<li>Attack Results</li>
+</ul>
+<div class="hlcode"><pre><span class="n">Store</span> <span class="n">requests</span><span class="o">/</span><span class="n">responses</span><span class="p">(</span><span class="err">存储请求</span><span class="o">/</span><span class="err">响应</span><span class="p">)</span> <span class="o">-</span> <span class="err">这些选项确定攻击是否会保存单个请求和响应的内容。保存请求和响应占用磁盘空间，在你的临时目录中，但可以让您在攻击期间在众目睽睽这些，如果有必要重复单个请求，并将其发送到其他</span><span class="n">Burp</span><span class="err">工具。</span>
+<span class="n">Make</span> <span class="n">unmodified</span> <span class="n">baseline</span> <span class="n">request</span><span class="p">(</span><span class="err">未修改的基本请求</span><span class="p">)</span> <span class="o">-</span> <span class="err">如果选择此选项，那么除了配置的攻击请求，</span><span class="n">Burp</span><span class="err">会发出模板请求设置为基值，所有有效载荷的位置。此请求将在结果表显示为项目＃</span> <span class="mi">0</span> <span class="err">。使用此选项很有用，提供一个用来比较的攻击响应基地的响应。</span>
+<span class="n">Use</span> <span class="n">denial</span><span class="o">-</span><span class="n">of</span><span class="o">-</span><span class="n">service</span> <span class="n">mode</span><span class="p">(</span><span class="err">使用拒绝服务的模式</span><span class="p">)</span> <span class="o">-</span> <span class="err">如果选择此选项，那么攻击会发出请求，如正常，但不会等待处理从服务器收到任何答复。只要发出的每个请求，</span> <span class="n">TCP</span><span class="err">连接将被关闭。这个功能可以被用来执行拒绝服务的应用层对脆弱的应用程序的攻击，通过重复发送该启动高负荷任务的服务器上，同时避免通过举办开放套接字等待服务器响应锁定了本地资源的请求。</span>
+<span class="n">Store</span> <span class="n">full</span> <span class="n">payloads</span><span class="p">(</span><span class="err">保存完整的有效载荷</span><span class="p">)</span> <span class="o">-</span> <span class="err">如果选择此选项，</span><span class="n">Burp</span><span class="err">将存储全部有效载荷值的结果。此选项会占用额外的内存，但如果你想在运行时执行某些操作，如修改</span><span class="n">payload</span> <span class="n">grep</span> <span class="n">setting</span><span class="p">(</span><span class="err">有效负载值设置</span><span class="p">)</span><span class="err">，或重新发出请求与修改请求模板可能需要。</span>
+</pre></div>
+
+
+<ul>
+<li>Grep-Match</li>
+</ul>
+<p>设置可用于包含在响应中指定的表达式标志结果的项目。对于配置列表中的每个项目，Burp会添加一个包含一个复选框，指出项目是否被发现在每个响应的新成果列。然后，您可以到组排序此列（通过单击列标题）匹配的结果相加。</p>
+<p>除了表达式匹配的列表，下列选项可用：</p>
+<div class="hlcode"><pre><span class="n">Match</span><span class="p">(</span><span class="err">匹配类型</span><span class="p">)</span> <span class="o">-</span> <span class="err">指定的表达式是否是简单的字符串或</span><span class="n">regular</span> <span class="n">expressions</span><span class="p">(</span><span class="err">正则表达式</span><span class="p">)</span><span class="err">。</span>
+<span class="n">Case</span> <span class="n">sensitive</span> <span class="n">match</span><span class="p">(</span><span class="err">区分大小写的匹配</span><span class="p">)</span> <span class="o">-</span> <span class="err">指定检查表达式是否应区分大小写。</span>
+<span class="n">Exclude</span> <span class="n">HTTP</span> <span class="n">headers</span><span class="p">(</span><span class="err">不包括</span><span class="n">HTTP</span><span class="err">头</span><span class="p">)</span> <span class="o">-</span> <span class="err">指定的</span><span class="n">HTTP</span><span class="err">响应头是否应被排除在检查。</span>
+</pre></div>
+
+
+<ul>
+<li>Grep-Extrack</li>
+</ul>
+<p>从攻击列表中提取有用信息</p>
+<h2 id="extender">Extender</h2>
+<h3 id="python-environment-note">python environment note</h3>
+<p><a href="https://portswigger.net/burp/help/extender.html">burp extender document</a></p>
+<p><a href="https://portswigger.net/bappstore/">burp app store</a></p>
+<p><a href="https://portswigger.net/burp/help/suite_burp_projects.html#configfiles">burp configuration file</a></p>
+<p>Because of the way in which Jython dynamically generates Java classes, you may encounter memory problems if you load several different Python extensions, or if you unload and reload a Python extension multiple times. If this happens, you will see an error like:
+java.lang.OutOfMemoryError: PermGen space </p>
+<p>You can avoid this problem by configuring Java to allocate more PermGen storage, by adding a -XX:MaxPermSize option to the command line when starting Burp. For example: <code>java -XX:MaxPermSize=1G -jar burp.jar</code></p>
+<h3 id="bapp-store">Bapp store</h3>
+<p>Bapp store里的扩展安装之后默认是在burpsuite同目录下的<code>bapps</code>的文件夹内</p>
+<h3 id="interface">interface</h3>
+<p>interface IBurpExtender: 这个接口所有的扩展都需要实现.</p>
+<p>Interface IBurpExtenderCallbacks: 这个接口几乎是必备的。在编写扩展的过程中会经常用到。</p>
+<p>Interface IExtensionHelpers: 这个接口是新加的。提供了编写扩展中常用的一些通用函数，比如编解码、构造请求等。这样就不需要重负造轮子了。</p>
+<p>Interface IHttpRequestResponse: 这个接口包含了每个请求和响应的细节。在Brupsuite中的每个请求或者响应都是IHttpRequestResponse实例</p>
+<h3 id="_1">插件开发</h3>
+<p>最好的方式就是在原有插件的基础上修改，这样能省很多精力。从头开发，步骤如下：</p>
+<ol>
+<li>
+<p>包含burp的接口文件</p>
+</li>
+<li>
+<p>创建一个包名为burp，在里面创建BurpExtender类，实现IBurpExtender接口，这个BurpExtender类是所有接口的心脏，注意这里涉及到名字都不能改动，burp插件就这么规定的。</p>
+</li>
+<li>
+<p>实现唯一的接口函数</p>
+</li>
+</ol>
+<div class="hlcode"><pre><span class="n">public</span> <span class="kt">void</span> <span class="nf">registerExtenderCallbacks</span><span class="p">(</span><span class="n">final</span> <span class="n">IBurpExtenderCallbacks</span> <span class="n">callbacks</span><span class="p">)</span> <span class="p">{</span>
+<span class="n">this</span><span class="p">.</span> <span class="n">callbacks</span> <span class="o">=</span> <span class="n">callbacks</span> <span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>通过callbacks获取核心基础库能力,像日志，请求，返回值修改等。</p>
+<ol>
+<li>日志接口</li>
+</ol>
+<div class="hlcode"><pre><span class="n">PrintWriter</span> <span class="n">stdout</span> <span class="o">=</span> <span class="n">new</span> <span class="n">PrintWriter</span><span class="p">(</span><span class="n">callbacks</span><span class="p">.</span><span class="n">getStdout</span><span class="p">(),</span> <span class="nb">true</span><span class="p">);</span>
+<span class="n">PrintWriter</span> <span class="n">stderr</span> <span class="o">=</span> <span class="n">new</span> <span class="n">PrintWriter</span><span class="p">(</span><span class="n">callbacks</span><span class="p">.</span><span class="n">getStderr</span><span class="p">(),</span> <span class="nb">true</span><span class="p">);</span>
+<span class="c1">//输出到插件的output</span>
+<span class="n">stdout</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Hello output&quot;</span><span class="p">);</span>
+<span class="c1">// 输出到alerts tab</span>
+<span class="n">callbacks</span><span class="p">.</span><span class="n">issueAlert</span><span class="p">(</span><span class="s">&quot;Hello alerts&quot;</span><span class="p">);</span>
+<span class="c1">//打印调用栈</span>
+<span class="n">e</span><span class="p">.</span><span class="n">printStackTrace</span><span class="p">(</span><span class="n">stderr</span><span class="p">)</span>
+</pre></div>
+
+
+<p>有了这些日志接口就能比较好的调试代码了，如果要很好的跟踪请求的，可以在BApp Store中添加”Custom Logger”这个插件，能够记录所有的请求和返回信息</p>
+<h3 id="demo">Demo</h3>
+<div class="hlcode"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">python extension</span>
+<span class="sd">function: simple fuzz</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">burp</span> <span class="kn">import</span> <span class="n">IBurpExtender</span>
+<span class="kn">from</span> <span class="nn">burp</span> <span class="kn">import</span> <span class="n">IIntruderPayloadGeneratorFactory</span>
+<span class="kn">from</span> <span class="nn">burp</span> <span class="kn">import</span> <span class="n">IIntruderPayloadGenerator</span>
+
+<span class="c">#from java.util import List</span>
+<span class="c">#from java.util import ArrayList</span>
+
+<span class="kn">import</span> <span class="nn">random</span>
+
+
+<span class="k">class</span> <span class="nc">BurpExtender</span><span class="p">(</span><span class="n">IBurpExtender</span><span class="p">,</span> <span class="n">IIntruderPayloadGeneratorFactory</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">registerExtenderCallbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callbacks</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_callbacks</span> <span class="o">=</span> <span class="n">callbacks</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_helpers</span> <span class="o">=</span> <span class="n">callbacks</span><span class="o">.</span><span class="n">getHelpers</span><span class="p">()</span>
+
+        <span class="n">callbacks</span><span class="o">.</span><span class="n">registerIntruderPayloadGeneratorFactory</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">getGeneratorName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;BHP payload Generator&quot;</span>
+
+    <span class="k">def</span> <span class="nf">createNewInstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attack</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">BHPFuzzer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attack</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">BHPFuzzer</span><span class="p">(</span><span class="n">IIntruderPayloadGenerator</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extender</span><span class="p">,</span> <span class="n">attack</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_extender</span> <span class="o">=</span> <span class="n">extender</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__helpers</span> <span class="o">=</span> <span class="n">extender</span><span class="o">.</span><span class="n">_helpers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__attack</span> <span class="o">=</span> <span class="n">attack</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_payloads</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_iterations</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">hasMorePayloads</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_iterations</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_payloads</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">getNextPayload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_payload</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        params:</span>
+<span class="sd">            current_payload[list]: 列表对象，存储payload 每个字符的 ascii 码数值</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># convert to string</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">current_payload</span><span class="p">)</span>
+
+        <span class="c"># fuzz post requesta</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mutate_payload</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_iterations</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">payload</span>
+
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_iterations</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">mutate_payload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">original_payload</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        params:</span>
+<span class="sd">            original_payload[str]:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># generate random int</span>
+        <span class="n">picker</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+        <span class="c"># 在载荷中选取一个随机的偏移量去变形</span>
+        <span class="n">offset</span>  <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">original_payload</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">original_payload</span><span class="p">[:</span><span class="n">offset</span><span class="p">]</span>
+
+        <span class="c"># 在随机偏移位置插入sql 注入尝试</span>
+        <span class="k">if</span> <span class="n">picker</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">payload</span> <span class="o">+=</span> <span class="s">&quot;&#39;&quot;</span>
+        <span class="c"># xss</span>
+        <span class="k">elif</span> <span class="n">picker</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">payload</span> <span class="o">+=</span> <span class="s">&quot;&lt;script&gt;alert(&#39;BHP&#39;);&lt;/script&gt;&quot;</span>
+        <span class="c"># random repeat</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">chunk_length</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">[</span><span class="n">offset</span><span class="p">:]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>
+            <span class="n">repeater</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">repeater</span><span class="p">):</span>
+                <span class="n">payload</span> <span class="o">+=</span> <span class="n">original_payload</span><span class="p">[</span><span class="n">offset</span><span class="p">:</span><span class="n">offset</span><span class="o">+</span><span class="n">chunk_length</span><span class="p">]</span>
+
+        <span class="c"># add remain</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">original_payload</span><span class="p">[</span><span class="n">offset</span><span class="p">:]</span>
+
+        <span class="k">return</span> <span class="n">payload</span>
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

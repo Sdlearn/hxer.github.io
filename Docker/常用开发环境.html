@@ -18,7 +18,82 @@
 <div class="clearfix"></div>
 <div id="title">常用开发环境</div>
   <div id="content">
-  
+  <p><a href="http://wiki.jikexueyuan.com/project/docker-technology-and-combat/appendix_storage.html">常用镜像</a></p>
+<h2 id="0x01-php">0x01 php</h2>
+<p><a href="https://hub.docker.com/_/php/">php 官方源</a></p>
+<h3 id="php56-apache">php:5.6-apache</h3>
+<p><a href="https://github.com/docker-library/php/blob/47abb34bbfc92ccd26d07351bc18542ded37ef17/5.6/apache/Dockerfile">github Dockerfile</a></p>
+<p>Dockerfile: <code>FROM php:5.6-apache</code>, <code>FROM daocloud.io/php:5.6-apache</code>(国内)</p>
+<p>默认 <code>DOCUMENT_ROOT: /var/www/html</code></p>
+<h2 id="0x02-mysql">0x02 mysql</h2>
+<p><a href="https://github.com/docker-library/php/blob/47abb34bbfc92ccd26d07351bc18542ded37ef17/5.6/apache/Dockerfile">mysql 官方源</a></p>
+<h3 id="_1">简单使用</h3>
+<blockquote>
+<p>默认在 3306 端口启动数据库, MySQL 初始化完成前无法连接</p>
+</blockquote>
+<ul>
+<li>运行 mysql 实例</li>
+</ul>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">name</span> <span class="n">some</span><span class="o">-</span><span class="n">mysql</span> <span class="o">-</span><span class="n">e</span> <span class="n">MYSQL_ROOT_PASSWORD</span><span class="o">=</span><span class="n">mysecretpassword</span> <span class="o">-</span><span class="n">d</span> <span class="n">mysql</span>
+</pre></div>
+
+
+<ul>
+<li>其它应用来连接到 mysql 容器。</li>
+</ul>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">name</span> <span class="n">some</span><span class="o">-</span><span class="n">app</span> <span class="o">--</span><span class="n">link</span> <span class="n">some</span><span class="o">-</span><span class="n">mysql</span><span class="o">:</span><span class="n">mysql</span> <span class="o">-</span><span class="n">d</span> <span class="n">application</span><span class="o">-</span><span class="n">that</span><span class="o">-</span><span class="n">uses</span><span class="o">-</span><span class="n">mysql</span>
+</pre></div>
+
+
+<ul>
+<li>从 mysql 命令行客户端连接 mysql 容器</li>
+</ul>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="o">--</span><span class="n">link</span> <span class="n">some</span><span class="o">-</span><span class="n">mysql</span><span class="o">:</span><span class="n">mysql</span> <span class="o">--</span><span class="n">rm</span> <span class="n">mysql</span> <span class="n">sh</span> <span class="o">-</span><span class="n">c</span> <span class="err">&#39;</span><span class="n">exec</span> <span class="n">mysql</span> <span class="o">-</span><span class="n">h</span><span class="s">&quot;$MYSQL_PORT_3306_TCP_ADDR&quot;</span> <span class="o">-</span><span class="n">P</span><span class="s">&quot;$MYSQL_PORT_3306_TCP_PORT&quot;</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">p</span><span class="s">&quot;$MYSQL_ENV_MYSQL_ROOT_PASSWORD&quot;</span><span class="err">&#39;</span>
+</pre></div>
+
+
+<h3 id="lamp-with-mysql">LAMP with mysql</h3>
+<div class="hlcode"><pre><span class="n">FROM</span> <span class="n">php</span><span class="o">:</span><span class="mf">5.6</span><span class="o">-</span><span class="n">apache</span>
+
+<span class="n">RUN</span> <span class="n">docker</span><span class="o">-</span><span class="n">php</span><span class="o">-</span><span class="n">ext</span><span class="o">-</span><span class="n">install</span> <span class="n">mysql</span>
+</pre></div>
+
+
+<h3 id="lamp-with-pdo_mysql">LAMP with pdo_mysql</h3>
+<p><a href="https://github.com/DaoCloud/php-apache-mysql-sample">github demo pdo_mysql</a></p>
+<p><strong> php 安装 pdo_mysql 扩展 </strong></p>
+<div class="hlcode"><pre><span class="n">FROM</span> <span class="n">php</span><span class="o">:</span><span class="mf">5.6</span><span class="o">-</span><span class="n">apache</span>
+
+<span class="cp"># docker-php-ext-install 为官方 PHP 镜像内置命令，用于安装 PHP 扩展依赖</span>
+<span class="cp"># pdo_mysql 为 PHP 连接 MySQL 扩展</span>
+<span class="n">RUN</span> <span class="n">docker</span><span class="o">-</span><span class="n">php</span><span class="o">-</span><span class="n">ext</span><span class="o">-</span><span class="n">install</span> <span class="n">pdo_mysql</span> <span class="p">(</span><span class="n">pdo</span><span class="o">:</span> <span class="n">php</span> <span class="n">data</span> <span class="n">objects</span><span class="p">)</span>
+</pre></div>
+
+
+<p><strong> php 应用程序代码访问数据库 </strong></p>
+<div class="hlcode"><pre><span class="cp">&lt;?php</span>
+<span class="nv">$serverName</span> <span class="o">=</span>   <span class="nx">env</span><span class="p">(</span><span class="s2">&quot;MYSQL_PORT_3306_TCP_ADDR&quot;</span><span class="p">,</span> <span class="s2">&quot;localhost&quot;</span><span class="p">);</span>
+<span class="nv">$databaseName</span> <span class="o">=</span> <span class="nx">env</span><span class="p">(</span><span class="s2">&quot;MYSQL_INSTANCE_NAME&quot;</span><span class="p">,</span> <span class="s2">&quot;homestead&quot;</span><span class="p">);</span>
+<span class="nv">$username</span> <span class="o">=</span>     <span class="nx">env</span><span class="p">(</span><span class="s2">&quot;MYSQL_USERNAME&quot;</span><span class="p">,</span> <span class="s2">&quot;homestead&quot;</span><span class="p">);</span>
+<span class="nv">$password</span> <span class="o">=</span>     <span class="nx">env</span><span class="p">(</span><span class="s2">&quot;MYSQL_PASSWORD&quot;</span><span class="p">,</span> <span class="s2">&quot;secret&quot;</span><span class="p">);</span>
+
+<span class="sd">/**</span>
+<span class="sd"> * 获取环境变量</span>
+<span class="sd"> * @param $key</span>
+<span class="sd"> * @param null $default</span>
+<span class="sd"> * @return null|string</span>
+<span class="sd"> */</span>
+<span class="k">function</span> <span class="nf">env</span><span class="p">(</span><span class="nv">$key</span><span class="p">,</span> <span class="nv">$default</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>  
+<span class="p">{</span>
+    <span class="nv">$value</span> <span class="o">=</span> <span class="nb">getenv</span><span class="p">(</span><span class="nv">$key</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$value</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$default</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nv">$value</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
 </div>
 
         </div>

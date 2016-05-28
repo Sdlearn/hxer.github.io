@@ -18,7 +18,17 @@
 <div class="clearfix"></div>
 <div id="title">Docker Compose</div>
   <div id="content">
-  <h2 id="_1">介绍</h2>
+  <p><a href="https://docs.docker.com/v1.8/compose/yml/">dockercompose doc</a></p>
+<h2 id="0x02-yml">0x02 yml模板文件</h2>
+<h3 id="command">command</h3>
+<p>重写默认的命令，支持两种格式</p>
+<div class="hlcode"><pre><span class="n">command</span><span class="o">:</span> <span class="n">bundle</span> <span class="n">exec</span> <span class="n">thin</span> <span class="o">-</span><span class="n">p</span> <span class="mi">3000</span>
+<span class="n">command</span><span class="o">:</span> <span class="o">[</span><span class="n">bundle</span><span class="o">,</span> <span class="n">exec</span><span class="o">,</span> <span class="n">thin</span><span class="o">,</span> <span class="o">-</span><span class="n">p</span><span class="o">,</span> <span class="mi">3000</span><span class="o">]</span>
+</pre></div>
+
+
+<p>command 不支持 多条命令通过 <code>&amp;&amp;</code> 连接执行，可以使用 <code>bash -c "cmd1 &amp;&amp; cmd2"</code></p>
+<h2 id="_1">介绍</h2>
 <p>Docker Compose 是官方提供的容器业务流程框架(曾经的项目名称是Fig)。</p>
 <p>Docker Compose 处理Docker容器部署分布式应用，可以定义哪个容器运行哪个应用。</p>
 <p>使用Compose，只需要定义一个多容器应用的yml文件(docker-compose.yml)，然后使用一条命令(docker-compose up)即可部署运行所有的容器。</p>

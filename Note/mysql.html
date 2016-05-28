@@ -18,11 +18,58 @@
 <div class="clearfix"></div>
 <div id="title">mysql</div>
   <div id="content">
-  <h2 id="basic-operation">basic operation</h2>
+  <h2 id="0x01-basic-operation">0x01 basic operation</h2>
 <h3 id="create-user">create user</h3>
 <p><a href="http://dev.mysql.com/doc/refman/5.7/en/create-user.html">create user</a></p>
 <div class="hlcode"><pre><span class="n">Create</span> <span class="n">Users</span>    <span class="n">CREATE</span> <span class="n">USER</span> <span class="n">test1</span> <span class="n">IDENTIFIED</span> <span class="n">BY</span> <span class="err">‘</span><span class="n">pass1</span><span class="err">′</span><span class="p">;</span> <span class="err">—</span> <span class="n">priv</span>
 <span class="n">Delete</span> <span class="n">Users</span>    <span class="n">DROP</span> <span class="n">USER</span> <span class="n">test1</span><span class="p">;</span> <span class="err">—</span> <span class="n">priv</span>
+</pre></div>
+
+
+<h3 id="create-database">create database</h3>
+<div class="hlcode"><pre><span class="n">create</span> <span class="n">database</span> <span class="n">your_database_name</span><span class="p">;</span>
+</pre></div>
+
+
+<h3 id="create-table">create table</h3>
+<div class="hlcode"><pre><span class="n">create</span> <span class="n">table</span> <span class="nf">your_table_name</span><span class="p">(</span>
+    <span class="n">id</span> <span class="kt">int</span> <span class="kt">unsigned</span> <span class="n">not</span> <span class="n">null</span> <span class="n">auto_increment</span> <span class="n">primary</span> <span class="n">key</span><span class="p">,</span>
+    <span class="n">name</span> <span class="kt">char</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="n">not</span> <span class="n">null</span><span class="p">,</span>
+    <span class="n">password</span> <span class="kt">char</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="n">not</span> <span class="n">null</span>    
+<span class="p">);</span>
+</pre></div>
+
+
+<h3 id="insert">insert</h3>
+<div class="hlcode"><pre><span class="n">INSERT</span> <span class="p">[</span><span class="n">INTO</span><span class="p">]</span> <span class="n">table_name</span> <span class="p">[(</span><span class="n">column1</span><span class="p">,</span> <span class="n">column2</span><span class="p">,</span> <span class="p">...)]</span> <span class="n">VALUES</span> <span class="p">(</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">,</span> <span class="p">...);</span>
+</pre></div>
+
+
+<h3 id="_1">数据库(表)导入导出</h3>
+<p>导出 </p>
+<div class="hlcode"><pre><span class="cp"># 将192.168.1.1主机上的 mydb 数据库导出到本地文件</span>
+<span class="n">mysqldump</span> <span class="o">-</span><span class="n">h192</span><span class="mf">.168.1.1</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">p123456</span> <span class="o">--</span><span class="n">databases</span> <span class="n">mydb</span> <span class="o">&gt;</span> <span class="n">db_mydb</span><span class="p">.</span><span class="n">sql</span><span class="p">.</span><span class="n">bak</span><span class="p">;</span>   
+
+<span class="cp"># 将192.168.1.1主机上的mydb数据库的tb1数据表导出到本地的tb1.bak文件中</span>
+<span class="n">mysqldump</span> <span class="o">-</span><span class="n">h192</span><span class="mf">.168.1.1</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">p123456</span> <span class="n">mydb</span> <span class="n">tb1</span> <span class="o">&gt;</span> <span class="n">tb_tb1</span><span class="p">.</span><span class="n">sql</span><span class="p">.</span><span class="n">bak</span><span class="p">;</span>                         
+</pre></div>
+
+
+<p>导入</p>
+<div class="hlcode"><pre><span class="cp"># 数据库</span>
+<span class="err">在本地数据库中创建相对应导出的数据库</span><span class="n">mydb</span><span class="err">同名的数据库：</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">create</span> <span class="n">database</span> <span class="n">mydb</span><span class="p">;</span>
+<span class="err">然后退出数据库，再使用以下的</span> <span class="err">命令导入数据库文件</span><span class="n">mydb</span><span class="p">.</span><span class="n">bak</span><span class="err">到本地数据库</span><span class="n">mydb</span><span class="err">中：</span>
+<span class="n">mysql</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">p123456</span> <span class="n">mydb</span> <span class="o">&lt;</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">db_mydb</span><span class="p">.</span><span class="n">bak</span><span class="p">;</span>
+
+<span class="err">或者进入</span><span class="n">mysql</span><span class="err">中，使用</span><span class="n">sourc</span><span class="err">指令完成数据库导入，如下：</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">source</span>  <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">db_mydb</span><span class="p">.</span><span class="n">bak</span><span class="p">;</span>
+
+<span class="cp"># 数据表</span>
+<span class="err">在本地数据库中创建相对应导出的数据库</span><span class="n">mydb</span><span class="err">同名的数据库：</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">create</span> <span class="n">database</span> <span class="n">mydb</span><span class="p">;</span>
+<span class="err">然后在</span><span class="n">mysql</span><span class="err">中使用</span><span class="n">source</span><span class="err">指令来完成数据表的导入，如下：</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">source</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">tb1</span><span class="p">.</span><span class="n">bak</span><span class="p">;</span>
 </pre></div>
 
 
@@ -58,7 +105,7 @@
 <p>如果Key是UNI，那么该列是一个唯一值索引的第一列（前导列），并别不能含有空值（NULL）；</p>
 <p>如果Key是MUL，那么该列的值可以重复，该列是一个非唯一索引的前导列（第一列）或者是一个唯一性索引的组成部分但是可以含有空值NULL。</p>
 <p>如果对于一个列的定义，同时满足上述4种情况的多种，比如一个列既是PRI，又是UNI，那么"desc 表名"的时候，显示的Key值按照优先级来显示 PRI-&gt;UNI-&gt;MUL。那么此时，显示PRI</p>
-<h2 id="_1">导出文本文件</h2>
+<h2 id="_2">导出文本文件</h2>
 <div class="hlcode"><pre><span class="n">SELECT</span> <span class="err">…</span> <span class="n">INTO</span> <span class="n">OUTFILE</span> <span class="err">‘</span><span class="n">file_name</span><span class="err">’</span>
 </pre></div>
 
