@@ -3,9 +3,9 @@ title: "locale"
 date: 2016-04-27 00:39
 ---
 
-# Dockerfile
+## 0x01 debian
 
-## debian
+### Dockerfile
 
 ```
 # Install program to configure locales
@@ -25,7 +25,9 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 ```
 
-## ubuntu
+## 0x02 ubuntu
+
+### Dockerfile
 
 ```
 # Set default locale for the environment

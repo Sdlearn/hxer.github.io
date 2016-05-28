@@ -3,7 +3,7 @@ title: "mysql"
 date: 2016-04-09 11:23
 ---
 
-## basic operation
+## 0x01 basic operation
 
 ### create user
 
@@ -14,9 +14,60 @@ Create Users	CREATE USER test1 IDENTIFIED BY ‘pass1′; — priv
 Delete Users	DROP USER test1; — priv
 ```
 
+### create database
+
+```
+create database your_database_name;
+```
+
+### create table
+
+```
+create table your_table_name(
+    id int unsigned not null auto_increment primary key,
+    name char(50) not null,
+    password char(50) not null    
+);
+```
+
+### insert
+
+```
+INSERT [INTO] table_name [(column1, column2, ...)] VALUES (value1, value2, ...);
+```
+
+### 数据库(表)导入导出
+
+导出 
+
+```
+# 将192.168.1.1主机上的 mydb 数据库导出到本地文件
+mysqldump -h192.168.1.1 -uroot -p123456 --databases mydb > db_mydb.sql.bak;   
+
+# 将192.168.1.1主机上的mydb数据库的tb1数据表导出到本地的tb1.bak文件中
+mysqldump -h192.168.1.1 -uroot -p123456 mydb tb1 > tb_tb1.sql.bak;                         
+```
+
+导入
+
+```
+# 数据库
+在本地数据库中创建相对应导出的数据库mydb同名的数据库：
+mysql> create database mydb;
+然后退出数据库，再使用以下的 命令导入数据库文件mydb.bak到本地数据库mydb中：
+mysql -uroot -p123456 mydb < /root/db_mydb.bak;
+
+或者进入mysql中，使用sourc指令完成数据库导入，如下：
+mysql> source  /root/db_mydb.bak;
+
+# 数据表
+在本地数据库中创建相对应导出的数据库mydb同名的数据库：
+mysql> create database mydb;
+然后在mysql中使用source指令来完成数据表的导入，如下：
+mysql> source /root/data/tb1.bak;
+```
+
 ## basic database
-
-
 
 ### mysql
 

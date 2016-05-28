@@ -3,6 +3,20 @@ title: "Docker Compose"
 date: 2016-02-23 19:58
 ---
 
+[dockercompose doc][1]
+
+## 0x02 yml模板文件
+
+### command
+
+重写默认的命令，支持两种格式
+
+```
+command: bundle exec thin -p 3000
+command: [bundle, exec, thin, -p, 3000]
+```
+
+command 不支持 多条命令通过 `&&` 连接执行，可以使用 `bash -c "cmd1 && cmd2"`
 ## 介绍
 
 Docker Compose 是官方提供的容器业务流程框架(曾经的项目名称是Fig)。
@@ -107,3 +121,5 @@ firefox > 127.0.0.1:5000
 ```
 curl 127.0.0.1:5000
 ```
+
+[1]: https://docs.docker.com/v1.8/compose/yml/

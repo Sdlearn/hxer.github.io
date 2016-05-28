@@ -82,3 +82,44 @@ inter
 retry
 timeout
 ```
+
+## 0x03 sniff
+
+### params
+
+```
+filter
+iface       iface="ech0"
+prn
+```
+
+### demo
+
+```
+import scapy_http.http as HTTP
+from scapy import *
+from scapy.error import
+
+count = 0
+def pktTCP(pkt):
+    global count
+    count += 1
+    print count
+    if HTTP.HTTPRequest or HTTP.HTTPResponse in pkt:
+        src = pkt[IP].src
+        srcport = pkt[IP].sport
+        dst = pkt[IP].dst
+        dport = pkt[IP].dport
+        data = pkt[TCP].payload
+        if HTTP.HTTPRequest in pkt:
+            # do something
+            pass
+        if HTTP.HTTPResponse in pkt:
+            try:
+                headers, body = src(data).split("\r\n\r\n", 1)
+                print headers
+            except Exception as e
+                print e
+
+sniff(filter="tcp and port 80", prn=pktTCP, iface='eth0')
+```
