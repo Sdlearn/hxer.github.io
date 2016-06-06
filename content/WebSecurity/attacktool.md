@@ -136,37 +136,6 @@ htpwdscan -u=http://www.baidu.com -get -proxylist=available.txt -checkproxy -suc
 htpwdscan -f=post.txt -proxylist=proxies.txt -checkproxy -suc="用户名或密码错误" 
 ```
 
-## burpsuite
-
-[乌云 Brup使用介绍][3]
-
-检测模式
-
-sniper  -- payload 数为1
-
-```
------ username/password -------- sniper {%username%---表示测试变量，也就是字典值}
------%username%/password
------username/%password%
-```
-
-battering ram -- payload 数为1	
-```
-------username/password ------- battering ram 测试
-------%username%=%password%
-```
-
-pitchfork
-
-```
------username/password ------- pitchfork 测试
-```
-
-cluster bomb
-
-```
--------username/password ---------- cluster bomb 测试
-```
 ## webscarab
 
 ## CeWL - Custom Word List generator
@@ -175,14 +144,15 @@ cluster bomb
 
 ## sqlmap
 
-
-sqlmap.py -u url --dbms                 爆后端数据库
-sqlmap.py -u url --dbms "数据库名" --dbs 
-sqlmap.py -u url --dbms "数据库名" --tables              爆数据库表
-sqlmap.py -u url --dbms "数据库名" --current-db             显示当前连接数据库名
-sqlmap.py -u url --dbms "数据库名" --tables  -D "数据库名"                   列出数据库表中的表名
-sqlmap.py -u url --dbms "数据库名" --columns  -T "表名" -D "数据库名"         列出数据库名中的表名内容
-sqlmap.py -u url --dbms "数据库名" --dump  -C "字段,字段"  -T "表名" -D "数据库名"       获取字段里面的内容
+```
+sqlmap.py -u url --dbms                                 爆后端数据库, eg. mysql
+sqlmap.py -u url --dbms "后端数据库名" --dbs 
+sqlmap.py -u url --dbms "后端数据库名" --tables                 爆数据库表
+sqlmap.py -u url --dbms "后端数据库名" --current-db             显示当前连接数据库名
+sqlmap.py -u url --dbms "后端数据库名" --tables  -D "数据库名"                   列出数据库表中的表名
+sqlmap.py -u url --dbms "后端数据库名" --columns  -T "表名" -D "数据库名"         列出数据库名中的表名内容
+sqlmap.py -u url --dbms "后端数据库名" --dump  -C "字段,字段"  -T "表名" -D "数据库名"       获取字段里面的内容
+```
 
 * option
 

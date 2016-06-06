@@ -56,8 +56,8 @@ Burp Intruder包含以下几种attack type:
 |haracter frobber| |
 |Bit flipper|位翻转|
 |Username generator|用户名生成器|
-|ECB block shuffler|欧洲央行座洗牌|
-|Extension-generated|扩展生成|
+|ECB block shuffler| |
+|Extension-generated|使用安装的扩展|
 |Copy other payload|复制其它有效负载|
 
 * Character substitution
@@ -116,7 +116,7 @@ Skip raw payload - 将检查是否当前处理的值匹配指定的正则表达�
 Invoke Burp extension - 调用一个Burp exxtension(扩展)来处理负载。扩展名必须已注册入侵者有效载荷处理器。您可以从已注册的当前加载的扩展可用的处理器列表中选择所需的处理器。
 ```
 
-### Optins
+### Options
 
 * Request Headers
 

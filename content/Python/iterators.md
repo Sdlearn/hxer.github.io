@@ -26,7 +26,8 @@ repeat(3) --> 3 3 3 3 ...   repeat(4, 3) --> 3 3 3
 ```python
 chain('ABC', 'DEF') --> A B C D E F
 compress('ABCDEF', [1,0,1,0,1,1]) --> A C E F
-dropwhile(lambda x: x<5, [1,4,6,4,1]) --> 6 4 1
+dropwhile(lambda x: x<5, [1,4,6,4,1]) --> 6 4 1         # 跳过头部符合条件的元素
+takewhile(lambda x: x<5, [1,4,6,4,1]) --> 1 4           # 保留头部符合条件的元素
 groupby(['aa', 'abc', 'abcd', 'ab', 'ccf'], len) --> ['aa', 'ab'] ['abc', 'ccf'] ['abcd']	 
 ifilter(lambda x: x%2, range(10)) --> 1 3 5 7 9
 ifilterfalse(lambda x: x%2, range(10)) --> 0 2 4 6 8
@@ -34,7 +35,6 @@ islice('ABCDEFG', 2, None) --> C D E F G
 imap(pow, (2,3,10), (5,2,3)) --> 32 9 1000
 starmap(pow, [(2,5), (3,2), (10,3)]) --> 32 9 1000
 tee()	it, n	it1, it2, ... itn splits one iterator into n	 
-takewhile(lambda x: x<5, [1,4,6,4,1]) --> 1 4
 izip('ABCD', 'xy') --> Ax By
 izip_longest('ABCD', 'xy', fillvalue='-') --> Ax By C- D-
 ```

