@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>运维 - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Python">Python</a>&nbsp;»&nbsp;运维</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">运维</div>
+  <div id="content">
+  <h2 id="0x01-rrdtool">0x01 rrdtool</h2>
+<p>监控系统网络流量</p>
+<p><a href="http://oss.oetiker.ch/rrdtool/prog/rrdpython.en.html">rrdtool python</a></p>
+<p><a href="https://github.com/pbanaszkiewicz/python-rrdtool">python-rrdtoool github</a></p>
+<p>[rrdtool 详解]</p>
+<h3 id="install">install</h3>
+<div class="hlcode"><pre><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libcairo2</span><span class="o">-</span><span class="n">dev</span> <span class="n">libpango1</span><span class="mf">.0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libglib2</span><span class="mf">.0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxml2</span><span class="o">-</span><span class="n">dev</span> <span class="n">librrd</span><span class="o">-</span><span class="n">dev</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">rrdtool</span>
+</pre></div>
+
+
+<h3 id="_1">一般流程</h3>
+<div class="hlcode"><pre><span class="n">create</span> <span class="n">rrd</span> <span class="o">-&gt;</span> <span class="n">update</span> <span class="n">rrd</span> <span class="o">-&gt;</span> <span class="n">query</span> <span class="n">rrd</span><span class="p">,</span> <span class="n">graph</span> <span class="n">png</span>
+</pre></div>
+
+
+<p>上述步骤需要使用循环，可以使用两种方式： <code>在Script中使用循环</code>; <code>使用crontab任务计划</code></p>
+<h3 id="create">create</h3>
+<p><a href="http://oss.oetiker.ch/rrdtool/doc/rrdcreate.en.html">create doc</a></p>
+<div class="hlcode"><pre><span class="n">create</span><span class="p">(...)</span>
+    <span class="n">create</span><span class="p">(</span><span class="n">args</span><span class="p">..)</span><span class="o">:</span> <span class="n">Set</span> <span class="n">up</span> <span class="n">a</span> <span class="n">new</span> <span class="n">Round</span> <span class="n">Robin</span> <span class="n">Database</span>
+    <span class="n">create</span> <span class="n">filename</span> <span class="p">[</span><span class="o">--</span><span class="n">start</span><span class="o">|-</span><span class="n">b</span> <span class="n">start</span> <span class="n">time</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">step</span><span class="o">|-</span><span class="n">s</span> <span class="n">step</span><span class="p">]</span> <span class="p">[</span><span class="n">DS</span><span class="o">:</span><span class="n">ds</span><span class="o">-</span><span class="n">name</span><span class="o">:</span><span class="n">DST</span><span class="o">:</span><span class="n">heartbeat</span><span class="o">:</span><span class="n">min</span><span class="o">:</span><span class="n">max</span><span class="p">]</span> <span class="p">[</span><span class="n">RRA</span><span class="o">:</span><span class="n">CF</span><span class="o">:</span><span class="n">xff</span><span class="o">:</span><span class="n">steps</span><span class="o">:</span><span class="n">rows</span><span class="p">]</span>
+
+<span class="nl">filename:</span>   <span class="err">文件名</span>
+<span class="o">--</span><span class="n">start</span><span class="o">:</span>    <span class="err">起始时间</span><span class="p">,</span> <span class="err">默认</span><span class="n">now</span><span class="o">-</span><span class="mi">10</span><span class="n">s</span>
+<span class="o">--</span><span class="n">step</span><span class="o">:</span>     <span class="err">更新频率</span><span class="p">,</span> <span class="err">默认</span><span class="mi">300</span><span class="n">s</span>
+
+<span class="nl">DS:</span>         <span class="n">DS</span> <span class="err">用于定义</span> <span class="n">Data</span> <span class="n">Soure</span>
+<span class="n">ds</span><span class="o">-</span><span class="n">name</span><span class="o">:</span>    <span class="err">数据域命名</span>
+<span class="nl">DST:</span>        <span class="err">定义数据源的类型</span><span class="p">,</span> <span class="n">GAUGE</span> <span class="o">|</span> <span class="n">COUNTER</span> <span class="o">|</span> <span class="n">DERIVE</span> <span class="o">|</span> <span class="n">ABSOLUTE</span>
+<span class="nl">heartbeat:</span>  <span class="err">有效期</span>
+<span class="nl">min:</span>        <span class="err">允许存放的最小值</span>    <span class="err">#</span> <span class="err">不设限制</span><span class="p">,</span> <span class="s">&quot;U&quot;</span><span class="err">表示（</span><span class="n">Unknown</span><span class="err">）</span>
+<span class="nl">max:</span>        <span class="err">允许存放的最大值</span>
+
+<span class="nl">RRA:</span>        <span class="n">RRA</span> <span class="err">用于指定数据如何存放</span>    
+<span class="nl">CF:</span>         <span class="err">定义了</span> <span class="n">AVERAGE</span> <span class="o">|</span> <span class="n">MAX</span> <span class="o">|</span> <span class="n">MIN</span> <span class="n">LAST</span> <span class="err">几种数据合并方式</span>  
+</pre></div>
+
+
+<ul>
+<li>DST</li>
+</ul>
+<p>GAUGE ：GAGUE 和上面三种不同，它没有“平均”的概念，RRDtool 收到值之后字节存入 RRA 中。</p>
+<p>COUNTER ：必须是递增的，除非是计数器溢出。在这种情况下，RRDtool 会自动修改收到的值。例如<code>网络接口流量</code>、<code>收到的packets 数量</code>都属于这一类型。</p>
+<p>DERIVE：和 COUNTER 类似。但可以是递增，也可以递减，或者一会增加一会儿减少。</p>
+<p>ABSOLUTE ：ABSOLUTE 比较特殊，它每次都假定前一个interval的值是0，再计算平均值。</p>
+<p>COMPUTE ：COMPUTE 比较特殊，它并不接受输入，它的定义是一个表达式，能够引用其他DS并自动计算出某个值。例如CODE：DS:eth0_bytes:COUNTER:600:0:U DS:eth0_bits:COMPUTE:eth0_bytes,8,<em> 则 eth0_bytes 每得到一个值，eth0_bits 会自动计算出它的值：将 eth0_bytes 的值乘以 8 。不过 COMPUTE 型的 DS 有个限制，只能应用它所在的 RRD 的 DS ，不能引用其他 RRD 的 DS。 COMPUTE 型 DS 是新版本的 RRDtool 才有的，你也可以用 CDEF 来实现该功能。如:CDEF:eth0_bits=eth0_bytes,8,</em></p>
+<p>实例说明:</p>
+<div class="hlcode"><pre><span class="cp">#假设 RRDtool 收到4个值，分别是300，600，900，1200。</span>
+<span class="n">Values</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">600</span><span class="p">,</span> <span class="mi">900</span><span class="p">,</span> <span class="mi">1200</span>
+
+<span class="cp">#step 为 300  </span>
+<span class="n">Step</span> <span class="o">=</span> <span class="mi">300</span> <span class="n">seconds</span>
+
+<span class="cp"># COUNTER （300-0）/300，（600-300）/300，（900-600）/300，（1200-900）/300</span>
+<span class="n">COUNTER</span> <span class="o">=</span> <span class="mi">1</span><span class="err">，</span><span class="mi">1</span><span class="err">，</span><span class="mi">1</span><span class="err">，</span><span class="mi">1</span>
+
+<span class="cp"># DERIVE 同上 </span>
+<span class="n">DERIVE</span> <span class="o">=</span> <span class="mi">1</span><span class="err">，</span><span class="mi">1</span><span class="err">，</span><span class="mi">1</span><span class="err">，</span><span class="mi">1</span>  
+
+<span class="cp"># ABSOLUTE (300-0)/300，(600-0)/300，(900-0)/300，(1200-0)/300 </span>
+<span class="n">ABSOLUTE</span> <span class="o">=</span> <span class="mi">1</span><span class="err">，</span><span class="mi">2</span><span class="err">，</span><span class="mi">3</span><span class="err">，</span><span class="mi">4</span>
+
+<span class="cp"># GAUGE 300 , 600 ,900 ,1200 不做运算，直接存入数据库</span>
+<span class="n">GAUGE</span> <span class="o">=</span> <span class="mi">300</span><span class="err">，</span><span class="mi">600</span><span class="err">，</span><span class="mi">900</span><span class="err">，</span><span class="mi">1200</span>
+</pre></div>
+
+
+<h3 id="update">update</h3>
+<p>update插入值后，并不会有返回，无法知道插入是否正常，可以用updatev</p>
+<div class="hlcode"><pre><span class="n">update</span><span class="p">(...)</span>
+<span class="n">update</span><span class="p">(</span><span class="n">args</span><span class="p">..)</span><span class="o">:</span> <span class="n">Store</span> <span class="n">a</span> <span class="n">new</span> <span class="n">set</span> <span class="n">of</span> <span class="n">values</span> <span class="n">into</span> <span class="n">the</span> <span class="n">rrd</span>
+    <span class="n">update</span> <span class="n">filename</span> <span class="p">[</span><span class="o">--</span><span class="n">template</span><span class="o">|-</span><span class="n">t</span> <span class="n">ds</span><span class="o">-</span><span class="n">name</span><span class="p">[</span><span class="o">:</span><span class="n">ds</span><span class="o">-</span><span class="n">name</span><span class="p">]...]</span> <span class="n">N</span><span class="o">|</span><span class="n">timestamp</span><span class="o">:</span><span class="n">value</span><span class="p">[</span><span class="o">:</span><span class="n">value</span><span class="p">...]</span> <span class="p">[</span><span class="n">timestamp</span><span class="o">:</span><span class="n">value</span><span class="p">[</span><span class="o">:</span><span class="n">value</span><span class="p">...]</span> <span class="p">...]</span>
+    <span class="n">filename</span><span class="err">：要更新的</span><span class="n">rrd</span><span class="err">文件</span>
+    <span class="o">--</span><span class="n">template</span><span class="err">：</span>
+    <span class="o">-</span><span class="n">t</span> <span class="n">ds</span><span class="o">-</span><span class="n">name</span><span class="p">[</span><span class="o">:</span><span class="n">ds</span><span class="o">-</span><span class="n">name</span><span class="p">]</span><span class="err">：设置更新那个</span><span class="n">DS</span><span class="err">的数据</span>
+    <span class="n">N</span><span class="o">|</span><span class="n">timestamp</span><span class="err">：时间戳，表示数据在哪个时间点采集的，</span><span class="n">N</span><span class="err">表示</span><span class="n">now</span><span class="err">。</span>
+    <span class="n">value</span><span class="p">[</span><span class="o">:</span><span class="n">value</span><span class="p">...]</span><span class="err">：一个</span><span class="n">rrd</span><span class="err">文件可以有多个</span><span class="n">DS</span><span class="err">，所以一次</span><span class="n">update</span><span class="err">可以更新多个</span><span class="n">value</span><span class="err">。</span>
+</pre></div>
+
+
+<h3 id="updatev">updatev</h3>
+<p>带返回值的插入. 和update类似，不过每次插入后会返回一个状态码</p>
+<div class="hlcode"><pre><span class="n">updatev</span><span class="p">(...)</span>
+<span class="n">updatev</span> <span class="n">is</span> <span class="n">called</span> <span class="n">in</span> <span class="n">the</span> <span class="n">same</span> <span class="n">manner</span> <span class="n">as</span> <span class="n">update</span>
+</pre></div>
+
+
+<h3 id="fetch">fetch</h3>
+<div class="hlcode"><pre><span class="n">fetch</span><span class="p">(...)</span>
+<span class="n">fetch</span><span class="p">(</span><span class="n">args</span><span class="p">..)</span><span class="o">:</span> <span class="n">fetch</span> <span class="n">data</span> <span class="n">from</span> <span class="n">an</span> <span class="n">rrd</span><span class="p">.</span>
+    <span class="n">fetch</span> <span class="n">filename</span> <span class="n">CF</span> <span class="p">[</span><span class="o">--</span><span class="n">resolution</span><span class="o">|-</span><span class="n">r</span> <span class="n">resolution</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">start</span><span class="o">|-</span><span class="n">s</span> <span class="n">start</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">end</span><span class="o">|-</span><span class="n">e</span> <span class="n">end</span><span class="p">]</span>
+    <span class="n">filename</span><span class="err">：要取出数据的</span><span class="n">rrd</span><span class="err">文件</span>
+    <span class="o">--</span><span class="n">start</span><span class="err">：可选，默认是</span><span class="n">end</span><span class="o">-</span><span class="mi">1</span><span class="n">day</span>
+    <span class="o">--</span><span class="n">end</span><span class="err">：可选，默认是</span><span class="n">now</span>
+    <span class="n">CF</span><span class="err">：</span><span class="n">AVERAGE</span><span class="err">、</span><span class="n">MAX</span><span class="err">、</span><span class="n">MIN</span><span class="err">、</span><span class="n">LAST</span><span class="err">。前提是你的</span><span class="n">rrd</span><span class="err">中有该类型的</span><span class="n">rra</span><span class="err">才可以。</span>
+</pre></div>
+
+
+<h3 id="graph">graph(...)</h3>
+<div class="hlcode"><pre><span class="n">graph</span><span class="p">(...)</span>
+    <span class="n">graph</span><span class="p">(</span><span class="n">args</span><span class="p">..)</span><span class="o">:</span> <span class="n">Create</span> <span class="n">a</span> <span class="n">graph</span> <span class="n">based</span> <span class="n">on</span> <span class="n">data</span> <span class="n">from</span> <span class="n">one</span> <span class="n">or</span> <span class="n">several</span> <span class="n">RRD</span>
+    <span class="n">graph</span> <span class="n">filename</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span><span class="o">|--</span><span class="n">start</span> <span class="n">seconds</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span><span class="o">|--</span><span class="n">end</span> <span class="n">seconds</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">x</span><span class="o">|--</span><span class="n">x</span><span class="o">-</span><span class="n">grid</span> <span class="n">x</span><span class="o">-</span><span class="n">axis</span> <span class="n">grid</span> <span class="n">and</span> <span class="n">label</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">y</span><span class="o">|--</span><span class="n">y</span><span class="o">-</span><span class="n">grid</span> <span class="n">y</span><span class="o">-</span><span class="n">axis</span> <span class="n">grid</span> <span class="n">and</span> <span class="n">label</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">alt</span><span class="o">-</span><span class="n">y</span><span class="o">-</span><span class="n">grid</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">alt</span><span class="o">-</span><span class="n">y</span><span class="o">-</span><span class="n">mrtg</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">alt</span><span class="o">-</span><span class="n">autoscale</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">alt</span><span class="o">-</span><span class="n">autoscale</span><span class="o">-</span><span class="n">max</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">units</span><span class="o">-</span><span class="n">exponent</span><span class="p">]</span> <span class="n">value</span> <span class="p">[</span><span class="o">-</span><span class="n">v</span><span class="o">|--</span><span class="n">vertical</span><span class="o">-</span><span class="n">label</span> <span class="n">text</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">w</span><span class="o">|--</span><span class="n">width</span> <span class="n">pixels</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="o">|--</span><span class="n">height</span> <span class="n">pixels</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span><span class="o">|--</span><span class="n">interlaced</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">f</span><span class="o">|--</span><span class="n">imginfo</span> <span class="n">formatstring</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">a</span><span class="o">|--</span><span class="n">imgformat</span> <span class="n">GIF</span><span class="o">|</span><span class="n">PNG</span><span class="o">|</span><span class="n">GD</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">B</span><span class="o">|--</span><span class="n">background</span> <span class="n">value</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">O</span><span class="o">|--</span><span class="n">overlay</span> <span class="n">value</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">U</span><span class="o">|--</span><span class="n">unit</span> <span class="n">value</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">z</span><span class="o">|--</span><span class="n">lazy</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span><span class="o">|--</span><span class="n">logarithmic</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">u</span><span class="o">|--</span><span class="n">upper</span><span class="o">-</span><span class="n">limit</span> <span class="n">value</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">l</span><span class="o">|--</span><span class="n">lower</span><span class="o">-</span><span class="n">limit</span> <span class="n">value</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">g</span><span class="o">|--</span><span class="n">no</span><span class="o">-</span><span class="n">legend</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">r</span><span class="o">|--</span><span class="n">rigid</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">step</span> <span class="n">value</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span><span class="o">|--</span><span class="n">base</span> <span class="n">value</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="o">|--</span><span class="n">color</span> <span class="n">COLORTAG</span><span class="err">#</span><span class="n">rrggbb</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">t</span><span class="o">|--</span><span class="n">title</span> <span class="n">title</span><span class="p">]</span> <span class="p">[</span><span class="n">DEF</span><span class="o">:</span><span class="n">vname</span><span class="o">=</span><span class="n">rrd</span><span class="o">:</span><span class="n">ds</span><span class="o">-</span><span class="n">name</span><span class="o">:</span><span class="n">CF</span><span class="p">]</span> <span class="p">[</span><span class="n">CDEF</span><span class="o">:</span><span class="n">vname</span><span class="o">=</span><span class="n">rpn</span><span class="o">-</span><span class="n">expression</span><span class="p">]</span> <span class="p">[</span><span class="n">PRINT</span><span class="o">:</span><span class="n">vname</span><span class="o">:</span><span class="n">CF</span><span class="o">:</span><span class="n">format</span><span class="p">]</span> <span class="p">[</span><span class="n">GPRINT</span><span class="o">:</span><span class="n">vname</span><span class="o">:</span><span class="n">CF</span><span class="o">:</span><span class="n">format</span><span class="p">]</span> <span class="p">[</span><span class="n">COMMENT</span><span class="o">:</span><span class="n">text</span><span class="p">]</span> <span class="p">[</span><span class="n">HRULE</span><span class="o">:</span><span class="n">value</span><span class="err">#</span><span class="n">rrggbb</span><span class="p">[</span><span class="o">:</span><span class="n">legend</span><span class="p">]]</span> <span class="p">[</span><span class="n">VRULE</span><span class="o">:</span><span class="n">time</span><span class="err">#</span><span class="n">rrggbb</span><span class="p">[</span><span class="o">:</span><span class="n">legend</span><span class="p">]]</span> <span class="p">[</span><span class="n">LINE</span><span class="p">{</span><span class="mi">1</span><span class="o">|</span><span class="mi">2</span><span class="o">|</span><span class="mi">3</span><span class="p">}</span><span class="o">:</span><span class="n">vname</span><span class="p">[</span><span class="err">#</span><span class="n">rrggbb</span><span class="p">[</span><span class="o">:</span><span class="n">legend</span><span class="p">]]]</span> <span class="p">[</span><span class="n">AREA</span><span class="o">:</span><span class="n">vname</span><span class="p">[</span><span class="err">#</span><span class="n">rrggbb</span><span class="p">[</span><span class="o">:</span><span class="n">legend</span><span class="p">]]]</span> <span class="p">[</span><span class="n">STACK</span><span class="o">:</span><span class="n">vname</span><span class="p">[</span><span class="err">#</span><span class="n">rrggbb</span><span class="p">[</span><span class="o">:</span><span class="n">legend</span><span class="p">]]]</span>
+
+<span class="n">filename</span><span class="err">：图片的名称，默认是</span><span class="n">PNG</span><span class="err">格式</span>
+<span class="o">--</span><span class="n">start</span><span class="err">：图片</span><span class="n">X</span><span class="err">轴数据的起始时间</span>
+<span class="o">--</span><span class="n">end</span><span class="err">：图片</span><span class="n">X</span><span class="err">轴数据的结束时间</span>
+<span class="o">--</span><span class="n">x</span><span class="o">-</span><span class="n">grid</span> <span class="n">x</span><span class="o">-</span><span class="n">axis</span> <span class="n">grid</span> <span class="n">and</span> <span class="n">label</span><span class="err">：</span>
+<span class="o">--</span><span class="n">y</span><span class="o">-</span><span class="n">grid</span> <span class="n">y</span><span class="o">-</span><span class="n">axis</span> <span class="n">grid</span> <span class="n">and</span> <span class="n">label</span><span class="err">：</span>
+<span class="o">--</span><span class="n">alt</span><span class="o">-</span><span class="n">y</span><span class="o">-</span><span class="n">grid</span>
+<span class="o">--</span><span class="n">alt</span><span class="o">-</span><span class="n">y</span><span class="o">-</span><span class="n">mrtg</span>
+<span class="o">--</span><span class="n">alt</span><span class="o">-</span><span class="n">autoscale</span>
+<span class="o">--</span><span class="n">alt</span><span class="o">-</span><span class="n">autoscale</span><span class="o">-</span><span class="n">max</span>
+<span class="o">--</span><span class="n">units</span><span class="o">-</span><span class="n">exponent</span>
+<span class="o">--</span><span class="n">vertical</span><span class="o">-</span><span class="n">label</span> <span class="n">text</span>  <span class="n">Y</span><span class="err">轴的文字说明</span>
+<span class="o">--</span><span class="n">width</span> <span class="n">pixels</span>  <span class="n">X</span><span class="err">轴的大小</span>
+<span class="o">--</span><span class="n">height</span> <span class="n">pixels</span>  <span class="n">Y</span><span class="err">轴的大小</span>
+<span class="o">--</span><span class="n">interlaced</span>
+<span class="o">--</span><span class="n">imginfo</span> <span class="n">formatstring</span>  
+<span class="o">--</span><span class="n">imgformat</span> <span class="n">GIF</span><span class="o">|</span><span class="n">PNG</span><span class="o">|</span><span class="n">GD</span>  <span class="err">图片格式</span>
+<span class="o">--</span><span class="n">background</span> <span class="n">value</span>
+<span class="o">--</span><span class="n">overlay</span> <span class="n">value</span>
+<span class="o">--</span><span class="n">unit</span> <span class="n">value</span>
+<span class="o">--</span><span class="n">lazy</span>
+<span class="o">--</span><span class="n">logarithmic</span>
+<span class="o">--</span><span class="n">upper</span><span class="o">-</span><span class="n">limit</span> <span class="n">value</span>  <span class="n">Y</span><span class="err">轴数据值的上限，默认会自动调整</span><span class="n">Y</span><span class="err">轴的数字</span>
+<span class="o">--</span><span class="n">lower</span><span class="o">-</span><span class="n">limit</span> <span class="n">value</span>  <span class="n">Y</span><span class="err">轴数据值的下限</span>
+<span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">legend</span>  <span class="err">取消图表下方的图例</span>
+<span class="o">--</span><span class="n">rigid</span>  <span class="err">严格按照</span><span class="n">upper</span><span class="o">-</span><span class="n">limit</span><span class="o">/</span><span class="n">lower</span><span class="o">-</span><span class="n">limit</span><span class="err">来绘制</span>
+<span class="o">--</span><span class="n">step</span> <span class="n">value</span>
+<span class="o">--</span><span class="n">base</span> <span class="n">value</span>  <span class="err">默认</span><span class="mi">1</span><span class="n">K</span><span class="o">=</span><span class="mi">1000</span> <span class="err">可以调整</span><span class="mi">1</span><span class="n">K</span><span class="o">=</span><span class="mi">1024</span>
+<span class="o">--</span><span class="n">color</span> <span class="n">COLORTAG</span><span class="err">#</span><span class="n">rrggbb</span>
+<span class="o">--</span><span class="n">title</span> <span class="n">title</span>  <span class="err">图表上方的标题</span>
+<span class="nl">DEF:</span><span class="n">vname</span><span class="o">=</span><span class="n">rrd</span><span class="o">:</span><span class="n">ds</span><span class="o">-</span><span class="n">name</span><span class="o">:</span><span class="n">CF</span> <span class="err">定义绘图用的数据源，也就是从那个</span><span class="n">RRD</span><span class="err">中取数据，因为</span><span class="n">RRA</span><span class="err">有多种类型，所以需要指定</span><span class="n">CF</span>
+<span class="nl">CDEF:</span><span class="n">vname</span><span class="o">=</span><span class="n">rpn</span><span class="o">-</span><span class="n">expression</span>  <span class="err">定义合并值，</span>
+<span class="nl">PRINT:</span><span class="n">vname</span><span class="o">:</span><span class="n">CF</span><span class="o">:</span><span class="n">format</span>
+<span class="nl">GPRINT:</span><span class="n">vname</span><span class="o">:</span><span class="n">CF</span><span class="o">:</span><span class="n">format</span>  <span class="err">在图表的下方输出最大值、最小值之类</span>
+<span class="nl">COMMENT:</span><span class="n">text</span>  <span class="err">用来输出一些字符串</span>
+<span class="nl">HRULE:</span><span class="n">value</span><span class="err">#</span><span class="n">rrggbb</span>  <span class="err">在图表上绘制水平线</span>
+<span class="nl">VRULE:</span><span class="n">time</span><span class="err">#</span><span class="n">rrggbb</span>  <span class="err">在图表上绘制垂直线</span>
+<span class="n">LINE</span><span class="p">{</span><span class="mi">1</span><span class="o">|</span><span class="mi">2</span><span class="o">|</span><span class="mi">3</span><span class="p">}</span><span class="o">:</span><span class="n">vname</span>  <span class="err">使用线条来绘制</span><span class="n">vname</span><span class="err">的数据图</span>
+<span class="nl">AREA:</span><span class="n">vname</span>  <span class="err">使用方块来绘制</span><span class="n">vname</span><span class="err">的数据图</span>
+<span class="nl">STACK:</span><span class="n">vname</span> 
+</pre></div>
+
+
+<h2 id="0x02-crontab">0x02 crontab</h2>
+<p><a href="http://linux.vbird.org/linux_basic/0430cron.php">鸟哥的私房菜 cron</a></p>
+<p><a href="http://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/crontab.html">gitbook crontab</a></p>
+<h3 id="_2">配置</h3>
+<p><code>/etc/cron.allow</code> 可以使用 crontab 的帐号写入其中，若不在这个文件的使用者则不可使用 crontab； <code>/etc/cron.deny</code> 不可以使用 crontab 的帐号写入其中，若未记录到这个文件的使用者，就可以使用 crontab。 当使用者使用 crontab 指令建立工作排成之后，该项工作会被记录到 <code>/var/spool/cron</code> 文件中，cron 的每项工作都会记录到 <code>/var/log/corn</code> 文件， 可以通过查这个文件，检查系统是否植入木马等。 </p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

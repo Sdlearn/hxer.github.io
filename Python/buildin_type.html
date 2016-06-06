@@ -1,0 +1,749 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>常用内置对象操作 - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Python">Python</a>&nbsp;»&nbsp;常用内置对象操作</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">常用内置对象操作</div>
+  <div id="content">
+  <h2 id="0x01-string">0x01 string</h2>
+<h3 id="_1">基本操作</h3>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;a&quot;</span> <span class="o">+</span> <span class="s">&quot;b&quot;</span>
+<span class="s">&#39;ab&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;a&quot;</span> <span class="o">*</span> <span class="mi">3</span>
+<span class="s">&#39;aaa&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">])</span>           <span class="c"># 合并多个字符串</span>
+<span class="s">&#39;a,b,c&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;a,b,c&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">)</span>                  <span class="c"># 按指定字符分割</span>
+<span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;a</span><span class="se">\n</span><span class="s">b</span><span class="se">\r\n</span><span class="s">c&quot;</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>            <span class="c"># 按行分割</span>
+<span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;a</span><span class="se">\n</span><span class="s">b</span><span class="se">\r\n</span><span class="s">c&quot;</span><span class="o">.</span><span class="n">splitlines</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>        <span class="c"># 分割后,保留换行行符。</span>
+<span class="p">[</span><span class="s">&#39;a</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="s">&#39;b</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;abc&quot;</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;ab&quot;</span><span class="p">),</span> <span class="s">&quot;abc&quot;</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&quot;bc&quot;</span><span class="p">)</span><span class="err">!</span>       <span class="c"># 判断是否以特定子子串开始或结束。</span>
+<span class="bp">True</span><span class="p">,</span> <span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;abc&quot;</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="s">&quot;Abc&quot;</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>        <span class="c"># 大大小小写转换。</span>
+<span class="s">&#39;ABC&#39;</span><span class="p">,</span> <span class="s">&#39;abc&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;abcabc&quot;</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;bc&quot;</span><span class="p">),</span> <span class="s">&quot;abcabc&quot;</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;bc&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>         <span class="c"># 可指定查找起始结束位置。</span>
+<span class="mi">1</span><span class="p">,</span> <span class="mi">4</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot; abc&quot;</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(),</span> <span class="s">&quot;abc &quot;</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(),</span> <span class="s">&quot; abc &quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>   <span class="c"># 剔除前后空格。</span>
+<span class="s">&#39;abc&#39;</span><span class="p">,</span> <span class="s">&#39;abc&#39;</span><span class="p">,</span> <span class="s">&#39;abc&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;abc&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&quot;ac&quot;</span><span class="p">)</span>                   <span class="c"># 可删除指定的前后缀字符。</span>
+<span class="s">&#39;b&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;abcabc&quot;</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;bc&quot;</span><span class="p">,</span> <span class="s">&quot;BC&quot;</span><span class="p">)</span>        <span class="c"># 可指定替换次数。</span>
+<span class="s">&#39;aBCaBC&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;a</span><span class="se">\t</span><span class="s">bc&quot;</span><span class="o">.</span><span class="n">expandtabs</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>               <span class="c"># 将 tab 替换成空格。</span>
+<span class="s">&#39;a    bc&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;123&quot;</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s">&#39;0&#39;</span><span class="p">),</span> <span class="s">&quot;456&quot;</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s">&#39;0&#39;</span><span class="p">),</span> <span class="s">&quot;abc&quot;</span><span class="o">.</span><span class="n">center</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s">&#39;*&#39;</span><span class="p">)</span>     <span class="c"># 填充</span>
+<span class="s">&#39;12300&#39;</span><span class="p">,</span> <span class="s">&#39;00456&#39;</span><span class="p">,</span> <span class="s">&#39;***abc****&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;123&quot;</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span> <span class="s">&quot;123456&quot;</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>   <span class="c"># 数字填充</span>
+<span class="s">&#39;000123&#39;</span><span class="p">,</span> <span class="s">&#39;123456&#39;</span>
+</pre></div>
+
+
+<h3 id="_2">格式化</h3>
+<p>Python 提供了两种字符串格式化方方法</p>
+<ol>
+<li><code>%[(key)][flags][width][.precision]typecode</code></li>
+</ol>
+<p>标记: - 左对齐, + 数字符号, # 进制前缀, 或者用用空格、0 填充。</p>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;</span><span class="si">%(key)s</span><span class="s">=</span><span class="si">%(value)d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="nb">dict</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>       <span class="c"># key</span>
+<span class="s">&#39;a=10&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;[</span><span class="si">%-10s</span><span class="s">]&quot;</span> <span class="o">%</span> <span class="s">&quot;a&quot;</span>         <span class="c"># 左对齐</span>
+<span class="s">&#39;[a         ]&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;</span><span class="si">%+d</span><span class="s">, </span><span class="si">%+d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c"># 数字符号</span>
+<span class="s">&#39;-10, +10&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;</span><span class="si">%010d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="mi">3</span>             <span class="c"># 填充</span>
+<span class="s">&#39;0000000003&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;</span><span class="si">%.2f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="mf">0.1234</span>         <span class="c"># 小小数位</span>
+<span class="s">&#39;0.12&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;</span><span class="si">%#x</span><span class="s">, </span><span class="si">%#X</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span> <span class="c"># 十十六进制、前缀、大大小小写</span>
+<span class="s">&#39;0x64, 0XC8&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">, </span><span class="si">%r</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>       <span class="c"># s: str(); r: repr()</span>
+<span class="s">&#39;test..., &lt;__main__.M object at 0x103c4aa10&gt;&#39;</span>
+</pre></div>
+
+
+<ol>
+<li>format 方方法支支持更多的数据类型,包括列表、字典、对象成员等</li>
+</ol>
+<p><code>{field!convertflag:formatspec}</code></p>
+<p>格式化规范: formatspec: <code>[[fill]align][sign][#][0][width][.precision][typecode]</code></p>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;{key}={value}&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>   <span class="err">#</span> <span class="err">使用用命名参数</span>
+<span class="err">&#39;</span><span class="n">a</span><span class="o">=</span><span class="mi">10</span><span class="err">&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;{0},{1},{0}&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>                  <span class="err">#</span> <span class="n">field</span> <span class="err">可多次使用用</span>
+<span class="err">&#39;</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="err">&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;{0:,}&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="mi">1234567</span><span class="p">)</span>                     <span class="err">#</span> <span class="err">千分位符号</span> 
+<span class="err">&#39;</span><span class="mi">1</span><span class="p">,</span><span class="mi">234</span><span class="p">,</span><span class="mi">567</span><span class="err">&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;{0:,.2f}&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="mf">12345.6789</span><span class="p">)</span>               <span class="err">#</span> <span class="err">千分位</span><span class="p">,</span><span class="err">带小小数位。</span>
+<span class="err">&#39;</span><span class="mi">12</span><span class="p">,</span><span class="mf">345.68</span><span class="err">&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;[{0:&lt;10}], [{0:^10}], [{0:*&gt;10}]&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">)</span><span class="o">!</span> <span class="err">#</span> <span class="err">左中右对齐</span><span class="p">,</span><span class="err">可指定填充字符。</span>
+<span class="err">&#39;</span><span class="p">[</span><span class="n">a</span>       <span class="p">],</span> <span class="p">[</span>    <span class="n">a</span>     <span class="p">],</span> <span class="p">[</span><span class="o">*********</span><span class="n">a</span><span class="p">]</span><span class="err">&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">import</span> <span class="n">sys</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;{0.platform}&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">sys</span><span class="p">)</span>          <span class="err">#</span> <span class="err">成员</span>
+<span class="err">&#39;</span><span class="n">linux2</span><span class="err">&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;{0[a]}&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">dict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">20</span><span class="p">))</span>   <span class="err">#</span> <span class="err">字典</span>
+<span class="err">&#39;</span><span class="mi">10</span><span class="err">&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;{0[5]}&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>          <span class="err">#</span> <span class="err">列表</span>
+<span class="sc">&#39;5&#39;</span>
+</pre></div>
+
+
+<p>另有 string.Template 模板可供使用用。该模块还定义了各种常见的字符序列。</p>
+<div class="hlcode"><pre>&gt;&gt;&gt; from string import letters, digits, Template
+&gt;&gt;&gt; letters`        # 字母母表
+&#39;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;
+&gt;&gt;&gt; digits          # 数字表
+&#39;0123456789&#39;
+&gt;&gt;&gt; Template(&quot;<span class="nv">$name</span>, <span class="nv">$age</span>&quot;).substitute(name = &quot;User1&quot;, age = 20)    # 模板替换。
+&#39;User1, 20&#39;
+&gt;&gt;&gt; Template(&quot;<span class="cp">${</span><span class="n">name</span><span class="cp">}</span>, <span class="nv">$age</span>&quot;).safe_substitute(name = &quot;User1&quot;)       # 没找到值,不会抛出异常。
+&#39;User1, <span class="nv">$age</span>&#39;
+</pre></div>
+
+
+<h2 id="0x02">0x02 字符串数字转换</h2>
+<p>二进制：    ‘0b’ 开头
+八进制：    ‘0o’ 开头
+十六进制：  ‘0x’ 开头</p>
+<ul>
+<li>整数 &lt;==&gt; 字符串</li>
+</ul>
+<div class="hlcode"><pre><span class="n">hex</span><span class="p">()</span>       <span class="n">hex</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">string</span>       
+<span class="o">&gt;</span> <span class="n">hex</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">==&gt;</span> <span class="err">&#39;</span><span class="mh">0xa</span><span class="err">&#39;</span>
+
+<span class="kt">int</span><span class="p">()</span>       <span class="kt">int</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">int</span> <span class="n">or</span> <span class="kt">long</span>
+<span class="o">&gt;</span> <span class="kt">int</span><span class="p">(</span><span class="err">&#39;</span><span class="mi">0</span><span class="n">b100</span><span class="err">&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==&gt;</span> <span class="mi">4</span>
+<span class="o">&gt;</span> <span class="kt">int</span><span class="p">(</span><span class="err">&#39;</span><span class="mi">0</span><span class="n">b100</span><span class="err">&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">==&gt;</span> <span class="mi">4</span>
+<span class="o">&gt;</span> <span class="kt">int</span><span class="p">(</span><span class="err">&#39;</span><span class="mh">0x10</span><span class="err">&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span> <span class="o">==&gt;</span> <span class="mi">16</span>
+<span class="o">&gt;</span> <span class="kt">int</span><span class="p">(</span><span class="err">&#39;</span><span class="mi">10</span><span class="err">&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>   <span class="o">==&gt;</span> <span class="mi">16</span>
+
+<span class="n">bin</span><span class="p">()</span>       <span class="n">bin</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">string</span>
+<span class="o">&gt;</span> <span class="n">bin</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">==&gt;</span> <span class="err">&#39;</span><span class="mi">0</span><span class="n">b100</span><span class="err">&#39;</span>
+
+<span class="s">&quot;{0:b}&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">==&gt;</span> <span class="err">&#39;</span><span class="mi">100</span><span class="err">&#39;</span>
+</pre></div>
+
+
+<ul>
+<li>整数 &lt;==&gt; 字节串</li>
+</ul>
+<p>short:2字节， long：4字节</p>
+<div class="hlcode"><pre><span class="n">import</span> <span class="k">struct</span>
+
+<span class="k">struct</span><span class="p">.</span><span class="n">unpack</span><span class="p">(</span><span class="err">&#39;</span><span class="o">&lt;</span><span class="n">HH</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">bytes</span><span class="p">(</span><span class="n">b</span><span class="err">&#39;\</span><span class="n">x01</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">&#39;</span><span class="p">))</span> <span class="o">==&gt;</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">struct</span><span class="p">.</span><span class="n">unpack</span><span class="p">(</span><span class="err">&#39;</span><span class="o">&lt;</span><span class="n">L</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">bytes</span><span class="p">(</span><span class="n">b</span><span class="err">&#39;\</span><span class="n">x01</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">&#39;</span><span class="p">))</span>  <span class="o">==&gt;</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
+
+<span class="k">struct</span><span class="p">.</span><span class="n">pack</span><span class="p">(</span><span class="err">&#39;</span><span class="o">&lt;</span><span class="n">HH</span><span class="err">&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>    <span class="o">==&gt;</span> <span class="err">&#39;\</span><span class="n">x01</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x02</span><span class="err">\</span><span class="n">x00</span><span class="err">&#39;</span>
+<span class="k">struct</span><span class="p">.</span><span class="n">pack</span><span class="p">(</span><span class="err">&#39;</span><span class="o">&lt;</span><span class="n">LL</span><span class="err">&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>    <span class="o">==&gt;</span> <span class="err">&#39;\</span><span class="n">x01</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x02</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">&#39;</span>
+</pre></div>
+
+
+<ul>
+<li>16进制串 &lt;==&gt; 字符串</li>
+</ul>
+<div class="hlcode"><pre><span class="err">&#39;</span><span class="n">abc</span><span class="err">&#39;</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="err">&#39;</span><span class="n">hex</span><span class="err">&#39;</span><span class="p">)</span>     <span class="o">==&gt;</span> <span class="err">&#39;</span><span class="mi">616263</span><span class="err">&#39;</span>
+<span class="n">binascii</span><span class="p">.</span><span class="n">b2a_hex</span><span class="p">(</span><span class="err">&#39;</span><span class="n">abc</span><span class="err">&#39;</span><span class="p">)</span> <span class="o">==&gt;</span> <span class="err">&#39;</span><span class="mi">616263</span><span class="err">&#39;</span>
+<span class="n">binascii</span><span class="p">.</span><span class="n">hexlify</span><span class="p">(</span><span class="err">&#39;</span><span class="n">abc</span><span class="err">&#39;</span><span class="p">)</span> <span class="o">==&gt;</span> <span class="err">&#39;</span><span class="mi">616263</span><span class="err">&#39;</span>
+
+<span class="err">&#39;</span><span class="mi">616263</span><span class="err">&#39;</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="err">&#39;</span><span class="n">hex</span><span class="err">&#39;</span><span class="p">)</span>      <span class="o">==&gt;</span> <span class="err">&#39;</span><span class="n">abc</span><span class="err">&#39;</span>
+<span class="n">binascii</span><span class="p">.</span><span class="n">a2b_hex</span><span class="p">(</span><span class="err">&#39;</span><span class="mi">616263</span><span class="err">&#39;</span><span class="p">)</span>  <span class="o">==&gt;</span> <span class="err">&#39;</span><span class="n">abc</span><span class="err">&#39;</span>
+<span class="n">binascii</span><span class="p">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="err">&#39;</span><span class="mi">616263</span><span class="err">&#39;</span><span class="p">)</span><span class="o">==&gt;</span> <span class="err">&#39;</span><span class="n">abc</span><span class="err">&#39;</span>
+</pre></div>
+
+
+<ul>
+<li>字符串 &lt;==&gt; 字节串</li>
+</ul>
+<div class="hlcode"><pre>
+</pre></div>
+
+
+<ul>
+<li>unicode</li>
+</ul>
+<p>\u 后面是十六进制的Unicode码</p>
+<div class="hlcode"><pre><span class="o">+</span> <span class="n">prefix</span> <span class="n">u</span>
+
+<span class="n">u</span><span class="err">‘中文’</span> <span class="o">==&gt;</span> <span class="n">u</span><span class="err">&#39;\</span><span class="n">u4e2d</span><span class="err">\</span><span class="n">u6587</span><span class="err">&#39;</span>
+
+<span class="o">+</span> <span class="n">unicode</span> <span class="err">强制转换</span>
+
+<span class="err">要求</span> <span class="n">python</span><span class="err">文件中指定了对应的编码类型；并且对应的</span><span class="n">python</span><span class="err">文件的确是以该编码方式保存的</span>
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="cp"># -*- coding: utf-8 -*-</span>
+
+<span class="n">import</span> <span class="n">sys</span>
+
+<span class="n">reload</span><span class="p">(</span><span class="n">sys</span><span class="p">)</span>
+<span class="n">sys</span><span class="p">.</span><span class="n">setdefaultencoding</span><span class="p">(</span><span class="s">&quot;utf-8&quot;</span><span class="p">)</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="err">&#39;中文&#39;</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">u</span><span class="err">&#39;\</span><span class="n">u4e2d</span><span class="err">\</span><span class="n">u6587</span><span class="err">&#39;</span>
+</pre></div>
+
+
+<ul>
+<li>unicode &lt;==&gt; string</li>
+</ul>
+<p>unicode ==&gt; string : encode</p>
+<p>string  ==&gt; unicode: decode</p>
+<h2 id="0x03">0x03 编码</h2>
+<p>Python 2.x 默认采用用 ASCII 编码。为了完成编码转换,必须和操作系统字符编码统一一起来。</p>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">import</span> <span class="n">sys</span><span class="p">,</span> <span class="n">locale</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sys</span><span class="p">.</span><span class="n">getdefaultencoding</span><span class="p">()</span>            <span class="err">#</span> <span class="n">Python</span> <span class="err">默认编码。</span>
+<span class="err">&#39;</span><span class="n">ascii</span><span class="err">&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="n">locale</span><span class="p">.</span><span class="n">getdefaultlocale</span><span class="p">();</span> <span class="n">c</span>    <span class="err">#</span> <span class="err">获取当前系统编码。</span>
+<span class="p">(</span><span class="err">&#39;</span><span class="n">zh_CN</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span><span class="err">&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">reload</span><span class="p">(</span><span class="n">sys</span><span class="p">)</span>                         <span class="err">#</span> <span class="n">setdefaultencoding</span> <span class="err">在被初始化时被</span> <span class="n">site</span><span class="p">.</span><span class="n">py</span> <span class="err">删掉了。</span>
+<span class="o">&lt;</span><span class="n">module</span> <span class="err">&#39;</span><span class="n">sys</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">built</span><span class="o">-</span><span class="n">in</span><span class="p">)</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sys</span><span class="p">.</span><span class="n">setdefaultencoding</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>        <span class="err">#</span> <span class="err">重新设置默认编码。</span>
+</pre></div>
+
+
+<p>str、unicode 都提供了 encode 和 decode 编码转换方方法。</p>
+<ul>
+<li>encode: 将默认编码转换为其他编码。</li>
+<li>decode: 将默认或者指定编码字符串转换为 unicode</li>
+</ul>
+<p>标准库 codecs 模块用用来处理更复杂的编码转换</p>
+<h3 id="base64">base64</h3>
+<ul>
+<li>characters set</li>
+</ul>
+<div class="hlcode"><pre><span class="n">ABCDEFGHIJKLMNOP</span>
+<span class="n">QRSTUVWXYZabcdef</span>
+<span class="n">ghijklmnopqrstuv</span>
+<span class="n">wxyz0123456789</span><span class="o">+/</span>
+</pre></div>
+
+
+<h2 id="0x04-list">0x04 list</h2>
+<h3 id="_3">基本操作</h3>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="p">[]</span>                          <span class="c"># 空列表</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span>   
+<span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">]</span>     <span class="c"># 连接多个列表</span>
+<span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="s">&quot;abcd&quot;</span><span class="p">)</span>                <span class="c"># 将序列类型或迭代器转换为列表</span>
+<span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>       <span class="c"># 生生成器表达式</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+
+<span class="o">&gt;&gt;&gt;</span><span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="s">&quot;abcbc&quot;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span><span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>                      <span class="c"># 切片</span>
+<span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">)</span>                <span class="c"># 统计元素项</span>
+<span class="mi">2</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>             <span class="c"># 从指定位置查找项，返回序号</span>
+<span class="mi">3</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;d&#39;</span><span class="p">)</span>               <span class="c"># 追加元素</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span>
+<span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>              <span class="c"># 指定位置插入元素</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span>
+<span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>          <span class="c"># 合并列表</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span>
+<span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">)</span>               <span class="c"># 移除第一个指定元素</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span>
+<span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>                    <span class="c"># 弹出指定位置的元素(默认最后项)</span>
+<span class="s">&#39;a&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span>
+<span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+
+
+<h3 id="bisect">bisect 向有序列表中插入入元素</h3>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">import</span> <span class="n">bisect</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;d&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">,</span> <span class="s">&quot;e&quot;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span><span class="p">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span>
+<span class="p">[</span><span class="sc">&#39;a&#39;</span><span class="p">,</span> <span class="sc">&#39;c&#39;</span><span class="p">,</span> <span class="sc">&#39;d&#39;</span><span class="p">,</span> <span class="sc">&#39;e&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">bisect</span><span class="p">.</span><span class="n">insort</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span>
+<span class="p">[</span><span class="sc">&#39;a&#39;</span><span class="p">,</span> <span class="sc">&#39;b&#39;</span><span class="p">,</span> <span class="sc">&#39;c&#39;</span><span class="p">,</span> <span class="sc">&#39;d&#39;</span><span class="p">,</span> <span class="sc">&#39;e&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">bisect</span><span class="p">.</span><span class="n">insort</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="s">&quot;d&quot;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span>
+<span class="p">[</span><span class="sc">&#39;a&#39;</span><span class="p">,</span> <span class="sc">&#39;b&#39;</span><span class="p">,</span> <span class="sc">&#39;c&#39;</span><span class="p">,</span> <span class="sc">&#39;d&#39;</span><span class="p">,</span> <span class="sc">&#39;d&#39;</span><span class="p">,</span> <span class="sc">&#39;e&#39;</span><span class="p">]</span>
+</pre></div>
+
+
+<h3 id="array">array</h3>
+<p>某些时候,可以考虑用用数组代替列表。 和列表存储对象指针不同,数组直接内嵌数据,既省了创建
+对象的内存开销,又又提升了读写效率。</p>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">import</span> <span class="n">array</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">array</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="s">&quot;l&quot;</span><span class="p">,</span> <span class="n">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>     <span class="err">#</span> <span class="err">用用其他序列类型初始化数组。</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+<span class="n">array</span><span class="p">(</span><span class="sc">&#39;l&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">.</span><span class="n">tolist</span><span class="p">()</span>                          <span class="err">#</span> <span class="err">转换为列表。</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">array</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="s">&quot;c&quot;</span><span class="p">)</span>                <span class="err">#</span> <span class="err">创建特定类型数组。</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">.</span><span class="n">fromstring</span><span class="p">(</span><span class="s">&quot;abc&quot;</span><span class="p">)</span>                 <span class="err">#</span> <span class="err">从字符串添加元素。</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+<span class="n">array</span><span class="p">(</span><span class="sc">&#39;c&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">abc</span><span class="err">&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">.</span><span class="n">fromlist</span><span class="p">(</span><span class="n">list</span><span class="p">(</span><span class="s">&quot;def&quot;</span><span class="p">))</span>             <span class="err">#</span> <span class="err">从列表添加元素。</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+<span class="n">array</span><span class="p">(</span><span class="sc">&#39;c&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">abcdef</span><span class="err">&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">.</span><span class="n">extend</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="s">&quot;c&quot;</span><span class="p">,</span> <span class="s">&quot;xyz&quot;</span><span class="p">))</span>   <span class="err">#</span> <span class="err">合并列表或数组。</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+<span class="n">array</span><span class="p">(</span><span class="sc">&#39;c&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">abcdefxyz</span><span class="err">&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<h2 id="0x05-tuple">0x05 tuple</h2>
+<ul>
+<li>只读对象,元组和元素指针数组内存是一一次性连续分配的</li>
+<li>虚拟机缓存 n 个元素数量小小于 20 的元组复用用对象</li>
+</ul>
+<p>在编码中,应该尽可能用用元组代替列表。除内存复用用更高高效外,其只读特征更利于并行行开发</p>
+<h3 id="_4">基本操作:</h3>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span>             <span class="err">#</span> <span class="err">少了逗号</span><span class="p">,</span><span class="err">就成了普通的括号运算符了</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">type</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">type</span> <span class="err">&#39;</span><span class="kt">int</span><span class="err">&#39;</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,)</span>            <span class="err">#</span> <span class="err">这才是元组</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">type</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">type</span> <span class="err">&#39;</span><span class="n">tuple</span><span class="err">&#39;</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="n">tuple</span><span class="p">(</span><span class="s">&quot;abcadef&quot;</span><span class="p">)</span><span class="o">!</span> <span class="o">!</span> <span class="o">!</span> <span class="err">#</span> <span class="err">将其他序列类型转换成元组。</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span>
+<span class="p">(</span><span class="sc">&#39;a&#39;</span><span class="p">,</span> <span class="sc">&#39;b&#39;</span><span class="p">,</span> <span class="sc">&#39;c&#39;</span><span class="p">,</span> <span class="sc">&#39;a&#39;</span><span class="p">,</span> <span class="sc">&#39;d&#39;</span><span class="p">,</span> <span class="sc">&#39;e&#39;</span><span class="p">,</span> <span class="sc">&#39;f&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">)</span>        <span class="err">#</span> <span class="err">元素统计。</span>
+<span class="mi">2</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">.</span><span class="n">index</span><span class="p">(</span><span class="s">&quot;d&quot;</span><span class="p">)</span>        <span class="err">#</span> <span class="err">查找元素</span><span class="p">,</span><span class="err">返回序号</span>
+<span class="mi">4</span>
+</pre></div>
+
+
+<h3 id="namedtuple">标准库 namedtuple</h3>
+<p>可用用名字访问元素项。</p>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">from</span> <span class="n">collections</span> <span class="n">import</span> <span class="n">namedtuple</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">User</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s">&quot;User&quot;</span><span class="p">,</span> <span class="s">&quot;name age&quot;</span><span class="p">)</span>       <span class="err">#</span> <span class="err">空格分隔字段名</span><span class="p">,</span><span class="err">或使用用迭代器。</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">u</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="s">&quot;user1&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">u</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">u</span><span class="p">.</span><span class="n">age</span>
+<span class="p">(</span><span class="err">&#39;</span><span class="n">user1</span><span class="err">&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+
+<p>其实 namedtuple 并不是元组,而而是利用用模板动态创建的自自定义类型</p>
+<h2 id="0x06-dict">0x06 dict</h2>
+<p>字典 (dict) 采用用开放地址法的哈希表实现</p>
+<ul>
+<li>自自带元素容量为 8 的 smalltable,只有 "超出" 时才到堆上额外分配元素表内存。</li>
+<li>虚拟机缓存 80 个字典复用用对象,但在堆上分配的元素表内存会被释放。</li>
+<li>按需动态调整容量。扩容或收缩操作都将重新分配内存,重新哈希</li>
+<li>删除元素操作不会立立即收缩内存</li>
+</ul>
+<h3 id="_5">创建字典</h3>
+<blockquote>
+<blockquote>
+<blockquote>
+<p 0_="0," 1="1" 2_="2," _a_:="'a':" _b_:="'b':" _c_:="'c':">{}              # 空字典
+{"a":1, "b":2}  # 普通构造方方式
+dict(a = 1, b = 2)          # 构造
+{'a': 1, 'b': 2}
+dict((["a", 1], ["b", 2]))  # 用两个序列类型构造字典
+{'a': 1, 'b': 2}
+dict(zip("ab", range(2)))   # 同上
+{'a': 0, 'b': 1}
+dict(map(None, "abc", range(2)))    #同上
+{'a': 0, 'c': None, 'b': 1}
+dict.fromkeys("abc", 1)     # 用序列作 key， 并提供默认的 value
+{'a': 1, 'c': 1, 'b': 1}
+{k:v for k, v in zip("abc", range(3))}      # 使用用生生成表达式构造字典。</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<div class="hlcode"><pre><span class="c">### 基本操作</span>
+</pre></div>
+
+
+<blockquote>
+<blockquote>
+<blockquote>
+<p>d = {"a":1, "b":2}
+"b" in d            # 判断是否包含 key
+True
+d = {"a":1, "b":2}  # 删除 k/v
+del d["b"]
+d
+{'a': 1}
+d = {"a":1}
+d.update({"c": 3})  # 合并
+d
+{'a': 1, 'c': 3}
+d = {"a":1, "b":2}
+d.pop("b")          # 弹出
+d
+(2, {'a': 1})
+d = {"a":1, "b":2}
+d.popitem()         # 弹出 (key, value)
+('a', 1)</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h1 id="_6">默认返回值</h1>
+<blockquote>
+<blockquote>
+<blockquote>
+<p 1_="1," 2="2" 200_="200," _a_:="'a':" _b_:="'b':" _c_:="'c':">d = {"a":1, "b":2}
+d.get("c")              # 如果没有对应 key, 返回 None
+None
+d.get("d", 123)         # 如果没有对应 key,返回缺省值。
+d.setdefault("a", 100)  # key 存在,直接返回 value。
+1
+d.setdefault("c", 200)  # key 不存在,先设置,后返回。
+200
+d</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<div class="hlcode"><pre><span class="c">### 迭代器操作</span>
+</pre></div>
+
+
+<blockquote>
+<blockquote>
+<blockquote>
+<p>d = {"a":1, "b":2}
+d.keys()
+['a', 'b']
+d.values()
+[1, 2]
+d.items()
+[('a', 1), ('b', 2)]
+for k in d: print k, d[k]
+a 1
+b 2
+for k, v in d.items(): print k, v
+a 1
+b 2</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<div class="hlcode"><pre><span class="err">对于大大字典</span><span class="p">,</span><span class="err">调用用</span> <span class="n">keys</span><span class="p">()</span><span class="err">、</span><span class="n">values</span><span class="p">()</span><span class="err">、</span><span class="n">items</span><span class="p">()</span> <span class="err">会构造同样巨大大的列表。建议用用迭代器替代</span><span class="p">,</span><span class="err">以减</span>
+<span class="err">少内存开销</span>
+</pre></div>
+
+
+<blockquote>
+<blockquote>
+<blockquote>
+<p>d = {"a":1, "b":2}
+d.iterkeys()
+<dictionary-keyiterator object at 0x10de82cb0>
+d.itervalues()
+<dictionary-valueiterator object at 0x10de82d08>
+d.iteritems()
+<dictionary-itemiterator object at 0x10de82d60>
+for k, v in d.iteritems():
+...    print k, v
+a 1
+b 2</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<div class="hlcode"><pre><span class="cp">### 视图</span>
+
+<span class="err">要判断两个字典间的差异</span><span class="p">,</span><span class="err">使用用视图是最简便的做法。</span>
+</pre></div>
+
+
+<blockquote>
+<blockquote>
+<blockquote>
+<p>d1 = dict(a = 1, b = 2)
+d2 = dict(b = 2, c = 3)
+d1 &amp; d2                 # 字典不支支持该操作。
+TypeError: unsupported operand type(s) for &amp;: 'dict' and 'dict'
+v1 = d1.viewitems()
+v2 = d2.viewitems()
+v1 &amp; v2                 # 交集
+set([('b', 2)]) 
+v1 | v2                 # 并集
+set([('a', 1), ('b', 2), ('c', 3)])
+v1 - v2                 # 差集 (仅 v1 有,v2 没有的)
+set([('a', 1)])
+v1 ^ v2                 # 对称差集 (不会同时出现在 v1 和 v2 中)
+set([('a', 1), ('c', 3)])
+('a', 1) in v1          # 判断
+True</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h1 id="_7">更新字典内容</h1>
+<blockquote>
+<blockquote>
+<blockquote>
+<p 10="10" _x_:="'x':">a = dict(x=1)
+b = dict(x=10, y=20)
+39&gt;&gt;&gt; a.update({k:b[k] for k in a.viewkeys() &amp; b.viewkeys()})
+a</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<div class="hlcode"><pre><span class="err">视图会和字典同步变更</span>
+</pre></div>
+
+
+<blockquote>
+<blockquote>
+<blockquote>
+<p>d = {"a": 1}
+v = d.viewitems()
+v
+dict_items([('a', 1)])
+d["b"] = 2
+v
+dict_items([('a', 1), ('b', 2)])
+del d["a"]
+v
+dict_items([('b', 2)])</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<div class="hlcode"><pre><span class="cp">### 扩展</span>
+
+<span class="err">当访问的</span> <span class="n">key</span> <span class="err">不存在时</span><span class="p">,</span> <span class="n">defaultdict</span> <span class="err">自自动调用用</span> <span class="n">factory</span> <span class="err">对象创建所需键值对。</span><span class="n">factory</span> <span class="err">可以是任何无无参数函数或</span> <span class="n">callable</span> <span class="err">对象</span>
+</pre></div>
+
+
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from collections import defaultdict
+d = defaultdict(list)       # key "a" 不存在,直接用用 list() 函数创建一一个空列表作为 value。
+d["a"].append(1)</p>
+<p>d["a"].append(2)
+d["a"]
+[1, 2]</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<div class="hlcode"><pre><span class="err">字典是哈希表</span><span class="p">,</span><span class="err">默认迭代是无无序的。如果希望按照元素添加顺序输出结果</span><span class="p">,</span><span class="err">可以用用</span> <span class="n">OrderedDict</span><span class="err">。</span>
+</pre></div>
+
+
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from collections import OrderedDict
+d = dict()
+d["a"] = 1
+d["b"] = 2
+d["c"] = 3
+for k, v in d.items(): print k, v           # 并非非按添加顺序输出。
+a 1
+c 3
+b 2
+od = OrderedDict()
+od["a"] = 1
+od["b"] = 2
+od["c"] = 3
+for k, v in od.items(): print k, v          # 按添加顺序输出。
+a 1
+b 2
+c 3
+od.popitem()                                # 按 LIFO 顺序弹出。
+('c', 3)
+od.popitem()
+('b', 2)
+od.popitem()
+('a', 1)</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<div class="hlcode"><pre><span class="cp">## 0x07 set</span>
+
+<span class="err">集合</span> <span class="p">(</span><span class="n">set</span><span class="p">)</span> <span class="err">用用来存储无无序不重复对象。所谓不重复对象</span><span class="p">,</span><span class="err">除了不是同一一对象外</span><span class="p">,</span><span class="err">还包括</span> <span class="s">&quot;值&quot;</span> <span class="err">不能相同。集合只能存储可哈希对象</span><span class="p">,</span><span class="err">一一样有只读版本</span> <span class="n">frozenset</span><span class="err">。</span>
+
+<span class="err">判重公式</span><span class="o">:</span> <span class="err">`</span><span class="p">(</span><span class="n">a</span> <span class="n">is</span> <span class="n">b</span><span class="p">)</span> <span class="n">or</span> <span class="p">(</span><span class="n">hash</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="n">hash</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="n">and</span> <span class="n">eq</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span><span class="err">`</span>
+
+<span class="err">在内部实现上</span><span class="p">,</span><span class="err">集合和字典非非常相似</span><span class="p">,</span><span class="err">除了</span> <span class="n">Entry</span> <span class="err">没有</span> <span class="n">value</span> <span class="err">字段。集合不是序列类型</span><span class="p">,</span><span class="err">不能像列表那样按序号访问</span><span class="p">,</span><span class="err">也不能做切片片操作</span>
+</pre></div>
+
+
+<blockquote>
+<blockquote>
+<blockquote>
+<p>s = set("abc")              # 通过序列类型初始化。
+set(['a', 'c', 'b'])
+{v for v in "abc"}          # 通过构造表达式创建
+set(['a', 'c', 'b'])
+"b" in s                    # 判断元素是否在集合中
+True
+s.add("d")                  # 添加元素
+s
+set(['a', 'c', 'b', 'd'])
+s.remove("b")               # 移除元素
+s
+set(['a', 'c', 'd'])
+s.discard("a")              # 如果存在,就移除
+s
+set(['c', 'd'])
+s.update(set("abcd"))       # 合并集合
+s
+set(['a', 'c', 'b', 'd'])
+s.pop()                     # 弹出元素
+'a'
+s
+set(['c', 'b', 'd'])</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<div class="hlcode"><pre><span class="c">### 集合运算</span>
+</pre></div>
+
+
+<blockquote>
+<blockquote>
+<blockquote>
+<p>"c" in set("abcd")          # 判断集合中是否有特定元素
+set("abc") is set("abc")
+False
+set("abc") == set("abc")    # 相等判断
+True
+set("abc") != set("abc")    # 不等判断
+False
+set("abcd") &gt;= set("ab")    # 超集判断 (issuperset)
+True
+set("bc") &lt; set("abcd")     # 子集判断 (issubset)
+True
+set("abcd") | set("cdef")   # 并集 (union)
+set(['a', 'c', 'b', 'e', 'd', 'f'])
+set("abcd") &amp; set("abx")    # 交集 (intersection)
+set(['a', 'b'])
+set("abcd") - set("ab")     # 差集 (difference), 仅左边有,右边没有的
+set(['c', 'd'])
+set("abx") ^ set("aby")     # 对称差集 (symmetric_difference)
+set(['y', 'x'])                 # 不会同时出现在两个集合当中的元素
+set("abcd").isdisjoint("ab")    # 判断是否没有交集
+False</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<div class="hlcode"><pre><span class="c">### 更新操作</span>
+</pre></div>
+
+
+<blockquote>
+<blockquote>
+<blockquote>
+<p>s = set("abcd")
+s |= set("cdef")        # 并集 (update)
+s
+set(['a', 'c', 'b', 'e', 'd', 'f'])
+s = set("abcd")
+s &amp;= set("cdef")        # 交集 (intersection_update)
+s
+set(['c', 'd'])
+s = set("abx")
+s -= set("abcdy")       # 差集 (difference_update)
+s
+set(['x'])
+s = set("abx")
+s ^= set("aby")         # 对称差集 (symmetric_difference_update)
+s
+set(['y', 'x'])</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<div class="hlcode"><pre><span class="err">集合和字典主键都必须是可哈希类型对象</span><span class="p">,</span><span class="err">但常用用的</span> <span class="n">list</span><span class="err">、</span><span class="n">dict</span><span class="err">、</span><span class="n">set</span><span class="err">、</span><span class="n">defaultdict</span><span class="err">、</span><span class="n">OrderedDict</span> <span class="err">都是不可哈希的</span><span class="p">,</span><span class="err">仅有</span> <span class="n">tuple</span><span class="err">、</span><span class="n">frozenset</span> <span class="err">可用用</span>
+</pre></div>
+
+
+<blockquote>
+<blockquote>
+<blockquote>
+<p>hash([])
+TypeError: unhashable type: 'list'
+hash({})
+TypeError: unhashable type: 'dict'
+hash(set())
+TypeError: unhashable type: 'set'
+hash(tuple()), hash(frozenset())
+(3527539, 133156838395276)</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<div class="hlcode"><pre><span class="err">如果想把自自定义类型放入入集合</span><span class="p">,</span><span class="err">需要保证</span> <span class="n">hash</span> <span class="err">和</span> <span class="n">equal</span> <span class="err">的结果都相同才能去重</span>
+</pre></div>
+
+
+<blockquote>
+<blockquote>
+<blockquote>
+<p>class User(object):
+...     def <strong>init</strong>(self, name):
+...         self.name = name
+hash(User("tom"))           # 每次的哈希结果都不同
+279218517
+hash(User("tom"))
+279218521
+class User(object):
+...    def <strong>init</strong>(self, name):
+...        self.name = name
+...    def <strong>hash</strong>(self):
+...        return hash(self.name)
+...    def <strong>eq</strong>(self, o):
+...        if not o or not isinstance(o, User): return False
+...        return self.name == o.name
+s = set()
+s.add(User("tom"))
+s.add(User("tom"))
+s
+set([&lt;<strong>main</strong>.User object at 0x10a48d150&gt;])</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<div class="hlcode"><pre><span class="o">******</span>
+
+<span class="cp"># python3</span>
+
+
+<span class="err">字符串转字节串</span><span class="o">:</span>
+</pre></div>
+
+
+<p>字符串编码为字节码: '12abc'.encode('ascii')  ==&gt;  b'12abc'
+数字或字符数组: bytes([1,2, ord('1'),ord('2')])  ==&gt;  b'\x01\x0212'
+16进制字符串: bytes().fromhex('010210')  ==&gt;  b'\x01\x02\x10'
+16进制字符串: bytes(map(ord, '\x01\x02\x31\x32'))  ==&gt;  b'\x01\x0212'
+16进制数组: bytes([0x01,0x02,0x31,0x32])  ==&gt;  b'\x01\x0212'</p>
+<div class="hlcode"><pre><span class="err">字节串转字符串</span><span class="o">:</span>
+</pre></div>
+
+
+<p>字节码解码为字符串: bytes(b'\x31\x32\x61\x62').decode('ascii')  ==&gt;  12ab
+字节串转16进制表示,夹带ascii: str(bytes(b'\x01\x0212'))[2:-1]  ==&gt;  \x01\x0212
+字节串转16进制表示,固定两个字符表示: str(binascii.b2a_hex(b'\x01\x0212'))[2:-1]  ==&gt;  01023132
+字节串转16进制数组: [hex(x) for x in bytes(b'\x01\x0212')]  ==&gt;  ['0x1', '0x2', '0x31', '0x32']
+```</p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

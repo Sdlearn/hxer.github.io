@@ -132,43 +132,20 @@
 </pre></div>
 
 
-<h2 id="burpsuite">burpsuite</h2>
-<p><a href="http://drops.wooyun.org/tools/1548">乌云 Brup使用介绍</a></p>
-<p>检测模式</p>
-<p>sniper  -- payload 数为1</p>
-<div class="hlcode"><pre><span class="o">-----</span> <span class="n">username</span><span class="o">/</span><span class="n">password</span> <span class="o">--------</span> <span class="n">sniper</span> <span class="p">{</span><span class="o">%</span><span class="n">username</span><span class="o">%---</span><span class="err">表示测试变量，也就是字典值</span><span class="p">}</span>
-<span class="o">-----%</span><span class="n">username</span><span class="o">%/</span><span class="n">password</span>
-<span class="o">-----</span><span class="n">username</span><span class="o">/%</span><span class="n">password</span><span class="o">%</span>
-</pre></div>
-
-
-<p>battering ram -- payload 数为1    </p>
-<div class="hlcode"><pre><span class="o">------</span><span class="n">username</span><span class="o">/</span><span class="n">password</span> <span class="o">-------</span> <span class="n">battering</span> <span class="n">ram</span> <span class="err">测试</span>
-<span class="o">------%</span><span class="n">username</span><span class="o">%=%</span><span class="n">password</span><span class="o">%</span>
-</pre></div>
-
-
-<p>pitchfork</p>
-<div class="hlcode"><pre><span class="o">-----</span><span class="n">username</span><span class="o">/</span><span class="n">password</span> <span class="o">-------</span> <span class="n">pitchfork</span> <span class="err">测试</span>
-</pre></div>
-
-
-<p>cluster bomb</p>
-<div class="hlcode"><pre><span class="o">-------</span><span class="n">username</span><span class="o">/</span><span class="n">password</span> <span class="o">----------</span> <span class="n">cluster</span> <span class="n">bomb</span> <span class="err">测试</span>
-</pre></div>
-
-
 <h2 id="webscarab">webscarab</h2>
 <h2 id="cewl-custom-word-list-generator">CeWL - Custom Word List generator</h2>
 <h1 id="sql">SQL</h1>
 <h2 id="sqlmap">sqlmap</h2>
-<p>sqlmap.py -u url --dbms                 爆后端数据库
-sqlmap.py -u url --dbms "数据库名" --dbs 
-sqlmap.py -u url --dbms "数据库名" --tables              爆数据库表
-sqlmap.py -u url --dbms "数据库名" --current-db             显示当前连接数据库名
-sqlmap.py -u url --dbms "数据库名" --tables  -D "数据库名"                   列出数据库表中的表名
-sqlmap.py -u url --dbms "数据库名" --columns  -T "表名" -D "数据库名"         列出数据库名中的表名内容
-sqlmap.py -u url --dbms "数据库名" --dump  -C "字段,字段"  -T "表名" -D "数据库名"       获取字段里面的内容</p>
+<div class="hlcode"><pre><span class="n">sqlmap</span><span class="p">.</span><span class="n">py</span> <span class="o">-</span><span class="n">u</span> <span class="n">url</span> <span class="o">--</span><span class="n">dbms</span>                                 <span class="err">爆后端数据库</span><span class="p">,</span> <span class="n">eg</span><span class="p">.</span> <span class="n">mysql</span>
+<span class="n">sqlmap</span><span class="p">.</span><span class="n">py</span> <span class="o">-</span><span class="n">u</span> <span class="n">url</span> <span class="o">--</span><span class="n">dbms</span> <span class="s">&quot;后端数据库名&quot;</span> <span class="o">--</span><span class="n">dbs</span> 
+<span class="n">sqlmap</span><span class="p">.</span><span class="n">py</span> <span class="o">-</span><span class="n">u</span> <span class="n">url</span> <span class="o">--</span><span class="n">dbms</span> <span class="s">&quot;后端数据库名&quot;</span> <span class="o">--</span><span class="n">tables</span>                 <span class="err">爆数据库表</span>
+<span class="n">sqlmap</span><span class="p">.</span><span class="n">py</span> <span class="o">-</span><span class="n">u</span> <span class="n">url</span> <span class="o">--</span><span class="n">dbms</span> <span class="s">&quot;后端数据库名&quot;</span> <span class="o">--</span><span class="n">current</span><span class="o">-</span><span class="n">db</span>             <span class="err">显示当前连接数据库名</span>
+<span class="n">sqlmap</span><span class="p">.</span><span class="n">py</span> <span class="o">-</span><span class="n">u</span> <span class="n">url</span> <span class="o">--</span><span class="n">dbms</span> <span class="s">&quot;后端数据库名&quot;</span> <span class="o">--</span><span class="n">tables</span>  <span class="o">-</span><span class="n">D</span> <span class="s">&quot;数据库名&quot;</span>                   <span class="err">列出数据库表中的表名</span>
+<span class="n">sqlmap</span><span class="p">.</span><span class="n">py</span> <span class="o">-</span><span class="n">u</span> <span class="n">url</span> <span class="o">--</span><span class="n">dbms</span> <span class="s">&quot;后端数据库名&quot;</span> <span class="o">--</span><span class="n">columns</span>  <span class="o">-</span><span class="n">T</span> <span class="s">&quot;表名&quot;</span> <span class="o">-</span><span class="n">D</span> <span class="s">&quot;数据库名&quot;</span>         <span class="err">列出数据库名中的表名内容</span>
+<span class="n">sqlmap</span><span class="p">.</span><span class="n">py</span> <span class="o">-</span><span class="n">u</span> <span class="n">url</span> <span class="o">--</span><span class="n">dbms</span> <span class="s">&quot;后端数据库名&quot;</span> <span class="o">--</span><span class="n">dump</span>  <span class="o">-</span><span class="n">C</span> <span class="s">&quot;字段,字段&quot;</span>  <span class="o">-</span><span class="n">T</span> <span class="s">&quot;表名&quot;</span> <span class="o">-</span><span class="n">D</span> <span class="s">&quot;数据库名&quot;</span>       <span class="err">获取字段里面的内容</span>
+</pre></div>
+
+
 <ul>
 <li>option</li>
 </ul>

