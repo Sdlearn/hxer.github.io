@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>String - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Python3">Python3</a>&nbsp;»&nbsp;String</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">String</div>
+  <div id="content">
+  <h3 id="_1">字符串转字节串</h3>
+<div class="hlcode"><pre><span class="err">字符串编码为字节码</span><span class="o">:</span> <span class="err">&#39;</span><span class="mi">12</span><span class="n">abc</span><span class="err">&#39;</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="err">&#39;</span><span class="n">ascii</span><span class="err">&#39;</span><span class="p">)</span>  <span class="o">==&gt;</span>  <span class="n">b</span><span class="err">&#39;</span><span class="mi">12</span><span class="n">abc</span><span class="err">&#39;</span>
+<span class="err">数字或字符数组</span><span class="o">:</span> <span class="n">bytes</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">ord</span><span class="p">(</span><span class="sc">&#39;1&#39;</span><span class="p">),</span><span class="n">ord</span><span class="p">(</span><span class="sc">&#39;2&#39;</span><span class="p">)])</span>  <span class="o">==&gt;</span>  <span class="n">b</span><span class="err">&#39;\</span><span class="n">x01</span><span class="err">\</span><span class="n">x0212</span><span class="err">&#39;</span>
+<span class="mi">16</span><span class="err">进制字符串</span><span class="o">:</span> <span class="n">bytes</span><span class="p">().</span><span class="n">fromhex</span><span class="p">(</span><span class="err">&#39;</span><span class="mo">010210</span><span class="err">&#39;</span><span class="p">)</span>  <span class="o">==&gt;</span>  <span class="n">b</span><span class="err">&#39;\</span><span class="n">x01</span><span class="err">\</span><span class="n">x02</span><span class="err">\</span><span class="n">x10</span><span class="err">&#39;</span>
+<span class="mi">16</span><span class="err">进制字符串</span><span class="o">:</span> <span class="n">bytes</span><span class="p">(</span><span class="n">map</span><span class="p">(</span><span class="n">ord</span><span class="p">,</span> <span class="err">&#39;\</span><span class="n">x01</span><span class="err">\</span><span class="n">x02</span><span class="err">\</span><span class="n">x31</span><span class="err">\</span><span class="n">x32</span><span class="err">&#39;</span><span class="p">))</span>  <span class="o">==&gt;</span>  <span class="n">b</span><span class="err">&#39;\</span><span class="n">x01</span><span class="err">\</span><span class="n">x0212</span><span class="err">&#39;</span>
+<span class="mi">16</span><span class="err">进制数组</span><span class="o">:</span> <span class="n">bytes</span><span class="p">([</span><span class="mh">0x01</span><span class="p">,</span><span class="mh">0x02</span><span class="p">,</span><span class="mh">0x31</span><span class="p">,</span><span class="mh">0x32</span><span class="p">])</span>  <span class="o">==&gt;</span>  <span class="n">b</span><span class="err">&#39;\</span><span class="n">x01</span><span class="err">\</span><span class="n">x0212</span><span class="err">&#39;</span>
+</pre></div>
+
+
+<h3 id="_2">字节串转字符串</h3>
+<div class="hlcode"><pre><span class="s-Atom">字节码解码为字符串:</span> <span class="nf">bytes</span><span class="p">(</span><span class="s-Atom">b&#39;\x31\x32\x61\x62&#39;</span><span class="p">).</span><span class="nf">decode</span><span class="p">(</span><span class="s-Atom">&#39;ascii&#39;</span><span class="p">)</span>  <span class="s-Atom">==&gt;</span>  <span class="m">12</span><span class="s-Atom">ab</span>
+<span class="s-Atom">字节串转16进制表示</span><span class="p">,</span><span class="s-Atom">夹带ascii:</span> <span class="nf">str</span><span class="p">(</span><span class="nf">bytes</span><span class="p">(</span><span class="s-Atom">b&#39;\x01\x0212&#39;</span><span class="p">))[</span><span class="m">2</span><span class="p">:-</span><span class="m">1</span><span class="p">]</span>  <span class="s-Atom">==&gt;</span>  <span class="s-Atom">\x01\x0212</span>
+<span class="s-Atom">字节串转16进制表示</span><span class="p">,</span><span class="s-Atom">固定两个字符表示:</span> <span class="nf">str</span><span class="p">(</span><span class="s-Atom">binascii</span><span class="p">.</span><span class="nf">b2a_hex</span><span class="p">(</span><span class="s-Atom">b&#39;\x01\x0212&#39;</span><span class="p">))[</span><span class="m">2</span><span class="p">:-</span><span class="m">1</span><span class="p">]</span>  <span class="s-Atom">==&gt;</span>  <span class="m">01023132</span>
+<span class="s-Atom">字节串转16进制数组:</span> <span class="p">[</span><span class="nf">hex</span><span class="p">(</span><span class="s-Atom">x</span><span class="p">)</span> <span class="s-Atom">for</span> <span class="s-Atom">x</span> <span class="s-Atom">in</span> <span class="nf">bytes</span><span class="p">(</span><span class="s-Atom">b&#39;\x01\x0212&#39;</span><span class="p">)]</span>  <span class="s-Atom">==&gt;</span>  <span class="p">[</span><span class="s-Atom">&#39;0x1&#39;</span><span class="p">,</span> <span class="s-Atom">&#39;0x2&#39;</span><span class="p">,</span> <span class="s-Atom">&#39;0x31&#39;</span><span class="p">,</span> <span class="s-Atom">&#39;0x32&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

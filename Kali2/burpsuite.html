@@ -222,22 +222,26 @@
 <li>Grep-Extrack</li>
 </ul>
 <p>从攻击列表中提取有用信息</p>
-<h2 id="extender">Extender</h2>
-<h3 id="python-environment-note">python environment note</h3>
-<p><a href="https://portswigger.net/burp/help/extender.html">burp extender document</a></p>
-<p><a href="https://portswigger.net/bappstore/">burp app store</a></p>
-<p><a href="https://portswigger.net/burp/help/suite_burp_projects.html#configfiles">burp configuration file</a></p>
+<h2 id="0x02-extender">0x02 Extender</h2>
+<h3 id="001-python-environment-note">001 python environment note</h3>
+<ol>
+<li><a href="https://portswigger.net/burp/help/extender.html">burp extender document</a>  </li>
+<li><a href="https://portswigger.net/burp/extender/api/index.html">burp extender api</a>  </li>
+<li><a href="https://portswigger.net/bappstore/">burp app store</a>  </li>
+<li><a href="https://portswigger.net/burp/help/suite_burp_projects.html#configfiles">burp configuration file</a></li>
+<li><a href="https://portswigger.net/burp/extender/api/constant-values.html#burp.IBurpExtenderCallbacks">burpextendercallback Constant Field Values</a></li>
+</ol>
 <p>Because of the way in which Jython dynamically generates Java classes, you may encounter memory problems if you load several different Python extensions, or if you unload and reload a Python extension multiple times. If this happens, you will see an error like:
 java.lang.OutOfMemoryError: PermGen space </p>
-<p>You can avoid this problem by configuring Java to allocate more PermGen storage, by adding a -XX:MaxPermSize option to the command line when starting Burp. For example: <code>java -XX:MaxPermSize=1G -jar burp.jar</code></p>
-<h3 id="bapp-store">Bapp store</h3>
+<p>You can avoid this problem by configuring Java to allocate more PermGen storage, by adding a <code>-XX:MaxPermSize</code> option to the command line when starting Burp. For example: <code>java -XX:MaxPermSize=1G -jar burp.jar</code></p>
+<h3 id="002-bapp-store">002 Bapp store</h3>
 <p>Bapp store里的扩展安装之后默认是在burpsuite同目录下的<code>bapps</code>的文件夹内</p>
-<h3 id="interface">interface</h3>
+<h3 id="003-interface">003 interface</h3>
 <p>interface IBurpExtender: 这个接口所有的扩展都需要实现.</p>
 <p>Interface IBurpExtenderCallbacks: 这个接口几乎是必备的。在编写扩展的过程中会经常用到。</p>
-<p>Interface IExtensionHelpers: 这个接口是新加的。提供了编写扩展中常用的一些通用函数，比如编解码、构造请求等。这样就不需要重负造轮子了。</p>
+<p>Interface IExtensionHelpers: 这个接口是新加的。提供了编写扩展中常用的一些通用函数，比如编解码、构造请求等。这样就不需要重复造轮子了。</p>
 <p>Interface IHttpRequestResponse: 这个接口包含了每个请求和响应的细节。在Brupsuite中的每个请求或者响应都是IHttpRequestResponse实例</p>
-<h3 id="_1">插件开发</h3>
+<h3 id="004">004 插件开发</h3>
 <p>最好的方式就是在原有插件的基础上修改，这样能省很多精力。从头开发，步骤如下：</p>
 <ol>
 <li>
@@ -272,7 +276,7 @@ java.lang.OutOfMemoryError: PermGen space </p>
 
 
 <p>有了这些日志接口就能比较好的调试代码了，如果要很好的跟踪请求的，可以在BApp Store中添加”Custom Logger”这个插件，能够记录所有的请求和返回信息</p>
-<h3 id="demo">Demo</h3>
+<h3 id="005-demo">005 Demo</h3>
 <div class="hlcode"><pre><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">python extension</span>
 <span class="sd">function: simple fuzz</span>
@@ -369,6 +373,229 @@ java.lang.OutOfMemoryError: PermGen space </p>
 
         <span class="k">return</span> <span class="n">payload</span>
 </pre></div>
+
+
+<h2 id="0x06-extender-interface">0x06 Extender Interface</h2>
+<h3 id="001-ihttplistener">001 IHttpListener</h3>
+<p><code>IBurpExtenderCallbacks.registerHttpListener()</code> to register an HTTP listener. </p>
+<p>监听器可以接受和修改任何 burp 工具(如: proxy, repeater)产生的 HTTP 请求和响应。</p>
+<ul>
+<li>methods</li>
+</ul>
+<div class="hlcode"><pre><span class="kt">void</span> <span class="n">processHttpMessage</span><span class="p">(</span><span class="kt">int</span> <span class="n">toolFlag</span><span class="p">,</span>
+                      <span class="n">boolean</span> <span class="n">messageIsRequest</span><span class="p">,</span>
+                      <span class="n">IHttpRequestResponse</span> <span class="n">messageInfo</span><span class="p">)</span>
+<span class="n">This</span> <span class="n">method</span> <span class="n">is</span> <span class="n">invoked</span> <span class="n">when</span> <span class="n">an</span> <span class="n">HTTP</span> <span class="n">request</span> <span class="n">is</span> <span class="n">about</span> <span class="n">to</span> <span class="n">be</span> <span class="n">issued</span><span class="p">,</span> <span class="n">and</span> <span class="n">when</span> <span class="n">an</span> <span class="n">HTTP</span> <span class="n">response</span> <span class="n">has</span> <span class="n">been</span> <span class="n">received</span><span class="p">.</span>
+<span class="nl">Parameters:</span>
+<span class="n">toolFlag</span> <span class="o">-</span> <span class="n">A</span> <span class="n">flag</span> <span class="n">indicating</span> <span class="n">the</span> <span class="n">Burp</span> <span class="n">tool</span> <span class="n">that</span> <span class="n">issued</span> <span class="n">the</span> <span class="n">request</span><span class="p">.</span> <span class="n">Burp</span> <span class="n">tool</span> <span class="n">flags</span> <span class="n">are</span> <span class="n">defined</span> <span class="n">in</span> <span class="n">the</span> <span class="n">IBurpExtenderCallbacks</span> <span class="n">interface</span><span class="p">.</span>
+<span class="n">messageIsRequest</span> <span class="o">-</span> <span class="n">Flags</span> <span class="n">whether</span> <span class="n">the</span> <span class="n">method</span> <span class="n">is</span> <span class="n">being</span> <span class="n">invoked</span> <span class="k">for</span> <span class="n">a</span> <span class="n">request</span> <span class="n">or</span> <span class="n">response</span><span class="p">.</span>        
+<span class="n">messageInfo</span> <span class="o">-</span> <span class="n">Details</span> <span class="n">of</span> <span class="n">the</span> <span class="n">request</span> <span class="o">/</span> <span class="n">response</span> <span class="n">to</span> <span class="n">be</span> <span class="n">processed</span><span class="p">.</span> <span class="n">Extensions</span> <span class="n">can</span> <span class="n">call</span> <span class="n">the</span> <span class="n">setter</span> <span class="n">methods</span> <span class="n">on</span> <span class="n">this</span> <span class="n">object</span> <span class="n">to</span> <span class="n">update</span> <span class="n">the</span> <span class="n">current</span> <span class="n">message</span> <span class="n">and</span> <span class="n">so</span> <span class="n">modify</span> <span class="n">Burp</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">behavior</span><span class="p">.</span> 
+</pre></div>
+
+
+<p><strong>toolFlag [int]</strong></p>
+<p><code>IBurpExtenderCallbacks.getToolName(toolFlag)</code> 返回 burp tool 的名称， 如: Repeater, Proxy</p>
+<p><strong>messageIsRequest [boolean]</strong>  </p>
+<p>布尔值，True is request, Flase is response</p>
+<p><strong>messageInfo [IHttpRequestResponse]</strong></p>
+<p><code>jpython</code>: methods on this object </p>
+<div class="hlcode"><pre><span class="n">c</span><span class="o">:</span><span class="n">bool</span><span class="o">(</span><span class="n">x</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">bool</span>
+
+<span class="n">Returns</span> <span class="n">True</span> <span class="n">when</span> <span class="n">the</span> <span class="n">argument</span> <span class="n">x</span> <span class="k">is</span> <span class="kc">true</span><span class="o">,</span> <span class="n">False</span> <span class="n">otherwise</span><span class="o">.</span>
+<span class="n">The</span> <span class="n">builtins</span> <span class="n">True</span> <span class="n">and</span> <span class="n">False</span> <span class="n">are</span> <span class="n">the</span> <span class="n">only</span> <span class="n">two</span> <span class="n">instances</span> <span class="n">of</span> <span class="n">the</span> <span class="kd">class</span> <span class="n">bool</span><span class="o">.</span>
+<span class="n">The</span> <span class="kd">class</span> <span class="n">bool</span> <span class="k">is</span> <span class="n">a</span> <span class="n">subclass</span> <span class="n">of</span> <span class="n">the</span> <span class="kd">class</span> <span class="n">int</span><span class="o">,</span> <span class="n">and</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">subclassed</span><span class="o">.</span>
+
+<span class="kd">class</span> <span class="o">-&gt;</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">Class</span>
+<span class="n">comment</span><span class="o">:</span>
+<span class="n">equals</span><span class="o">:</span><span class="n">None</span>
+<span class="n">getClass</span><span class="o">:</span><span class="n">None</span>
+<span class="n">getComment</span><span class="o">:</span><span class="n">None</span>
+<span class="n">getHighlight</span><span class="o">:</span><span class="n">None</span>
+<span class="n">getHost</span><span class="o">()</span> <span class="o">-&gt;</span> <span class="n">unicode</span>
+<span class="n">getHttpService</span><span class="o">()</span> <span class="o">-&gt;</span> <span class="n">burp</span><span class="o">.</span><span class="na">j7f</span>
+<span class="n">getPort</span><span class="o">()</span> <span class="o">-&gt;</span> <span class="n">int</span>
+<span class="n">getProtocol</span><span class="o">()</span> <span class="o">-&gt;</span> <span class="n">unicode</span> <span class="o">:</span> <span class="n">eg</span><span class="o">.</span> <span class="n">http</span>
+<span class="n">getRequest</span><span class="o">():</span><span class="n">None</span>
+<span class="n">getResponse</span><span class="o">():</span><span class="n">None</span>
+<span class="n">getStatusCode</span><span class="o">()</span> <span class="o">-&gt;</span> <span class="n">int</span>
+<span class="n">getUrl</span><span class="o">()</span> <span class="o">-&gt;</span> <span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URL</span> <span class="kd">class</span>
+<span class="n">hashCode</span><span class="o">:</span><span class="n">None</span>
+<span class="n">highlight</span><span class="o">:</span>
+
+<span class="n">host</span><span class="o">:</span><span class="n">unicode</span><span class="o">(</span><span class="n">object</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">unicode</span> <span class="n">object</span>
+<span class="n">unicode</span><span class="o">(</span><span class="n">string</span><span class="o">[,</span> <span class="n">encoding</span><span class="o">[,</span> <span class="n">errors</span><span class="o">]])</span> <span class="o">-&gt;</span> <span class="n">unicode</span> <span class="n">object</span>
+
+<span class="n">Create</span> <span class="n">a</span> <span class="k">new</span> <span class="n">Unicode</span> <span class="n">object</span> <span class="n">from</span> <span class="n">the</span> <span class="n">given</span> <span class="n">encoded</span> <span class="n">string</span><span class="o">.</span>
+<span class="n">encoding</span> <span class="n">defaults</span> <span class="n">to</span> <span class="n">the</span> <span class="n">current</span> <span class="k">default</span> <span class="n">string</span> <span class="n">encoding</span><span class="o">.</span>
+<span class="n">errors</span> <span class="n">can</span> <span class="n">be</span> <span class="s1">&#39;strict&#39;</span><span class="o">,</span> <span class="s1">&#39;replace&#39;</span> <span class="n">or</span> <span class="s1">&#39;ignore&#39;</span> <span class="n">and</span> <span class="n">defaults</span> <span class="n">to</span> <span class="s1">&#39;strict&#39;</span><span class="o">.</span>
+
+<span class="n">httpService</span><span class="o">:</span><span class="n">The</span> <span class="n">most</span> <span class="n">base</span> <span class="n">type</span>
+<span class="n">notify</span><span class="o">:</span><span class="n">None</span>
+<span class="n">notifyAll</span><span class="o">:</span><span class="n">None</span>
+
+<span class="n">port</span><span class="o">:</span><span class="n">int</span><span class="o">(</span><span class="n">x</span><span class="o">[,</span> <span class="n">base</span><span class="o">])</span> <span class="o">-&gt;</span> <span class="n">integer</span>
+
+<span class="n">Convert</span> <span class="n">a</span> <span class="n">string</span> <span class="n">or</span> <span class="n">number</span> <span class="n">to</span> <span class="n">an</span> <span class="n">integer</span><span class="o">,</span> <span class="k">if</span> <span class="n">possible</span><span class="o">.</span>  <span class="n">A</span> <span class="n">floating</span> <span class="n">point</span>
+<span class="n">argument</span> <span class="n">will</span> <span class="n">be</span> <span class="n">truncated</span> <span class="n">towards</span> <span class="n">zero</span> <span class="o">(</span><span class="k">this</span> <span class="n">does</span> <span class="n">not</span> <span class="k">include</span> <span class="n">a</span> <span class="n">string</span>
+<span class="n">representation</span> <span class="n">of</span> <span class="n">a</span> <span class="n">floating</span> <span class="n">point</span> <span class="n">number</span><span class="o">!)</span>  <span class="n">When</span> <span class="n">converting</span> <span class="n">a</span> <span class="n">string</span><span class="o">,</span> <span class="n">use</span>
+<span class="n">the</span> <span class="n">optional</span> <span class="n">base</span><span class="o">.</span>  <span class="n">It</span> <span class="k">is</span> <span class="n">an</span> <span class="n">error</span> <span class="n">to</span> <span class="n">supply</span> <span class="n">a</span> <span class="n">base</span> <span class="n">when</span> <span class="n">converting</span> <span class="n">a</span>
+<span class="n">non</span><span class="o">-</span><span class="n">string</span><span class="o">.</span>  <span class="n">If</span> <span class="n">base</span> <span class="k">is</span> <span class="n">zero</span><span class="o">,</span> <span class="n">the</span> <span class="n">proper</span> <span class="n">base</span> <span class="k">is</span> <span class="n">guessed</span> <span class="n">based</span> <span class="n">on</span> <span class="n">the</span>
+<span class="n">string</span> <span class="n">content</span><span class="o">.</span>  <span class="n">If</span> <span class="n">the</span> <span class="n">argument</span> <span class="k">is</span> <span class="n">outside</span> <span class="n">the</span> <span class="n">integer</span> <span class="n">range</span> <span class="n">a</span>
+<span class="n">long</span> <span class="n">object</span> <span class="n">will</span> <span class="n">be</span> <span class="n">returned</span> <span class="n">instead</span><span class="o">.</span>
+
+<span class="n">protocol</span><span class="o">:</span><span class="n">unicode</span><span class="o">(</span><span class="n">object</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">unicode</span> <span class="n">object</span>
+<span class="n">unicode</span><span class="o">(</span><span class="n">string</span><span class="o">[,</span> <span class="n">encoding</span><span class="o">[,</span> <span class="n">errors</span><span class="o">]])</span> <span class="o">-&gt;</span> <span class="n">unicode</span> <span class="n">object</span>
+
+<span class="n">Create</span> <span class="n">a</span> <span class="k">new</span> <span class="n">Unicode</span> <span class="n">object</span> <span class="n">from</span> <span class="n">the</span> <span class="n">given</span> <span class="n">encoded</span> <span class="n">string</span><span class="o">.</span>
+<span class="n">encoding</span> <span class="n">defaults</span> <span class="n">to</span> <span class="n">the</span> <span class="n">current</span> <span class="k">default</span> <span class="n">string</span> <span class="n">encoding</span><span class="o">.</span>
+<span class="n">errors</span> <span class="n">can</span> <span class="n">be</span> <span class="s1">&#39;strict&#39;</span><span class="o">,</span> <span class="s1">&#39;replace&#39;</span> <span class="n">or</span> <span class="s1">&#39;ignore&#39;</span> <span class="n">and</span> <span class="n">defaults</span> <span class="n">to</span> <span class="s1">&#39;strict&#39;</span><span class="o">.</span>
+
+<span class="n">request</span><span class="o">:</span><span class="n">None</span>
+<span class="n">response</span><span class="o">:</span>
+<span class="n">setComment</span><span class="o">:</span><span class="n">None</span>
+<span class="n">setHighlight</span><span class="o">:</span><span class="n">None</span>
+<span class="n">setHost</span><span class="o">:</span><span class="n">None</span>
+<span class="n">setHttpService</span><span class="o">:</span><span class="n">None</span>
+<span class="n">setPort</span><span class="o">:</span><span class="n">None</span>
+<span class="n">setProtocol</span><span class="o">:</span><span class="n">None</span>
+<span class="n">setRequest</span><span class="o">:</span><span class="n">None</span>
+<span class="n">setResponse</span><span class="o">:</span><span class="n">None</span>
+
+<span class="n">statusCode</span><span class="o">:</span><span class="n">int</span><span class="o">(</span><span class="n">x</span><span class="o">[,</span> <span class="n">base</span><span class="o">])</span> <span class="o">-&gt;</span> <span class="n">integer</span>
+
+<span class="n">Convert</span> <span class="n">a</span> <span class="n">string</span> <span class="n">or</span> <span class="n">number</span> <span class="n">to</span> <span class="n">an</span> <span class="n">integer</span><span class="o">,</span> <span class="k">if</span> <span class="n">possible</span><span class="o">.</span>  <span class="n">A</span> <span class="n">floating</span> <span class="n">point</span>
+<span class="n">argument</span> <span class="n">will</span> <span class="n">be</span> <span class="n">truncated</span> <span class="n">towards</span> <span class="n">zero</span> <span class="o">(</span><span class="k">this</span> <span class="n">does</span> <span class="n">not</span> <span class="k">include</span> <span class="n">a</span> <span class="n">string</span>
+<span class="n">representation</span> <span class="n">of</span> <span class="n">a</span> <span class="n">floating</span> <span class="n">point</span> <span class="n">number</span><span class="o">!)</span>  <span class="n">When</span> <span class="n">converting</span> <span class="n">a</span> <span class="n">string</span><span class="o">,</span> <span class="n">use</span>
+<span class="n">the</span> <span class="n">optional</span> <span class="n">base</span><span class="o">.</span>  <span class="n">It</span> <span class="k">is</span> <span class="n">an</span> <span class="n">error</span> <span class="n">to</span> <span class="n">supply</span> <span class="n">a</span> <span class="n">base</span> <span class="n">when</span> <span class="n">converting</span> <span class="n">a</span>
+<span class="n">non</span><span class="o">-</span><span class="n">string</span><span class="o">.</span>  <span class="n">If</span> <span class="n">base</span> <span class="k">is</span> <span class="n">zero</span><span class="o">,</span> <span class="n">the</span> <span class="n">proper</span> <span class="n">base</span> <span class="k">is</span> <span class="n">guessed</span> <span class="n">based</span> <span class="n">on</span> <span class="n">the</span>
+<span class="n">string</span> <span class="n">content</span><span class="o">.</span>  <span class="n">If</span> <span class="n">the</span> <span class="n">argument</span> <span class="k">is</span> <span class="n">outside</span> <span class="n">the</span> <span class="n">integer</span> <span class="n">range</span> <span class="n">a</span>
+<span class="n">long</span> <span class="n">object</span> <span class="n">will</span> <span class="n">be</span> <span class="n">returned</span> <span class="n">instead</span><span class="o">.</span>
+
+<span class="n">toString</span><span class="o">()</span> <span class="o">-&gt;</span> <span class="n">unicode</span> 
+<span class="n">url</span><span class="o">:</span><span class="n">The</span> <span class="n">most</span> <span class="n">base</span> <span class="n">type</span><span class="o">.</span> <span class="n">type</span><span class="o">(</span><span class="n">messageInfo</span><span class="o">.</span><span class="na">url</span><span class="o">)</span> <span class="k">is</span> <span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URL</span><span class="o">,</span>
+<span class="n">wait</span><span class="o">:</span><span class="n">None</span>
+</pre></div>
+
+
+<h3 id="002-ihttprequestresponse">002 IHttpRequestResponse</h3>
+<p>This interface is used to retrieve and update details about HTTP messages. Note: The setter methods generally can only be used before the message has been processed, and not in read-only contexts. The getter methods relating to response details can only be used after the request has been issued.</p>
+<p><strong>method</strong></p>
+<ul>
+<li><code>byte[]   getRequest()</code></li>
+</ul>
+<p>This method is used to retrieve the request message.</p>
+<ul>
+<li><code>byte[]   getResponse()</code></li>
+</ul>
+<p>This method is used to retrieve the response message.</p>
+<ul>
+<li><code>void setRequest(byte[] message)</code></li>
+</ul>
+<p>This method is used to update the request message.</p>
+<ul>
+<li><code>void setResponse(byte[] message)</code></li>
+</ul>
+<p>This method is used to update the response message.</p>
+<h3 id="003-ihttpservice">003 IHttpService</h3>
+<h3 id="004-iburpextendercallbacks">004 IBurpExtenderCallbacks</h3>
+<p><strong>Field</strong></p>
+<div class="hlcode"><pre><span class="n">TOOL_COMPARER</span>
+<span class="n">TOOL_DECODER</span>
+<span class="n">TOOL_EXTENDER</span>
+<span class="n">TOOL_INTRUDER</span>
+<span class="n">TOOL_PROXY</span>
+<span class="n">TOOL_REPEATER</span>
+<span class="n">TOOL_SCANNER</span>
+<span class="n">TOOL_SEQUENCER</span>
+<span class="n">TOOL_SPIDER</span>
+<span class="n">TOOL_SUITE</span>
+<span class="n">TOOL_TARGET</span>
+</pre></div>
+
+
+<p><strong>method</strong></p>
+<ul>
+<li><code>java.util.List&lt;ICookie&gt;  getCookieJarContents()</code></li>
+</ul>
+<p>This method is used to retrieve the contents of Burp's session handling cookie jar</p>
+<ul>
+<li><code>java.lang.String getToolName(int toolFlag)</code></li>
+</ul>
+<p>This method is used to obtain the descriptive name for the Burp tool identified by the tool flag provided.</p>
+<ul>
+<li><code>IHttpRequestResponse makeHttpRequest(IHttpService httpService, byte[] request)</code></li>
+</ul>
+<p>This method can be used to issue HTTP requests and retrieve their responses.</p>
+<ul>
+<li><code>byte[]   makeHttpRequest(java.lang.String host, int port, boolean useHttps, byte[] request)</code></li>
+</ul>
+<p>This method can be used to issue HTTP requests and retrieve their responses.</p>
+<ul>
+<li><code>IHttpRequestResponsePersisted saveBuffersToTempFiles(IHttpRequestResponse httpRequestResponse)</code></li>
+</ul>
+<p>This method is used to save the request and response of an IHttpRequestResponse object to temporary files, so that they are no longer held in memory.</p>
+<ul>
+<li><code>void updateCookieJar(ICookie cookie)</code></li>
+</ul>
+<p>This method is used to update the contents of Burp's session handling cookie jar.</p>
+<h3 id="005-iextensionhelpers">005 IExtensionHelpers</h3>
+<p><strong>method</strong></p>
+<ul>
+<li><code>IParameter buildParameter(java.lang.String name, java.lang.String value, byte type)</code></li>
+</ul>
+<p>This method constructs an IParameter object based on the details provided. 
+根据提供的参数，生成 IParamter 对象</p>
+<ul>
+<li><code>IParameter   getRequestParameter(byte[] request, java.lang.String parameterName)</code></li>
+</ul>
+<blockquote>
+<p>Returns: An IParameter object that can be queried to obtain details about the parameter, or null if the parameter was not found</p>
+</blockquote>
+<p>This method can be used to retrieve details of a specified parameter within an HTTP request.</p>
+<ul>
+<li><code>byte[]   removeParameter(byte[] request, IParameter parameter)</code></li>
+</ul>
+<p>This method removes a parameter from an HTTP request, and if appropriate updates the Content-Length header.</p>
+<ul>
+<li><code>byte[]   updateParameter(byte[] request, IParameter parameter)</code></li>
+</ul>
+<blockquote>
+<p>Returns:  A new HTTP request with the parameter updated</p>
+</blockquote>
+<p>This method updates the value of a parameter within an HTTP request, and if appropriate updates the Content-Length header.</p>
+<h3 id="006-iparameters">006 IParameters</h3>
+<p><strong>Field</strong></p>
+<div class="hlcode"><pre><span class="n">PARAM_BODY</span>
+<span class="n">PARAM_COOKIE</span>
+<span class="n">PARAM_JSON</span>
+<span class="n">PARAM_MULTIPART_ATTR</span>
+<span class="n">PARAM_URL</span>
+<span class="n">PARAM_XML</span>
+<span class="n">PARAM_XML_ATTR</span>
+</pre></div>
+
+
+<p><strong>method</strong></p>
+<ul>
+<li><code>java.lang.String getName()</code></li>
+</ul>
+<p>This method is used to retrieve the parameter name.</p>
+<ul>
+<li><code>byte getType()</code></li>
+</ul>
+<p>This method is used to retrieve the parameter type.</p>
+<ul>
+<li><code>java.lang.String getValue()</code></li>
+</ul>
+<p>This method is used to retrieve the parameter value.</p>
+<h3 id="007-irequestinfo">007 IRequestInfo</h3>
+<p><strong>method</strong> </p>
+<ul>
+<li><code>java.util.List&lt;IParameter&gt;   getParameters()</code></li>
+</ul>
+<p>This method is used to obtain the parameters contained in the request.<br />
+返回请求参数对象的列表， IParameter 可以是 URL，COOKIE，BODY等的参数，通过 Iparamter.getType() 确定参数类型</p>
+<h3 id="008-iresponseinfo">008 IResponseInfo</h3>
 </div>
 
         </div>

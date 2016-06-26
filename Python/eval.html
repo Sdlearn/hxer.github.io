@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>动态执行字符串代码 - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Python">Python</a>&nbsp;»&nbsp;动态执行字符串代码</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">动态执行字符串代码</div>
+  <div id="content">
+  <h2 id="0x01-exec">0x01 exec</h2>
+<p><code>exec_stmt ::=  "exec" or_expr ["in" expression ["," expression]]</code></p>
+<p>注意：exec 是一个语法声明，不是一个函数.也就是说和if,for一样. 官方文档对于exec的解释</p>
+<blockquote>
+<p>This statement supports dynamic execution of Python code.</p>
+</blockquote>
+<p>exec的第一个表达式可以是：</p>
+<ul>
+<li>代码字符串</li>
+<li>文件对象</li>
+<li>代码对象</li>
+<li>tuple</li>
+</ul>
+<p>前面三种情况差不多，第四种比较特殊</p>
+<p>如果忽略后面的可选表达式,exec后面代码将在当前域执行</p>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">=</span><span class="mi">2</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">exec</span> <span class="s">&quot;a=1&quot;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+<span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span>
+</pre></div>
+
+
+<p>如果在表达式之后使用in选项指定一个dic，它将作为global和local变量作用域</p>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">=</span><span class="mi">10</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="o">=</span><span class="mi">20</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">g</span><span class="o">=</span><span class="p">{</span><span class="sc">&#39;a&#39;</span><span class="o">:</span><span class="mi">6</span><span class="p">,</span><span class="sc">&#39;b&#39;</span><span class="o">:</span><span class="mi">8</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">exec</span> <span class="s">&quot;global a;print a,b&quot;</span> <span class="n">in</span> <span class="n">g</span>
+<span class="mi">6</span> <span class="mi">8</span>
+<span class="o">&gt;&gt;&gt;</span>
+</pre></div>
+
+
+<p>如果in后详指定两个表达式，它们将分别用作global和local变量作用域</p>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">=</span><span class="mi">10</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="o">=</span><span class="mi">20</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">c</span><span class="o">=</span><span class="mi">20</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">g</span><span class="o">=</span><span class="p">{</span><span class="sc">&#39;a&#39;</span><span class="o">:</span><span class="mi">6</span><span class="p">,</span><span class="sc">&#39;b&#39;</span><span class="o">:</span><span class="mi">8</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span><span class="o">=</span><span class="p">{</span><span class="sc">&#39;b&#39;</span><span class="o">:</span><span class="mi">9</span><span class="p">,</span><span class="sc">&#39;c&#39;</span><span class="o">:</span><span class="mi">10</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">exec</span> <span class="s">&quot;global a;print a,b,c&quot;</span> <span class="n">in</span> <span class="n">g</span><span class="p">,</span><span class="n">l</span>
+<span class="mi">6</span> <span class="mi">9</span> <span class="mi">10</span>
+<span class="o">&gt;&gt;&gt;</span>
+</pre></div>
+
+
+<h3 id="tuple">tuple</h3>
+<p>如果第一个表达式是tuple</p>
+<div class="hlcode"><pre><span class="n">exec</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">globals</span><span class="p">)</span> <span class="err">#它等效与</span>  <span class="n">exec</span> <span class="n">expr</span> <span class="n">in</span> <span class="n">globals</span>
+<span class="n">exec</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">globals</span><span class="p">,</span> <span class="n">locals</span><span class="p">)</span> <span class="err">#它等效与</span>  <span class="n">exec</span> <span class="n">expr</span> <span class="n">in</span> <span class="n">globals</span><span class="p">,</span><span class="n">locals</span>
+</pre></div>
+
+
+<h2 id="0x02-eval">0x02 eval</h2>
+<p>eval通常用来执行一个字符串表达式，并返回表达式的值。</p>
+<p><code>eval(expression[, globals[, locals]])</code> 有三个参数，表达式字符串，globals变量作用域，locals变量作用域。 其中第二个和第三个参数是可选的。</p>
+<p>如果忽略后面两个参数，则eval在当前作用域执行。</p>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">=</span><span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">eval</span><span class="p">(</span><span class="s">&quot;a+1&quot;</span><span class="p">)</span>
+<span class="mi">2</span>
+<span class="o">&gt;&gt;&gt;</span>
+</pre></div>
+
+
+<p>如果指定globals参数</p>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">=</span><span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">g</span><span class="o">=</span><span class="p">{</span><span class="sc">&#39;a&#39;</span><span class="o">:</span><span class="mi">10</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">eval</span><span class="p">(</span><span class="s">&quot;a+1&quot;</span><span class="p">,</span><span class="n">g</span><span class="p">)</span>
+<span class="mi">11</span>
+<span class="o">&gt;&gt;&gt;</span>
+</pre></div>
+
+
+<p>如果指定locals参数</p>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">=</span><span class="mi">10</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="o">=</span><span class="mi">20</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">c</span><span class="o">=</span><span class="mi">20</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">g</span><span class="o">=</span><span class="p">{</span><span class="sc">&#39;a&#39;</span><span class="o">:</span><span class="mi">6</span><span class="p">,</span><span class="sc">&#39;b&#39;</span><span class="o">:</span><span class="mi">8</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span><span class="o">=</span><span class="p">{</span><span class="sc">&#39;b&#39;</span><span class="o">:</span><span class="mi">9</span><span class="p">,</span><span class="sc">&#39;c&#39;</span><span class="o">:</span><span class="mi">10</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">eval</span><span class="p">(</span><span class="s">&quot;a+b+c&quot;</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">l</span><span class="p">)</span>
+<span class="mi">25</span>
+<span class="o">&gt;&gt;&gt;</span>
+</pre></div>
+
+
+<p>如果要严格限制 eval 执行，可以设置globals为__builtins__,这样 这个表达式只可以访问 <code>__builtin__ module</code></p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
