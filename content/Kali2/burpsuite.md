@@ -163,36 +163,36 @@ Exclude HTTP headers(不包括HTTP头) - 指定的HTTP响应头是否应被排�
 
 从攻击列表中提取有用信息
 
-## Extender
+## 0x02 Extender
 
-### python environment note
+### 001 python environment note
 
-[burp extender document][2]
-
-[burp app store][3]
-
-[burp configuration file][4]
+1. [burp extender document][2]  
+2. [burp extender api][5]  
+3. [burp app store][3]  
+4. [burp configuration file][4]
+5. [burpextendercallback Constant Field Values][6]
 
 Because of the way in which Jython dynamically generates Java classes, you may encounter memory problems if you load several different Python extensions, or if you unload and reload a Python extension multiple times. If this happens, you will see an error like:
 java.lang.OutOfMemoryError: PermGen space 
 
-You can avoid this problem by configuring Java to allocate more PermGen storage, by adding a -XX:MaxPermSize option to the command line when starting Burp. For example: `java -XX:MaxPermSize=1G -jar burp.jar`
+You can avoid this problem by configuring Java to allocate more PermGen storage, by adding a `-XX:MaxPermSize` option to the command line when starting Burp. For example: `java -XX:MaxPermSize=1G -jar burp.jar`
 
-### Bapp store
+### 002 Bapp store
 
 Bapp store里的扩展安装之后默认是在burpsuite同目录下的`bapps`的文件夹内
 
-### interface
+### 003 interface
 
 interface IBurpExtender: 这个接口所有的扩展都需要实现.
 
 Interface IBurpExtenderCallbacks: 这个接口几乎是必备的。在编写扩展的过程中会经常用到。
 
-Interface IExtensionHelpers: 这个接口是新加的。提供了编写扩展中常用的一些通用函数，比如编解码、构造请求等。这样就不需要重负造轮子了。
+Interface IExtensionHelpers: 这个接口是新加的。提供了编写扩展中常用的一些通用函数，比如编解码、构造请求等。这样就不需要重复造轮子了。
 
 Interface IHttpRequestResponse: 这个接口包含了每个请求和响应的细节。在Brupsuite中的每个请求或者响应都是IHttpRequestResponse实例
 
-### 插件开发
+### 004 插件开发
 
 最好的方式就是在原有插件的基础上修改，这样能省很多精力。从头开发，步骤如下：
 
@@ -226,7 +226,7 @@ e.printStackTrace(stderr)
 有了这些日志接口就能比较好的调试代码了，如果要很好的跟踪请求的，可以在BApp Store中添加”Custom Logger”这个插件，能够记录所有的请求和返回信息
 
 
-### Demo
+### 005 Demo
 
 ```python
 """
@@ -326,7 +326,258 @@ class BHPFuzzer(IIntruderPayloadGenerator):
         return payload
 ```
 
+
+## 0x06 Extender Interface
+
+### 001 IHttpListener
+
+`IBurpExtenderCallbacks.registerHttpListener()` to register an HTTP listener. 
+
+监听器可以接受和修改任何 burp 工具(如: proxy, repeater)产生的 HTTP 请求和响应。
+
+* methods
+
+```
+void processHttpMessage(int toolFlag,
+                      boolean messageIsRequest,
+                      IHttpRequestResponse messageInfo)
+This method is invoked when an HTTP request is about to be issued, and when an HTTP response has been received.
+Parameters:
+toolFlag - A flag indicating the Burp tool that issued the request. Burp tool flags are defined in the IBurpExtenderCallbacks interface.
+messageIsRequest - Flags whether the method is being invoked for a request or response.        
+messageInfo - Details of the request / response to be processed. Extensions can call the setter methods on this object to update the current message and so modify Burp's behavior. 
+```
+
+**toolFlag [int]**
+
+`IBurpExtenderCallbacks.getToolName(toolFlag)` 返回 burp tool 的名称， 如: Repeater, Proxy
+
+**messageIsRequest [boolean]**  
+
+布尔值，True is request, Flase is response
+
+**messageInfo [IHttpRequestResponse]**
+
+`jpython`: methods on this object 
+
+```
+c:bool(x) -> bool
+
+Returns True when the argument x is true, False otherwise.
+The builtins True and False are the only two instances of the class bool.
+The class bool is a subclass of the class int, and cannot be subclassed.
+
+class -> java.lang.Class
+comment:
+equals:None
+getClass:None
+getComment:None
+getHighlight:None
+getHost() -> unicode
+getHttpService() -> burp.j7f
+getPort() -> int
+getProtocol() -> unicode : eg. http
+getRequest():None
+getResponse():None
+getStatusCode() -> int
+getUrl() -> java.net.URL class
+hashCode:None
+highlight:
+
+host:unicode(object='') -> unicode object
+unicode(string[, encoding[, errors]]) -> unicode object
+
+Create a new Unicode object from the given encoded string.
+encoding defaults to the current default string encoding.
+errors can be 'strict', 'replace' or 'ignore' and defaults to 'strict'.
+
+httpService:The most base type
+notify:None
+notifyAll:None
+
+port:int(x[, base]) -> integer
+
+Convert a string or number to an integer, if possible.  A floating point
+argument will be truncated towards zero (this does not include a string
+representation of a floating point number!)  When converting a string, use
+the optional base.  It is an error to supply a base when converting a
+non-string.  If base is zero, the proper base is guessed based on the
+string content.  If the argument is outside the integer range a
+long object will be returned instead.
+
+protocol:unicode(object='') -> unicode object
+unicode(string[, encoding[, errors]]) -> unicode object
+
+Create a new Unicode object from the given encoded string.
+encoding defaults to the current default string encoding.
+errors can be 'strict', 'replace' or 'ignore' and defaults to 'strict'.
+
+request:None
+response:
+setComment:None
+setHighlight:None
+setHost:None
+setHttpService:None
+setPort:None
+setProtocol:None
+setRequest:None
+setResponse:None
+
+statusCode:int(x[, base]) -> integer
+
+Convert a string or number to an integer, if possible.  A floating point
+argument will be truncated towards zero (this does not include a string
+representation of a floating point number!)  When converting a string, use
+the optional base.  It is an error to supply a base when converting a
+non-string.  If base is zero, the proper base is guessed based on the
+string content.  If the argument is outside the integer range a
+long object will be returned instead.
+
+toString() -> unicode 
+url:The most base type. type(messageInfo.url) is java.net.URL,
+wait:None
+```
+
+### 002 IHttpRequestResponse
+
+This interface is used to retrieve and update details about HTTP messages. Note: The setter methods generally can only be used before the message has been processed, and not in read-only contexts. The getter methods relating to response details can only be used after the request has been issued.
+
+**method**
+
+* `byte[]	getRequest()`
+
+This method is used to retrieve the request message.
+
+* `byte[]	getResponse()`
+
+This method is used to retrieve the response message.
+
+* `void	setRequest(byte[] message)`
+
+This method is used to update the request message.
+
+* `void	setResponse(byte[] message)`
+
+This method is used to update the response message.
+
+### 003 IHttpService
+
+### 004 IBurpExtenderCallbacks
+
+**Field**
+
+```
+TOOL_COMPARER
+TOOL_DECODER
+TOOL_EXTENDER
+TOOL_INTRUDER
+TOOL_PROXY
+TOOL_REPEATER
+TOOL_SCANNER
+TOOL_SEQUENCER
+TOOL_SPIDER
+TOOL_SUITE
+TOOL_TARGET
+```
+
+**method**
+
+* `java.util.List<ICookie>	getCookieJarContents()`
+
+This method is used to retrieve the contents of Burp's session handling cookie jar
+
+* `java.lang.String	getToolName(int toolFlag)`
+
+This method is used to obtain the descriptive name for the Burp tool identified by the tool flag provided.
+
+* `IHttpRequestResponse	makeHttpRequest(IHttpService httpService, byte[] request)`
+
+This method can be used to issue HTTP requests and retrieve their responses.
+
+* `byte[]	makeHttpRequest(java.lang.String host, int port, boolean useHttps, byte[] request)`
+
+This method can be used to issue HTTP requests and retrieve their responses.
+
+* `IHttpRequestResponsePersisted saveBuffersToTempFiles(IHttpRequestResponse httpRequestResponse)`
+
+This method is used to save the request and response of an IHttpRequestResponse object to temporary files, so that they are no longer held in memory.
+
+* `void	updateCookieJar(ICookie cookie)`
+
+This method is used to update the contents of Burp's session handling cookie jar.
+
+
+### 005 IExtensionHelpers
+
+**method**
+
+* `IParameter buildParameter(java.lang.String name, java.lang.String value, byte type)`
+
+This method constructs an IParameter object based on the details provided. 
+根据提供的参数，生成 IParamter 对象
+
+* `IParameter	getRequestParameter(byte[] request, java.lang.String parameterName)`
+
+> Returns: An IParameter object that can be queried to obtain details about the parameter, or null if the parameter was not found
+
+This method can be used to retrieve details of a specified parameter within an HTTP request.
+
+* `byte[]	removeParameter(byte[] request, IParameter parameter)`
+
+This method removes a parameter from an HTTP request, and if appropriate updates the Content-Length header.
+
+* `byte[]	updateParameter(byte[] request, IParameter parameter)`
+
+> Returns:  A new HTTP request with the parameter updated
+
+This method updates the value of a parameter within an HTTP request, and if appropriate updates the Content-Length header.
+
+
+
+### 006 IParameters
+
+**Field**
+
+```
+PARAM_BODY
+PARAM_COOKIE
+PARAM_JSON
+PARAM_MULTIPART_ATTR
+PARAM_URL
+PARAM_XML
+PARAM_XML_ATTR
+```
+
+**method**
+
+* `java.lang.String	getName()`
+
+This method is used to retrieve the parameter name.
+
+* `byte	getType()`
+
+This method is used to retrieve the parameter type.
+
+* `java.lang.String	getValue()`
+
+This method is used to retrieve the parameter value.
+
+### 007 IRequestInfo
+
+**method** 
+
+* `java.util.List<IParameter>	getParameters()`
+
+This method is used to obtain the parameters contained in the request.  
+返回请求参数对象的列表， IParameter 可以是 URL，COOKIE，BODY等的参数，通过 Iparamter.getType() 确定参数类型
+
+### 008 IResponseInfo
+
+
+
 [1]: http://drops.wooyun.org/tools/1548
 [2]: https://portswigger.net/burp/help/extender.html
 [3]: https://portswigger.net/bappstore/
 [4]: https://portswigger.net/burp/help/suite_burp_projects.html#configfiles
+[5]: https://portswigger.net/burp/extender/api/index.html
+[6]: https://portswigger.net/burp/extender/api/constant-values.html#burp.IBurpExtenderCallbacks

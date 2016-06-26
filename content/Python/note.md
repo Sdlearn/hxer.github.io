@@ -26,17 +26,6 @@ import string
 '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~ \t\n\r\x0b\x0c'
 ```
 
-
-
-## little tips
-
-* 集合 A，B 交集判断
-
-```
-any(_ in A for _ in B)  => True(have) or False(no)
-```
-
-
 * hack
 
 request_file

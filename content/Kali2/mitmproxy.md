@@ -1,9 +1,9 @@
 ---
-title: "mitmproxy"
+title: "MitmProxy"
 date: 2016-03-08 16:45
 ---
 
-## mitmproxy
+## 0x01 mitmproxy
 
 mitmproxy 是一个基于python的中间人代理的框架。
 
@@ -15,10 +15,9 @@ mitmproxy 是一个基于python的中间人代理的框架。
 
 [虚拟机安装lxml内存不够报错][2]
 
-## 介绍
+## 0x02 介绍
 
 首次运行mitmproxy
-
 
 ```
 $mitmproxy
@@ -37,7 +36,7 @@ mitmproxy-ca.pem        # 私钥
 
 ```
 
-## 操作模式
+## 0x03 操作模式
 
 * 常规代理 --default
 
@@ -76,7 +75,7 @@ mitmproxt -T --host
 上游代理模式可以将客户端所有的请求无条件的转发传输给上游的代理服务器
 
 
-## mitmproxy交互
+## 0x04 mitmproxy交互
 
 [mitmproxy基本操作][4]
 
@@ -94,7 +93,7 @@ q: quit
 r: replay request
 ```
 
-## libmproxy
+## 0x05 libmproxy
 
 * HTTPRequest (libmproxy.models.HTTPRequest)
 
@@ -258,6 +257,10 @@ urlencoded_form:
 
 wrap:None
 ```
+
+## 0x06 demo
+
+### 数据监听
 
 抓取含 passwd 或 password 数据包，借鉴Mitmproxy官网代码。
 

@@ -25,6 +25,11 @@ solution:
 sudo apt-get install exfat-fuse exfat-utils
 ```
 
+## zip 解压含中文文件名乱码
+
+解决方案：
+
+1. `unar file.zip`， unar 会自动检测文件编码， `-e` 选项指定文件编码
 
 # kali2 sana
 
