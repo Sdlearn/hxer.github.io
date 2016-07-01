@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>命令执行 - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Python">Python</a>&nbsp;»&nbsp;命令执行</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">命令执行</div>
+  <div id="content">
+  <h2 id="0x01-os">0x01 os</h2>
+<h3 id="ossystem">os.system()</h3>
+<blockquote>
+<p>不返回shell命令的输出</p>
+</blockquote>
+<div class="hlcode"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">28</span><span class="p">]</span><span class="o">:</span> <span class="n">os</span><span class="p">.</span><span class="n">system</span><span class="p">(</span><span class="err">&#39;</span><span class="n">ls</span><span class="err">&#39;</span><span class="p">)</span>
+<span class="n">tmp</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">28</span><span class="p">]</span><span class="o">:</span> <span class="mi">0</span>
+</pre></div>
+
+
+<h3 id="ospopen">os.popen()</h3>
+<blockquote>
+<p>返回输出结果</p>
+</blockquote>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span><span class="n">tmp</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">popen</span><span class="p">(</span><span class="err">&#39;</span><span class="n">ls</span> <span class="o">*</span><span class="p">.</span><span class="n">sh</span><span class="err">&#39;</span><span class="p">).</span><span class="n">readlines</span><span class="p">()</span>  
+<span class="o">&gt;&gt;&gt;</span><span class="n">tmp</span>  
+<span class="p">[</span><span class="err">&#39;</span><span class="n">install_zabbix</span><span class="p">.</span><span class="n">sh</span><span class="err">\</span><span class="n">n</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">manage_deploy</span><span class="p">.</span><span class="n">sh</span><span class="err">\</span><span class="n">n</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">mysql_setup</span><span class="p">.</span><span class="n">sh</span><span class="err">\</span><span class="n">n</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">python_manage_deploy</span><span class="p">.</span><span class="n">sh</span><span class="err">\</span><span class="n">n</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">setup</span><span class="p">.</span><span class="n">sh</span><span class="err">\</span><span class="n">n</span><span class="err">&#39;</span><span class="p">]</span> 
+</pre></div>
+
+
+<h2 id="0x02-commands">0x02 commands</h2>
+<p>可以很方便的取得命令的输出（包括标准和错误输出）和执行状态位</p>
+<h3 id="commandsgetstatusoutputcmd">commands.getstatusoutput(cmd)</h3>
+<p>返回（status,output)</p>
+<div class="hlcode"><pre><span class="n">import</span> <span class="n">commands</span>
+<span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="n">commands</span><span class="p">.</span><span class="n">getstatusoutput</span><span class="p">(</span><span class="err">&#39;</span><span class="n">ls</span><span class="err">&#39;</span><span class="p">)</span>
+<span class="n">a</span><span class="err">是退出状态</span>
+<span class="n">b</span><span class="err">是输出的结果。</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">import</span> <span class="n">commands</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="n">commands</span><span class="p">.</span><span class="n">getstatusoutput</span><span class="p">(</span><span class="err">&#39;</span><span class="n">ls</span><span class="err">&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">print</span> <span class="n">a</span>
+<span class="mi">0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">print</span> <span class="n">b</span>
+<span class="n">anaconda</span><span class="o">-</span><span class="n">ks</span><span class="p">.</span><span class="n">cfg</span>
+<span class="n">install</span><span class="p">.</span><span class="n">log</span>
+<span class="n">install</span><span class="p">.</span><span class="n">log</span><span class="p">.</span><span class="n">syslog</span>
+</pre></div>
+
+
+<h3 id="commandsgetoutputcmd">commands.getoutput(cmd)</h3>
+<p>只返回输出结果</p>
+<h2 id="0x03-subprocess">0x03 subprocess</h2>
+<p>可以创建新的进程，可以与新建进程的输入/输出/错误管道连通，并可以获得新建进程执行的返回状态. <code>使用subprocess模块的目的是替代os.system()、os.popen*()、commands.*等旧的函数或模块。</code></p>
+<p>注意： 当执行命令的参数或者返回中包含了中文文字，那么建议使用subprocess，如果使用os.popen则会出现错误</p>
+<h3 id="subprocesscallcommand-shelltrue">subprocess.call(command, shell=True)</h3>
+<blockquote>
+<p>直接打印出结果, 如果command不是一个可执行文件，shell=True是不可省略的</p>
+</blockquote>
+<h3 id="subprocesspopencommand-shelltrue">subprocess.Popen(command, shell=True)</h3>
+<blockquote>
+<p>如果command不是一个可执行文件，shell=True是不可省略的</p>
+</blockquote>
+<p><code>subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)</code> 这样可以输出结果</p>
+<div class="hlcode"><pre><span class="n">import</span> <span class="n">subprocess</span>  
+<span class="n">p</span> <span class="o">=</span> <span class="n">subprocess</span><span class="p">.</span><span class="n">Popen</span><span class="p">(</span><span class="err">&#39;</span><span class="n">ls</span> <span class="o">*</span><span class="p">.</span><span class="n">sh</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="n">True</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="p">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="p">.</span><span class="n">STDOUT</span><span class="p">)</span>  
+<span class="n">print</span> <span class="n">p</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="n">readlines</span><span class="p">()</span>  
+<span class="k">for</span> <span class="n">line</span> <span class="n">in</span> <span class="n">p</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="n">readlines</span><span class="p">()</span><span class="o">:</span>  
+    <span class="n">print</span> <span class="n">line</span><span class="p">,</span>  
+<span class="n">retval</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>  
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

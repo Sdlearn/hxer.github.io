@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <title>Excel - Wiki | janes</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Python">Python</a>&nbsp;»&nbsp;Excel</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">Excel</div>
+  <div id="content">
+  <h2 id="0x00">0x00 简介</h2>
+<p>Python第三方库操作Excel</p>
+<ul>
+<li>xlrd (Excel Reader): 读</li>
+</ul>
+<p>支持Python 2.x和3.x，支持XLS和XLSX文件读取。</p>
+<ul>
+<li>xlwt (Excel Writer): 写</li>
+</ul>
+<p>仅支持Python 2.x，仅支持写XLS。</p>
+<ul>
+<li>xlutils: 更多高级操作，依赖前2个库</li>
+</ul>
+<p>仅支持Python 2.x</p>
+<h2 id="0x01-xlrd">0x01 xlrd</h2>
+<p><a href="http://xlrd.readthedocs.io/en/latest/">xlrd documet</a></p>
+<div class="hlcode"><pre><span class="cp"># 导入模块</span>
+<span class="n">import</span> <span class="n">xlrd</span>
+
+<span class="cp"># 打开Excel文件读取数据</span>
+
+<span class="n">rb</span> <span class="o">=</span> <span class="n">xlrd</span><span class="p">.</span><span class="n">open_workbook</span><span class="p">(</span><span class="err">&#39;</span><span class="n">excelFile</span><span class="p">.</span><span class="n">xls</span><span class="err">&#39;</span><span class="p">)</span>
+
+<span class="cp"># 获取一个工作表</span>
+<span class="n">sheet</span> <span class="o">=</span> <span class="n">rb</span><span class="p">.</span><span class="n">sheets</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>               <span class="err">#通过索引顺序获取</span>
+<span class="n">sheet</span> <span class="o">=</span> <span class="n">rb</span><span class="p">.</span><span class="n">sheet_by_index</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>         <span class="err">#通过索引顺序获取</span>
+<span class="n">sheet</span> <span class="o">=</span> <span class="n">rb</span><span class="p">.</span><span class="n">sheet_by_name</span><span class="p">(</span><span class="n">u</span><span class="err">&#39;</span><span class="n">Sheet1</span><span class="err">&#39;</span><span class="p">)</span>  <span class="err">#通过名称获取</span>
+
+<span class="cp"># 获取整行和整列的值（数组）</span>
+<span class="n">sheet</span><span class="p">.</span><span class="n">row_values</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="n">sheet</span><span class="p">.</span><span class="n">col_values</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="cp"># 工作表名字 </span>
+<span class="n">sheet</span><span class="p">.</span><span class="n">name</span>
+
+<span class="cp">#获取行数和列数</span>
+<span class="n">nrows</span> <span class="o">=</span> <span class="n">sheet</span><span class="p">.</span><span class="n">nrows</span>
+<span class="n">ncols</span> <span class="o">=</span> <span class="n">sheet</span><span class="p">.</span><span class="n">ncols</span>
+
+<span class="cp"># 循环行列表数据</span>
+<span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="n">range</span><span class="p">(</span><span class="n">nrows</span> <span class="p">)</span><span class="o">:</span>
+    <span class="n">print</span> <span class="n">sheet</span><span class="p">.</span><span class="n">row_values</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="cp"># 单元格</span>
+<span class="n">cell_A1</span> <span class="o">=</span> <span class="n">sheet</span><span class="p">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">).</span><span class="n">value</span>
+<span class="n">cell_C4</span> <span class="o">=</span> <span class="n">sheet</span><span class="p">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">).</span><span class="n">value</span>
+
+<span class="cp"># 使用行列索引</span>
+<span class="n">cell_A1</span> <span class="o">=</span> <span class="n">sheet</span><span class="p">.</span><span class="n">row</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="n">value</span>
+<span class="n">cell_A2</span> <span class="o">=</span> <span class="n">sheet</span><span class="p">.</span><span class="n">col</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="n">value</span>
+
+<span class="cp"># 返回行单元格类型列表，0：None，1：string，2：Number，3：date，4：bool，5：error</span>
+<span class="n">ws</span><span class="p">.</span><span class="n">row_types</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span>  
+</pre></div>
+
+
+<h2 id="0x02-xlwt">0x02 xlwt</h2>
+<p><a href="http://xlwt.readthedocs.io/en/latest/">xlwt document</a></p>
+<div class="hlcode"><pre><span class="n">import</span> <span class="n">xlwt</span>
+<span class="n">wbk</span> <span class="o">=</span> <span class="n">xlwt</span><span class="p">.</span><span class="n">Workbook</span><span class="p">()</span>
+<span class="n">sheet</span> <span class="o">=</span> <span class="n">wbk</span><span class="p">.</span><span class="n">add_sheet</span><span class="p">(</span><span class="err">&#39;</span><span class="n">sheet</span> <span class="mi">1</span><span class="err">&#39;</span><span class="p">)</span>
+
+<span class="err">这样表单就被创建了</span><span class="p">,</span><span class="err">写入数据也很简单：</span>
+<span class="cp"># indexing is zero based, row then column</span>
+<span class="n">sheet</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">test</span> <span class="n">text</span><span class="err">&#39;</span><span class="p">)</span>
+<span class="n">wbk</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="err">&#39;</span><span class="n">demo</span><span class="p">.</span><span class="n">xls</span><span class="err">&#39;</span><span class="p">)</span>
+
+<span class="cp"># 根据序号激活工作表</span>
+<span class="n">ws</span> <span class="o">=</span> <span class="n">wb</span><span class="p">.</span><span class="n">get_sheet</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span>
+
+<span class="cp"># 写入并且合并单元格，(x，y)是开始单元格，(m,n)是结束单元格</span>
+<span class="n">ws</span><span class="p">.</span><span class="n">write_merge</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">value</span><span class="o">/</span><span class="n">Formula</span><span class="p">[,</span> <span class="n">sytle</span><span class="p">])</span> 
+</pre></div>
+
+
+<h2 id="0x03-xlutils">0x03 xlutils</h2>
+<p><a href="http://xlutils.readthedocs.io/en/latest/">xlutils document</a></p>
+<p><a href="http://blog.csdn.net/tianzhu123/article/details/7225809">修改Excel文件</a></p>
+<div class="hlcode"><pre><span class="cp"># xlutils.copy.copy 这个模块是用来在xlrd和xlwt之间嫁接桥梁的，可以说是依赖xlrd的，因为必须要初始化xlrd的Book类才能复制。 </span>
+<span class="n">wb</span> <span class="o">=</span> <span class="n">xlutils</span><span class="p">.</span><span class="n">copy</span><span class="p">.</span><span class="n">copy</span><span class="p">(</span><span class="n">rwb</span><span class="p">)</span>   
+<span class="n">ws</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">row</span><span class="p">,</span><span class="n">col</span><span class="p">,</span><span class="n">value</span><span class="p">)</span>  
+<span class="n">wb</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="err">&#39;</span><span class="n">WorkBookName</span><span class="err">&#39;</span><span class="p">)</span> 
+</pre></div>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2012-2016 .
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
