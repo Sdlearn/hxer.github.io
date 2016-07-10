@@ -35,55 +35,6 @@
 <p><a href="https://github.com/pwning/public-writeup/tree/master/hitcon2015/web300-giraffes-coffee">hitcon 2015 web300</a></p>
 <p>mt_rand rainbow:</p>
 <p><a href="http://www.gat3way.eu/poc/wtrt/">mt_rand rainbow</a></p>
-<h2 id="hydra">hydra</h2>
-<ul>
-<li>option</li>
-</ul>
-<div class="hlcode"><pre><span class="na">-R</span>          <span class="err">继续从上一次进度接着破解</span>
-<span class="na">-S</span>          <span class="err">采用</span><span class="nx">SSL</span><span class="err">链接</span>
-<span class="na">-s</span> <span class="o">&lt;</span><span class="nb">PORT</span><span class="o">&gt;</span>   <span class="err">可通过这个参数指定非默认端口</span>
-<span class="na">-l</span> <span class="o">&lt;</span><span class="nx">LOGIN</span><span class="o">&gt;</span>  <span class="err">指定破解的用户，对特定用户破解</span>
-<span class="na">-L</span> <span class="o">&lt;</span><span class="nb">FILE</span><span class="o">&gt;</span>   <span class="err">指定用户名字典</span>
-<span class="na">-p</span> <span class="o">&lt;</span><span class="nb">PASS</span><span class="o">&gt;</span>   <span class="err">指定密码破解，少用，一般是采用密码字典</span>
-<span class="na">-P</span> <span class="o">&lt;</span><span class="nb">FILE</span><span class="o">&gt;</span>   <span class="err">指定密码字典</span>
-<span class="na">-e</span> <span class="o">&lt;</span><span class="nx">nsr</span><span class="o">&gt;</span>     <span class="err">额外可选选项，</span><span class="nb">n</span> <span class="p">(</span><span class="err">空密碼，即不指定密碼</span><span class="p">)</span><span class="err">，</span> <span class="nb">s</span> <span class="p">(</span><span class="err">將帳號同時當成密碼用</span><span class="p">)</span><span class="err">，</span><span class="nb">r</span> <span class="p">(</span><span class="err">將帳號</span><span class="o">/</span><span class="err">密碼調換使用</span><span class="p">)</span>
-<span class="na">-C</span> <span class="o">&lt;</span><span class="nb">FILE</span><span class="o">&gt;</span>   <span class="err">使用冒号分割格式，例如“登录名</span><span class="p">:</span><span class="err">密码”来代替</span><span class="na">-L</span><span class="o">/-</span><span class="nx">P</span><span class="err">参数</span>
-<span class="na">-M</span> <span class="o">&lt;</span><span class="nb">FILE</span><span class="o">&gt;</span>   <span class="err">指定目标列表文件一行一条</span>
-<span class="na">-o</span> <span class="o">&lt;</span><span class="nb">FILE</span><span class="o">&gt;</span>   <span class="err">指定结果输出文件</span>
-<span class="na">-f</span>          <span class="err">在使用</span><span class="na">-M</span><span class="err">参数以后，找到第一对登录名或者密码的时候中止破解</span>
-<span class="na">-t</span> <span class="o">&lt;</span><span class="nb">TASKS</span><span class="o">&gt;</span>  <span class="err">同时运行的线程数，默认为</span><span class="mi">16</span>
-<span class="na">-w</span> <span class="o">&lt;</span><span class="nb">TIME</span><span class="o">&gt;</span>   <span class="err">设置最大超时的时间，单位秒，默认是</span><span class="mi">30</span><span class="nb">s</span>
-<span class="na">-v</span> <span class="o">/</span> <span class="na">-V</span>     <span class="err">显示详细过程</span>
-<span class="na">-SuvVd46</span><span class="err">：是多個選項的組合，分別表示：</span>
-    <span class="nb">S</span><span class="err">：使用</span><span class="nx">SSL</span><span class="err">連線</span>
-    <span class="nx">u</span><span class="err">：每一組密碼都用帳號輪流測試，而不是每一組帳號用密碼輪流測試。</span>
-    <span class="nx">v</span> <span class="nx">V</span> <span class="nb">d</span> <span class="nx">U</span> <span class="err">是訊息的詳細度</span>
-    <span class="mi">4</span> <span class="mi">6</span> <span class="err">是</span> <span class="nx">IP</span> <span class="nx">address</span> <span class="err">格式</span><span class="p">(</span><span class="nx">IPv4</span> <span class="err">或</span> <span class="nx">IPv6</span><span class="p">)</span>
-<span class="nx">server</span>      <span class="err">目标</span><span class="nx">ip</span>
-<span class="nx">service</span>     <span class="err">指定服务名，支持的服务和协议：</span><span class="nx">telnet</span> <span class="nx">ftp</span> <span class="nx">pop3</span><span class="err">[</span><span class="na">-ntlm</span><span class="cp">]</span> imap<span class="cp">[</span><span class="na">-ntlm</span><span class="cp">]</span> smb smbnt http<span class="cp">[</span><span class="nb">s</span><span class="cp">]</span>-{head|get} http-{get|post}-form http-proxy cisco cisco-enable vnc ldap2 ldap3 mssql mysql oracle-listener postgres nntp socks5 rexec rlogin pcnfs snmp rsh cvs svn icq sapr3 ssh2 smtp-auth<span class="cp">[</span><span class="na">-ntlm</span><span class="cp">]</span> pcanywhere teamspeak sip vmauthd firebird ncp afp等等
-</pre></div>
-
-
-<h3 id="use">use</h3>
-<ul>
-<li>ssh</li>
-</ul>
-<div class="hlcode"><pre><span class="n">hydra</span> <span class="n">ip</span> <span class="o">-</span><span class="n">l</span> <span class="n">root</span> <span class="o">-</span><span class="n">P</span> <span class="n">pass</span><span class="p">.</span><span class="n">lst</span>
-</pre></div>
-
-
-<ul>
-<li>http post form attack</li>
-</ul>
-<div class="hlcode"><pre><span class="n">hydra</span> <span class="o">-</span><span class="n">l</span> <span class="n">admin</span> <span class="o">-</span><span class="n">P</span> <span class="n">pass</span><span class="p">.</span><span class="n">lst</span> <span class="o">-</span><span class="n">o</span> <span class="n">ok</span><span class="p">.</span><span class="n">lst</span> <span class="o">-</span><span class="n">t</span> <span class="mi">1</span> <span class="o">-</span><span class="n">f</span> <span class="mf">127.0.0.1</span> <span class="n">http</span><span class="o">-</span><span class="n">post</span><span class="o">-</span><span class="n">form</span> <span class="err">“</span><span class="o">/</span><span class="n">login</span><span class="p">.</span><span class="n">php</span><span class="o">:</span><span class="n">name</span><span class="o">=^</span><span class="n">USER</span><span class="o">^&amp;</span><span class="n">pwd</span><span class="o">=^</span><span class="n">PASS</span><span class="o">^:</span><span class="n">incorrect</span><span class="o">:</span><span class="n">H</span><span class="o">=</span><span class="n">Cookie</span><span class="o">:</span> <span class="n">security</span><span class="o">=</span><span class="n">low</span><span class="p">;</span> <span class="n">PHPSESSID</span><span class="o">=</span><span class="n">o7qiqd9fc1d003u9d38k64t0f4</span><span class="err">”</span>
-</pre></div>
-
-
-<blockquote>
-<p>http-post-form or http-get-form</p>
-<p>incorrect表示错误猜解的返回信息提示，自定义,最好和页面返回的信息一致，不要略写，不然可能产生错报，具体原因待去看源码</p>
-</blockquote>
-<p><strong>:H= 表示手工设置的Header</strong></p>
 <h2 id="htpwdscan">htpwdScan</h2>
 <p><a href="https://github.com/lijiejie/htpwdScan">github htpwdScan</a></p>
 <ul>
