@@ -1,5 +1,5 @@
 ---
-title: "log"
+title: "Log"
 date: 2016-02-25 00:25
 ---
 

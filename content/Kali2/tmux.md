@@ -1,5 +1,5 @@
 ---
-title: "tmux"
+title: "Tmux"
 date: 2016-03-30 23:58
 ---
 

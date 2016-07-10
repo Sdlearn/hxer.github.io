@@ -1,5 +1,5 @@
 ---
-title: "centos7"
+title: "Centos7"
 date: 2016-01-21 04:42
 ---
 

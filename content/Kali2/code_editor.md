@@ -1,5 +1,5 @@
 ---
-title: "code editor"
+title: "Code editor"
 date: 2016-01-20 21:38
 ---
 

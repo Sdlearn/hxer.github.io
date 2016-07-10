@@ -35,55 +35,6 @@ mt_rand rainbow:
 
 [mt_rand rainbow][7]
 
-## hydra
-
-* option
-
-```
--R          继续从上一次进度接着破解
--S          采用SSL链接
--s <PORT>   可通过这个参数指定非默认端口
--l <LOGIN>  指定破解的用户，对特定用户破解
--L <FILE>   指定用户名字典
--p <PASS>   指定密码破解，少用，一般是采用密码字典
--P <FILE>   指定密码字典
--e <nsr>     额外可选选项，n (空密碼，即不指定密碼)， s (將帳號同時當成密碼用)，r (將帳號/密碼調換使用)
--C <FILE>   使用冒号分割格式，例如“登录名:密码”来代替-L/-P参数
--M <FILE>   指定目标列表文件一行一条
--o <FILE>   指定结果输出文件
--f          在使用-M参数以后，找到第一对登录名或者密码的时候中止破解
--t <TASKS>  同时运行的线程数，默认为16
--w <TIME>   设置最大超时的时间，单位秒，默认是30s
--v / -V     显示详细过程
--SuvVd46：是多個選項的組合，分別表示：
-    S：使用SSL連線
-    u：每一組密碼都用帳號輪流測試，而不是每一組帳號用密碼輪流測試。
-    v V d U 是訊息的詳細度
-    4 6 是 IP address 格式(IPv4 或 IPv6)
-server      目标ip
-service     指定服务名，支持的服务和协议：telnet ftp pop3[-ntlm] imap[-ntlm] smb smbnt http[s]-{head|get} http-{get|post}-form http-proxy cisco cisco-enable vnc ldap2 ldap3 mssql mysql oracle-listener postgres nntp socks5 rexec rlogin pcnfs snmp rsh cvs svn icq sapr3 ssh2 smtp-auth[-ntlm] pcanywhere teamspeak sip vmauthd firebird ncp afp等等
-```
-
-### use
-
-* ssh
-
-```
-hydra ip -l root -P pass.lst
-```
-
-* http post form attack
-
-```
-hydra -l admin -P pass.lst -o ok.lst -t 1 -f 127.0.0.1 http-post-form “/login.php:name=^USER^&pwd=^PASS^:incorrect:H=Cookie: security=low; PHPSESSID=o7qiqd9fc1d003u9d38k64t0f4”
-```
-
-> http-post-form or http-get-form
-
-> incorrect表示错误猜解的返回信息提示，自定义,最好和页面返回的信息一致，不要略写，不然可能产生错报，具体原因待去看源码
-
-**:H= 表示手工设置的Header**
-
 ## htpwdScan
 
 [github htpwdScan][2]

@@ -1,5 +1,5 @@
 ---
-title: "ubuntu"
+title: "Ubuntu"
 date: 2016-01-27 21:54
 ---
 
