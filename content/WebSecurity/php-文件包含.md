@@ -245,7 +245,9 @@ result: ip information
 <?php echo base64_encode(file_get_contents("solution.php"));?>
 ```
 
-### ** php://filter **-- 利用主要是利用了resource和vonvert，这样可以读取到php的代码。
+### ** php://filter **-- 利用主要是利用了resource和vonvert，这样可以读取到php的代码 =========================
+
+ctf 赛事中，url参数值出现很像文件名的情况下，很有可能是 本地文件包含， 可利用 filter 协议读源码， 通常 flag 在 flag.php info.php phpinfo.php 这几个文件中，优先考虑
 
 > php5.0以上
 
