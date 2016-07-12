@@ -227,7 +227,8 @@ PGZvcm0gYWN0aW9uPSI8Pz0kX1NFUlZFUlsnUkVRVUVTVF9VUkknXT8%2BIiBtZXRob2Q9IlBPU1QiPj
 </pre></div>
 
 
-<h3 id="phpfilter-resourcevonvertphp"><strong> php://filter </strong>-- 利用主要是利用了resource和vonvert，这样可以读取到php的代码。</h3>
+<h3 id="phpfilter-resourcevonvertphp"><strong> php://filter </strong>-- 利用主要是利用了resource和vonvert，这样可以读取到php的代码 =========================</h3>
+<p>ctf 赛事中，url参数值出现很像文件名的情况下，很有可能是 本地文件包含， 可利用 filter 协议读源码， 通常 flag 在 flag.php info.php phpinfo.php 这几个文件中，优先考虑</p>
 <blockquote>
 <p>php5.0以上</p>
 </blockquote>
