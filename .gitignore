@@ -1,4 +1,7 @@
 *.pyc
-output
+
+wiki
+
+_book
 
 .ropeproject/

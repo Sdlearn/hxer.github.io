@@ -111,9 +111,9 @@ TEMPLATES = [
 
 * 1.基本
 
-> [S]: {% tag %}
+> [S]: `{% tag %}`
 
-> [D]: {% tag %} ... {% endtag %}
+> [D]: `{% tag %} ... {% endtag %}`
 
 * entends[S]
 
@@ -133,7 +133,7 @@ TEMPLATES = [
 
 * 2. 翻译
 
-* trans[S] --To enable it, set USE_I18N to True, then load it with {% load i18n %}
+* trans[S] --To enable it, set USE_I18N to True, then load it with `{% load i18n %}`
 
 > 标记需要翻译的字符串
 
