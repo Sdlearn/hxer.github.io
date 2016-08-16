@@ -1,662 +1,2254 @@
+
 <!DOCTYPE HTML>
-<html>
+<html lang="cn" >
     <head>
-        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
-        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
-        <title>install and configure - Wiki | janes</title>
-        <meta name="keywords" content=""/>
-        <meta name="description" content=""/>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
+        <title>install and configure · Wiki | janes</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.0">
+        <meta name="author" content="janes">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
 
-    <body>
-        <div id="container">
+    
             
-<div id="header">
-  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Kali2">Kali2</a>&nbsp;»&nbsp;install and configure</div>
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="phpmyadmin.html" />
+    
+    
+    <link rel="prev" href="w3af.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
 </div>
-<div class="clearfix"></div>
-<div id="title">install and configure</div>
-  <div id="content">
-  <h1 id="rolling">rolling</h1>
-<h2 id="source">source</h2>
-<div class="hlcode"><pre><span class="k">deb</span> <span class="s">http://http.kali.org/kali</span> <span class="kp">kali-rolling</span> <span class="kp">main</span> <span class="kp">contrib</span> <span class="kp">non-free</span>
-</pre></div>
+
+            
+                <nav role="navigation">
+                
 
 
-<h2 id="reboot-shutdown">reboot shutdown不能关机</h2>
-<p>solution: </p>
-<p>先做 用户注销，然后返回到登录页面，点击关机或重启</p>
-<h2 id="exfat">不能挂载 exfat 格式硬盘</h2>
-<p>solution:</p>
-<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">exfat</span><span class="o">-</span><span class="n">fuse</span> <span class="n">exfat</span><span class="o">-</span><span class="n">utils</span>
-</pre></div>
+<ul class="summary">
+    
+    
 
+    
 
-<h2 id="zip">zip 解压含中文文件名乱码</h2>
-<p>解决方案：</p>
-<ol>
-<li><code>unar file.zip</code>， unar 会自动检测文件编码， <code>-e</code> 选项指定文件编码</li>
-</ol>
-<h1 id="kali2-sana">kali2 sana</h1>
-<h2 id="_1">更新源</h2>
-<p>vim /etc/apt/sources.list</p>
-<div class="hlcode"><pre><span class="c">#中科大源</span>
-<span class="k">deb</span> <span class="s">http://mirrors.ustc.edu.cn/kali</span> <span class="kp">sana</span> <span class="kp">main</span> <span class="kp">non-free</span> <span class="kp">contrib</span> 
-<span class="kp">deb-src</span> <span class="kp">http://mirrors.ustc.edu.cn/kali</span> <span class="kp">sana</span> <span class="kp">main</span> <span class="kp">non-free</span> <span class="kp">contrib</span> 
-<span class="kp">deb</span> <span class="kp">http://mirrors.ustc.edu.cn/kali-security/</span> <span class="kp">sana/updates</span> <span class="kp">main</span> <span class="kp">contrib</span> <span class="kp">non-free</span> 
-<span class="kp">deb-src</span> <span class="kp">http://mirrors.ustc.edu.cn/kali-security/</span> <span class="kp">sana/updates</span> <span class="kp">main</span> <span class="kp">contrib</span> <span class="kp">non-free</span>
-<span class="c">#阿里云kali源</span>
-<span class="k">deb</span> <span class="s">http://mirrors.aliyun.com/kali</span> <span class="kp">sana</span> <span class="kp">main</span> <span class="kp">non-free</span> <span class="kp">contrib</span>
-<span class="k">deb</span> <span class="s">http://mirrors.aliyun.com/kali-security/</span> <span class="kp">sana/updates</span> <span class="kp">main</span> <span class="kp">contrib</span> <span class="kp">non-free</span>
-<span class="k">deb-src</span> <span class="s">http://mirrors.aliyun.com/kali-security/</span> <span class="kp">sana/updates</span> <span class="kp">main</span> <span class="kp">contrib</span> <span class="kp">non-free</span>
-</pre></div>
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Wiki
+            
+                </a>
+            
 
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    Python
+            
+                </span>
+            
 
-<h2 id="_2">安装输入法</h2>
-<div class="hlcode"><pre><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">fcitx</span> <span class="n">fcitx</span><span class="o">-</span><span class="n">googlepinyin</span>
-</pre></div>
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../Python/anaconda.html">
+            
+                <a href="../Python/anaconda.html">
+            
+                    
+                    Anaconda
+            
+                </a>
+            
 
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../Python/django.html">
+            
+                <a href="../Python/django.html">
+            
+                    
+                    Django 1.8.7
+            
+                </a>
+            
 
-<p>配置：应用程序&gt;常用程序&gt;系统工具&gt;首选项&gt;Fcitx配置 添加拼音</p>
-<p>重启或用户注销</p>
-<h2 id="upgrade-to-kali-rolling">upgrade to kali Rolling</h2>
-<div class="hlcode"><pre><span class="n">root</span><span class="err">@</span><span class="n">kali</span><span class="o">:</span><span class="err">#</span> <span class="n">cat</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span> <span class="o">&gt;/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="p">.</span><span class="n">list</span>
-<span class="o">&gt;</span> <span class="n">deb</span> <span class="n">http</span><span class="o">:</span><span class="c1">//http.kali.org/kali kali-rolling main non-free contrib</span>
-<span class="o">&gt;</span> <span class="n">EOF</span>
-<span class="n">root</span><span class="err">@</span><span class="n">kali</span><span class="o">:</span><span class="err">#</span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
-<span class="n">root</span><span class="err">@</span><span class="n">kali</span><span class="o">:</span><span class="err">#</span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">dist</span><span class="o">-</span><span class="n">upgrade</span>
-<span class="n">root</span><span class="err">@</span><span class="n">kali</span><span class="o">:</span><span class="err">#</span><span class="n">reboot</span> 
-</pre></div>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../Python/excel.html">
+            
+                <a href="../Python/excel.html">
+            
+                    
+                    Excel
+            
+                </a>
+            
 
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../Python/flask.html">
+            
+                <a href="../Python/flask.html">
+            
+                    
+                    Flask
+            
+                </a>
+            
 
-<h2 id="root">设置 root 密码</h2>
-<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">passwd</span>
-<span class="cp">#输入root密码</span>
-<span class="cp">#确认root密码</span>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../Python/flask_github_api_login.html">
+            
+                <a href="../Python/flask_github_api_login.html">
+            
+                    
+                    Flask github api login
+            
+                </a>
+            
 
-<span class="n">su</span> <span class="n">root</span>
-</pre></div>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../Python/函数.html">
+            
+                <a href="../Python/函数.html">
+            
+                    
+                    Function
+            
+                </a>
+            
 
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../Python/http_server.html">
+            
+                <a href="../Python/http_server.html">
+            
+                    
+                    Http_server
+            
+                </a>
+            
 
-<h2 id="_3">安装火狐</h2>
-<div class="hlcode"><pre><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">remove</span> <span class="n">iceweasel</span>
-<span class="n">echo</span> <span class="o">-</span><span class="n">e</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">deb http://downloads.sourceforge.net/project/ubuntuzilla/mozilla/apt all main&quot;</span> <span class="o">|</span> <span class="n">tee</span> <span class="o">-</span><span class="n">a</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="p">.</span><span class="n">list</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
-<span class="n">apt</span><span class="o">-</span><span class="n">key</span> <span class="n">adv</span> <span class="o">--</span><span class="n">recv</span><span class="o">-</span><span class="n">keys</span> <span class="o">--</span><span class="n">keyserver</span> <span class="n">keyserver</span><span class="p">.</span><span class="n">ubuntu</span><span class="p">.</span><span class="n">com</span> <span class="n">C1289A29</span>
-<span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
-<span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">firefox</span><span class="o">-</span><span class="n">mozilla</span><span class="o">-</span><span class="n">build</span>
-</pre></div>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../Python/iterators.html">
+            
+                <a href="../Python/iterators.html">
+            
+                    
+                    Iterators
+            
+                </a>
+            
 
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="../Python/log.html">
+            
+                <a href="../Python/log.html">
+            
+                    
+                    Log
+            
+                </a>
+            
 
-<h2 id="chromium">安装Chromium</h2>
-<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">isntall</span> <span class="n">chromium</span>
-</pre></div>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="../Python/pickle.html">
+            
+                <a href="../Python/pickle.html">
+            
+                    
+                    Pickle
+            
+                </a>
+            
 
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="../Python/pythonic.html">
+            
+                <a href="../Python/pythonic.html">
+            
+                    
+                    Pythonic
+            
+                </a>
+            
 
-<h2 id="java">java</h2>
-<p><a href="http://www.k4linux.com/2015/11/kali-linux-2-0-tutorials-java.html">install java tutorials</a></p>
-<h3 id="download-latest-java-se-sdk">Download latest Java SE SDK :</h3>
-<p>To Download Java Select the file according to your operating system from the list.</p>
-<p>Download Link : http://www.java.com/en/download/linux_manual.jsp</p>
-<p>Java will be saved on Downloads/ folder or save it on /root.</p>
-<p>Uncompress archive:</p>
-<div class="hlcode"><pre><span class="n">root</span><span class="err">@</span><span class="n">k4linux</span><span class="o">:~</span><span class="err">#</span> <span class="n">tar</span> <span class="o">-</span><span class="n">zxvf</span> <span class="n">jre</span><span class="o">*</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span>
-</pre></div>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="../Python/random.html">
+            
+                <a href="../Python/random.html">
+            
+                    
+                    Random
+            
+                </a>
+            
 
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13" data-path="../Python/scapy.html">
+            
+                <a href="../Python/scapy.html">
+            
+                    
+                    Scapy
+            
+                </a>
+            
 
-<p>Move the extracted folder to /opt:</p>
-<div class="hlcode"><pre><span class="n">root</span><span class="err">@</span><span class="n">k4linux</span><span class="o">:~</span><span class="err">#</span> <span class="n">mv</span> <span class="n">jre</span><span class="o">*</span> <span class="o">/</span><span class="n">opt</span>
-</pre></div>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14" data-path="../Python/selenium.html">
+            
+                <a href="../Python/selenium.html">
+            
+                    
+                    Selenium and Xvfb 
+            
+                </a>
+            
 
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15" data-path="../Python/socket.html">
+            
+                <a href="../Python/socket.html">
+            
+                    
+                    Socket
+            
+                </a>
+            
 
-<p>And go to the folder :</p>
-<div class="hlcode"><pre><span class="n">root</span><span class="err">@</span><span class="n">k4linux</span><span class="o">:~</span><span class="err">#</span> <span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jre</span><span class="o">*</span>
-</pre></div>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16" data-path="../Python/network_package.html">
+            
+                <a href="../Python/network_package.html">
+            
+                    
+                    network package
+            
+                </a>
+            
 
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17" data-path="../Python/note.html">
+            
+                <a href="../Python/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
 
-<h3 id="install-and-register-binaries-of-java">Install and register binaries Of Java :</h3>
-<p>This step registers the downloaded version of Java as an alternative, and switches it to be used as the default:</p>
-<div class="hlcode"><pre><span class="n">update</span><span class="o">-</span><span class="n">alternatives</span> <span class="o">--</span><span class="n">install</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">java</span> <span class="n">java</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jre</span><span class="err">*/</span><span class="n">bin</span><span class="o">/</span><span class="n">java</span> <span class="mi">1</span>
-<span class="n">update</span><span class="o">-</span><span class="n">alternatives</span> <span class="o">--</span><span class="n">install</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mozilla</span><span class="o">/</span><span class="n">plugins</span><span class="o">/</span><span class="n">libjavaplugin</span><span class="p">.</span><span class="n">s</span><span class="err">­</span><span class="n">o</span> <span class="n">mozilla</span><span class="o">-</span><span class="n">javaplugin</span><span class="p">.</span><span class="n">so</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jre</span><span class="err">*/</span><span class="n">lib</span><span class="o">/</span><span class="n">amd64</span><span class="o">/</span><span class="n">libnpjp2</span><span class="p">.</span><span class="n">so</span> <span class="mi">1</span>
-<span class="n">update</span><span class="o">-</span><span class="n">alternatives</span> <span class="o">--</span><span class="n">set</span> <span class="n">java</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jre</span><span class="err">*/</span><span class="n">bin</span><span class="o">/</span><span class="n">java</span>
-<span class="n">update</span><span class="o">-</span><span class="n">alternatives</span> <span class="o">--</span><span class="n">set</span> <span class="n">javac</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jre</span><span class="err">*/</span><span class="n">bin</span><span class="o">/</span><span class="n">javac</span>
-<span class="n">update</span><span class="o">-</span><span class="n">alternatives</span> <span class="o">--</span><span class="n">set</span> <span class="n">mozilla</span><span class="o">-</span><span class="n">javaplugin</span><span class="p">.</span><span class="n">so</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jre</span><span class="err">*/</span><span class="n">lib</span><span class="o">/</span><span class="n">amd64</span><span class="o">/</span><span class="n">libnpjp2</span><span class="p">.</span><span class="n">so</span>
-</pre></div>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18" data-path="../Python/eval.html">
+            
+                <a href="../Python/eval.html">
+            
+                    
+                    动态执行字符串代码
+            
+                </a>
+            
 
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19" data-path="../Python/command.html">
+            
+                <a href="../Python/command.html">
+            
+                    
+                    命令执行
+            
+                </a>
+            
 
-<p>Testing your installation OF Java on Kali Linux 2.0:</p>
-<p>To check the browser plugin, restart your webrowser, and click “Do I have Java?”</p>
-<p>To check the version of Java you are now running:</p>
-<div class="hlcode"><pre> <span class="n">root</span><span class="err">@</span><span class="n">k4linux</span><span class="o">:~</span><span class="err">#</span> <span class="n">java</span> <span class="o">-</span><span class="n">version</span>
-<span class="n">java</span> <span class="n">version</span> <span class="s">&quot;1.8.0_60&quot;</span>
-<span class="n">Java</span><span class="p">(</span><span class="n">TM</span><span class="p">)</span> <span class="n">SE</span> <span class="n">Runtime</span> <span class="n">Environment</span> <span class="p">(</span><span class="n">build</span> <span class="mf">1.8.0</span><span class="n">_60</span><span class="o">-</span><span class="n">b27</span><span class="p">)</span>
-<span class="n">Java</span> <span class="n">HotSpot</span><span class="p">(</span><span class="n">TM</span><span class="p">)</span> <span class="mi">64</span><span class="o">-</span><span class="n">Bit</span> <span class="n">Server</span> <span class="n">VM</span> <span class="p">(</span><span class="n">build</span> <span class="mf">25.60</span><span class="o">-</span><span class="n">b23</span><span class="p">,</span> <span class="n">mixed</span> <span class="n">mode</span><span class="p">)</span>
-</pre></div>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.20" data-path="../Python/buildin_type.html">
+            
+                <a href="../Python/buildin_type.html">
+            
+                    
+                    常用内置对象操作
+            
+                </a>
+            
 
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.21" data-path="../Python/常用模块.html">
+            
+                <a href="../Python/常用模块.html">
+            
+                    
+                    常用模块
+            
+                </a>
+            
 
-<h2 id="proxy">proxy</h2>
-<ul>
-<li>shadowsocks</li>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.22" data-path="../Python/wechat.html">
+            
+                <a href="../Python/wechat.html">
+            
+                    
+                    微信公众号开发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.23" data-path="../Python/模拟http-post-upload-file.html">
+            
+                <a href="../Python/模拟http-post-upload-file.html">
+            
+                    
+                    模拟HTTP POST upload file
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.24" data-path="../Python/自省.html">
+            
+                <a href="../Python/自省.html">
+            
+                    
+                    自省
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.25" data-path="../Python/运维.html">
+            
+                <a href="../Python/运维.html">
+            
+                    
+                    运维
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.26" data-path="../Python/processing.html">
+            
+                <a href="../Python/processing.html">
+            
+                    
+                    进(线程)程处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.27" data-path="../Python/迭代器和生成器.html">
+            
+                <a href="../Python/迭代器和生成器.html">
+            
+                    
+                    迭代器和生成器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    Linux
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../Linux/centos.html">
+            
+                <a href="../Linux/centos.html">
+            
+                    
+                    Centos7
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../Linux/cmdline.html">
+            
+                <a href="../Linux/cmdline.html">
+            
+                    
+                    Cmdline
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../Linux/ncat.html">
+            
+                <a href="../Linux/ncat.html">
+            
+                    
+                    Nc
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../Linux/nmap.html">
+            
+                <a href="../Linux/nmap.html">
+            
+                    
+                    Nmap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../Linux/ubuntu.html">
+            
+                <a href="../Linux/ubuntu.html">
+            
+                    
+                    Ubuntu
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    WebSecurity
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../WebSecurity/attacktool.html">
+            
+                <a href="../WebSecurity/attacktool.html">
+            
+                    
+                    AttackTool
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../WebSecurity/csrf.html">
+            
+                <a href="../WebSecurity/csrf.html">
+            
+                    
+                    CSRF
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../WebSecurity/dns.html">
+            
+                <a href="../WebSecurity/dns.html">
+            
+                    
+                    DNS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../WebSecurity/mysqlinject.html">
+            
+                <a href="../WebSecurity/mysqlinject.html">
+            
+                    
+                    Mysql 注入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../WebSecurity/note.html">
+            
+                <a href="../WebSecurity/note.html">
+            
+                    
+                    Note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../WebSecurity/php序列化.html">
+            
+                <a href="../WebSecurity/php序列化.html">
+            
+                    
+                    PHP序列化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../WebSecurity/ssti-jinja2.html">
+            
+                <a href="../WebSecurity/ssti-jinja2.html">
+            
+                    
+                    SSTI Jinja2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../WebSecurity/scan_for_info.html">
+            
+                <a href="../WebSecurity/scan_for_info.html">
+            
+                    
+                    Scan For Information
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9" data-path="../WebSecurity/sqlinject.html">
+            
+                <a href="../WebSecurity/sqlinject.html">
+            
+                    
+                    SqlInject
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.10" data-path="../WebSecurity/vulnapp.html">
+            
+                <a href="../WebSecurity/vulnapp.html">
+            
+                    
+                    Vulnapp
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11" data-path="../WebSecurity/xss.html">
+            
+                <a href="../WebSecurity/xss.html">
+            
+                    
+                    XSS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.12" data-path="../WebSecurity/backdoor.html">
+            
+                <a href="../WebSecurity/backdoor.html">
+            
+                    
+                    backdoor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.13" data-path="../WebSecurity/linux提权.html">
+            
+                <a href="../WebSecurity/linux提权.html">
+            
+                    
+                    linux提权
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.14" data-path="../WebSecurity/mysql.html">
+            
+                <a href="../WebSecurity/mysql.html">
+            
+                    
+                    mysql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.15" data-path="../WebSecurity/mysql宽字节注入.html">
+            
+                <a href="../WebSecurity/mysql宽字节注入.html">
+            
+                    
+                    mysql宽字节注入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.16" data-path="../WebSecurity/mysql注入过滤.html">
+            
+                <a href="../WebSecurity/mysql注入过滤.html">
+            
+                    
+                    mysql注入过滤
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.17" data-path="../WebSecurity/php.html">
+            
+                <a href="../WebSecurity/php.html">
+            
+                    
+                    php
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.18" data-path="../WebSecurity/php-match-or-comapre.html">
+            
+                <a href="../WebSecurity/php-match-or-comapre.html">
+            
+                    
+                    php match or comapre
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.19" data-path="../WebSecurity/php-文件包含.html">
+            
+                <a href="../WebSecurity/php-文件包含.html">
+            
+                    
+                    php 文件包含
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.20" data-path="../WebSecurity/ssrf.html">
+            
+                <a href="../WebSecurity/ssrf.html">
+            
+                    
+                    ssrf
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.21" data-path="../WebSecurity/url.html">
+            
+                <a href="../WebSecurity/url.html">
+            
+                    
+                    url
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.22" data-path="../WebSecurity/webshell.html">
+            
+                <a href="../WebSecurity/webshell.html">
+            
+                    
+                    webshell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.23" data-path="../WebSecurity/web渗透测试.html">
+            
+                <a href="../WebSecurity/web渗透测试.html">
+            
+                    
+                    web渗透测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.24" data-path="../WebSecurity/常用端口.html">
+            
+                <a href="../WebSecurity/常用端口.html">
+            
+                    
+                    常用端口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.25" data-path="../WebSecurity/常见协议.html">
+            
+                <a href="../WebSecurity/常见协议.html">
+            
+                    
+                    常见协议
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.26" data-path="../WebSecurity/敏感配置文件.html">
+            
+                <a href="../WebSecurity/敏感配置文件.html">
+            
+                    
+                    敏感配置文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.27" data-path="../WebSecurity/path_collect.html">
+            
+                <a href="../WebSecurity/path_collect.html">
+            
+                    
+                    文件读取漏洞路径收集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.28" data-path="../WebSecurity/解析漏洞.html">
+            
+                <a href="../WebSecurity/解析漏洞.html">
+            
+                    
+                    解析漏洞
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    Kali2
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="beef.html">
+            
+                <a href="beef.html">
+            
+                    
+                    Beef
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="burpsuite.html">
+            
+                <a href="burpsuite.html">
+            
+                    
+                    BurpSuite
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="code_editor.html">
+            
+                <a href="code_editor.html">
+            
+                    
+                    Code editor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="gather-information.html">
+            
+                <a href="gather-information.html">
+            
+                    
+                    Gather Information
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="hydra.html">
+            
+                <a href="hydra.html">
+            
+                    
+                    Hydra
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6" data-path="mitmproxy.html">
+            
+                <a href="mitmproxy.html">
+            
+                    
+                    MitmProxy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.7" data-path="pyenv.html">
+            
+                <a href="pyenv.html">
+            
+                    
+                    Pyenv
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.8" data-path="remote.html">
+            
+                <a href="remote.html">
+            
+                    
+                    Remote access
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9" data-path="shell.html">
+            
+                <a href="shell.html">
+            
+                    
+                    Shell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.10" data-path="tmux.html">
+            
+                <a href="tmux.html">
+            
+                    
+                    Tmux
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.11" data-path="w3af.html">
+            
+                <a href="w3af.html">
+            
+                    
+                    W3af
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.5.12" data-path="install&configure.html">
+            
+                <a href="install&configure.html">
+            
+                    
+                    install and configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.13" data-path="phpmyadmin.html">
+            
+                <a href="phpmyadmin.html">
+            
+                    
+                    phpmyadmin install and configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.14" data-path="flow_analysis.html">
+            
+                <a href="flow_analysis.html">
+            
+                    
+                    流量监听
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    Vuln
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../Vuln/joomla.html">
+            
+                <a href="../Vuln/joomla.html">
+            
+                    
+                    Joomla
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    PHP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../PHP/function.html">
+            
+                <a href="../PHP/function.html">
+            
+                    
+                    Function
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../PHP/configure.html">
+            
+                <a href="../PHP/configure.html">
+            
+                    
+                    configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../PHP/note.html">
+            
+                <a href="../PHP/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../PHP/正则匹配.html">
+            
+                <a href="../PHP/正则匹配.html">
+            
+                    
+                    正则匹配
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    Docker
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../Docker/docker-compose.html">
+            
+                <a href="../Docker/docker-compose.html">
+            
+                    
+                    Docker Compose
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../Docker/dockerfile.html">
+            
+                <a href="../Docker/dockerfile.html">
+            
+                    
+                    Dockerfile
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../Docker/docker-api-in-python.html">
+            
+                <a href="../Docker/docker-api-in-python.html">
+            
+                    
+                    docker api in python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../Docker/locale.html">
+            
+                <a href="../Docker/locale.html">
+            
+                    
+                    locale
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="../Docker/note.html">
+            
+                <a href="../Docker/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" data-path="../Docker/openvpn.html">
+            
+                <a href="../Docker/openvpn.html">
+            
+                    
+                    openvpn
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7" data-path="../Docker/安装和基本命令.html">
+            
+                <a href="../Docker/安装和基本命令.html">
+            
+                    
+                    安装和基本命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.8" data-path="../Docker/常用开发环境.html">
+            
+                <a href="../Docker/常用开发环境.html">
+            
+                    
+                    常用开发环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.9" data-path="../Docker/微容器.html">
+            
+                <a href="../Docker/微容器.html">
+            
+                    
+                    微容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.10" data-path="../Docker/心得.html">
+            
+                <a href="../Docker/心得.html">
+            
+                    
+                    心得
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.11" data-path="../Docker/持续集成与自动发布.html">
+            
+                <a href="../Docker/持续集成与自动发布.html">
+            
+                    
+                    持续集成与自动发布
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" >
+            
+                <span>
+            
+                    
+                    HTTP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../HTTP/cookie.html">
+            
+                <a href="../HTTP/cookie.html">
+            
+                    
+                    Cookie
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../HTTP/encode_and_decode.html">
+            
+                <a href="../HTTP/encode_and_decode.html">
+            
+                    
+                    Encode and Decode
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../HTTP/http请求格式.html">
+            
+                <a href="../HTTP/http请求格式.html">
+            
+                    
+                    HTTP请求格式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../HTTP/proxy.html">
+            
+                <a href="../HTTP/proxy.html">
+            
+                    
+                    Proxy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../HTTP/xpath.html">
+            
+                <a href="../HTTP/xpath.html">
+            
+                    
+                    XPATH
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" >
+            
+                <span>
+            
+                    
+                    Git
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../Git/gist.html">
+            
+                <a href="../Git/gist.html">
+            
+                    
+                    Gist
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../Git/git.html">
+            
+                <a href="../Git/git.html">
+            
+                    
+                    git
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../Git/git_remote_operation.html">
+            
+                <a href="../Git/git_remote_operation.html">
+            
+                    
+                    git remote operation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Image
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../Image/png.html">
+            
+                <a href="../Image/png.html">
+            
+                    
+                    PNG
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" >
+            
+                <span>
+            
+                    
+                    JS
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../JS/xhr.html">
+            
+                <a href="../JS/xhr.html">
+            
+                    
+                    XHR
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" >
+            
+                <span>
+            
+                    
+                    Note
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../Note/ctf.html">
+            
+                <a href="../Note/ctf.html">
+            
+                    
+                    CTF
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.2" data-path="../Note/elk.html">
+            
+                <a href="../Note/elk.html">
+            
+                    
+                    ELK
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.3" data-path="../Note/google-hacking.html">
+            
+                <a href="../Note/google-hacking.html">
+            
+                    
+                    Google Hacking
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.4" data-path="../Note/sql.html">
+            
+                <a href="../Note/sql.html">
+            
+                    
+                    Sql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.5" data-path="../Note/mysql.html">
+            
+                <a href="../Note/mysql.html">
+            
+                    
+                    mysql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.6" data-path="../Note/same-origin-policy.html">
+            
+                <a href="../Note/same-origin-policy.html">
+            
+                    
+                    same origin policy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.7" data-path="../Note/software.html">
+            
+                <a href="../Note/software.html">
+            
+                    
+                    software
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" >
+            
+                <span>
+            
+                    
+                    AWS
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../AWS/note.html">
+            
+                <a href="../AWS/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" >
+            
+                <span>
+            
+                    
+                    Python3
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../Python3/string.html">
+            
+                <a href="../Python3/string.html">
+            
+                    
+                    String
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" >
+            
+                <span>
+            
+                    
+                    Simiki
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="../Simiki/simiki-命令.html">
+            
+                <a href="../Simiki/simiki-命令.html">
+            
+                    
+                    simiki 命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="../Simiki/start with github page.html">
+            
+                <a href="../Simiki/start with github page.html">
+            
+                    
+                    start github page
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
 </ul>
-<p>install</p>
-<div class="hlcode"><pre><span class="n">pip</span> <span class="n">install</span> <span class="n">shadowsocks</span>
-</pre></div>
 
 
-<p>run</p>
-<div class="hlcode"><pre><span class="nx">sslocal</span> <span class="na">-s</span> <span class="o">&lt;</span><span class="nx">remote_ip</span><span class="o">&gt;</span> <span class="na">-p</span> <span class="o">&lt;</span><span class="nx">remote_port</span><span class="o">&gt;</span> <span class="na">-k</span> <span class="o">&lt;</span><span class="nx">password</span><span class="o">&gt;</span> 
-</pre></div>
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >install and configure</a>
+    </h1>
+</div>
 
 
-<p>run with user login</p>
-<div class="hlcode"><pre><span class="nx">vim</span> <span class="err">~</span><span class="p">/</span><span class="nx">opt</span><span class="p">/</span><span class="nx">ss.sh</span>
-    <span class="nx">sslocal</span> <span class="na">-s</span> <span class="o">&lt;</span><span class="nx">remote_ip</span><span class="o">&gt;</span> <span class="na">-p</span> <span class="o">&lt;</span><span class="nx">remote_port</span><span class="o">&gt;</span> <span class="na">-k</span> <span class="o">&lt;</span><span class="nx">password</span><span class="o">&gt;</span>   <span class="vi">#add</span> <span class="k">to</span> <span class="nx">ss.sh</span>
-
-<span class="nb">chmod</span> <span class="nx">u</span><span class="o">+</span><span class="nx">x</span> <span class="nx">ss.sh</span>
-
-<span class="nx">vim</span> <span class="err">~</span><span class="p">/</span><span class="nx">.profile</span>
-    <span class="nx">sh</span> <span class="err">~</span><span class="p">/</span><span class="nx">opt</span><span class="p">/</span><span class="nx">ss.sh</span> <span class="mi">1</span><span class="o">&gt;/</span><span class="nx">dev</span><span class="p">/</span><span class="nb">null</span> <span class="mi">2</span><span class="o">&gt;</span><span class="err">~</span><span class="p">/</span><span class="nx">opt</span><span class="p">/</span><span class="nx">ss.log</span> <span class="o">&amp;</span>     <span class="vi">#add</span> <span class="k">to</span> <span class="nb">file</span> <span class="nb">end</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="nb">stdout</span> <span class="mi">2</span><span class="p">:</span><span class="nx">stderr</span>
-</pre></div>
 
 
-<ul>
-<li>socks proxy</li>
-</ul>
-<p>1.安装</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">proxychains</span>
-</pre></div>
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="rolling">rolling</h1><h2 id="source">source</h2><pre><code>deb http://http.kali.org/kali kali-rolling main contrib non-free</code></pre>
+<h2 id="reboot-shutdown&#x4E0D;&#x80FD;&#x5173;&#x673A;">reboot shutdown&#x4E0D;&#x80FD;&#x5173;&#x673A;</h2><p>solution:</p><p>&#x5148;&#x505A; &#x7528;&#x6237;&#x6CE8;&#x9500;&#xFF0C;&#x7136;&#x540E;&#x8FD4;&#x56DE;&#x5230;&#x767B;&#x5F55;&#x9875;&#x9762;&#xFF0C;&#x70B9;&#x51FB;&#x5173;&#x673A;&#x6216;&#x91CD;&#x542F;</p><h2 id="&#x4E0D;&#x80FD;&#x6302;&#x8F7D;-exfat-&#x683C;&#x5F0F;&#x786C;&#x76D8;">&#x4E0D;&#x80FD;&#x6302;&#x8F7D; exfat &#x683C;&#x5F0F;&#x786C;&#x76D8;</h2><p>solution:</p><pre><code>sudo apt-get install exfat-fuse exfat-utils</code></pre>
+<h2 id="zip-&#x89E3;&#x538B;&#x542B;&#x4E2D;&#x6587;&#x6587;&#x4EF6;&#x540D;&#x4E71;&#x7801;">zip &#x89E3;&#x538B;&#x542B;&#x4E2D;&#x6587;&#x6587;&#x4EF6;&#x540D;&#x4E71;&#x7801;</h2><p>&#x89E3;&#x51B3;&#x65B9;&#x6848;&#xFF1A;</p><ol><li><code>unar file.zip</code>&#xFF0C; unar &#x4F1A;&#x81EA;&#x52A8;&#x68C0;&#x6D4B;&#x6587;&#x4EF6;&#x7F16;&#x7801;&#xFF0C; <code>-e</code> &#x9009;&#x9879;&#x6307;&#x5B9A;&#x6587;&#x4EF6;&#x7F16;&#x7801;
+</li></ol>
+<h1 id="kali2-sana">kali2 sana</h1><h2 id="&#x66F4;&#x65B0;&#x6E90;">&#x66F4;&#x65B0;&#x6E90;</h2><p>vim /etc/apt/sources.list</p><pre><code>#&#x4E2D;&#x79D1;&#x5927;&#x6E90;
+deb http://mirrors.ustc.edu.cn/kali sana main non-free contrib 
+deb-src http://mirrors.ustc.edu.cn/kali sana main non-free contrib 
+deb http://mirrors.ustc.edu.cn/kali-security/ sana/updates main contrib non-free 
+deb-src http://mirrors.ustc.edu.cn/kali-security/ sana/updates main contrib non-free
+#&#x963F;&#x91CC;&#x4E91;kali&#x6E90;
+deb http://mirrors.aliyun.com/kali sana main non-free contrib
+deb http://mirrors.aliyun.com/kali-security/ sana/updates main contrib non-free
+deb-src http://mirrors.aliyun.com/kali-security/ sana/updates main contrib non-free</code></pre>
+<h2 id="&#x5B89;&#x88C5;&#x8F93;&#x5165;&#x6CD5;">&#x5B89;&#x88C5;&#x8F93;&#x5165;&#x6CD5;</h2><pre><code>apt-get install fcitx fcitx-googlepinyin</code></pre>
+<p>&#x914D;&#x7F6E;&#xFF1A;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&gt;&#x5E38;&#x7528;&#x7A0B;&#x5E8F;&gt;&#x7CFB;&#x7EDF;&#x5DE5;&#x5177;&gt;&#x9996;&#x9009;&#x9879;&gt;Fcitx&#x914D;&#x7F6E; &#x6DFB;&#x52A0;&#x62FC;&#x97F3;</p><p>&#x91CD;&#x542F;&#x6216;&#x7528;&#x6237;&#x6CE8;&#x9500;</p><h2 id="upgrade-to-kali-rolling">upgrade to kali Rolling</h2><pre><code>root@kali:# cat &lt;&lt; EOF &gt;/etc/apt/sources.list
+&gt; deb http://http.kali.org/kali kali-rolling main non-free contrib
+&gt; EOF
+root@kali:#apt-get update
+root@kali:#apt-get dist-upgrade
+root@kali:#reboot </code></pre>
+<h2 id="&#x8BBE;&#x7F6E;-root-&#x5BC6;&#x7801;">&#x8BBE;&#x7F6E; root &#x5BC6;&#x7801;</h2><pre><code>sudo passwd
+#&#x8F93;&#x5165;root&#x5BC6;&#x7801;
+#&#x786E;&#x8BA4;root&#x5BC6;&#x7801;
 
+su root</code></pre>
+<h2 id="&#x5B89;&#x88C5;&#x706B;&#x72D0;">&#x5B89;&#x88C5;&#x706B;&#x72D0;</h2><pre><code>apt-get remove iceweasel
+echo -e &quot;\ndeb http://downloads.sourceforge.net/project/ubuntuzilla/mozilla/apt all main&quot; | tee -a /etc/apt/sources.list &gt; /dev/null
+apt-key adv --recv-keys --keyserver keyserver.ubuntu.com C1289A29
+apt-get update
+apt-get install firefox-mozilla-build</code></pre>
+<h2 id="&#x5B89;&#x88C5;chromium">&#x5B89;&#x88C5;Chromium</h2><pre><code>sudo apt-get isntall chromium</code></pre>
+<h2 id="java">java</h2><p><a href="http://www.k4linux.com/2015/11/kali-linux-2-0-tutorials-java.html" target="_blank">install java tutorials</a></p><h3 id="download-latest-java-se-sdk-">Download latest Java SE SDK :</h3><p>To Download Java Select the file according to your operating system from the list.</p><p>Download Link : <a href="http://www.java.com/en/download/linux_manual.jsp" target="_blank">http://www.java.com/en/download/linux_manual.jsp</a></p><p>Java will be saved on Downloads/ folder or save it on /root.</p><p>Uncompress archive:</p><pre><code>root@k4linux:~# tar -zxvf jre*.tar.gz</code></pre>
+<p>Move the extracted folder to /opt:</p><pre><code>root@k4linux:~# mv jre* /opt</code></pre>
+<p>And go to the folder :</p><pre><code>root@k4linux:~# cd /opt/jre*</code></pre>
+<h3 id="install-and-register-binaries-of-java-">Install and register binaries Of Java :</h3><p>This step registers the downloaded version of Java as an alternative, and switches it to be used as the default:</p><pre><code>update-alternatives --install /usr/bin/java java /opt/jre*/bin/java 1
+update-alternatives --install /usr/lib/mozilla/plugins/libjavaplugin.s&#xAD;o mozilla-javaplugin.so /opt/jre*/lib/amd64/libnpjp2.so 1
+update-alternatives --set java /opt/jre*/bin/java
+update-alternatives --set javac /opt/jre*/bin/javac
+update-alternatives --set mozilla-javaplugin.so /opt/jre*/lib/amd64/libnpjp2.so</code></pre>
+<p>Testing your installation OF Java on Kali Linux 2.0:</p><p>To check the browser plugin, restart your webrowser, and click &#x201C;Do I have Java?&#x201D;</p><p>To check the version of Java you are now running:</p><pre><code> root@k4linux:~# java -version
+java version &quot;1.8.0_60&quot;
+Java(TM) SE Runtime Environment (build 1.8.0_60-b27)
+Java HotSpot(TM) 64-Bit Server VM (build 25.60-b23, mixed mode)</code></pre>
+<h2 id="proxy">proxy</h2><ul><li>shadowsocks
+</li></ul>
+<p>install</p><pre><code>pip install shadowsocks</code></pre>
+<p>run</p><pre><code>sslocal -s &lt;remote_ip&gt; -p &lt;remote_port&gt; -k &lt;password&gt; </code></pre>
+<p>run with user login</p><pre><code>vim ~/opt/ss.sh
+    sslocal -s &lt;remote_ip&gt; -p &lt;remote_port&gt; -k &lt;password&gt;   #add to ss.sh
 
-<p>2.编辑proxychains配置</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">proxychains</span><span class="p">.</span><span class="n">conf</span>
-</pre></div>
+chmod u+x ss.sh
 
+vim ~/.profile
+    sh ~/opt/ss.sh 1&gt;/dev/null 2&gt;~/opt/ss.log &amp;     #add to file end, 1:stdout 2:stderr</code></pre>
+<ul><li>socks proxy
+</li></ul>
+<p>1.&#x5B89;&#x88C5;</p><pre><code>$ sudo apt-get install proxychains</code></pre>
+<p>2.&#x7F16;&#x8F91;proxychains&#x914D;&#x7F6E;</p><pre><code>$ vim /etc/proxychains.conf</code></pre>
+<p>3.&#x5C06;socks4 127.0.0.1 9095&#x6539;&#x4E3A;</p><blockquote><p>socks5 127.0.0.1 1080</p></blockquote><p>ps: &#x9ED8;&#x8BA4;&#x7684;socks4 127.0.0.1 9095&#x662F;tor&#x4EE3;&#x7406;&#xFF0C;&#x800C;socks5 127.0.0.1 1080&#x662F;shadowsocks&#x7684;&#x4EE3;&#x7406;</p><p>4.&#x4F7F;&#x7528;&#x65B9;&#x6CD5;</p><p>&#x5728;&#x9700;&#x8981;&#x4EE3;&#x7406;&#x7684;&#x547D;&#x4EE4;&#x524D;&#x52A0;&#x4E0A; proxychains &#xFF0C;&#x5982;&#xFF1A;</p><pre><code>$ sudo proxychains apt-get update</code></pre>
+<h2 id="beef">beef</h2><p>beef use ruby-2.1.5</p><p>Debian / Ubuntu</p><ul><li>Install dependencies
+</li></ul>
+<pre><code>gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+or 
+curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
 
-<p>3.将socks4 127.0.0.1 9095改为</p>
-<blockquote>
-<p>socks5 127.0.0.1 1080</p>
-</blockquote>
-<p>ps: 默认的socks4 127.0.0.1 9095是tor代理，而socks5 127.0.0.1 1080是shadowsocks的代理</p>
-<p>4.使用方法</p>
-<p>在需要代理的命令前加上 proxychains ，如：</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">proxychains</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
-</pre></div>
+sudo apt-get update
+sudo apt-get install curl git
+curl -sSL https://raw.githubusercontent.com/wayneeseguin/rvm/master/binscripts/rvm-installer | bash -s stable
+source ~/.rvm/scripts/rvm
 
+# openssl patch, because openssl update that affects 2.1.5 compiling
+curl https://github.com/ruby/ruby/commit/801e1fe46d83c856844ba18ae4751478c59af0d1.diff &gt; openssl.patch
+rvm install --patch ./openssl.patch 2.0.0
 
-<h2 id="beef">beef</h2>
-<p>beef use ruby-2.1.5</p>
-<p>Debian / Ubuntu</p>
-<ul>
-<li>Install dependencies</li>
-</ul>
-<div class="hlcode"><pre><span class="n">gpg2</span> <span class="o">--</span><span class="n">keyserver</span> <span class="n">hkp</span><span class="o">:</span><span class="c1">//keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3</span>
-<span class="n">or</span> 
-<span class="n">curl</span> <span class="o">-</span><span class="n">sSL</span> <span class="n">https</span><span class="o">:</span><span class="c1">//rvm.io/mpapis.asc | gpg2 --import -</span>
+rvm install 2.1.5
+rvm use 2.1.5 -- default
+gem install bundler</code></pre>
+<p>Follow this instruction <a href="http://rvm.io/integration/gnome-terminal" target="_blank">http://rvm.io/integration/gnome-terminal</a></p><ul><li>Download BeEF
+</li></ul>
+<pre><code>git clone git://github.com/beefproject/beef.git</code></pre>
+<ul><li>Install gems and launch
+</li></ul>
+<pre><code>cd beef
+bundle install
+./beef</code></pre>
+<h2 id="install-docker">install docker</h2><pre><code>sudo vim /etc/apt/sources.list
+    # add follow line in the file
+    deb http://http.debian.net/debian jessie-backports main
 
-<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
-<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">curl</span> <span class="n">git</span>
-<span class="n">curl</span> <span class="o">-</span><span class="n">sSL</span> <span class="n">https</span><span class="o">:</span><span class="c1">//raw.githubusercontent.com/wayneeseguin/rvm/master/binscripts/rvm-installer | bash -s stable</span>
-<span class="n">source</span> <span class="o">~/</span><span class="p">.</span><span class="n">rvm</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">rvm</span>
+sudo apt-get update
+sudo apt-get install docker.io      
 
-<span class="cp"># openssl patch, because openssl update that affects 2.1.5 compiling</span>
-<span class="n">curl</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/ruby/ruby/commit/801e1fe46d83c856844ba18ae4751478c59af0d1.diff &gt; openssl.patch</span>
-<span class="n">rvm</span> <span class="n">install</span> <span class="o">--</span><span class="n">patch</span> <span class="p">.</span><span class="o">/</span><span class="n">openssl</span><span class="p">.</span><span class="n">patch</span> <span class="mf">2.0.0</span>
+or
 
-<span class="n">rvm</span> <span class="n">install</span> <span class="mf">2.1.5</span>
-<span class="n">rvm</span> <span class="n">use</span> <span class="mf">2.1.5</span> <span class="o">--</span> <span class="k">default</span>
-<span class="n">gem</span> <span class="n">install</span> <span class="n">bundler</span>
-</pre></div>
+curl -sSL https://get.docker.com/ | sh </code></pre>
+<h2 id="irc">irc</h2><ul><li>irssi
+</li></ul>
+<pre><code>sudo apt-get install irssi </code></pre>
+<h2 id="zbar----decode-&#x4E8C;&#x7EF4;&#x7801;">zbar -- decode &#x4E8C;&#x7EF4;&#x7801;</h2><pre><code>$ apt-get install libzbar-dev
 
+$ pip install zbar</code></pre>
+<h2 id="&#x5B89;&#x88C5;vpn">&#x5B89;&#x88C5;vpn</h2><ul><li>openvpn
+</li></ul>
+<pre><code>apt-get install -y openvpn</code></pre>
+<p>&#x914D;&#x7F6E;</p><pre><code>vim ovpn.sh
 
-<p>Follow this instruction http://rvm.io/integration/gnome-terminal</p>
-<ul>
-<li>Download BeEF</li>
-</ul>
-<div class="hlcode"><pre><span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="o">:</span><span class="c1">//github.com/beefproject/beef.git</span>
-</pre></div>
+=== ovpn.sh ===
+#!/bin/bash
 
+# run openvpn with configuration
+# need root privilige
+openvpn --config clientname.ovpn 1&gt;ovpn_info.log 2&gt;ovpn_error.log &amp;
+================
 
-<ul>
-<li>Install gems and launch</li>
-</ul>
-<div class="hlcode"><pre><span class="n">cd</span> <span class="n">beef</span>
-<span class="n">bundle</span> <span class="n">install</span>
-<span class="p">.</span><span class="o">/</span><span class="n">beef</span>
-</pre></div>
+chmod u+x ovpn.sh
 
+# run 
+sudo ./ovpn.sh</code></pre>
+<h2 id="&#x65B0;&#x589E;&#x7528;&#x6237;">&#x65B0;&#x589E;&#x7528;&#x6237;</h2><pre><code>useradd -m username
+passwd username
+usermod -a -G sudo username
+chsh -s /bin/bash username
+id username         #&#x67E5;&#x770B;&#x914D;&#x7F6E;</code></pre>
+<h2 id="&#x5F00;&#x542F;ssh&#x670D;&#x52A1;">&#x5F00;&#x542F;SSH&#x670D;&#x52A1;</h2><pre><code>#vi /etc/ssh/sshd_config   </code></pre>
+<p>&#x5C06;#PasswordAuthentication no&#x7684;&#x6CE8;&#x91CA;&#x53BB;&#x6389;&#xFF0C;&#x5E76;&#x4E14;&#x5C06;NO&#x4FEE;&#x6539;&#x4E3A;YES
+&#x5C06;#PermitRootLogin yes&#x7684;&#x6CE8;&#x91CA;&#x53BB;&#x6389;</p><p>&#x542F;&#x52A8;SSH&#x670D;&#x52A1;</p><pre><code>#/etc/init.d/ssh start    //or service ssh start</code></pre>
+<p>&#x9A8C;&#x8BC1;SSH&#x670D;&#x52A1;&#x72B6;&#x6001;</p><pre><code>#/etc/init.d/ssh status</code></pre>
+<h2 id="&#x5F00;&#x673A;&#x81EA;&#x542F;&#x52A8;">&#x5F00;&#x673A;&#x81EA;&#x542F;&#x52A8;</h2><pre><code># vi /etc/rc.local
 
-<h2 id="install-docker">install docker</h2>
-<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="p">.</span><span class="n">list</span>
-    <span class="err">#</span> <span class="n">add</span> <span class="n">follow</span> <span class="n">line</span> <span class="n">in</span> <span class="n">the</span> <span class="n">file</span>
-    <span class="n">deb</span> <span class="n">http</span><span class="o">:</span><span class="c1">//http.debian.net/debian jessie-backports main</span>
-
-<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
-<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">docker</span><span class="p">.</span><span class="n">io</span>      
-
-<span class="n">or</span>
-
-<span class="n">curl</span> <span class="o">-</span><span class="n">sSL</span> <span class="n">https</span><span class="o">:</span><span class="c1">//get.docker.com/ | sh </span>
-</pre></div>
-
-
-<h2 id="irc">irc</h2>
-<ul>
-<li>irssi</li>
-</ul>
-<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">irssi</span> 
-</pre></div>
-
-
-<h2 id="zbar-decode">zbar -- decode 二维码</h2>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libzbar</span><span class="o">-</span><span class="n">dev</span>
-
-<span class="err">$</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">zbar</span>
-</pre></div>
-
-
-<h2 id="vpn">安装vpn</h2>
-<ul>
-<li>openvpn</li>
-</ul>
-<div class="hlcode"><pre><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">openvpn</span>
-</pre></div>
-
-
-<p>配置</p>
-<div class="hlcode"><pre><span class="n">vim</span> <span class="n">ovpn</span><span class="p">.</span><span class="n">sh</span>
-
-<span class="o">===</span> <span class="n">ovpn</span><span class="p">.</span><span class="n">sh</span> <span class="o">===</span>
-<span class="cp">#!/bin/bash</span>
-
-<span class="cp"># run openvpn with configuration</span>
-<span class="cp"># need root privilige</span>
-<span class="n">openvpn</span> <span class="o">--</span><span class="n">config</span> <span class="n">clientname</span><span class="p">.</span><span class="n">ovpn</span> <span class="mi">1</span><span class="o">&gt;</span><span class="n">ovpn_info</span><span class="p">.</span><span class="n">log</span> <span class="mi">2</span><span class="o">&gt;</span><span class="n">ovpn_error</span><span class="p">.</span><span class="n">log</span> <span class="o">&amp;</span>
-<span class="o">================</span>
-
-<span class="n">chmod</span> <span class="n">u</span><span class="o">+</span><span class="n">x</span> <span class="n">ovpn</span><span class="p">.</span><span class="n">sh</span>
-
-<span class="cp"># run </span>
-<span class="n">sudo</span> <span class="p">.</span><span class="o">/</span><span class="n">ovpn</span><span class="p">.</span><span class="n">sh</span>
-</pre></div>
-
-
-<h2 id="_4">新增用户</h2>
-<div class="hlcode"><pre><span class="n">useradd</span> <span class="o">-</span><span class="n">m</span> <span class="n">username</span>
-<span class="n">passwd</span> <span class="n">username</span>
-<span class="n">usermod</span> <span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">G</span> <span class="n">sudo</span> <span class="n">username</span>
-<span class="n">chsh</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span> <span class="n">username</span>
-<span class="n">id</span> <span class="n">username</span>         <span class="err">#查看配置</span>
-</pre></div>
-
-
-<h2 id="ssh">开启SSH服务</h2>
-<div class="hlcode"><pre><span class="c">#vi /etc/ssh/sshd_config   </span>
-</pre></div>
-
-
-<p>将#PasswordAuthentication no的注释去掉，并且将NO修改为YES
-将#PermitRootLogin yes的注释去掉</p>
-<p>启动SSH服务</p>
-<div class="hlcode"><pre><span class="c">#/etc/init.d/ssh start    //or service ssh start</span>
-</pre></div>
-
-
-<p>验证SSH服务状态</p>
-<div class="hlcode"><pre><span class="c">#/etc/init.d/ssh status</span>
-</pre></div>
-
-
-<h2 id="_5">开机自启动</h2>
-<div class="hlcode"><pre><span class="cp"># vi /etc/rc.local</span>
-
-<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">apache2</span> <span class="n">start</span>
-<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">mysql</span> <span class="n">start</span>
-<span class="n">exit</span> <span class="mi">0</span>
-</pre></div>
-
-
-<h2 id="terminal">terminal 设置</h2>
-<ul>
-<li>快捷键</li>
-</ul>
-<p>设置&gt;键盘&gt;快捷键&gt;自定义快捷键</p>
-<p>名称：终端/terminal
-命令：gnome-terminal</p>
-<p>添加后，单击 disabled，按下 ctrl+alt+T</p>
-<ul>
-<li>menu</li>
-</ul>
-<p>Edit menu -&gt; Preferences</p>
-<p>1.去掉 Show menubar by default in terminals 的勾选</p>
-<p>2.Shortcuts menu, 勾选Enable shortcuts, Hide and Show toolbar 绑定快捷键F2.</p>
-<blockquote>
-<p>设置 F2 显示或隐藏菜单栏，默认是隐藏菜单栏</p>
-</blockquote>
-<h2 id="office">office</h2>
-<p><a href="http://wps-community.org/download.html">wps</a></p>
-<h2 id="gdb">gdb</h2>
-<p>kali2 默认安装好了gdb</p>
-<h4 id="peda">peda</h4>
-<ul>
-<li>install</li>
-</ul>
-<div class="hlcode"><pre><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/longld/peda.git ~/peda</span>
-<span class="n">echo</span> <span class="s">&quot;source ~/peda/peda.py&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">~/</span><span class="p">.</span><span class="n">gdbinit</span>
-</pre></div>
-
-
-<h2 id="nodejs">nodejs</h2>
-<h2 id="source-install">source install</h2>
-<p><a href="https://nodejs.org/en/download/">nodejs download</a></p>
-<p>Prerequisites:</p>
-<ul>
-<li><code>gcc</code> and <code>g++</code> 4.8 or newer, or</li>
-<li><code>clang</code> and <code>clang++</code> 3.4 or newer</li>
-<li>Python 2.6 or 2.7</li>
-<li>GNU Make 3.81 or newer</li>
-<li>libexecinfo (FreeBSD and OpenBSD only)</li>
-</ul>
-<div class="hlcode"><pre>$ ./configure
+/etc/init.d/apache2 start
+/etc/init.d/mysql start
+exit 0</code></pre>
+<h2 id="terminal-&#x8BBE;&#x7F6E;">terminal &#x8BBE;&#x7F6E;</h2><ul><li>&#x5FEB;&#x6377;&#x952E;
+</li></ul>
+<p>&#x8BBE;&#x7F6E;&gt;&#x952E;&#x76D8;&gt;&#x5FEB;&#x6377;&#x952E;&gt;&#x81EA;&#x5B9A;&#x4E49;&#x5FEB;&#x6377;&#x952E;</p><p>&#x540D;&#x79F0;&#xFF1A;&#x7EC8;&#x7AEF;/terminal
+&#x547D;&#x4EE4;&#xFF1A;gnome-terminal</p><p>&#x6DFB;&#x52A0;&#x540E;&#xFF0C;&#x5355;&#x51FB; disabled&#xFF0C;&#x6309;&#x4E0B; ctrl+alt+T</p><ul><li>menu
+</li></ul>
+<p>Edit menu -&gt; Preferences</p><p>1.&#x53BB;&#x6389; Show menubar by default in terminals &#x7684;&#x52FE;&#x9009;</p><p>2.Shortcuts menu, &#x52FE;&#x9009;Enable shortcuts, Hide and Show toolbar &#x7ED1;&#x5B9A;&#x5FEB;&#x6377;&#x952E;F2.</p><blockquote><p>&#x8BBE;&#x7F6E; F2 &#x663E;&#x793A;&#x6216;&#x9690;&#x85CF;&#x83DC;&#x5355;&#x680F;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F;&#x9690;&#x85CF;&#x83DC;&#x5355;&#x680F;</p></blockquote><h2 id="office">office</h2><p><a href="http://wps-community.org/download.html" target="_blank">wps</a></p><h2 id="gdb">gdb</h2><p>kali2 &#x9ED8;&#x8BA4;&#x5B89;&#x88C5;&#x597D;&#x4E86;gdb</p><h4 id="peda">peda</h4><ul><li>install
+</li></ul>
+<pre><code>git clone https://github.com/longld/peda.git ~/peda
+echo &quot;source ~/peda/peda.py&quot; &gt;&gt; ~/.gdbinit</code></pre>
+<h2 id="nodejs">nodejs</h2><h2 id="source-install">source install</h2><p><a href="https://nodejs.org/en/download/" target="_blank">nodejs download</a></p><p>Prerequisites:</p><ul><li><code>gcc</code> and <code>g++</code> 4.8 or newer, or
+</li>
+<li><code>clang</code> and <code>clang++</code> 3.4 or newer
+</li>
+<li>Python 2.6 or 2.7
+</li>
+<li>GNU Make 3.81 or newer
+</li>
+<li>libexecinfo (FreeBSD and OpenBSD only)
+</li></ul>
+<pre><code class="lang-text">$ ./configure
 $ make
-$ [sudo] make install
-</pre></div>
-
-
+$ [sudo] make install</code></pre>
 <p>If your Python binary is in a non-standard location or has a
-non-standard name, run the following instead:</p>
-<div class="hlcode"><pre>$ export PYTHON=/path/to/python
+non-standard name, run the following instead:</p><pre><code class="lang-text">$ export PYTHON=/path/to/python
 $ $PYTHON ./configure
 $ make
-$ [sudo] make install
-</pre></div>
+$ [sudo] make install</code></pre>
+<p>To run the tests:</p><pre><code class="lang-text">$ make test</code></pre>
+<p>To build the documentation:</p><pre><code class="lang-text">$ make doc</code></pre>
+<p>To read the documentation:</p><pre><code class="lang-text">$ man doc/node.1</code></pre>
+<p>To test if Node.js was built correctly:</p><pre><code>$ node -e &quot;console.log(&apos;Hello from Node.js &apos; + process.version)&quot;</code></pre>
+<h2 id="electronic-wechat-&#x5FAE;&#x4FE1;">electronic-wechat &#x5FAE;&#x4FE1;</h2><p><a href="https://github.com/geeeeeeeeek/electronic-wechat/blob/master/README_zh.md?hmsr=toutiao.io&amp;utm_medium=toutiao.io&amp;utm_source=toutiao.io" target="_blank">electronic-wechat github</a></p><ul><li>install
+</li></ul>
+<p>1.intall nodejs</p><p>then</p><pre><code># &#x4E0B;&#x8F7D;&#x4ED3;&#x5E93;
+git clone https://github.com/geeeeeeeeek/electronic-wechat.git
 
+# &#x8FDB;&#x5165;&#x4ED3;&#x5E93;
+cd electronic-wechat
 
-<p>To run the tests:</p>
-<div class="hlcode"><pre>$ make test
-</pre></div>
+# &#x5B89;&#x88C5;&#x4F9D;&#x8D56;, &#x8FD0;&#x884C;&#x5E94;&#x7528;
+npm install -g
 
-
-<p>To build the documentation:</p>
-<div class="hlcode"><pre>$ make doc
-</pre></div>
-
-
-<p>To read the documentation:</p>
-<div class="hlcode"><pre>$ man doc/node.1
-</pre></div>
-
-
-<p>To test if Node.js was built correctly:</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">node</span> <span class="o">-</span><span class="n">e</span> <span class="s">&quot;console.log(&#39;Hello from Node.js &#39; + process.version)&quot;</span>
-</pre></div>
-
-
-<h2 id="electronic-wechat">electronic-wechat 微信</h2>
-<p><a href="https://github.com/geeeeeeeeek/electronic-wechat/blob/master/README_zh.md?hmsr=toutiao.io&amp;utm_medium=toutiao.io&amp;utm_source=toutiao.io">electronic-wechat github</a></p>
-<ul>
-<li>install</li>
-</ul>
-<p>1.intall nodejs </p>
-<p>then </p>
-<div class="hlcode"><pre><span class="cp"># 下载仓库</span>
-<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/geeeeeeeeek/electronic-wechat.git</span>
-
-<span class="cp"># 进入仓库</span>
-<span class="n">cd</span> <span class="n">electronic</span><span class="o">-</span><span class="n">wechat</span>
-
-<span class="cp"># 安装依赖, 运行应用</span>
-<span class="n">npm</span> <span class="n">install</span> <span class="o">-</span><span class="n">g</span>
-
-<span class="n">npm</span> <span class="n">start</span>
-</pre></div>
-
-
-<p>或者下载 realease 的可执行安装包</p>
-<h2 id="note">note</h2>
-<ul>
-<li>use ~/.profile instead of ~/.bash_profile</li>
-</ul>
-<h2 id="flash">flash</h2>
-<div class="hlcode"><pre><span class="n">su</span> <span class="n">root</span>
-<span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">flashplugin</span><span class="o">-</span><span class="n">nonfree</span>
-<span class="n">update</span><span class="o">-</span><span class="n">flashplugin</span><span class="o">-</span><span class="n">nonfree</span> <span class="o">--</span><span class="n">install</span> 
-</pre></div>
-
-
-<ul>
-<li>安装百度云</li>
-</ul>
-<p>首先先git一下：https://github.com/LiuLang/bcloud-packages</p>
-<p>然后安装自己对应版本（32bit or 64bit） </p>
-<div class="hlcode"><pre><span class="n">dpkg</span> <span class="o">-</span><span class="n">i</span> <span class="n">bcloud</span><span class="o">-</span><span class="n">x</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">deb</span>
-<span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">f</span> <span class="n">install</span>
-</pre></div>
-
-
-<ul>
-<li>安装网易云音乐</li>
-</ul>
-<div class="hlcode"><pre><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/cosven/FeelUOwn.git</span>
-<span class="n">cd</span> <span class="n">FeelUOwn</span>
-<span class="p">.</span><span class="o">/</span><span class="n">install</span><span class="p">.</span><span class="n">sh</span>
-</pre></div>
-
-
-<blockquote>
-<p>注：遇到有什么依赖没有安装，根据提示缺少什么依赖安装什么依赖即可。</p>
-</blockquote>
-<h2 id="ftp">ftp</h2>
-<ul>
-<li>vsftp</li>
-</ul>
-<p>install</p>
-<div class="hlcode"><pre><span class="err">$</span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">vsftpd</span>
-</pre></div>
-
-
-<p>config</p>
-<div class="hlcode"><pre><span class="nv">$vim</span> <span class="p">/</span><span class="nx">etc</span><span class="p">/</span><span class="nx">vsftpd.conf</span>
-    <span class="n">Write_enable</span><span class="o">=</span><span class="nx">YES</span> <span class="err">将前面的#去掉</span>
-    <span class="n">chroot_local_user</span><span class="o">=</span><span class="nx">YES</span> <span class="err">将前面的#去掉</span>
-<span class="nv">$mkdir</span> <span class="p">/</span><span class="nb">home</span><span class="p">/</span><span class="nx">hx</span><span class="p">/</span><span class="nx">ftp</span>
-<span class="nv">$chmod</span> <span class="na">-R</span> <span class="mi">777</span> <span class="nx">ftp</span>
-<span class="nv">$chmod</span> <span class="nx">a</span><span class="na">-w</span> <span class="nx">ftp</span>
-<span class="nv">$sudo</span> <span class="nx">useradd</span> <span class="na">-g</span> <span class="nx">ftp</span> <span class="na">-d</span> <span class="p">/</span><span class="nb">home</span><span class="p">/</span><span class="nx">hx</span><span class="p">/</span><span class="nx">ftp</span><span class="o">/</span> <span class="o">&lt;</span><span class="nb">user</span><span class="o">&gt;</span>
-<span class="nv">$sudo</span> <span class="nx">passwd</span> <span class="o">&lt;</span><span class="nb">user</span><span class="o">&gt;</span>
-<span class="nv">$sudo</span> <span class="nx">service</span> <span class="nx">vsftpd</span> <span class="nb">restart</span>
-</pre></div>
-
-
-<h2 id="weblamp">web环境(LAMP)配置</h2>
-<p>1.apache 服务启动     </p>
-<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">service</span> <span class="n">apache2</span> <span class="n">start</span>
-</pre></div>
-
-
-<p>2.修改网站默认打开路径 </p>
-<div class="hlcode"><pre><span class="p">/</span><span class="nx">etc</span><span class="p">/</span><span class="nx">apache2</span><span class="p">/</span><span class="nx">sites</span><span class="na">-enabled</span><span class="p">/</span><span class="nx">000</span><span class="na">-default.conf</span>    
-        <span class="err">修改“</span><span class="nb">DocumentRoot</span> <span class="p">/</span><span class="nb">var</span><span class="p">/</span><span class="nx">www</span><span class="p">/</span><span class="nx">html</span><span class="s2">&quot; to &quot;</span><span class="nb">DocumentRoot</span> <span class="nx">yourpath</span><span class="s2">&quot;     这是修改80端口</span>
-<span class="s2">/etc/apache2/sites-available/default*</span>
-<span class="s2">        修改“DocumentRoot /var/www/html&quot;</span> <span class="k">to</span> <span class="s2">&quot;DocumentRoot yourpath&quot;</span>     <span class="err">这是修改</span><span class="mi">443</span><span class="err">端口（可选）</span>
-<span class="p">/</span><span class="nx">etc</span><span class="p">/</span><span class="nx">apache2</span><span class="p">/</span><span class="nx">apache2.conf</span>
-        <span class="err">增加如下内容</span><span class="o">--</span><span class="err">进入权限</span>
-        <span class="o">&lt;</span><span class="nx">Directory</span> <span class="nx">yourpath</span><span class="o">&gt;</span>
-            <span class="nx">Options</span> <span class="nx">Indexes</span> <span class="nx">FollowSymLinks</span>
-            <span class="nx">AllowOverride</span> <span class="kc">None</span>
-            <span class="k">Require</span> <span class="n">all</span> <span class="nx">granted</span>
-        <span class="o">&lt;/</span><span class="nx">Directory</span><span class="o">&gt;</span>
-</pre></div>
-
-
-<p>2.mysql 服务启动    </p>
-<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">service</span> <span class="n">mysql</span> <span class="n">start</span>
-</pre></div>
-
-
-<ul>
-<li>mysql root 默认无密码，设置密码</li>
-</ul>
-<div class="hlcode"><pre><span class="nx">mysql</span> <span class="na">-u</span> <span class="nb">root</span>
-<span class="o">&gt;</span><span class="nx">use</span> <span class="nx">mysql</span><span class="p">;</span>
-<span class="o">&gt;</span><span class="nx">UPDATE</span> <span class="nb">user</span> <span class="nb">SET</span> <span class="n">Password</span><span class="o">=</span><span class="nx">PASSWORD</span><span class="p">(</span><span class="s1">&#39;&lt;passwd&gt;&#39;</span><span class="p">)</span> <span class="k">WHERE</span> <span class="n">User</span><span class="o">=</span><span class="s1">&#39;root&#39;</span><span class="p">;</span>
-<span class="o">&gt;</span><span class="nb">flush</span> <span class="nx">privileges</span><span class="p">;</span>
-<span class="o">&gt;</span><span class="nx">exit</span><span class="p">;</span> 
-</pre></div>
-
-
-<p>3.php 配置      </p>
-<p>直接在/var/www/html/(默认情况)目录放php文件，即可通过 http://127.0.0.1/xx.php 来访问 
-修改php.ini文件， 改为"display_errors = On"     重启apache生效</p>
-<p>4.织梦模板</p>
-<p>下载织梦源码包，解压，按要求操作！
-a.安装GD扩展库：     </p>
-<div class="hlcode"><pre><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">php5</span><span class="o">-</span><span class="n">gd</span>
-</pre></div>
-
-
-<p>b.php.ini(/etc/php5/apache2/php.ini) 找到 ”[gd]“， 在该区域下增加一行”extension=gd.so“</p>
-<h2 id="funny-tool">funny tool</h2>
-<ul>
-<li>1.fuck</li>
-</ul>
-<p>install</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">wget</span> <span class="o">-</span><span class="n">O</span> <span class="o">-</span> <span class="n">https</span><span class="o">:</span><span class="c1">//raw.githubusercontent.com/nvbn/thefuck/master/install.sh | sh - &amp;&amp; $0</span>
-</pre></div>
-
-
-<p>use</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">fuck</span>
-</pre></div>
-
-
-<h2 id="_6">命令行锁屏</h2>
-<div class="hlcode"><pre><span class="cp"># apt-get install gnome-screensaver</span>
-<span class="err">$</span> <span class="n">gnome</span><span class="o">-</span><span class="n">screensaver</span><span class="o">-</span><span class="n">command</span> <span class="o">-</span><span class="n">l</span>     <span class="err">#</span><span class="n">lock</span>
-<span class="err">$</span> <span class="n">gnome</span><span class="o">-</span><span class="n">screensaver</span><span class="o">-</span><span class="n">command</span> <span class="o">-</span><span class="n">a</span>     <span class="err">#</span><span class="n">active</span>
-</pre></div>
-
-
-<h2 id="_7">系统设置</h2>
-<ul>
-<li>设置屏幕刷新率</li>
-</ul>
-<div class="hlcode"><pre><span class="err">$</span><span class="n">xrandr</span> <span class="o">-</span><span class="n">r</span> <span class="mi">60</span>
-</pre></div>
-
-
-<h2 id="vmware">vmware</h2>
-<ol>
-<li>Install linux-headers-$(uname -r)</li>
-</ol>
-<div class="hlcode"><pre><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">linux</span><span class="o">-</span><span class="n">headers</span><span class="o">-</span><span class="err">$</span><span class="p">(</span><span class="n">uname</span> <span class="o">-</span><span class="n">r</span><span class="p">)</span>
-</pre></div>
-
-
-<ol>
-<li>
-<p>Download and Install VMWare as normal</p>
+npm start</code></pre>
+<p>&#x6216;&#x8005;&#x4E0B;&#x8F7D; realease &#x7684;&#x53EF;&#x6267;&#x884C;&#x5B89;&#x88C5;&#x5305;</p><h2 id="note">note</h2><ul><li>use ~/.profile instead of ~/.bash_profile
+</li></ul>
+<h2 id="flash">flash</h2><pre><code>su root
+apt-get install flashplugin-nonfree
+update-flashplugin-nonfree --install </code></pre>
+<ul><li>&#x5B89;&#x88C5;&#x767E;&#x5EA6;&#x4E91;
+</li></ul>
+<p>&#x9996;&#x5148;&#x5148;git&#x4E00;&#x4E0B;&#xFF1A;<a href="https://github.com/LiuLang/bcloud-packages" target="_blank">https://github.com/LiuLang/bcloud-packages</a></p><p>&#x7136;&#x540E;&#x5B89;&#x88C5;&#x81EA;&#x5DF1;&#x5BF9;&#x5E94;&#x7248;&#x672C;&#xFF08;32bit or 64bit&#xFF09;</p><pre><code>dpkg -i bcloud-x.x.x.deb
+apt-get -f install</code></pre>
+<ul><li>&#x5B89;&#x88C5;&#x7F51;&#x6613;&#x4E91;&#x97F3;&#x4E50;
+</li></ul>
+<pre><code>git clone https://github.com/cosven/FeelUOwn.git
+cd FeelUOwn
+./install.sh</code></pre>
+<blockquote><p>&#x6CE8;&#xFF1A;&#x9047;&#x5230;&#x6709;&#x4EC0;&#x4E48;&#x4F9D;&#x8D56;&#x6CA1;&#x6709;&#x5B89;&#x88C5;&#xFF0C;&#x6839;&#x636E;&#x63D0;&#x793A;&#x7F3A;&#x5C11;&#x4EC0;&#x4E48;&#x4F9D;&#x8D56;&#x5B89;&#x88C5;&#x4EC0;&#x4E48;&#x4F9D;&#x8D56;&#x5373;&#x53EF;&#x3002;</p></blockquote><h2 id="ftp">ftp</h2><ul><li>vsftp
+</li></ul>
+<p>install</p><pre><code>$apt-get install vsftpd</code></pre>
+<p>config</p><pre><code>$vim /etc/vsftpd.conf
+    Write_enable=YES &#x5C06;&#x524D;&#x9762;&#x7684;#&#x53BB;&#x6389;
+    chroot_local_user=YES &#x5C06;&#x524D;&#x9762;&#x7684;#&#x53BB;&#x6389;
+$mkdir /home/hx/ftp
+$chmod -R 777 ftp
+$chmod a-w ftp
+$sudo useradd -g ftp -d /home/hx/ftp/ &lt;user&gt;
+$sudo passwd &lt;user&gt;
+$sudo service vsftpd restart</code></pre>
+<h2 id="web&#x73AF;&#x5883;lamp&#x914D;&#x7F6E;">web&#x73AF;&#x5883;(LAMP)&#x914D;&#x7F6E;</h2><p>1.apache &#x670D;&#x52A1;&#x542F;&#x52A8;</p><pre><code>sudo service apache2 start</code></pre>
+<p>2.&#x4FEE;&#x6539;&#x7F51;&#x7AD9;&#x9ED8;&#x8BA4;&#x6253;&#x5F00;&#x8DEF;&#x5F84;</p><pre><code>/etc/apache2/sites-enabled/000-default.conf    
+        &#x4FEE;&#x6539;&#x201C;DocumentRoot /var/www/html&quot; to &quot;DocumentRoot yourpath&quot;     &#x8FD9;&#x662F;&#x4FEE;&#x6539;80&#x7AEF;&#x53E3;
+/etc/apache2/sites-available/default*
+        &#x4FEE;&#x6539;&#x201C;DocumentRoot /var/www/html&quot; to &quot;DocumentRoot yourpath&quot;     &#x8FD9;&#x662F;&#x4FEE;&#x6539;443&#x7AEF;&#x53E3;&#xFF08;&#x53EF;&#x9009;&#xFF09;
+/etc/apache2/apache2.conf
+        &#x589E;&#x52A0;&#x5982;&#x4E0B;&#x5185;&#x5BB9;--&#x8FDB;&#x5165;&#x6743;&#x9650;
+        &lt;Directory yourpath&gt;
+            Options Indexes FollowSymLinks
+            AllowOverride None
+            Require all granted
+        &lt;/Directory&gt;</code></pre>
+<p>2.mysql &#x670D;&#x52A1;&#x542F;&#x52A8;</p><pre><code>sudo service mysql start</code></pre>
+<ul><li>mysql root &#x9ED8;&#x8BA4;&#x65E0;&#x5BC6;&#x7801;&#xFF0C;&#x8BBE;&#x7F6E;&#x5BC6;&#x7801;
+</li></ul>
+<pre><code>mysql -u root
+&gt;use mysql;
+&gt;UPDATE user SET Password=PASSWORD(&apos;&lt;passwd&gt;&apos;) WHERE User=&apos;root&apos;;
+&gt;flush privileges;
+&gt;exit; </code></pre>
+<p>3.php &#x914D;&#x7F6E;</p><p>&#x76F4;&#x63A5;&#x5728;/var/www/html/(&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;)&#x76EE;&#x5F55;&#x653E;php&#x6587;&#x4EF6;&#xFF0C;&#x5373;&#x53EF;&#x901A;&#x8FC7; <a href="http://127.0.0.1/xx.php" target="_blank">http://127.0.0.1/xx.php</a> &#x6765;&#x8BBF;&#x95EE; 
+&#x4FEE;&#x6539;php.ini&#x6587;&#x4EF6;&#xFF0C; &#x6539;&#x4E3A;&quot;display_errors = On&quot;     &#x91CD;&#x542F;apache&#x751F;&#x6548;</p><p>4.&#x7EC7;&#x68A6;&#x6A21;&#x677F;</p><p>&#x4E0B;&#x8F7D;&#x7EC7;&#x68A6;&#x6E90;&#x7801;&#x5305;&#xFF0C;&#x89E3;&#x538B;&#xFF0C;&#x6309;&#x8981;&#x6C42;&#x64CD;&#x4F5C;&#xFF01;
+a.&#x5B89;&#x88C5;GD&#x6269;&#x5C55;&#x5E93;&#xFF1A;</p><pre><code>apt-get install php5-gd</code></pre>
+<p>b.php.ini(/etc/php5/apache2/php.ini) &#x627E;&#x5230; &#x201D;[gd]&#x201C;&#xFF0C; &#x5728;&#x8BE5;&#x533A;&#x57DF;&#x4E0B;&#x589E;&#x52A0;&#x4E00;&#x884C;&#x201D;extension=gd.so&#x201C;</p><h2 id="funny-tool">funny tool</h2><ul><li>1.fuck
+</li></ul>
+<p>install</p><pre><code>$ wget -O - https://raw.githubusercontent.com/nvbn/thefuck/master/install.sh | sh - &amp;&amp; $0</code></pre>
+<p>use</p><pre><code>$ fuck</code></pre>
+<h2 id="&#x547D;&#x4EE4;&#x884C;&#x9501;&#x5C4F;">&#x547D;&#x4EE4;&#x884C;&#x9501;&#x5C4F;</h2><pre><code># apt-get install gnome-screensaver
+$ gnome-screensaver-command -l     #lock
+$ gnome-screensaver-command -a     #active</code></pre>
+<h2 id="&#x7CFB;&#x7EDF;&#x8BBE;&#x7F6E;">&#x7CFB;&#x7EDF;&#x8BBE;&#x7F6E;</h2><ul><li>&#x8BBE;&#x7F6E;&#x5C4F;&#x5E55;&#x5237;&#x65B0;&#x7387;
+</li></ul>
+<pre><code>$xrandr -r 60</code></pre>
+<h2 id="vmware">vmware</h2><ol><li><p>Install linux-headers-$(uname -r)</p><pre><code>apt-get install linux-headers-$(uname -r)</code></pre>
+<ol><li>Download and Install VMWare as normal
+</li></ol>
 </li>
-<li>
-<p>Patch for Kernel 4.0</p>
+<li><p>Patch for Kernel 4.0</p></li></ol>
+<pre><code>$ curl http://pastie.org/pastes/9934018/download -o /tmp/vmnet-3.19.patch
+Extract the vmnet module sources:
+$ cd /usr/lib/vmware/modules/source
+
+
+# tar -xf vmnet.tar
+Apply the patch:
+# patch -p0 -i /tmp/vmnet-3.19.patch
+Recreate the archive:
+# tar -cf vmnet.tar vmnet-only
+Remove leftover:
+# rm -r -only
+Rebuild modules:
+# vmware-modconfig --console --install-all
+
+Fix network vitural not complie
+# - as root user
+$ cd /usr/lib/vmware/modules/source
+$ tar -xvf vmnet.tar
+# - edit the file vmnet-only/netif.c and replace the line that looks like
+dev = allocnetdev(sizeof netIf, deviceName, VNetNetIfSetup);
+to
+dev = allocnetdev(sizeof netIf, deviceName, NETNAMEUNKNOWN, VNetNetIfSetup);
+$ tar -cvf vmnet.tar vmnet-only/
+$ rm -rf vmnet-only/</code></pre>
+<p>key&#xFF1A;1A2ZZ-8RH06-AZTJ1-7A17H-32RM8</p><h2 id="webgoat">webgoat</h2><ul><li><p>&#x5FEB;&#x901F;&#x4F7F;&#x7528;</p><ul><li><p>&#x5DF2;&#x5B89;&#x88C5;java&#x7684;&#x6761;&#x4EF6;&#x4E0B;&#xFF0C;&#x6839;&#x636E;github&#x4E0A;&#x8BF4;&#x660E;&#x8FDB;&#x884C;&#x5B89;&#x88C5;&#xFF0C;&#x4E0B;&#x8F7D;&quot;*jar&quot;&#x6587;&#x4EF6;</p><pre><code>https://github.com/WebGoat/WebGoat-Legacy/releases</code></pre>
+<ul><li>run
+</li></ul>
+<pre><code>java -jar WebGoat-6.0.1-war.exec.jar&quot;. </code></pre>
+<ul><li>browse
+</li></ul>
+<pre><code>http://localhost:8080/WebGoat</code></pre>
+</li></ul>
+</li></ul>
+<ul><li><p>&#x5B89;&#x88C5;&#x6E90;&#x7801;&#xFF08;for developers&#xFF09;</p><ul><li>&#x4E0B;&#x8F7D;source&#x6587;&#x4EF6;
 </li>
-</ol>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">curl</span> <span class="n">http</span><span class="o">:</span><span class="c1">//pastie.org/pastes/9934018/download -o /tmp/vmnet-3.19.patch</span>
-<span class="n">Extract</span> <span class="n">the</span> <span class="n">vmnet</span> <span class="n">module</span> <span class="n">sources</span><span class="o">:</span>
-<span class="err">$</span> <span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">vmware</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="n">source</span>
-
-
-<span class="cp"># tar -xf vmnet.tar</span>
-<span class="n">Apply</span> <span class="n">the</span> <span class="n">patch</span><span class="o">:</span>
-<span class="cp"># patch -p0 -i /tmp/vmnet-3.19.patch</span>
-<span class="n">Recreate</span> <span class="n">the</span> <span class="n">archive</span><span class="o">:</span>
-<span class="cp"># tar -cf vmnet.tar vmnet-only</span>
-<span class="n">Remove</span> <span class="n">leftover</span><span class="o">:</span>
-<span class="cp"># rm -r -only</span>
-<span class="n">Rebuild</span> <span class="n">modules</span><span class="o">:</span>
-<span class="cp"># vmware-modconfig --console --install-all</span>
-
-<span class="n">Fix</span> <span class="n">network</span> <span class="n">vitural</span> <span class="n">not</span> <span class="n">complie</span>
-<span class="cp"># - as root user</span>
-<span class="err">$</span> <span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">vmware</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="n">source</span>
-<span class="err">$</span> <span class="n">tar</span> <span class="o">-</span><span class="n">xvf</span> <span class="n">vmnet</span><span class="p">.</span><span class="n">tar</span>
-<span class="cp"># - edit the file vmnet-only/netif.c and replace the line that looks like</span>
-<span class="n">dev</span> <span class="o">=</span> <span class="n">allocnetdev</span><span class="p">(</span><span class="k">sizeof</span> <span class="n">netIf</span><span class="p">,</span> <span class="n">deviceName</span><span class="p">,</span> <span class="n">VNetNetIfSetup</span><span class="p">);</span>
-<span class="n">to</span>
-<span class="n">dev</span> <span class="o">=</span> <span class="n">allocnetdev</span><span class="p">(</span><span class="k">sizeof</span> <span class="n">netIf</span><span class="p">,</span> <span class="n">deviceName</span><span class="p">,</span> <span class="n">NETNAMEUNKNOWN</span><span class="p">,</span> <span class="n">VNetNetIfSetup</span><span class="p">);</span>
-<span class="err">$</span> <span class="n">tar</span> <span class="o">-</span><span class="n">cvf</span> <span class="n">vmnet</span><span class="p">.</span><span class="n">tar</span> <span class="n">vmnet</span><span class="o">-</span><span class="n">only</span><span class="o">/</span>
-<span class="err">$</span> <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="n">vmnet</span><span class="o">-</span><span class="n">only</span><span class="o">/</span>
-</pre></div>
-
-
-<p>key：1A2ZZ-8RH06-AZTJ1-7A17H-32RM8</p>
-<h2 id="webgoat">webgoat</h2>
-<ul>
-<li>
-<p>快速使用</p>
-<ul>
-<li>已安装java的条件下，根据github上说明进行安装，下载"*jar"文件</li>
-</ul>
-<p><code>https://github.com/WebGoat/WebGoat-Legacy/releases</code></p>
-<ul>
-<li>run</li>
-</ul>
-<p><code>java -jar WebGoat-6.0.1-war.exec.jar".</code></p>
-<ul>
-<li>browse </li>
-</ul>
-<p><code>http://localhost:8080/WebGoat</code></p>
+<li>&#x4E0B;&#x8F7D;JAVA JDK&#xFF0C;&#x6EE1;&#x8DB3;&#x5B89;&#x88C5;&#x8981;&#x6C42;&#x7684;&#x7248;&#x672C;&#xFF0C;Kali&#x81EA;&#x5E26;java jdk&#x4E14;&#x6EE1;&#x8DB3;&#x8981;&#x6C42;
 </li>
-<li>
-<p>安装源码（for developers）</p>
-<ul>
-<li>下载source文件</li>
-<li>下载JAVA JDK，满足安装要求的版本，Kali自带java jdk且满足要求</li>
-<li>下载配置maven， http://maven.apache.org/  </li>
-</ul>
-<p>按要求下载 apache-maven-3.2.3-bin.tar.gz    </p>
-<p>下载文件解压至/usr/local/目录下</p>
-<p>vi /etc/profile 设置全局变量</p>
-</li>
-</ul>
-<div class="hlcode"><pre><span class="n">M2_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">apache</span><span class="o">-</span><span class="n">maven</span><span class="o">-</span><span class="mf">3.2.3</span> 
-<span class="n">export</span> <span class="n">M2_HOME</span> 
-<span class="n">PATH</span><span class="o">=</span><span class="err">$</span><span class="n">PATH</span><span class="o">:</span><span class="err">$</span><span class="n">M2_HOME</span><span class="o">/</span><span class="n">bin</span> 
-<span class="n">export</span> <span class="n">PATH</span>
-</pre></div>
+<li><p>&#x4E0B;&#x8F7D;&#x914D;&#x7F6E;maven&#xFF0C; <a href="http://maven.apache.org/" target="_blank">http://maven.apache.org/</a></p><p>&#x6309;&#x8981;&#x6C42;&#x4E0B;&#x8F7D; apache-maven-3.2.3-bin.tar.gz</p><p>&#x4E0B;&#x8F7D;&#x6587;&#x4EF6;&#x89E3;&#x538B;&#x81F3;/usr/local/&#x76EE;&#x5F55;&#x4E0B;</p><p>vi /etc/profile &#x8BBE;&#x7F6E;&#x5168;&#x5C40;&#x53D8;&#x91CF;</p></li></ul>
+</li></ul>
+<pre><code>M2_HOME=/usr/local/apache-maven-3.2.3 
+export M2_HOME 
+PATH=$PATH:$M2_HOME/bin 
+export PATH</code></pre>
+<pre><code>#source /etc/profile  &#x751F;&#x6548;</code></pre>
+<p>&#x6D4B;&#x8BD5;&#x662F;&#x5426;&#x6210;&#x529F;</p><pre><code>#mvn -v</code></pre>
+<p>maven &#x4FEE;&#x5EFA;&#x9879;&#x76EE;</p><pre><code>#cd webgoat* #(webgoat &#x6E90;&#x7801;&#x89E3;&#x538B;&#x76EE;&#x5F55;),
+#mvn clean package
+#mvn tomcat:run-war</code></pre>
+<p>&#x9009;&#x7528;eclipse&#xFF0C;&#x5B89;&#x88C5;maven&#x63D2;&#x4EF6;&#xFF0C;</p><pre><code>name&#x4E3A;&#xFF1A;m2e, 
 
+location&#x4E3A;&#xFF1A;http://download.eclipse.org/technology/m2e/releases
 
-<div class="hlcode"><pre><span class="c">#source /etc/profile  生效</span>
-</pre></div>
+&#x5F53;&#x8FD9;&#x6837;&#x5B89;&#x88C5;&#x63D2;&#x4EF6;&#x65F6;&#x4F1A;&#x62A5;&#x9519;&#xFF0C;&#x539F;&#x56E0;&#x662F;m2e&#x63D2;&#x4EF6;&#x548C;eclipse&#x7248;&#x672C;&#x4E0D;&#x5339;&#x914D;&#x5BFC;&#x81F4;&#xFF0C;location&#x6539;&#x4E3A;&#xFF1A;http://download.eclipse.org/technology/m2e/releases/1.4 &#x5373;&#x53EF;&#x3002;</code></pre>
 
-
-<p>测试是否成功</p>
-<div class="hlcode"><pre><span class="c">#mvn -v</span>
-</pre></div>
-
-
-<p>maven 修建项目</p>
-<div class="hlcode"><pre><span class="c">#cd webgoat* #(webgoat 源码解压目录),</span>
-<span class="c">#mvn clean package</span>
-<span class="c">#mvn tomcat:run-war</span>
-</pre></div>
-
-
-<p>选用eclipse，安装maven插件，</p>
-<div class="hlcode"><pre><span class="n">name</span><span class="err">为：</span><span class="n">m2e</span><span class="p">,</span>
-
-<span class="n">location</span><span class="err">为：</span><span class="n">http</span><span class="o">:</span><span class="c1">//download.eclipse.org/technology/m2e/releases</span>
-
-<span class="err">当这样安装插件时会报错，原因是</span><span class="n">m2e</span><span class="err">插件和</span><span class="n">eclipse</span><span class="err">版本不匹配导致，</span><span class="n">location</span><span class="err">改为：</span><span class="n">http</span><span class="o">:</span><span class="c1">//download.eclipse.org/technology/m2e/releases/1.4 即可。</span>
-</pre></div>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
 </div>
 
-        </div>
-        <div id="footer">
-            <span>
-                Copyright © 2012-2016 .
-                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
-            </span>
-        </div>
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="w3af.html" class="navigation navigation-prev " aria-label="Previous page: W3af">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="phpmyadmin.html" class="navigation navigation-next " aria-label="Next page: phpmyadmin install and configure">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
         
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"install and configure","date":"2016-01-20 21:20","level":"1.5.12","depth":2,"next":{"title":"phpmyadmin install and configure","level":"1.5.13","depth":2,"path":"Kali2/phpmyadmin.md","ref":"Kali2/phpmyadmin.md","articles":[]},"previous":{"title":"W3af","level":"1.5.11","depth":2,"path":"Kali2/w3af.md","ref":"Kali2/w3af.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"janes","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Wiki | janes","language":"cn","gitbook":">= 3.2.0"},"file":{"path":"Kali2/install&configure.md","mtime":"2016-08-16T14:00:50.453Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2016-08-16T16:38:45.378Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
     </body>
 </html>
+

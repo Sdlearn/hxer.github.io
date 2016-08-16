@@ -1,273 +1,2161 @@
+
 <!DOCTYPE HTML>
-<html>
+<html lang="cn" >
     <head>
-        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
-        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
-        <title>Http_server - Wiki | janes</title>
-        <meta name="keywords" content=""/>
-        <meta name="description" content=""/>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
-
-    <body>
-        <div id="container">
-            
-<div id="header">
-  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Python">Python</a>&nbsp;»&nbsp;Http_server</div>
-</div>
-<div class="clearfix"></div>
-<div id="title">Http_server</div>
-  <div id="content">
-  <h1 id="run-a-simple-http-server">run a simple http server</h1>
-<ul>
-<li>命令行运行</li>
-</ul>
-<div class="hlcode"><pre><span class="nx">cd</span> <span class="err">~</span><span class="p">/</span><span class="nx">www</span>    <span class="err">#切换到你想在浏览器上访问的目录</span>
-<span class="nx">python</span> <span class="na">-m</span> <span class="nx">SimpleHTTPServer</span> <span class="err">[</span><span class="o">&lt;</span><span class="nb">port</span><span class="o">&gt;</span><span class="cp">]</span> #默认端口8000
-</pre></div>
-
-
-<p>访问</p>
-<div class="hlcode"><pre><span class="nl">http:</span><span class="c1">//127.0.0.1:8000/index.html</span>
-<span class="nl">http:</span><span class="c1">//your_ip:8000/index.html</span>
-</pre></div>
-
-
-<h1 id="wsgi">wsgi</h1>
-<h2 id="lets-build-a-web-server-part-2">参考 <a href="http://ruslanspivak.com/lsbaws-part2/">Let’s Build A Web Server. Part 2.</a></h2>
-<p>WSGI provides a minimal interface between Python Web servers and Python Web Frameworks. It’s very simple and it’s easy to implement on both the server and the framework side. The following code snippet shows the server and the framework side of the interface:</p>
-<div class="hlcode"><pre><span class="k">def</span> <span class="nf">run_application</span><span class="p">(</span><span class="n">application</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Server code.&quot;&quot;&quot;</span>
-    <span class="c"># This is where an application/framework stores</span>
-    <span class="c"># an HTTP status and HTTP response headers for the server</span>
-    <span class="c"># to transmit to the client</span>
-    <span class="n">headers_set</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="c"># Environment dictionary with WSGI/CGI variables</span>
-    <span class="n">environ</span> <span class="o">=</span> <span class="p">{}</span>
-
-    <span class="k">def</span> <span class="nf">start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="n">headers_set</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[</span><span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">]</span>
-
-    <span class="c"># Server invokes the ‘application&#39; callable and gets back the</span>
-    <span class="c"># response body</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
-    <span class="c"># Server builds an HTTP response and transmits it to the client</span>
-    <span class="err">…</span>
-
-<span class="k">def</span> <span class="nf">app</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A barebones WSGI app.&quot;&quot;&quot;</span>
-    <span class="n">start_response</span><span class="p">(</span><span class="s">&#39;200 OK&#39;</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s">&#39;text/plain&#39;</span><span class="p">)])</span>
-    <span class="k">return</span> <span class="p">[</span><span class="s">&#39;Hello world!&#39;</span><span class="p">]</span>
-
-<span class="n">run_application</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
-</pre></div>
-
-
-<p>Here is how it works:</p>
-<ul>
-<li>
-<p>The framework provides an ‘application’ callable (The WSGI specification doesn’t prescribe how that should be implemented)</p>
-</li>
-<li>
-<p>The server invokes the ‘application’ callable for each request it receives from an HTTP client. It passes a dictionary ‘environ’ containing WSGI/CGI variables and a ‘start_response’ callable as arguments to the ‘application’ callable.</p>
-</li>
-<li>
-<p>The framework/application generates an HTTP status and HTTP response headers and passes them to the ‘start_response’ callable for the server to store them. The framework/application also returns a response body.</p>
-</li>
-<li>
-<p>The server combines the status, the response headers, and the response body into an HTTP response and transmits it to the client</p>
-</li>
-</ul>
-<h2 id="a-simple-demo">a simple demo</h2>
-<ul>
-<li>file: wsgi.py</li>
-</ul>
-<div class="hlcode"><pre><span class="c"># -*- coding:utf-8 -*-</span>
-
-<span class="c"># Tested with Python 2.7.9, Linux &amp; Mac OS X</span>
-<span class="kn">import</span> <span class="nn">socket</span>
-<span class="kn">import</span> <span class="nn">StringIO</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-
-
-<span class="k">class</span> <span class="nc">WSGIServer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-
-    <span class="n">address_family</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span>
-    <span class="n">socket_type</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span>
-    <span class="n">request_queue_size</span> <span class="o">=</span> <span class="mi">1</span>
-
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">server_address</span><span class="p">):</span>
-        <span class="c"># Create a listening socket</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">listen_socket</span> <span class="o">=</span> <span class="n">listen_socket</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">address_family</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">socket_type</span>
-        <span class="p">)</span>
-        <span class="c"># Allow to reuse the same address</span>
-        <span class="n">listen_socket</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">SOL_SOCKET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SO_REUSEADDR</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="c"># Bind</span>
-        <span class="n">listen_socket</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">server_address</span><span class="p">)</span>
-        <span class="c"># Activate</span>
-        <span class="n">listen_socket</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request_queue_size</span><span class="p">)</span>
-        <span class="c"># Get server host name and port</span>
-        <span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">listen_socket</span><span class="o">.</span><span class="n">getsockname</span><span class="p">()[:</span><span class="mi">2</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">server_name</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">getfqdn</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">server_port</span> <span class="o">=</span> <span class="n">port</span>
-        <span class="c"># Return headers set by Web framework/Web application</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">headers_set</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="k">def</span> <span class="nf">set_app</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">application</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">application</span> <span class="o">=</span> <span class="n">application</span>
-
-    <span class="k">def</span> <span class="nf">serve_forever</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">listen_socket</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">listen_socket</span>
-        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-            <span class="c"># New client connection</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">client_connection</span><span class="p">,</span> <span class="n">client_address</span> <span class="o">=</span> <span class="n">listen_socket</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
-            <span class="c"># Handle one request and close the client connection. Then</span>
-            <span class="c"># loop over to wait for another client connection</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">handle_one_request</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="nf">handle_one_request</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">request_data</span> <span class="o">=</span> <span class="n">request_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client_connection</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
-        <span class="c"># Print formatted request data a la &#39;curl -v&#39;</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-            <span class="s">&#39;&lt; {line}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">request_data</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
-        <span class="p">))</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">parse_request</span><span class="p">(</span><span class="n">request_data</span><span class="p">)</span>
-
-        <span class="c"># Construct environment dictionary using request data</span>
-        <span class="n">env</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_environ</span><span class="p">()</span>
-
-        <span class="c"># It&#39;s time to call our application callable and get</span>
-        <span class="c"># back a result that will become HTTP response body</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">application</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_response</span><span class="p">)</span>
-
-        <span class="c"># Construct a response and send it back to the client</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">finish_response</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">parse_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-        <span class="n">request_line</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">request_line</span> <span class="o">=</span> <span class="n">request_line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="p">)</span>
-        <span class="c"># Break down the request line into components</span>
-        <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request_method</span><span class="p">,</span>  <span class="c"># GET</span>
-         <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>            <span class="c"># /hello</span>
-         <span class="bp">self</span><span class="o">.</span><span class="n">request_version</span>  <span class="c"># HTTP/1.1</span>
-         <span class="p">)</span> <span class="o">=</span> <span class="n">request_line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="nf">get_environ</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">env</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="c"># The following code snippet does not follow PEP8 conventions</span>
-        <span class="c"># but it&#39;s formatted the way it is for demonstration purposes</span>
-        <span class="c"># to emphasize the required variables and their values</span>
-        <span class="c">#</span>
-        <span class="c"># Required WSGI variables</span>
-        <span class="n">env</span><span class="p">[</span><span class="s">&#39;wsgi.version&#39;</span><span class="p">]</span>      <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="n">env</span><span class="p">[</span><span class="s">&#39;wsgi.url_scheme&#39;</span><span class="p">]</span>   <span class="o">=</span> <span class="s">&#39;http&#39;</span>
-        <span class="n">env</span><span class="p">[</span><span class="s">&#39;wsgi.input&#39;</span><span class="p">]</span>        <span class="o">=</span> <span class="n">StringIO</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request_data</span><span class="p">)</span>
-        <span class="n">env</span><span class="p">[</span><span class="s">&#39;wsgi.errors&#39;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span>
-        <span class="n">env</span><span class="p">[</span><span class="s">&#39;wsgi.multithread&#39;</span><span class="p">]</span>  <span class="o">=</span> <span class="bp">False</span>
-        <span class="n">env</span><span class="p">[</span><span class="s">&#39;wsgi.multiprocess&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="n">env</span><span class="p">[</span><span class="s">&#39;wsgi.run_once&#39;</span><span class="p">]</span>     <span class="o">=</span> <span class="bp">False</span>
-        <span class="c"># Required CGI variables</span>
-        <span class="n">env</span><span class="p">[</span><span class="s">&#39;REQUEST_METHOD&#39;</span><span class="p">]</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_method</span>    <span class="c"># GET</span>
-        <span class="n">env</span><span class="p">[</span><span class="s">&#39;PATH_INFO&#39;</span><span class="p">]</span>         <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span>              <span class="c"># /hello</span>
-        <span class="n">env</span><span class="p">[</span><span class="s">&#39;SERVER_NAME&#39;</span><span class="p">]</span>       <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">server_name</span>       <span class="c"># localhost</span>
-        <span class="n">env</span><span class="p">[</span><span class="s">&#39;SERVER_PORT&#39;</span><span class="p">]</span>       <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">server_port</span><span class="p">)</span>  <span class="c"># 8888</span>
-        <span class="k">return</span> <span class="n">env</span>
-
-    <span class="k">def</span> <span class="nf">start_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="c"># Add necessary server headers</span>
-        <span class="n">server_headers</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="p">(</span><span class="s">&#39;Date&#39;</span><span class="p">,</span> <span class="s">&#39;Tue, 31 Mar 2015 12:54:48 GMT&#39;</span><span class="p">),</span>
-            <span class="p">(</span><span class="s">&#39;Server&#39;</span><span class="p">,</span> <span class="s">&#39;WSGIServer 0.2&#39;</span><span class="p">),</span>
-        <span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">headers_set</span> <span class="o">=</span> <span class="p">[</span><span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span> <span class="o">+</span> <span class="n">server_headers</span><span class="p">]</span>
-        <span class="c"># To adhere to WSGI specification the start_response must return</span>
-        <span class="c"># a &#39;write&#39; callable. We simplicity&#39;s sake we&#39;ll ignore that detail</span>
-        <span class="c"># for now.</span>
-        <span class="c"># return self.finish_response</span>
-
-    <span class="k">def</span> <span class="nf">finish_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">headers_set</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="s">&#39;HTTP/1.1 {status}</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">header</span> <span class="ow">in</span> <span class="n">response_headers</span><span class="p">:</span>
-                <span class="n">response</span> <span class="o">+=</span> <span class="s">&#39;{0}: {1}</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">header</span><span class="p">)</span>
-            <span class="n">response</span> <span class="o">+=</span> <span class="s">&#39;</span><span class="se">\r\n</span><span class="s">&#39;</span>
-            <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
-                <span class="n">response</span> <span class="o">+=</span> <span class="n">data</span>
-            <span class="c"># Print formatted response data a la &#39;curl -v&#39;</span>
-            <span class="k">print</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-                <span class="s">&#39;&gt; {line}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
-            <span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">client_connection</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
-        <span class="k">finally</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">client_connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-
-
-<span class="n">SERVER_ADDRESS</span> <span class="o">=</span> <span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="mi">8888</span>
-
-
-<span class="k">def</span> <span class="nf">make_server</span><span class="p">(</span><span class="n">server_address</span><span class="p">,</span> <span class="n">application</span><span class="p">):</span>
-    <span class="n">server</span> <span class="o">=</span> <span class="n">WSGIServer</span><span class="p">(</span><span class="n">server_address</span><span class="p">)</span>
-    <span class="n">server</span><span class="o">.</span><span class="n">set_app</span><span class="p">(</span><span class="n">application</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">server</span>
-
-
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s">&#39;Provide a WSGI application object as module:callable&#39;</span><span class="p">)</span>
-    <span class="n">app_path</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">module</span><span class="p">,</span> <span class="n">application</span> <span class="o">=</span> <span class="n">app_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">)</span>
-    <span class="n">module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
-    <span class="n">application</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">application</span><span class="p">)</span>
-    <span class="n">httpd</span> <span class="o">=</span> <span class="n">make_server</span><span class="p">(</span><span class="n">SERVER_ADDRESS</span><span class="p">,</span> <span class="n">application</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&#39;WSGIServer: Serving HTTP on port {port} ...</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">PORT</span><span class="p">))</span>
-    <span class="n">httpd</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
-</pre></div>
-
-
-<ul>
-<li>file: wsgi.app.py</li>
-</ul>
-<div class="hlcode"><pre><span class="c"># -*- coding:utf-8 -*-</span>
-
-<span class="k">def</span> <span class="nf">app</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A barebones WSGI application.</span>
-
-<span class="sd">    This is a starting point for your own Web framework :)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">status</span> <span class="o">=</span> <span class="s">&#39;200 OK&#39;</span>
-    <span class="n">response_headers</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s">&#39;text/plain&#39;</span><span class="p">)]</span>
-    <span class="n">start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">[</span><span class="s">&#39;Hello world from a simple WSGI application!</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">]</span>
-</pre></div>
-
-
-<ul>
-<li>run</li>
-</ul>
-<div class="hlcode"><pre><span class="n">python</span> <span class="n">wsgi</span><span class="p">.</span><span class="n">py</span> <span class="n">wsgiapp</span><span class="o">:</span><span class="n">app</span>
-</pre></div>
-
-
-<ul>
-<li>browse</li>
-</ul>
-<div class="hlcode"><pre><span class="nl">http:</span><span class="c1">//127.0.0.1:8888/</span>
-</pre></div>
-</div>
-
-        </div>
-        <div id="footer">
-            <span>
-                Copyright © 2012-2016 .
-                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
-            </span>
-        </div>
+        <title>Http_server · Wiki | janes</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.0">
+        <meta name="author" content="janes">
         
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="iterators.html" />
+    
+    
+    <link rel="prev" href="函数.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Wiki
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    Python
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="anaconda.html">
+            
+                <a href="anaconda.html">
+            
+                    
+                    Anaconda
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="django.html">
+            
+                <a href="django.html">
+            
+                    
+                    Django 1.8.7
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="excel.html">
+            
+                <a href="excel.html">
+            
+                    
+                    Excel
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="flask.html">
+            
+                <a href="flask.html">
+            
+                    
+                    Flask
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="flask_github_api_login.html">
+            
+                <a href="flask_github_api_login.html">
+            
+                    
+                    Flask github api login
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="函数.html">
+            
+                <a href="函数.html">
+            
+                    
+                    Function
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.7" data-path="http_server.html">
+            
+                <a href="http_server.html">
+            
+                    
+                    Http_server
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="iterators.html">
+            
+                <a href="iterators.html">
+            
+                    
+                    Iterators
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="log.html">
+            
+                <a href="log.html">
+            
+                    
+                    Log
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="pickle.html">
+            
+                <a href="pickle.html">
+            
+                    
+                    Pickle
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="pythonic.html">
+            
+                <a href="pythonic.html">
+            
+                    
+                    Pythonic
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="random.html">
+            
+                <a href="random.html">
+            
+                    
+                    Random
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13" data-path="scapy.html">
+            
+                <a href="scapy.html">
+            
+                    
+                    Scapy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14" data-path="selenium.html">
+            
+                <a href="selenium.html">
+            
+                    
+                    Selenium and Xvfb 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15" data-path="socket.html">
+            
+                <a href="socket.html">
+            
+                    
+                    Socket
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16" data-path="network_package.html">
+            
+                <a href="network_package.html">
+            
+                    
+                    network package
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17" data-path="note.html">
+            
+                <a href="note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18" data-path="eval.html">
+            
+                <a href="eval.html">
+            
+                    
+                    动态执行字符串代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19" data-path="command.html">
+            
+                <a href="command.html">
+            
+                    
+                    命令执行
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.20" data-path="buildin_type.html">
+            
+                <a href="buildin_type.html">
+            
+                    
+                    常用内置对象操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.21" data-path="常用模块.html">
+            
+                <a href="常用模块.html">
+            
+                    
+                    常用模块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.22" data-path="wechat.html">
+            
+                <a href="wechat.html">
+            
+                    
+                    微信公众号开发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.23" data-path="模拟http-post-upload-file.html">
+            
+                <a href="模拟http-post-upload-file.html">
+            
+                    
+                    模拟HTTP POST upload file
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.24" data-path="自省.html">
+            
+                <a href="自省.html">
+            
+                    
+                    自省
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.25" data-path="运维.html">
+            
+                <a href="运维.html">
+            
+                    
+                    运维
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.26" data-path="processing.html">
+            
+                <a href="processing.html">
+            
+                    
+                    进(线程)程处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.27" data-path="迭代器和生成器.html">
+            
+                <a href="迭代器和生成器.html">
+            
+                    
+                    迭代器和生成器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    Linux
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../Linux/centos.html">
+            
+                <a href="../Linux/centos.html">
+            
+                    
+                    Centos7
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../Linux/cmdline.html">
+            
+                <a href="../Linux/cmdline.html">
+            
+                    
+                    Cmdline
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../Linux/ncat.html">
+            
+                <a href="../Linux/ncat.html">
+            
+                    
+                    Nc
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../Linux/nmap.html">
+            
+                <a href="../Linux/nmap.html">
+            
+                    
+                    Nmap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../Linux/ubuntu.html">
+            
+                <a href="../Linux/ubuntu.html">
+            
+                    
+                    Ubuntu
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    WebSecurity
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../WebSecurity/attacktool.html">
+            
+                <a href="../WebSecurity/attacktool.html">
+            
+                    
+                    AttackTool
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../WebSecurity/csrf.html">
+            
+                <a href="../WebSecurity/csrf.html">
+            
+                    
+                    CSRF
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../WebSecurity/dns.html">
+            
+                <a href="../WebSecurity/dns.html">
+            
+                    
+                    DNS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../WebSecurity/mysqlinject.html">
+            
+                <a href="../WebSecurity/mysqlinject.html">
+            
+                    
+                    Mysql 注入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../WebSecurity/note.html">
+            
+                <a href="../WebSecurity/note.html">
+            
+                    
+                    Note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../WebSecurity/php序列化.html">
+            
+                <a href="../WebSecurity/php序列化.html">
+            
+                    
+                    PHP序列化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../WebSecurity/ssti-jinja2.html">
+            
+                <a href="../WebSecurity/ssti-jinja2.html">
+            
+                    
+                    SSTI Jinja2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../WebSecurity/scan_for_info.html">
+            
+                <a href="../WebSecurity/scan_for_info.html">
+            
+                    
+                    Scan For Information
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9" data-path="../WebSecurity/sqlinject.html">
+            
+                <a href="../WebSecurity/sqlinject.html">
+            
+                    
+                    SqlInject
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.10" data-path="../WebSecurity/vulnapp.html">
+            
+                <a href="../WebSecurity/vulnapp.html">
+            
+                    
+                    Vulnapp
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11" data-path="../WebSecurity/xss.html">
+            
+                <a href="../WebSecurity/xss.html">
+            
+                    
+                    XSS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.12" data-path="../WebSecurity/backdoor.html">
+            
+                <a href="../WebSecurity/backdoor.html">
+            
+                    
+                    backdoor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.13" data-path="../WebSecurity/linux提权.html">
+            
+                <a href="../WebSecurity/linux提权.html">
+            
+                    
+                    linux提权
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.14" data-path="../WebSecurity/mysql.html">
+            
+                <a href="../WebSecurity/mysql.html">
+            
+                    
+                    mysql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.15" data-path="../WebSecurity/mysql宽字节注入.html">
+            
+                <a href="../WebSecurity/mysql宽字节注入.html">
+            
+                    
+                    mysql宽字节注入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.16" data-path="../WebSecurity/mysql注入过滤.html">
+            
+                <a href="../WebSecurity/mysql注入过滤.html">
+            
+                    
+                    mysql注入过滤
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.17" data-path="../WebSecurity/php.html">
+            
+                <a href="../WebSecurity/php.html">
+            
+                    
+                    php
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.18" data-path="../WebSecurity/php-match-or-comapre.html">
+            
+                <a href="../WebSecurity/php-match-or-comapre.html">
+            
+                    
+                    php match or comapre
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.19" data-path="../WebSecurity/php-文件包含.html">
+            
+                <a href="../WebSecurity/php-文件包含.html">
+            
+                    
+                    php 文件包含
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.20" data-path="../WebSecurity/ssrf.html">
+            
+                <a href="../WebSecurity/ssrf.html">
+            
+                    
+                    ssrf
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.21" data-path="../WebSecurity/url.html">
+            
+                <a href="../WebSecurity/url.html">
+            
+                    
+                    url
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.22" data-path="../WebSecurity/webshell.html">
+            
+                <a href="../WebSecurity/webshell.html">
+            
+                    
+                    webshell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.23" data-path="../WebSecurity/web渗透测试.html">
+            
+                <a href="../WebSecurity/web渗透测试.html">
+            
+                    
+                    web渗透测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.24" data-path="../WebSecurity/常用端口.html">
+            
+                <a href="../WebSecurity/常用端口.html">
+            
+                    
+                    常用端口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.25" data-path="../WebSecurity/常见协议.html">
+            
+                <a href="../WebSecurity/常见协议.html">
+            
+                    
+                    常见协议
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.26" data-path="../WebSecurity/敏感配置文件.html">
+            
+                <a href="../WebSecurity/敏感配置文件.html">
+            
+                    
+                    敏感配置文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.27" data-path="../WebSecurity/path_collect.html">
+            
+                <a href="../WebSecurity/path_collect.html">
+            
+                    
+                    文件读取漏洞路径收集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.28" data-path="../WebSecurity/解析漏洞.html">
+            
+                <a href="../WebSecurity/解析漏洞.html">
+            
+                    
+                    解析漏洞
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    Kali2
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../Kali2/beef.html">
+            
+                <a href="../Kali2/beef.html">
+            
+                    
+                    Beef
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../Kali2/burpsuite.html">
+            
+                <a href="../Kali2/burpsuite.html">
+            
+                    
+                    BurpSuite
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../Kali2/code_editor.html">
+            
+                <a href="../Kali2/code_editor.html">
+            
+                    
+                    Code editor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../Kali2/gather-information.html">
+            
+                <a href="../Kali2/gather-information.html">
+            
+                    
+                    Gather Information
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../Kali2/hydra.html">
+            
+                <a href="../Kali2/hydra.html">
+            
+                    
+                    Hydra
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6" data-path="../Kali2/mitmproxy.html">
+            
+                <a href="../Kali2/mitmproxy.html">
+            
+                    
+                    MitmProxy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.7" data-path="../Kali2/pyenv.html">
+            
+                <a href="../Kali2/pyenv.html">
+            
+                    
+                    Pyenv
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.8" data-path="../Kali2/remote.html">
+            
+                <a href="../Kali2/remote.html">
+            
+                    
+                    Remote access
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9" data-path="../Kali2/shell.html">
+            
+                <a href="../Kali2/shell.html">
+            
+                    
+                    Shell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.10" data-path="../Kali2/tmux.html">
+            
+                <a href="../Kali2/tmux.html">
+            
+                    
+                    Tmux
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.11" data-path="../Kali2/w3af.html">
+            
+                <a href="../Kali2/w3af.html">
+            
+                    
+                    W3af
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.12" data-path="../Kali2/install&configure.html">
+            
+                <a href="../Kali2/install&configure.html">
+            
+                    
+                    install and configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.13" data-path="../Kali2/phpmyadmin.html">
+            
+                <a href="../Kali2/phpmyadmin.html">
+            
+                    
+                    phpmyadmin install and configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.14" data-path="../Kali2/flow_analysis.html">
+            
+                <a href="../Kali2/flow_analysis.html">
+            
+                    
+                    流量监听
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    Vuln
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../Vuln/joomla.html">
+            
+                <a href="../Vuln/joomla.html">
+            
+                    
+                    Joomla
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    PHP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../PHP/function.html">
+            
+                <a href="../PHP/function.html">
+            
+                    
+                    Function
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../PHP/configure.html">
+            
+                <a href="../PHP/configure.html">
+            
+                    
+                    configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../PHP/note.html">
+            
+                <a href="../PHP/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../PHP/正则匹配.html">
+            
+                <a href="../PHP/正则匹配.html">
+            
+                    
+                    正则匹配
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    Docker
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../Docker/docker-compose.html">
+            
+                <a href="../Docker/docker-compose.html">
+            
+                    
+                    Docker Compose
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../Docker/dockerfile.html">
+            
+                <a href="../Docker/dockerfile.html">
+            
+                    
+                    Dockerfile
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../Docker/docker-api-in-python.html">
+            
+                <a href="../Docker/docker-api-in-python.html">
+            
+                    
+                    docker api in python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../Docker/locale.html">
+            
+                <a href="../Docker/locale.html">
+            
+                    
+                    locale
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="../Docker/note.html">
+            
+                <a href="../Docker/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" data-path="../Docker/openvpn.html">
+            
+                <a href="../Docker/openvpn.html">
+            
+                    
+                    openvpn
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7" data-path="../Docker/安装和基本命令.html">
+            
+                <a href="../Docker/安装和基本命令.html">
+            
+                    
+                    安装和基本命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.8" data-path="../Docker/常用开发环境.html">
+            
+                <a href="../Docker/常用开发环境.html">
+            
+                    
+                    常用开发环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.9" data-path="../Docker/微容器.html">
+            
+                <a href="../Docker/微容器.html">
+            
+                    
+                    微容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.10" data-path="../Docker/心得.html">
+            
+                <a href="../Docker/心得.html">
+            
+                    
+                    心得
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.11" data-path="../Docker/持续集成与自动发布.html">
+            
+                <a href="../Docker/持续集成与自动发布.html">
+            
+                    
+                    持续集成与自动发布
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" >
+            
+                <span>
+            
+                    
+                    HTTP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../HTTP/cookie.html">
+            
+                <a href="../HTTP/cookie.html">
+            
+                    
+                    Cookie
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../HTTP/encode_and_decode.html">
+            
+                <a href="../HTTP/encode_and_decode.html">
+            
+                    
+                    Encode and Decode
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../HTTP/http请求格式.html">
+            
+                <a href="../HTTP/http请求格式.html">
+            
+                    
+                    HTTP请求格式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../HTTP/proxy.html">
+            
+                <a href="../HTTP/proxy.html">
+            
+                    
+                    Proxy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../HTTP/xpath.html">
+            
+                <a href="../HTTP/xpath.html">
+            
+                    
+                    XPATH
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" >
+            
+                <span>
+            
+                    
+                    Git
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../Git/gist.html">
+            
+                <a href="../Git/gist.html">
+            
+                    
+                    Gist
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../Git/git.html">
+            
+                <a href="../Git/git.html">
+            
+                    
+                    git
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../Git/git_remote_operation.html">
+            
+                <a href="../Git/git_remote_operation.html">
+            
+                    
+                    git remote operation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Image
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../Image/png.html">
+            
+                <a href="../Image/png.html">
+            
+                    
+                    PNG
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" >
+            
+                <span>
+            
+                    
+                    JS
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../JS/xhr.html">
+            
+                <a href="../JS/xhr.html">
+            
+                    
+                    XHR
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" >
+            
+                <span>
+            
+                    
+                    Note
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../Note/ctf.html">
+            
+                <a href="../Note/ctf.html">
+            
+                    
+                    CTF
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.2" data-path="../Note/elk.html">
+            
+                <a href="../Note/elk.html">
+            
+                    
+                    ELK
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.3" data-path="../Note/google-hacking.html">
+            
+                <a href="../Note/google-hacking.html">
+            
+                    
+                    Google Hacking
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.4" data-path="../Note/sql.html">
+            
+                <a href="../Note/sql.html">
+            
+                    
+                    Sql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.5" data-path="../Note/mysql.html">
+            
+                <a href="../Note/mysql.html">
+            
+                    
+                    mysql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.6" data-path="../Note/same-origin-policy.html">
+            
+                <a href="../Note/same-origin-policy.html">
+            
+                    
+                    same origin policy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.7" data-path="../Note/software.html">
+            
+                <a href="../Note/software.html">
+            
+                    
+                    software
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" >
+            
+                <span>
+            
+                    
+                    AWS
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../AWS/note.html">
+            
+                <a href="../AWS/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" >
+            
+                <span>
+            
+                    
+                    Python3
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../Python3/string.html">
+            
+                <a href="../Python3/string.html">
+            
+                    
+                    String
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" >
+            
+                <span>
+            
+                    
+                    Simiki
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="../Simiki/simiki-命令.html">
+            
+                <a href="../Simiki/simiki-命令.html">
+            
+                    
+                    simiki 命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="../Simiki/start with github page.html">
+            
+                <a href="../Simiki/start with github page.html">
+            
+                    
+                    start github page
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Http_server</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="run-a-simple-http-server">run a simple http server</h1><ul><li>&#x547D;&#x4EE4;&#x884C;&#x8FD0;&#x884C;
+</li></ul>
+<pre><code>cd ~/www    #&#x5207;&#x6362;&#x5230;&#x4F60;&#x60F3;&#x5728;&#x6D4F;&#x89C8;&#x5668;&#x4E0A;&#x8BBF;&#x95EE;&#x7684;&#x76EE;&#x5F55;
+python -m SimpleHTTPServer [&lt;port&gt;] #&#x9ED8;&#x8BA4;&#x7AEF;&#x53E3;8000</code></pre>
+<p>&#x8BBF;&#x95EE;</p><pre><code>http://127.0.0.1:8000/index.html
+http://your_ip:8000/index.html</code></pre>
+<h1 id="wsgi">wsgi</h1><h2 id="&#x53C2;&#x8003;-lets-build-a-web-server-part-2">&#x53C2;&#x8003; <a href="http://ruslanspivak.com/lsbaws-part2/" target="_blank">Let&#x2019;s Build A Web Server. Part 2.</a></h2><p>WSGI provides a minimal interface between Python Web servers and Python Web Frameworks. It&#x2019;s very simple and it&#x2019;s easy to implement on both the server and the framework side. The following code snippet shows the server and the framework side of the interface:</p><pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">run_application</span><span class="hljs-params">(application)</span>:</span>
+    <span class="hljs-string">&quot;&quot;&quot;Server code.&quot;&quot;&quot;</span>
+    <span class="hljs-comment"># This is where an application/framework stores</span>
+    <span class="hljs-comment"># an HTTP status and HTTP response headers for the server</span>
+    <span class="hljs-comment"># to transmit to the client</span>
+    headers_set = []
+    <span class="hljs-comment"># Environment dictionary with WSGI/CGI variables</span>
+    environ = {}
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">start_response</span><span class="hljs-params">(status, response_headers, exc_info=None)</span>:</span>
+        headers_set[:] = [status, response_headers]
+
+    <span class="hljs-comment"># Server invokes the &#x2018;application&apos; callable and gets back the</span>
+    <span class="hljs-comment"># response body</span>
+    result = application(environ, start_response)
+    <span class="hljs-comment"># Server builds an HTTP response and transmits it to the client</span>
+    &#x2026;
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">app</span><span class="hljs-params">(environ, start_response)</span>:</span>
+    <span class="hljs-string">&quot;&quot;&quot;A barebones WSGI app.&quot;&quot;&quot;</span>
+    start_response(<span class="hljs-string">&apos;200 OK&apos;</span>, [(<span class="hljs-string">&apos;Content-Type&apos;</span>, <span class="hljs-string">&apos;text/plain&apos;</span>)])
+    <span class="hljs-keyword">return</span> [<span class="hljs-string">&apos;Hello world!&apos;</span>]
+
+run_application(app)</code></pre>
+<p>Here is how it works:</p><ul><li><p>The framework provides an &#x2018;application&#x2019; callable (The WSGI specification doesn&#x2019;t prescribe how that should be implemented)</p></li>
+<li><p>The server invokes the &#x2018;application&#x2019; callable for each request it receives from an HTTP client. It passes a dictionary &#x2018;environ&#x2019; containing WSGI/CGI variables and a &#x2018;start_response&#x2019; callable as arguments to the &#x2018;application&#x2019; callable.</p></li>
+<li><p>The framework/application generates an HTTP status and HTTP response headers and passes them to the &#x2018;start_response&#x2019; callable for the server to store them. The framework/application also returns a response body.</p></li>
+<li><p>The server combines the status, the response headers, and the response body into an HTTP response and transmits it to the client</p></li></ul>
+<h2 id="a-simple-demo">a simple demo</h2><ul><li>file: wsgi.py
+</li></ul>
+<pre><code class="lang-python"><span class="hljs-comment"># -*- coding:utf-8 -*-</span>
+
+<span class="hljs-comment"># Tested with Python 2.7.9, Linux &amp; Mac OS X</span>
+<span class="hljs-keyword">import</span> socket
+<span class="hljs-keyword">import</span> StringIO
+<span class="hljs-keyword">import</span> sys
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WSGIServer</span><span class="hljs-params">(object)</span>:</span>
+
+    address_family = socket.AF_INET
+    socket_type = socket.SOCK_STREAM
+    request_queue_size = <span class="hljs-number">1</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, server_address)</span>:</span>
+        <span class="hljs-comment"># Create a listening socket</span>
+        self.listen_socket = listen_socket = socket.socket(
+            self.address_family,
+            self.socket_type
+        )
+        <span class="hljs-comment"># Allow to reuse the same address</span>
+        listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, <span class="hljs-number">1</span>)
+        <span class="hljs-comment"># Bind</span>
+        listen_socket.bind(server_address)
+        <span class="hljs-comment"># Activate</span>
+        listen_socket.listen(self.request_queue_size)
+        <span class="hljs-comment"># Get server host name and port</span>
+        host, port = self.listen_socket.getsockname()[:<span class="hljs-number">2</span>]
+        self.server_name = socket.getfqdn(host)
+        self.server_port = port
+        <span class="hljs-comment"># Return headers set by Web framework/Web application</span>
+        self.headers_set = []
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">set_app</span><span class="hljs-params">(self, application)</span>:</span>
+        self.application = application
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">serve_forever</span><span class="hljs-params">(self)</span>:</span>
+        listen_socket = self.listen_socket
+        <span class="hljs-keyword">while</span> <span class="hljs-keyword">True</span>:
+            <span class="hljs-comment"># New client connection</span>
+            self.client_connection, client_address = listen_socket.accept()
+            <span class="hljs-comment"># Handle one request and close the client connection. Then</span>
+            <span class="hljs-comment"># loop over to wait for another client connection</span>
+            self.handle_one_request()
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">handle_one_request</span><span class="hljs-params">(self)</span>:</span>
+        self.request_data = request_data = self.client_connection.recv(<span class="hljs-number">1024</span>)
+        <span class="hljs-comment"># Print formatted request data a la &apos;curl -v&apos;</span>
+        print(<span class="hljs-string">&apos;&apos;</span>.join(
+            <span class="hljs-string">&apos;&lt; {line}\n&apos;</span>.format(line=line)
+            <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> request_data.splitlines()
+        ))
+
+        self.parse_request(request_data)
+
+        <span class="hljs-comment"># Construct environment dictionary using request data</span>
+        env = self.get_environ()
+
+        <span class="hljs-comment"># It&apos;s time to call our application callable and get</span>
+        <span class="hljs-comment"># back a result that will become HTTP response body</span>
+        result = self.application(env, self.start_response)
+
+        <span class="hljs-comment"># Construct a response and send it back to the client</span>
+        self.finish_response(result)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse_request</span><span class="hljs-params">(self, text)</span>:</span>
+        request_line = text.splitlines()[<span class="hljs-number">0</span>]
+        request_line = request_line.rstrip(<span class="hljs-string">&apos;\r\n&apos;</span>)
+        <span class="hljs-comment"># Break down the request line into components</span>
+        (self.request_method,  <span class="hljs-comment"># GET</span>
+         self.path,            <span class="hljs-comment"># /hello</span>
+         self.request_version  <span class="hljs-comment"># HTTP/1.1</span>
+         ) = request_line.split()
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_environ</span><span class="hljs-params">(self)</span>:</span>
+        env = {}
+        <span class="hljs-comment"># The following code snippet does not follow PEP8 conventions</span>
+        <span class="hljs-comment"># but it&apos;s formatted the way it is for demonstration purposes</span>
+        <span class="hljs-comment"># to emphasize the required variables and their values</span>
+        <span class="hljs-comment">#</span>
+        <span class="hljs-comment"># Required WSGI variables</span>
+        env[<span class="hljs-string">&apos;wsgi.version&apos;</span>]      = (<span class="hljs-number">1</span>, <span class="hljs-number">0</span>)
+        env[<span class="hljs-string">&apos;wsgi.url_scheme&apos;</span>]   = <span class="hljs-string">&apos;http&apos;</span>
+        env[<span class="hljs-string">&apos;wsgi.input&apos;</span>]        = StringIO.StringIO(self.request_data)
+        env[<span class="hljs-string">&apos;wsgi.errors&apos;</span>]       = sys.stderr
+        env[<span class="hljs-string">&apos;wsgi.multithread&apos;</span>]  = <span class="hljs-keyword">False</span>
+        env[<span class="hljs-string">&apos;wsgi.multiprocess&apos;</span>] = <span class="hljs-keyword">False</span>
+        env[<span class="hljs-string">&apos;wsgi.run_once&apos;</span>]     = <span class="hljs-keyword">False</span>
+        <span class="hljs-comment"># Required CGI variables</span>
+        env[<span class="hljs-string">&apos;REQUEST_METHOD&apos;</span>]    = self.request_method    <span class="hljs-comment"># GET</span>
+        env[<span class="hljs-string">&apos;PATH_INFO&apos;</span>]         = self.path              <span class="hljs-comment"># /hello</span>
+        env[<span class="hljs-string">&apos;SERVER_NAME&apos;</span>]       = self.server_name       <span class="hljs-comment"># localhost</span>
+        env[<span class="hljs-string">&apos;SERVER_PORT&apos;</span>]       = str(self.server_port)  <span class="hljs-comment"># 8888</span>
+        <span class="hljs-keyword">return</span> env
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">start_response</span><span class="hljs-params">(self, status, response_headers, exc_info=None)</span>:</span>
+        <span class="hljs-comment"># Add necessary server headers</span>
+        server_headers = [
+            (<span class="hljs-string">&apos;Date&apos;</span>, <span class="hljs-string">&apos;Tue, 31 Mar 2015 12:54:48 GMT&apos;</span>),
+            (<span class="hljs-string">&apos;Server&apos;</span>, <span class="hljs-string">&apos;WSGIServer 0.2&apos;</span>),
+        ]
+        self.headers_set = [status, response_headers + server_headers]
+        <span class="hljs-comment"># To adhere to WSGI specification the start_response must return</span>
+        <span class="hljs-comment"># a &apos;write&apos; callable. We simplicity&apos;s sake we&apos;ll ignore that detail</span>
+        <span class="hljs-comment"># for now.</span>
+        <span class="hljs-comment"># return self.finish_response</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">finish_response</span><span class="hljs-params">(self, result)</span>:</span>
+        <span class="hljs-keyword">try</span>:
+            status, response_headers = self.headers_set
+            response = <span class="hljs-string">&apos;HTTP/1.1 {status}\r\n&apos;</span>.format(status=status)
+            <span class="hljs-keyword">for</span> header <span class="hljs-keyword">in</span> response_headers:
+                response += <span class="hljs-string">&apos;{0}: {1}\r\n&apos;</span>.format(*header)
+            response += <span class="hljs-string">&apos;\r\n&apos;</span>
+            <span class="hljs-keyword">for</span> data <span class="hljs-keyword">in</span> result:
+                response += data
+            <span class="hljs-comment"># Print formatted response data a la &apos;curl -v&apos;</span>
+            print(<span class="hljs-string">&apos;&apos;</span>.join(
+                <span class="hljs-string">&apos;&gt; {line}\n&apos;</span>.format(line=line)
+                <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> response.splitlines()
+            ))
+            self.client_connection.sendall(response)
+        <span class="hljs-keyword">finally</span>:
+            self.client_connection.close()
+
+
+SERVER_ADDRESS = (HOST, PORT) = <span class="hljs-string">&apos;&apos;</span>, <span class="hljs-number">8888</span>
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">make_server</span><span class="hljs-params">(server_address, application)</span>:</span>
+    server = WSGIServer(server_address)
+    server.set_app(application)
+    <span class="hljs-keyword">return</span> server
+
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&apos;__main__&apos;</span>:
+    <span class="hljs-keyword">if</span> len(sys.argv) &lt; <span class="hljs-number">2</span>:
+        sys.exit(<span class="hljs-string">&apos;Provide a WSGI application object as module:callable&apos;</span>)
+    app_path = sys.argv[<span class="hljs-number">1</span>]
+    module, application = app_path.split(<span class="hljs-string">&apos;:&apos;</span>)
+    module = __import__(module)
+    application = getattr(module, application)
+    httpd = make_server(SERVER_ADDRESS, application)
+    print(<span class="hljs-string">&apos;WSGIServer: Serving HTTP on port {port} ...\n&apos;</span>.format(port=PORT))
+    httpd.serve_forever()</code></pre>
+<ul><li>file: wsgi.app.py
+</li></ul>
+<pre><code class="lang-python"><span class="hljs-comment"># -*- coding:utf-8 -*-</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">app</span><span class="hljs-params">(environ, start_response)</span>:</span>
+    <span class="hljs-string">&quot;&quot;&quot;A barebones WSGI application.
+
+    This is a starting point for your own Web framework :)
+    &quot;&quot;&quot;</span>
+    status = <span class="hljs-string">&apos;200 OK&apos;</span>
+    response_headers = [(<span class="hljs-string">&apos;Content-Type&apos;</span>, <span class="hljs-string">&apos;text/plain&apos;</span>)]
+    start_response(status, response_headers)
+    <span class="hljs-keyword">return</span> [<span class="hljs-string">&apos;Hello world from a simple WSGI application!\n&apos;</span>]</code></pre>
+<ul><li>run
+</li></ul>
+<pre><code>python wsgi.py wsgiapp:app</code></pre>
+<ul><li>browse
+</li></ul>
+<pre><code>http://127.0.0.1:8888/</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="函数.html" class="navigation navigation-prev " aria-label="Previous page: Function">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="iterators.html" class="navigation navigation-next " aria-label="Next page: Iterators">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Http_server","date":"2016-01-20 05:33","level":"1.2.7","depth":2,"next":{"title":"Iterators","level":"1.2.8","depth":2,"path":"Python/iterators.md","ref":"Python/iterators.md","articles":[]},"previous":{"title":"Function","level":"1.2.6","depth":2,"path":"Python/函数.md","ref":"Python/函数.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"janes","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Wiki | janes","language":"cn","gitbook":">= 3.2.0"},"file":{"path":"Python/http_server.md","mtime":"2016-08-16T14:00:50.457Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2016-08-16T16:38:45.378Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
     </body>
 </html>
+

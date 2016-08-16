@@ -1,273 +1,2068 @@
+
 <!DOCTYPE HTML>
-<html>
+<html lang="cn" >
     <head>
-        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
-        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
-        <title>Iterators - Wiki | janes</title>
-        <meta name="keywords" content=""/>
-        <meta name="description" content=""/>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
+        <title>Iterators · Wiki | janes</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.0">
+        <meta name="author" content="janes">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
 
-    <body>
-        <div id="container">
+    
             
-<div id="header">
-  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Python">Python</a>&nbsp;»&nbsp;Iterators</div>
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="log.html" />
+    
+    
+    <link rel="prev" href="http_server.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
 </div>
-<div class="clearfix"></div>
-<div id="title">Iterators</div>
-  <div id="content">
-  <h2 id="0x01-itertools">0x01 Itertools</h2>
-<p><a href="http://www.wklken.me/posts/2013/08/20/python-extra-itertools.html">PYTHON进阶 ITERTOOLS模块小结</a></p>
-<p><a href="https://docs.python.org/2/library/itertools.html">python docs itertools</a></p>
-<h3 id="infinite-iterators">Infinite Iterators</h3>
-<p>无限迭代</p>
-<div class="hlcode"><pre><span class="n">count</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">--&gt;</span> <span class="mi">10</span> <span class="mi">11</span> <span class="mi">12</span> <span class="mi">13</span> <span class="mi">14</span> <span class="p">...</span>
-<span class="n">cycle</span><span class="p">(</span><span class="err">&#39;</span><span class="n">ABCD</span><span class="err">&#39;</span><span class="p">)</span> <span class="o">--&gt;</span> <span class="n">A</span> <span class="n">B</span> <span class="n">C</span> <span class="n">D</span> <span class="n">A</span> <span class="n">B</span> <span class="n">C</span> <span class="n">D</span> <span class="p">...</span>
-<span class="n">repeat</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">--&gt;</span> <span class="mi">3</span> <span class="mi">3</span> <span class="mi">3</span> <span class="mi">3</span> <span class="p">...</span>   <span class="n">repeat</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">--&gt;</span> <span class="mi">3</span> <span class="mi">3</span> <span class="mi">3</span>
-</pre></div>
+
+            
+                <nav role="navigation">
+                
 
 
-<h3 id="iterators-terminating-on-the-shortest-input-sequence">Iterators terminating on the shortest input sequence</h3>
-<p>处理输入迭代</p>
-<div class="hlcode"><pre><span class="n">chain</span><span class="p">(</span><span class="s">&#39;ABC&#39;</span><span class="p">,</span> <span class="s">&#39;DEF&#39;</span><span class="p">)</span> <span class="o">--&gt;</span> <span class="n">A</span> <span class="n">B</span> <span class="n">C</span> <span class="n">D</span> <span class="n">E</span> <span class="n">F</span>
-<span class="n">compress</span><span class="p">(</span><span class="s">&#39;ABCDEF&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span> <span class="o">--&gt;</span> <span class="n">A</span> <span class="n">C</span> <span class="n">E</span> <span class="n">F</span>
-<span class="n">dropwhile</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">&lt;</span><span class="mi">5</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span> <span class="o">--&gt;</span> <span class="mi">6</span> <span class="mi">4</span> <span class="mi">1</span>         <span class="c"># 跳过头部符合条件的元素</span>
-<span class="n">takewhile</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">&lt;</span><span class="mi">5</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span> <span class="o">--&gt;</span> <span class="mi">1</span> <span class="mi">4</span>           <span class="c"># 保留头部符合条件的元素</span>
-<span class="n">groupby</span><span class="p">([</span><span class="s">&#39;aa&#39;</span><span class="p">,</span> <span class="s">&#39;abc&#39;</span><span class="p">,</span> <span class="s">&#39;abcd&#39;</span><span class="p">,</span> <span class="s">&#39;ab&#39;</span><span class="p">,</span> <span class="s">&#39;ccf&#39;</span><span class="p">],</span> <span class="nb">len</span><span class="p">)</span> <span class="o">--&gt;</span> <span class="p">[</span><span class="s">&#39;aa&#39;</span><span class="p">,</span> <span class="s">&#39;ab&#39;</span><span class="p">]</span> <span class="p">[</span><span class="s">&#39;abc&#39;</span><span class="p">,</span> <span class="s">&#39;ccf&#39;</span><span class="p">]</span> <span class="p">[</span><span class="s">&#39;abcd&#39;</span><span class="p">]</span>    
-<span class="n">ifilter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">%</span><span class="mi">2</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span> <span class="o">--&gt;</span> <span class="mi">1</span> <span class="mi">3</span> <span class="mi">5</span> <span class="mi">7</span> <span class="mi">9</span>
-<span class="n">ifilterfalse</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">%</span><span class="mi">2</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span> <span class="o">--&gt;</span> <span class="mi">0</span> <span class="mi">2</span> <span class="mi">4</span> <span class="mi">6</span> <span class="mi">8</span>
-<span class="n">islice</span><span class="p">(</span><span class="s">&#39;ABCDEFG&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span> <span class="o">--&gt;</span> <span class="n">C</span> <span class="n">D</span> <span class="n">E</span> <span class="n">F</span> <span class="n">G</span>
-<span class="n">imap</span><span class="p">(</span><span class="nb">pow</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span> <span class="o">--&gt;</span> <span class="mi">32</span> <span class="mi">9</span> <span class="mi">1000</span>
-<span class="n">starmap</span><span class="p">(</span><span class="nb">pow</span><span class="p">,</span> <span class="p">[(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">3</span><span class="p">)])</span> <span class="o">--&gt;</span> <span class="mi">32</span> <span class="mi">9</span> <span class="mi">1000</span>
-<span class="n">tee</span><span class="p">()</span>   <span class="n">it</span><span class="p">,</span> <span class="n">n</span>   <span class="n">it1</span><span class="p">,</span> <span class="n">it2</span><span class="p">,</span> <span class="o">...</span> <span class="n">itn</span> <span class="n">splits</span> <span class="n">one</span> <span class="n">iterator</span> <span class="n">into</span> <span class="n">n</span>     
-<span class="n">izip</span><span class="p">(</span><span class="s">&#39;ABCD&#39;</span><span class="p">,</span> <span class="s">&#39;xy&#39;</span><span class="p">)</span> <span class="o">--&gt;</span> <span class="n">Ax</span> <span class="n">By</span>
-<span class="n">izip_longest</span><span class="p">(</span><span class="s">&#39;ABCD&#39;</span><span class="p">,</span> <span class="s">&#39;xy&#39;</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="s">&#39;-&#39;</span><span class="p">)</span> <span class="o">--&gt;</span> <span class="n">Ax</span> <span class="n">By</span> <span class="n">C</span><span class="o">-</span> <span class="n">D</span><span class="o">-</span>
-</pre></div>
+<ul class="summary">
+    
+    
 
+    
 
-<h3 id="combinatoric-generators">Combinatoric generators</h3>
-<p>组合生成</p>
-<div class="hlcode"><pre><span class="n">product</span><span class="p">(</span><span class="err">&#39;</span><span class="n">ABCD</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>   <span class="n">AA</span> <span class="n">AB</span> <span class="n">AC</span> <span class="n">AD</span> <span class="n">BA</span> <span class="n">BB</span> <span class="n">BC</span> <span class="n">BD</span> <span class="n">CA</span> <span class="n">CB</span> <span class="n">CC</span> <span class="n">CD</span> <span class="n">DA</span> <span class="n">DB</span> <span class="n">DC</span> <span class="n">DD</span>
-<span class="n">permutations</span><span class="p">(</span><span class="err">&#39;</span><span class="n">ABCD</span><span class="err">&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>     <span class="n">AB</span> <span class="n">AC</span> <span class="n">AD</span> <span class="n">BA</span> <span class="n">BC</span> <span class="n">BD</span> <span class="n">CA</span> <span class="n">CB</span> <span class="n">CD</span> <span class="n">DA</span> <span class="n">DB</span> <span class="n">DC</span>
-<span class="n">combinations</span><span class="p">(</span><span class="err">&#39;</span><span class="n">ABCD</span><span class="err">&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>     <span class="n">AB</span> <span class="n">AC</span> <span class="n">AD</span> <span class="n">BC</span> <span class="n">BD</span> <span class="n">CD</span>
-<span class="n">combinations_with_replacement</span><span class="p">(</span><span class="err">&#39;</span><span class="n">ABCD</span><span class="err">&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">--&gt;</span> <span class="n">AA</span> <span class="n">AB</span> <span class="n">AC</span> <span class="n">AD</span> <span class="n">BB</span> <span class="n">BC</span> <span class="n">BD</span> <span class="n">CC</span> <span class="n">CD</span> <span class="n">DD</span>
-</pre></div>
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Wiki
+            
+                </a>
+            
 
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    Python
+            
+                </span>
+            
 
-<ul>
-<li>chain</li>
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="anaconda.html">
+            
+                <a href="anaconda.html">
+            
+                    
+                    Anaconda
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="django.html">
+            
+                <a href="django.html">
+            
+                    
+                    Django 1.8.7
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="excel.html">
+            
+                <a href="excel.html">
+            
+                    
+                    Excel
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="flask.html">
+            
+                <a href="flask.html">
+            
+                    
+                    Flask
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="flask_github_api_login.html">
+            
+                <a href="flask_github_api_login.html">
+            
+                    
+                    Flask github api login
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="函数.html">
+            
+                <a href="函数.html">
+            
+                    
+                    Function
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="http_server.html">
+            
+                <a href="http_server.html">
+            
+                    
+                    Http_server
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.8" data-path="iterators.html">
+            
+                <a href="iterators.html">
+            
+                    
+                    Iterators
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="log.html">
+            
+                <a href="log.html">
+            
+                    
+                    Log
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="pickle.html">
+            
+                <a href="pickle.html">
+            
+                    
+                    Pickle
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="pythonic.html">
+            
+                <a href="pythonic.html">
+            
+                    
+                    Pythonic
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="random.html">
+            
+                <a href="random.html">
+            
+                    
+                    Random
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13" data-path="scapy.html">
+            
+                <a href="scapy.html">
+            
+                    
+                    Scapy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14" data-path="selenium.html">
+            
+                <a href="selenium.html">
+            
+                    
+                    Selenium and Xvfb 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15" data-path="socket.html">
+            
+                <a href="socket.html">
+            
+                    
+                    Socket
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16" data-path="network_package.html">
+            
+                <a href="network_package.html">
+            
+                    
+                    network package
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17" data-path="note.html">
+            
+                <a href="note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18" data-path="eval.html">
+            
+                <a href="eval.html">
+            
+                    
+                    动态执行字符串代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19" data-path="command.html">
+            
+                <a href="command.html">
+            
+                    
+                    命令执行
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.20" data-path="buildin_type.html">
+            
+                <a href="buildin_type.html">
+            
+                    
+                    常用内置对象操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.21" data-path="常用模块.html">
+            
+                <a href="常用模块.html">
+            
+                    
+                    常用模块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.22" data-path="wechat.html">
+            
+                <a href="wechat.html">
+            
+                    
+                    微信公众号开发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.23" data-path="模拟http-post-upload-file.html">
+            
+                <a href="模拟http-post-upload-file.html">
+            
+                    
+                    模拟HTTP POST upload file
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.24" data-path="自省.html">
+            
+                <a href="自省.html">
+            
+                    
+                    自省
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.25" data-path="运维.html">
+            
+                <a href="运维.html">
+            
+                    
+                    运维
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.26" data-path="processing.html">
+            
+                <a href="processing.html">
+            
+                    
+                    进(线程)程处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.27" data-path="迭代器和生成器.html">
+            
+                <a href="迭代器和生成器.html">
+            
+                    
+                    迭代器和生成器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    Linux
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../Linux/centos.html">
+            
+                <a href="../Linux/centos.html">
+            
+                    
+                    Centos7
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../Linux/cmdline.html">
+            
+                <a href="../Linux/cmdline.html">
+            
+                    
+                    Cmdline
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../Linux/ncat.html">
+            
+                <a href="../Linux/ncat.html">
+            
+                    
+                    Nc
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../Linux/nmap.html">
+            
+                <a href="../Linux/nmap.html">
+            
+                    
+                    Nmap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../Linux/ubuntu.html">
+            
+                <a href="../Linux/ubuntu.html">
+            
+                    
+                    Ubuntu
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    WebSecurity
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../WebSecurity/attacktool.html">
+            
+                <a href="../WebSecurity/attacktool.html">
+            
+                    
+                    AttackTool
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../WebSecurity/csrf.html">
+            
+                <a href="../WebSecurity/csrf.html">
+            
+                    
+                    CSRF
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../WebSecurity/dns.html">
+            
+                <a href="../WebSecurity/dns.html">
+            
+                    
+                    DNS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../WebSecurity/mysqlinject.html">
+            
+                <a href="../WebSecurity/mysqlinject.html">
+            
+                    
+                    Mysql 注入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../WebSecurity/note.html">
+            
+                <a href="../WebSecurity/note.html">
+            
+                    
+                    Note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../WebSecurity/php序列化.html">
+            
+                <a href="../WebSecurity/php序列化.html">
+            
+                    
+                    PHP序列化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../WebSecurity/ssti-jinja2.html">
+            
+                <a href="../WebSecurity/ssti-jinja2.html">
+            
+                    
+                    SSTI Jinja2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../WebSecurity/scan_for_info.html">
+            
+                <a href="../WebSecurity/scan_for_info.html">
+            
+                    
+                    Scan For Information
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9" data-path="../WebSecurity/sqlinject.html">
+            
+                <a href="../WebSecurity/sqlinject.html">
+            
+                    
+                    SqlInject
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.10" data-path="../WebSecurity/vulnapp.html">
+            
+                <a href="../WebSecurity/vulnapp.html">
+            
+                    
+                    Vulnapp
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11" data-path="../WebSecurity/xss.html">
+            
+                <a href="../WebSecurity/xss.html">
+            
+                    
+                    XSS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.12" data-path="../WebSecurity/backdoor.html">
+            
+                <a href="../WebSecurity/backdoor.html">
+            
+                    
+                    backdoor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.13" data-path="../WebSecurity/linux提权.html">
+            
+                <a href="../WebSecurity/linux提权.html">
+            
+                    
+                    linux提权
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.14" data-path="../WebSecurity/mysql.html">
+            
+                <a href="../WebSecurity/mysql.html">
+            
+                    
+                    mysql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.15" data-path="../WebSecurity/mysql宽字节注入.html">
+            
+                <a href="../WebSecurity/mysql宽字节注入.html">
+            
+                    
+                    mysql宽字节注入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.16" data-path="../WebSecurity/mysql注入过滤.html">
+            
+                <a href="../WebSecurity/mysql注入过滤.html">
+            
+                    
+                    mysql注入过滤
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.17" data-path="../WebSecurity/php.html">
+            
+                <a href="../WebSecurity/php.html">
+            
+                    
+                    php
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.18" data-path="../WebSecurity/php-match-or-comapre.html">
+            
+                <a href="../WebSecurity/php-match-or-comapre.html">
+            
+                    
+                    php match or comapre
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.19" data-path="../WebSecurity/php-文件包含.html">
+            
+                <a href="../WebSecurity/php-文件包含.html">
+            
+                    
+                    php 文件包含
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.20" data-path="../WebSecurity/ssrf.html">
+            
+                <a href="../WebSecurity/ssrf.html">
+            
+                    
+                    ssrf
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.21" data-path="../WebSecurity/url.html">
+            
+                <a href="../WebSecurity/url.html">
+            
+                    
+                    url
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.22" data-path="../WebSecurity/webshell.html">
+            
+                <a href="../WebSecurity/webshell.html">
+            
+                    
+                    webshell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.23" data-path="../WebSecurity/web渗透测试.html">
+            
+                <a href="../WebSecurity/web渗透测试.html">
+            
+                    
+                    web渗透测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.24" data-path="../WebSecurity/常用端口.html">
+            
+                <a href="../WebSecurity/常用端口.html">
+            
+                    
+                    常用端口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.25" data-path="../WebSecurity/常见协议.html">
+            
+                <a href="../WebSecurity/常见协议.html">
+            
+                    
+                    常见协议
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.26" data-path="../WebSecurity/敏感配置文件.html">
+            
+                <a href="../WebSecurity/敏感配置文件.html">
+            
+                    
+                    敏感配置文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.27" data-path="../WebSecurity/path_collect.html">
+            
+                <a href="../WebSecurity/path_collect.html">
+            
+                    
+                    文件读取漏洞路径收集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.28" data-path="../WebSecurity/解析漏洞.html">
+            
+                <a href="../WebSecurity/解析漏洞.html">
+            
+                    
+                    解析漏洞
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    Kali2
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../Kali2/beef.html">
+            
+                <a href="../Kali2/beef.html">
+            
+                    
+                    Beef
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../Kali2/burpsuite.html">
+            
+                <a href="../Kali2/burpsuite.html">
+            
+                    
+                    BurpSuite
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../Kali2/code_editor.html">
+            
+                <a href="../Kali2/code_editor.html">
+            
+                    
+                    Code editor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../Kali2/gather-information.html">
+            
+                <a href="../Kali2/gather-information.html">
+            
+                    
+                    Gather Information
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../Kali2/hydra.html">
+            
+                <a href="../Kali2/hydra.html">
+            
+                    
+                    Hydra
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6" data-path="../Kali2/mitmproxy.html">
+            
+                <a href="../Kali2/mitmproxy.html">
+            
+                    
+                    MitmProxy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.7" data-path="../Kali2/pyenv.html">
+            
+                <a href="../Kali2/pyenv.html">
+            
+                    
+                    Pyenv
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.8" data-path="../Kali2/remote.html">
+            
+                <a href="../Kali2/remote.html">
+            
+                    
+                    Remote access
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9" data-path="../Kali2/shell.html">
+            
+                <a href="../Kali2/shell.html">
+            
+                    
+                    Shell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.10" data-path="../Kali2/tmux.html">
+            
+                <a href="../Kali2/tmux.html">
+            
+                    
+                    Tmux
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.11" data-path="../Kali2/w3af.html">
+            
+                <a href="../Kali2/w3af.html">
+            
+                    
+                    W3af
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.12" data-path="../Kali2/install&configure.html">
+            
+                <a href="../Kali2/install&configure.html">
+            
+                    
+                    install and configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.13" data-path="../Kali2/phpmyadmin.html">
+            
+                <a href="../Kali2/phpmyadmin.html">
+            
+                    
+                    phpmyadmin install and configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.14" data-path="../Kali2/flow_analysis.html">
+            
+                <a href="../Kali2/flow_analysis.html">
+            
+                    
+                    流量监听
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    Vuln
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../Vuln/joomla.html">
+            
+                <a href="../Vuln/joomla.html">
+            
+                    
+                    Joomla
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    PHP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../PHP/function.html">
+            
+                <a href="../PHP/function.html">
+            
+                    
+                    Function
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../PHP/configure.html">
+            
+                <a href="../PHP/configure.html">
+            
+                    
+                    configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../PHP/note.html">
+            
+                <a href="../PHP/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../PHP/正则匹配.html">
+            
+                <a href="../PHP/正则匹配.html">
+            
+                    
+                    正则匹配
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    Docker
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../Docker/docker-compose.html">
+            
+                <a href="../Docker/docker-compose.html">
+            
+                    
+                    Docker Compose
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../Docker/dockerfile.html">
+            
+                <a href="../Docker/dockerfile.html">
+            
+                    
+                    Dockerfile
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../Docker/docker-api-in-python.html">
+            
+                <a href="../Docker/docker-api-in-python.html">
+            
+                    
+                    docker api in python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../Docker/locale.html">
+            
+                <a href="../Docker/locale.html">
+            
+                    
+                    locale
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="../Docker/note.html">
+            
+                <a href="../Docker/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" data-path="../Docker/openvpn.html">
+            
+                <a href="../Docker/openvpn.html">
+            
+                    
+                    openvpn
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7" data-path="../Docker/安装和基本命令.html">
+            
+                <a href="../Docker/安装和基本命令.html">
+            
+                    
+                    安装和基本命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.8" data-path="../Docker/常用开发环境.html">
+            
+                <a href="../Docker/常用开发环境.html">
+            
+                    
+                    常用开发环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.9" data-path="../Docker/微容器.html">
+            
+                <a href="../Docker/微容器.html">
+            
+                    
+                    微容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.10" data-path="../Docker/心得.html">
+            
+                <a href="../Docker/心得.html">
+            
+                    
+                    心得
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.11" data-path="../Docker/持续集成与自动发布.html">
+            
+                <a href="../Docker/持续集成与自动发布.html">
+            
+                    
+                    持续集成与自动发布
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" >
+            
+                <span>
+            
+                    
+                    HTTP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../HTTP/cookie.html">
+            
+                <a href="../HTTP/cookie.html">
+            
+                    
+                    Cookie
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../HTTP/encode_and_decode.html">
+            
+                <a href="../HTTP/encode_and_decode.html">
+            
+                    
+                    Encode and Decode
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../HTTP/http请求格式.html">
+            
+                <a href="../HTTP/http请求格式.html">
+            
+                    
+                    HTTP请求格式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../HTTP/proxy.html">
+            
+                <a href="../HTTP/proxy.html">
+            
+                    
+                    Proxy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../HTTP/xpath.html">
+            
+                <a href="../HTTP/xpath.html">
+            
+                    
+                    XPATH
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" >
+            
+                <span>
+            
+                    
+                    Git
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../Git/gist.html">
+            
+                <a href="../Git/gist.html">
+            
+                    
+                    Gist
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../Git/git.html">
+            
+                <a href="../Git/git.html">
+            
+                    
+                    git
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../Git/git_remote_operation.html">
+            
+                <a href="../Git/git_remote_operation.html">
+            
+                    
+                    git remote operation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Image
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../Image/png.html">
+            
+                <a href="../Image/png.html">
+            
+                    
+                    PNG
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" >
+            
+                <span>
+            
+                    
+                    JS
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../JS/xhr.html">
+            
+                <a href="../JS/xhr.html">
+            
+                    
+                    XHR
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" >
+            
+                <span>
+            
+                    
+                    Note
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../Note/ctf.html">
+            
+                <a href="../Note/ctf.html">
+            
+                    
+                    CTF
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.2" data-path="../Note/elk.html">
+            
+                <a href="../Note/elk.html">
+            
+                    
+                    ELK
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.3" data-path="../Note/google-hacking.html">
+            
+                <a href="../Note/google-hacking.html">
+            
+                    
+                    Google Hacking
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.4" data-path="../Note/sql.html">
+            
+                <a href="../Note/sql.html">
+            
+                    
+                    Sql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.5" data-path="../Note/mysql.html">
+            
+                <a href="../Note/mysql.html">
+            
+                    
+                    mysql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.6" data-path="../Note/same-origin-policy.html">
+            
+                <a href="../Note/same-origin-policy.html">
+            
+                    
+                    same origin policy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.7" data-path="../Note/software.html">
+            
+                <a href="../Note/software.html">
+            
+                    
+                    software
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" >
+            
+                <span>
+            
+                    
+                    AWS
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../AWS/note.html">
+            
+                <a href="../AWS/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" >
+            
+                <span>
+            
+                    
+                    Python3
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../Python3/string.html">
+            
+                <a href="../Python3/string.html">
+            
+                    
+                    String
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" >
+            
+                <span>
+            
+                    
+                    Simiki
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="../Simiki/simiki-命令.html">
+            
+                <a href="../Simiki/simiki-命令.html">
+            
+                    
+                    simiki 命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="../Simiki/start with github page.html">
+            
+                <a href="../Simiki/start with github page.html">
+            
+                    
+                    start github page
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
 </ul>
-<blockquote>
-<p>chain(*iterables) --&gt; chain object</p>
-</blockquote>
-<p>Return a chain object whose .next() method returns elements from the
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Iterators</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="0x01-itertools">0x01 Itertools</h2><p><a href="http://www.wklken.me/posts/2013/08/20/python-extra-itertools.html" target="_blank">PYTHON&#x8FDB;&#x9636; ITERTOOLS&#x6A21;&#x5757;&#x5C0F;&#x7ED3;</a></p><p><a href="https://docs.python.org/2/library/itertools.html" target="_blank">python docs itertools</a></p><h3 id="infinite-iterators">Infinite Iterators</h3><p>&#x65E0;&#x9650;&#x8FED;&#x4EE3;</p><pre><code>count(10, 1) --&gt; 10 11 12 13 14 ...
+cycle(&apos;ABCD&apos;) --&gt; A B C D A B C D ...
+repeat(3) --&gt; 3 3 3 3 ...   repeat(4, 3) --&gt; 3 3 3</code></pre>
+<h3 id="iterators-terminating-on-the-shortest-input-sequence">Iterators terminating on the shortest input sequence</h3><p>&#x5904;&#x7406;&#x8F93;&#x5165;&#x8FED;&#x4EE3;</p><pre><code class="lang-python">chain(&apos;ABC&apos;, &apos;DEF&apos;) --&gt; A B C D E F
+compress(&apos;ABCDEF&apos;, [1,0,1,0,1,1]) --&gt; A C E F
+dropwhile(lambda x: x&lt;5, [1,4,6,4,1]) --&gt; 6 4 1         # &#x8DF3;&#x8FC7;&#x5934;&#x90E8;&#x7B26;&#x5408;&#x6761;&#x4EF6;&#x7684;&#x5143;&#x7D20;
+takewhile(lambda x: x&lt;5, [1,4,6,4,1]) --&gt; 1 4           # &#x4FDD;&#x7559;&#x5934;&#x90E8;&#x7B26;&#x5408;&#x6761;&#x4EF6;&#x7684;&#x5143;&#x7D20;
+groupby([&apos;aa&apos;, &apos;abc&apos;, &apos;abcd&apos;, &apos;ab&apos;, &apos;ccf&apos;], len) --&gt; [&apos;aa&apos;, &apos;ab&apos;] [&apos;abc&apos;, &apos;ccf&apos;] [&apos;abcd&apos;]     
+ifilter(lambda x: x%2, range(10)) --&gt; 1 3 5 7 9
+ifilterfalse(lambda x: x%2, range(10)) --&gt; 0 2 4 6 8
+islice(&apos;ABCDEFG&apos;, 2, None) --&gt; C D E F G
+imap(pow, (2,3,10), (5,2,3)) --&gt; 32 9 1000
+starmap(pow, [(2,5), (3,2), (10,3)]) --&gt; 32 9 1000
+tee()    it, n    it1, it2, ... itn splits one iterator into n     
+izip(&apos;ABCD&apos;, &apos;xy&apos;) --&gt; Ax By
+izip_longest(&apos;ABCD&apos;, &apos;xy&apos;, fillvalue=&apos;-&apos;) --&gt; Ax By C- D-</code></pre>
+<h3 id="combinatoric-generators">Combinatoric generators</h3><p>&#x7EC4;&#x5408;&#x751F;&#x6210;</p><pre><code>product(&apos;ABCD&apos;, repeat=2)    AA AB AC AD BA BB BC BD CA CB CC CD DA DB DC DD
+permutations(&apos;ABCD&apos;, 2)         AB AC AD BA BC BD CA CB CD DA DB DC
+combinations(&apos;ABCD&apos;, 2)         AB AC AD BC BD CD
+combinations_with_replacement(&apos;ABCD&apos;, 2) --&gt; AA AB AC AD BB BC BD CC CD DD</code></pre>
+<ul><li>chain
+</li></ul>
+<blockquote><p>chain(*iterables) --&gt; chain object</p></blockquote><p>Return a chain object whose .next() method returns elements from the
 first iterable until it is exhausted, then elements from the next
-iterable, until all of the iterables are exhausted.</p>
-<ul>
-<li>combinations</li>
-</ul>
-<blockquote>
-<p>combinations(iterable, r) --&gt; combinations object</p>
-</blockquote>
-<p>Return successive r-length combinations of elements in the iterable.</p>
-<div class="hlcode"><pre><span class="n">combinations</span><span class="p">(</span><span class="n">range</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span> <span class="o">--&gt;</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
-</pre></div>
-
-
-<ul>
-<li>combinations_with_replacement</li>
-</ul>
-<blockquote>
-<p>combinations_with_replacement(iterable, r) --&gt; combinations_with_replacement object</p>
-</blockquote>
-<p>Return successive r-length combinations of elements in the iterable
-allowing individual elements to have successive repeats.</p>
-<div class="hlcode"><pre><span class="n">combinations_with_replacement</span><span class="p">(</span><span class="err">&#39;</span><span class="n">ABC</span><span class="err">&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">--&gt;</span> <span class="n">AA</span> <span class="n">AB</span> <span class="n">AC</span> <span class="n">BB</span> <span class="n">BC</span> <span class="n">CC</span>
-</pre></div>
-
-
-<ul>
-<li>compress</li>
-</ul>
-<blockquote>
-<p>compress(data, selectors) --&gt; iterator over selected data</p>
-</blockquote>
-<p>Return data elements corresponding to true selector elements.
+iterable, until all of the iterables are exhausted.</p><ul><li>combinations
+</li></ul>
+<blockquote><p>combinations(iterable, r) --&gt; combinations object</p></blockquote><p>Return successive r-length combinations of elements in the iterable.</p><pre><code>combinations(range(4), 3) --&gt; (0,1,2), (0,1,3), (0,2,3), (1,2,3)</code></pre>
+<ul><li>combinations_with_replacement
+</li></ul>
+<blockquote><p>combinations_with_replacement(iterable, r) --&gt; combinations_with_replacement object</p></blockquote><p>Return successive r-length combinations of elements in the iterable
+allowing individual elements to have successive repeats.</p><pre><code>combinations_with_replacement(&apos;ABC&apos;, 2) --&gt; AA AB AC BB BC CC</code></pre>
+<ul><li>compress
+</li></ul>
+<blockquote><p>compress(data, selectors) --&gt; iterator over selected data</p></blockquote><p>Return data elements corresponding to true selector elements.
 Forms a shorter iterator from selected data elements using the
-selectors to choose the data elements.</p>
-<ul>
-<li>count</li>
-</ul>
-<blockquote>
-<p>count(start=0, step=1) --&gt; count object</p>
-</blockquote>
-<p>Return a count object whose .next() method returns consecutive values.</p>
-<p>Equivalent to:</p>
-<div class="hlcode"><pre>    <span class="n">def</span> <span class="n">count</span><span class="p">(</span><span class="n">firstval</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">firstval</span>
-        <span class="k">while</span> <span class="mi">1</span><span class="o">:</span>
-            <span class="n">yield</span> <span class="n">x</span>
-            <span class="n">x</span> <span class="o">+=</span> <span class="n">step</span>
-</pre></div>
-
-
-<ul>
-<li>cycle</li>
-</ul>
-<blockquote>
-<p>cycle(iterable) --&gt; cycle object</p>
-</blockquote>
-<p>Return elements from the iterable until it is exhausted.
-Then repeat the sequence indefinitely.</p>
-<ul>
-<li>dropwhile</li>
-</ul>
-<blockquote>
-<p>dropwhile(predicate, iterable) --&gt; dropwhile object</p>
-</blockquote>
-<p>Drop items from the iterable while predicate(item) is true.
-Afterwards, return every element until the iterable is exhausted.</p>
-<ul>
-<li>groupby</li>
-</ul>
-<blockquote>
-<p>groupby(iterable[, keyfunc]) -&gt; create an iterator which returns
-(key, sub-iterator) grouped by each value of key(value).</p>
-</blockquote>
-<ul>
-<li>ifilter</li>
-</ul>
-<blockquote>
-<p>ifilter(function or None, sequence) --&gt; ifilter object</p>
-</blockquote>
-<p>Return those items of sequence for which function(item) is true.
-If function is None, return the items that are true.</p>
-<ul>
-<li>ifilterfalse</li>
-</ul>
-<blockquote>
-<p>ifilterfalse(function or None, sequence) --&gt; ifilterfalse object</p>
-</blockquote>
-<p>Return those items of sequence for which function(item) is false.
-If function is None, return the items that are false.</p>
-<ul>
-<li>imap</li>
-</ul>
-<blockquote>
-<p>imap(func, *iterables) --&gt; imap object</p>
-</blockquote>
-<p>Make an iterator that computes the function using arguments from
+selectors to choose the data elements.</p><ul><li>count
+</li></ul>
+<blockquote><p>count(start=0, step=1) --&gt; count object</p></blockquote><p>Return a count object whose .next() method returns consecutive values.</p><p>Equivalent to:</p><pre><code>    def count(firstval=0, step=1):
+        x = firstval
+        while 1:
+            yield x
+            x += step</code></pre>
+<ul><li>cycle
+</li></ul>
+<blockquote><p>cycle(iterable) --&gt; cycle object</p></blockquote><p>Return elements from the iterable until it is exhausted.
+Then repeat the sequence indefinitely.</p><ul><li>dropwhile
+</li></ul>
+<blockquote><p>dropwhile(predicate, iterable) --&gt; dropwhile object</p></blockquote><p>Drop items from the iterable while predicate(item) is true.
+Afterwards, return every element until the iterable is exhausted.</p><ul><li>groupby
+</li></ul>
+<blockquote><p>groupby(iterable[, keyfunc]) -&gt; create an iterator which returns
+(key, sub-iterator) grouped by each value of key(value).</p></blockquote><ul><li>ifilter
+</li></ul>
+<blockquote><p>ifilter(function or None, sequence) --&gt; ifilter object</p></blockquote><p>Return those items of sequence for which function(item) is true.
+If function is None, return the items that are true.</p><ul><li>ifilterfalse
+</li></ul>
+<blockquote><p>ifilterfalse(function or None, sequence) --&gt; ifilterfalse object</p></blockquote><p>Return those items of sequence for which function(item) is false.
+If function is None, return the items that are false.</p><ul><li>imap
+</li></ul>
+<blockquote><p>imap(func, *iterables) --&gt; imap object</p></blockquote><p>Make an iterator that computes the function using arguments from
 each of the iterables.  Like map() except that it returns
 an iterator instead of a list and that it stops when the shortest
 iterable is exhausted instead of filling in None for shorter
-iterables.</p>
-<ul>
-<li>islice</li>
-</ul>
-<blockquote>
-<p>islice(iterable, [start,] stop [, step]) --&gt; islice object</p>
-</blockquote>
-<p>Return an iterator whose next() method returns selected values from an
+iterables.</p><ul><li>islice
+</li></ul>
+<blockquote><p>islice(iterable, [start,] stop [, step]) --&gt; islice object</p></blockquote><p>Return an iterator whose next() method returns selected values from an
 iterable.  If start is specified, will skip all preceding elements;
 otherwise, start defaults to zero.  Step defaults to one.  If
 specified as another value, step determines how many values are 
 skipped between successive calls.  Works like a slice() on a list
-but returns an iterator.</p>
-<ul>
-<li>izip</li>
-</ul>
-<blockquote>
-<p>izip(iter1 [,iter2 [...]]) --&gt; izip object</p>
-</blockquote>
-<p>Return a izip object whose .next() method returns a tuple where
+but returns an iterator.</p><ul><li>izip
+</li></ul>
+<blockquote><p>izip(iter1 [,iter2 [...]]) --&gt; izip object</p></blockquote><p>Return a izip object whose .next() method returns a tuple where
 the i-th element comes from the i-th iterable argument.  The .next()
 method continues until the shortest iterable in the argument sequence
 is exhausted and then it raises StopIteration.  Works like the zip()
 function but consumes less memory by returning an iterator instead of
-a list.</p>
-<ul>
-<li>izip_longest</li>
-</ul>
-<blockquote>
-<p>izip_longest(iter1 [,iter2 [...]], [fillvalue=None]) --&gt; izip_longest object</p>
-</blockquote>
-<p>Return an izip_longest object whose .next() method returns a tuple where
+a list.</p><ul><li>izip_longest
+</li></ul>
+<blockquote><p>izip_longest(iter1 [,iter2 [...]], [fillvalue=None]) --&gt; izip_longest object</p></blockquote><p>Return an izip_longest object whose .next() method returns a tuple where
 the i-th element comes from the i-th iterable argument.  The .next()
 method continues until the longest iterable in the argument sequence
 is exhausted and then it raises StopIteration.  When the shorter iterables
 are exhausted, the fillvalue is substituted in their place.  The fillvalue
-defaults to None or can be specified by a keyword argument.</p>
-<ul>
-<li>permutations</li>
-</ul>
-<blockquote>
-<p>permutations(iterable[, r]) --&gt; permutations object</p>
-</blockquote>
-<p>Return successive r-length permutations of elements in the iterable.</p>
-<div class="hlcode"><pre><span class="n">permutations</span><span class="p">(</span><span class="n">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span> <span class="o">--&gt;</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>
-
-
-<ul>
-<li>product</li>
-</ul>
-<blockquote>
-<p>product(*iterables) --&gt; product object</p>
-</blockquote>
-<p>Cartesian product of input iterables.  Equivalent to nested for-loops.</p>
-<p>For example, product(A, B) returns the same as:  ((x,y) for x in A for y in B).
+defaults to None or can be specified by a keyword argument.</p><ul><li>permutations
+</li></ul>
+<blockquote><p>permutations(iterable[, r]) --&gt; permutations object</p></blockquote><p>Return successive r-length permutations of elements in the iterable.</p><pre><code>permutations(range(3), 2) --&gt; (0,1), (0,2), (1,0), (1,2), (2,0), (2,1)</code></pre>
+<ul><li>product
+</li></ul>
+<blockquote><p>product(*iterables) --&gt; product object</p></blockquote><p>Cartesian product of input iterables.  Equivalent to nested for-loops.</p><p>For example, product(A, B) returns the same as:  ((x,y) for x in A for y in B).
 The leftmost iterators are in the outermost for-loop, so the output tuples
 cycle in a manner similar to an odometer (with the rightmost element changing
-on every iteration).</p>
-<p>To compute the product of an iterable with itself, specify the number
+on every iteration).</p><p>To compute the product of an iterable with itself, specify the number
 of repetitions with the optional repeat keyword argument. For example,
-product(A, repeat=4) means the same as product(A, A, A, A).</p>
-<div class="hlcode"><pre><span class="n">product</span><span class="p">(</span><span class="err">&#39;</span><span class="n">ab</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="o">--&gt;</span> <span class="p">(</span><span class="sc">&#39;a&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="sc">&#39;a&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="sc">&#39;a&#39;</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="p">(</span><span class="sc">&#39;b&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="sc">&#39;b&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="sc">&#39;b&#39;</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">product</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span> <span class="o">--&gt;</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">...</span>
-</pre></div>
-
-
-<ul>
-<li>repeat</li>
-</ul>
-<blockquote>
-<p>repeat(object [,times]) -&gt; create an iterator which returns the object</p>
-</blockquote>
-<p>for the specified number of times.  If not specified, returns the object
-endlessly.</p>
-<ul>
-<li>starmap</li>
-</ul>
-<blockquote>
-<p>starmap(function, sequence) --&gt; starmap object</p>
-</blockquote>
-<p>Return an iterator whose values are returned from the function evaluated
-with an argument tuple taken from the given sequence.</p>
-<ul>
-<li>takewhile</li>
-</ul>
-<blockquote>
-<p>takewhile(predicate, iterable) --&gt; takewhile object</p>
-</blockquote>
-<p>Return successive entries from an iterable as long as the 
-predicate evaluates to true for each entry.</p>
-<ul>
-<li>tee </li>
-</ul>
-<blockquote>
-<p>tee(iterable, n=2) --&gt; tuple of n independent iterators.</p>
-</blockquote>
+product(A, repeat=4) means the same as product(A, A, A, A).</p><pre><code>product(&apos;ab&apos;, range(3)) --&gt; (&apos;a&apos;,0) (&apos;a&apos;,1) (&apos;a&apos;,2) (&apos;b&apos;,0) (&apos;b&apos;,1) (&apos;b&apos;,2)
+product((0,1), (0,1), (0,1)) --&gt; (0,0,0) (0,0,1) (0,1,0) (0,1,1) (1,0,0) ...</code></pre>
+<ul><li>repeat
+</li></ul>
+<blockquote><p>repeat(object [,times]) -&gt; create an iterator which returns the object</p></blockquote><p>for the specified number of times.  If not specified, returns the object
+endlessly.</p><ul><li>starmap
+</li></ul>
+<blockquote><p>starmap(function, sequence) --&gt; starmap object</p></blockquote><p>Return an iterator whose values are returned from the function evaluated
+with an argument tuple taken from the given sequence.</p><ul><li>takewhile
+</li></ul>
+<blockquote><p>takewhile(predicate, iterable) --&gt; takewhile object</p></blockquote><p>Return successive entries from an iterable as long as the 
+predicate evaluates to true for each entry.</p><ul><li>tee 
+</li></ul>
+<blockquote><p>tee(iterable, n=2) --&gt; tuple of n independent iterators.</p></blockquote>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
 </div>
 
-        </div>
-        <div id="footer">
-            <span>
-                Copyright © 2012-2016 .
-                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
-            </span>
-        </div>
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="http_server.html" class="navigation navigation-prev " aria-label="Previous page: Http_server">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="log.html" class="navigation navigation-next " aria-label="Next page: Log">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
         
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Iterators","date":"2016-04-19 19:13","level":"1.2.8","depth":2,"next":{"title":"Log","level":"1.2.9","depth":2,"path":"Python/log.md","ref":"Python/log.md","articles":[]},"previous":{"title":"Http_server","level":"1.2.7","depth":2,"path":"Python/http_server.md","ref":"Python/http_server.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"janes","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Wiki | janes","language":"cn","gitbook":">= 3.2.0"},"file":{"path":"Python/iterators.md","mtime":"2016-08-16T14:00:50.457Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2016-08-16T16:38:45.378Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
     </body>
 </html>
+

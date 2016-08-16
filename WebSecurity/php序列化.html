@@ -1,167 +1,2027 @@
+
 <!DOCTYPE HTML>
-<html>
+<html lang="cn" >
     <head>
-        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
-        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
-        <title>PHP序列化 - Wiki | janes</title>
-        <meta name="keywords" content=""/>
-        <meta name="description" content=""/>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
-
-    <body>
-        <div id="container">
-            
-<div id="header">
-  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#WebSecurity">WebSecurity</a>&nbsp;»&nbsp;PHP序列化</div>
-</div>
-<div class="clearfix"></div>
-<div id="title">PHP序列化</div>
-  <div id="content">
-  <h2 id="_1">序列化机制</h2>
-<p>PHP中的配置文件php.ini中含有几项配置项</p>
-<div class="hlcode"><pre><span class="n">session</span><span class="p">.</span><span class="n">save_path</span><span class="o">=</span><span class="s">&quot;&quot;</span>   <span class="o">--</span><span class="err">设置</span><span class="n">session</span><span class="err">的存储路径</span>
-<span class="n">session_set_save_handler</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="o">--</span><span class="err">设定用户自定义存储函数，如果想使用</span><span class="n">PHP</span><span class="err">内置会话存储机制之外的可以使用本函数</span><span class="p">(</span><span class="err">数据库等方式</span><span class="p">)</span>
-<span class="n">session</span><span class="p">.</span><span class="n">auto_start</span>   <span class="n">boolen</span> <span class="o">--</span><span class="err">指定会话模块是否在请求开始时启动一个会话</span><span class="p">,</span><span class="err">默认为</span><span class="mi">0</span><span class="err">不启动</span>
-<span class="n">session</span><span class="p">.</span><span class="n">serialize_handler</span>   <span class="n">string</span> <span class="o">--</span><span class="err">定义用来序列化</span><span class="o">/</span><span class="err">反序列化的处理器名字。默认使用</span><span class="n">php</span>
-</pre></div>
-
-
-<blockquote>
-<p>当session.auto_start设置为True的时候或者手动session_start()创建新会话，PHP内部调会调用会话管理器。</p>
-</blockquote>
-<h2 id="php-session">PHP Session 三种序列化方式</h2>
-<p>PHP 内置了多种处理器用于存取 $_SESSION 数据时会对数据进行序列化和反序列化，常用的有以下三种，对应三种不同的处理格式：</p>
-<table>
-<thead>
-<tr>
-<th>处理器</th>
-<th>对应的存储格式</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>php</td>
-<td>键名 ＋ 竖线 ＋ 经过 serialize() 函数反序列处理的值</td>
-</tr>
-<tr>
-<td>php_binary</td>
-<td>键名的长度对应的 ASCII 字符 ＋ 键名 ＋ 经过 serialize() 函数反序列处理的值</td>
-</tr>
-<tr>
-<td>php_serialize <br>(php&gt;=5.5.4)</td>
-<td>经过 serialize() 函数反序列处理的数组</td>
-</tr>
-</tbody>
-</table>
-<p>php处理器序列化过的值</p>
-<div class="hlcode"><pre><span class="n">name</span><span class="o">|</span><span class="n">s</span><span class="o">:</span><span class="mi">6</span><span class="o">:</span><span class="s">&quot;whoami&quot;</span><span class="p">;</span><span class="n">address</span><span class="o">|</span><span class="n">s</span><span class="o">:</span><span class="mi">7</span><span class="o">:</span><span class="s">&quot;beijing&quot;</span><span class="p">;</span>
-
-<span class="cp"># 其中每个session值是以&quot;;&quot;分割开来，例如</span>
-<span class="n">name</span><span class="o">|</span><span class="n">s</span><span class="o">:</span><span class="mi">6</span><span class="o">:</span><span class="s">&quot;whoami&quot;</span><span class="p">;</span>
-</pre></div>
-
-
-<p>session值,"|"前面表示session名称，"|"后边表示session具体信息,包含数据类型,长度,数据内容。</p>
-<h3 id="sessionserialize_handler">配置选项 session.serialize_handler</h3>
-<p>PHP 提供了 session.serialize_handler 配置选项，通过该选项可以设置序列化及反序列化时使用的处理器：</p>
-<div class="hlcode"><pre><span class="x">session.serialize_handler   &quot;php&quot;   PHP_INI_ALL</span>
-</pre></div>
-
-
-<h3 id="_2">安全隐患</h3>
-<p>通过上面对存储格式的分析，如果 PHP 在反序列化存储的 $_SESSION 数据时的使用的处理器和序列化时使用的处理器不同，会导致数据无法正确反序列化，通过特殊的构造，甚至可以伪造任意数据：）</p>
-<div class="hlcode"><pre><span class="x">$_SESSION[&#39;ryat&#39;] = &#39;|O:8:&quot;stdClass&quot;:0:{}&#39;;</span>
-</pre></div>
-
-
-<p>例如上面的 $_SESSION 数据，在存储时使用的序列化处理器为 php_serialize，存储的格式如下：</p>
-<div class="hlcode"><pre><span class="x">a:1:{s:4:&quot;ryat&quot;;s:20:&quot;|O:8:&quot;stdClass&quot;:0:{}&quot;;}</span>
-</pre></div>
-
-
-<p>在读取数据时如果用的反序列化处理器不是 php_serialize，而是 php 的话，那么反序列化后的数据将会变成：</p>
-<div class="hlcode"><pre><span class="x">// var_dump($_SESSION);</span>
-<span class="x">array(1) {</span>
-<span class="x">  [&quot;a:1:{s:4:&quot;ryat&quot;;s:20:&quot;&quot;]=&gt;</span>
-<span class="x">  object(stdClass)#1 (0) {</span>
-<span class="x">  }</span>
-<span class="x">}</span>
-</pre></div>
-
-
-<p>可以看到，通过注入 <code>|</code> 字符伪造了对象的序列化数据，成功实例化了 stdClass 对象：）</p>
-<h3 id="_3">实际利用</h3>
-<h4 id="i-sessionauto_starton">i）当 session.auto_start＝On 时：</h4>
-<p>当配置选项 session.auto_start＝On，会自动注册 Session 会话，因为该过程是发生在脚本代码执行前，所以在脚本中设定的包括序列化处理器在内的 session 相关配选项的设置是不起作用的，因此一些需要在脚本中设置序列化处理器配置的程序会在 session.auto_start＝On 时，销毁自动生成的 Session 会话，然后设置需要的序列化处理器，再调用 session_start() 函数注册会话，这时如果脚本中设置的序列化处理器与 php.ini 中设置的不同，就会出现安全问题，如下面的代码：</p>
-<div class="hlcode"><pre><span class="x">//foo.php</span>
-
-<span class="x">if (ini_get(&#39;session.auto_start&#39;)) {</span>
-<span class="x">    session_destroy();</span>
-<span class="x">}</span>
-
-<span class="x">ini_set(&#39;session.serialize_handler&#39;, &#39;php_serialize&#39;);</span>
-<span class="x">session_start();</span>
-
-<span class="x">$_SESSION[&#39;ryat&#39;] = $_GET[&#39;ryat&#39;];</span>
-</pre></div>
-
-
-<p>当第一次访问该脚本，并提交数据如下：</p>
-<div class="hlcode"><pre><span class="x">foo.php?ryat=|O:8:&quot;stdClass&quot;:0:{}</span>
-</pre></div>
-
-
-<p>脚本会按照 php_serialize 处理器的序列化格式存储数据：</p>
-<div class="hlcode"><pre><span class="x">a:1:{s:4:&quot;ryat&quot;;s:20:&quot;|O:8:&quot;stdClass&quot;:0:{}&quot;;}</span>
-</pre></div>
-
-
-<p>当第二次访问该脚本时，PHP 会按照 php.ini 里设置的序列化处理器反序列化存储的数据，这时如果 php.ini 里设置的是 php 处理器的话，将会反序列化伪造的数据，成功实例化了 stdClass 对象：）</p>
-<p>这里需要注意的是，因为 PHP 自动注册 Session 会话是在脚本执行前，所以通过该方式只能注入 PHP 的内置类。</p>
-<h4 id="ii-sessionauto_startoff">ii）当 session.auto_start＝Off 时：</h4>
-<p>当配置选项 session.auto_start＝Off，两个脚本注册 Session 会话时使用的序列化处理器不同，就会出现安全问题，如下面的代码：</p>
-<div class="hlcode"><pre><span class="x">//foo1.php</span>
-
-<span class="x">ini_set(&#39;session.serialize_handler&#39;, &#39;php_serialize&#39;);</span>
-<span class="x">session_start();</span>
-
-<span class="x">$_SESSION[&#39;ryat&#39;] = $_GET[&#39;ryat&#39;];</span>
-
-<span class="x">//foo2.php</span>
-
-<span class="x">ini_set(&#39;session.serialize_handler&#39;, &#39;php&#39;);</span>
-<span class="x">//or session.serialize_handler set to php in php.ini </span>
-<span class="x">session_start();</span>
-
-<span class="x">class ryat {</span>
-<span class="x">    var $hi;</span>
-
-<span class="x">    function __wakeup() {</span>
-<span class="x">        echo &#39;hi&#39;;</span>
-<span class="x">    }</span>
-<span class="x">    function __destruct() {</span>
-<span class="x">        echo $this-&gt;hi;</span>
-<span class="x">    }</span>
-<span class="x">}</span>
-</pre></div>
-
-
-<p>当访问 foo1.php 时，提交数据如下：</p>
-<div class="hlcode"><pre><span class="x">foo1.php?ryat=|O:4:&quot;ryat&quot;:1:{s:2:&quot;hi&quot;;s:4:&quot;ryat&quot;;}</span>
-</pre></div>
-
-
-<p>脚本会按照 php_serialize 处理器的序列化格式存储数据，访问 foo2.php 时，则会按照 php 处理器的反序列化格式读取数据，这时将会反序列化伪造的数据，成功实例化了 ryat 对象，并将会执行类中的 __wakeup 方法和 __destruct 方法：）</p>
-</div>
-
-        </div>
-        <div id="footer">
-            <span>
-                Copyright © 2012-2016 .
-                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
-            </span>
-        </div>
+        <title>PHP序列化 · Wiki | janes</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.0">
+        <meta name="author" content="janes">
         
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="ssti-jinja2.html" />
+    
+    
+    <link rel="prev" href="note.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Wiki
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    Python
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../Python/anaconda.html">
+            
+                <a href="../Python/anaconda.html">
+            
+                    
+                    Anaconda
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../Python/django.html">
+            
+                <a href="../Python/django.html">
+            
+                    
+                    Django 1.8.7
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../Python/excel.html">
+            
+                <a href="../Python/excel.html">
+            
+                    
+                    Excel
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../Python/flask.html">
+            
+                <a href="../Python/flask.html">
+            
+                    
+                    Flask
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../Python/flask_github_api_login.html">
+            
+                <a href="../Python/flask_github_api_login.html">
+            
+                    
+                    Flask github api login
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../Python/函数.html">
+            
+                <a href="../Python/函数.html">
+            
+                    
+                    Function
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../Python/http_server.html">
+            
+                <a href="../Python/http_server.html">
+            
+                    
+                    Http_server
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../Python/iterators.html">
+            
+                <a href="../Python/iterators.html">
+            
+                    
+                    Iterators
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="../Python/log.html">
+            
+                <a href="../Python/log.html">
+            
+                    
+                    Log
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="../Python/pickle.html">
+            
+                <a href="../Python/pickle.html">
+            
+                    
+                    Pickle
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="../Python/pythonic.html">
+            
+                <a href="../Python/pythonic.html">
+            
+                    
+                    Pythonic
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="../Python/random.html">
+            
+                <a href="../Python/random.html">
+            
+                    
+                    Random
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13" data-path="../Python/scapy.html">
+            
+                <a href="../Python/scapy.html">
+            
+                    
+                    Scapy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14" data-path="../Python/selenium.html">
+            
+                <a href="../Python/selenium.html">
+            
+                    
+                    Selenium and Xvfb 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15" data-path="../Python/socket.html">
+            
+                <a href="../Python/socket.html">
+            
+                    
+                    Socket
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16" data-path="../Python/network_package.html">
+            
+                <a href="../Python/network_package.html">
+            
+                    
+                    network package
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17" data-path="../Python/note.html">
+            
+                <a href="../Python/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18" data-path="../Python/eval.html">
+            
+                <a href="../Python/eval.html">
+            
+                    
+                    动态执行字符串代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19" data-path="../Python/command.html">
+            
+                <a href="../Python/command.html">
+            
+                    
+                    命令执行
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.20" data-path="../Python/buildin_type.html">
+            
+                <a href="../Python/buildin_type.html">
+            
+                    
+                    常用内置对象操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.21" data-path="../Python/常用模块.html">
+            
+                <a href="../Python/常用模块.html">
+            
+                    
+                    常用模块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.22" data-path="../Python/wechat.html">
+            
+                <a href="../Python/wechat.html">
+            
+                    
+                    微信公众号开发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.23" data-path="../Python/模拟http-post-upload-file.html">
+            
+                <a href="../Python/模拟http-post-upload-file.html">
+            
+                    
+                    模拟HTTP POST upload file
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.24" data-path="../Python/自省.html">
+            
+                <a href="../Python/自省.html">
+            
+                    
+                    自省
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.25" data-path="../Python/运维.html">
+            
+                <a href="../Python/运维.html">
+            
+                    
+                    运维
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.26" data-path="../Python/processing.html">
+            
+                <a href="../Python/processing.html">
+            
+                    
+                    进(线程)程处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.27" data-path="../Python/迭代器和生成器.html">
+            
+                <a href="../Python/迭代器和生成器.html">
+            
+                    
+                    迭代器和生成器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    Linux
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../Linux/centos.html">
+            
+                <a href="../Linux/centos.html">
+            
+                    
+                    Centos7
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../Linux/cmdline.html">
+            
+                <a href="../Linux/cmdline.html">
+            
+                    
+                    Cmdline
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../Linux/ncat.html">
+            
+                <a href="../Linux/ncat.html">
+            
+                    
+                    Nc
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../Linux/nmap.html">
+            
+                <a href="../Linux/nmap.html">
+            
+                    
+                    Nmap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../Linux/ubuntu.html">
+            
+                <a href="../Linux/ubuntu.html">
+            
+                    
+                    Ubuntu
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    WebSecurity
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="attacktool.html">
+            
+                <a href="attacktool.html">
+            
+                    
+                    AttackTool
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="csrf.html">
+            
+                <a href="csrf.html">
+            
+                    
+                    CSRF
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="dns.html">
+            
+                <a href="dns.html">
+            
+                    
+                    DNS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="mysqlinject.html">
+            
+                <a href="mysqlinject.html">
+            
+                    
+                    Mysql 注入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="note.html">
+            
+                <a href="note.html">
+            
+                    
+                    Note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.6" data-path="php序列化.html">
+            
+                <a href="php序列化.html">
+            
+                    
+                    PHP序列化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="ssti-jinja2.html">
+            
+                <a href="ssti-jinja2.html">
+            
+                    
+                    SSTI Jinja2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="scan_for_info.html">
+            
+                <a href="scan_for_info.html">
+            
+                    
+                    Scan For Information
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9" data-path="sqlinject.html">
+            
+                <a href="sqlinject.html">
+            
+                    
+                    SqlInject
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.10" data-path="vulnapp.html">
+            
+                <a href="vulnapp.html">
+            
+                    
+                    Vulnapp
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11" data-path="xss.html">
+            
+                <a href="xss.html">
+            
+                    
+                    XSS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.12" data-path="backdoor.html">
+            
+                <a href="backdoor.html">
+            
+                    
+                    backdoor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.13" data-path="linux提权.html">
+            
+                <a href="linux提权.html">
+            
+                    
+                    linux提权
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.14" data-path="mysql.html">
+            
+                <a href="mysql.html">
+            
+                    
+                    mysql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.15" data-path="mysql宽字节注入.html">
+            
+                <a href="mysql宽字节注入.html">
+            
+                    
+                    mysql宽字节注入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.16" data-path="mysql注入过滤.html">
+            
+                <a href="mysql注入过滤.html">
+            
+                    
+                    mysql注入过滤
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.17" data-path="php.html">
+            
+                <a href="php.html">
+            
+                    
+                    php
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.18" data-path="php-match-or-comapre.html">
+            
+                <a href="php-match-or-comapre.html">
+            
+                    
+                    php match or comapre
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.19" data-path="php-文件包含.html">
+            
+                <a href="php-文件包含.html">
+            
+                    
+                    php 文件包含
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.20" data-path="ssrf.html">
+            
+                <a href="ssrf.html">
+            
+                    
+                    ssrf
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.21" data-path="url.html">
+            
+                <a href="url.html">
+            
+                    
+                    url
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.22" data-path="webshell.html">
+            
+                <a href="webshell.html">
+            
+                    
+                    webshell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.23" data-path="web渗透测试.html">
+            
+                <a href="web渗透测试.html">
+            
+                    
+                    web渗透测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.24" data-path="常用端口.html">
+            
+                <a href="常用端口.html">
+            
+                    
+                    常用端口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.25" data-path="常见协议.html">
+            
+                <a href="常见协议.html">
+            
+                    
+                    常见协议
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.26" data-path="敏感配置文件.html">
+            
+                <a href="敏感配置文件.html">
+            
+                    
+                    敏感配置文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.27" data-path="path_collect.html">
+            
+                <a href="path_collect.html">
+            
+                    
+                    文件读取漏洞路径收集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.28" data-path="解析漏洞.html">
+            
+                <a href="解析漏洞.html">
+            
+                    
+                    解析漏洞
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    Kali2
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../Kali2/beef.html">
+            
+                <a href="../Kali2/beef.html">
+            
+                    
+                    Beef
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../Kali2/burpsuite.html">
+            
+                <a href="../Kali2/burpsuite.html">
+            
+                    
+                    BurpSuite
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../Kali2/code_editor.html">
+            
+                <a href="../Kali2/code_editor.html">
+            
+                    
+                    Code editor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../Kali2/gather-information.html">
+            
+                <a href="../Kali2/gather-information.html">
+            
+                    
+                    Gather Information
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../Kali2/hydra.html">
+            
+                <a href="../Kali2/hydra.html">
+            
+                    
+                    Hydra
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6" data-path="../Kali2/mitmproxy.html">
+            
+                <a href="../Kali2/mitmproxy.html">
+            
+                    
+                    MitmProxy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.7" data-path="../Kali2/pyenv.html">
+            
+                <a href="../Kali2/pyenv.html">
+            
+                    
+                    Pyenv
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.8" data-path="../Kali2/remote.html">
+            
+                <a href="../Kali2/remote.html">
+            
+                    
+                    Remote access
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9" data-path="../Kali2/shell.html">
+            
+                <a href="../Kali2/shell.html">
+            
+                    
+                    Shell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.10" data-path="../Kali2/tmux.html">
+            
+                <a href="../Kali2/tmux.html">
+            
+                    
+                    Tmux
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.11" data-path="../Kali2/w3af.html">
+            
+                <a href="../Kali2/w3af.html">
+            
+                    
+                    W3af
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.12" data-path="../Kali2/install&configure.html">
+            
+                <a href="../Kali2/install&configure.html">
+            
+                    
+                    install and configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.13" data-path="../Kali2/phpmyadmin.html">
+            
+                <a href="../Kali2/phpmyadmin.html">
+            
+                    
+                    phpmyadmin install and configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.14" data-path="../Kali2/flow_analysis.html">
+            
+                <a href="../Kali2/flow_analysis.html">
+            
+                    
+                    流量监听
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    Vuln
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../Vuln/joomla.html">
+            
+                <a href="../Vuln/joomla.html">
+            
+                    
+                    Joomla
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    PHP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../PHP/function.html">
+            
+                <a href="../PHP/function.html">
+            
+                    
+                    Function
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../PHP/configure.html">
+            
+                <a href="../PHP/configure.html">
+            
+                    
+                    configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../PHP/note.html">
+            
+                <a href="../PHP/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../PHP/正则匹配.html">
+            
+                <a href="../PHP/正则匹配.html">
+            
+                    
+                    正则匹配
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    Docker
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../Docker/docker-compose.html">
+            
+                <a href="../Docker/docker-compose.html">
+            
+                    
+                    Docker Compose
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../Docker/dockerfile.html">
+            
+                <a href="../Docker/dockerfile.html">
+            
+                    
+                    Dockerfile
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../Docker/docker-api-in-python.html">
+            
+                <a href="../Docker/docker-api-in-python.html">
+            
+                    
+                    docker api in python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../Docker/locale.html">
+            
+                <a href="../Docker/locale.html">
+            
+                    
+                    locale
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="../Docker/note.html">
+            
+                <a href="../Docker/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" data-path="../Docker/openvpn.html">
+            
+                <a href="../Docker/openvpn.html">
+            
+                    
+                    openvpn
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7" data-path="../Docker/安装和基本命令.html">
+            
+                <a href="../Docker/安装和基本命令.html">
+            
+                    
+                    安装和基本命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.8" data-path="../Docker/常用开发环境.html">
+            
+                <a href="../Docker/常用开发环境.html">
+            
+                    
+                    常用开发环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.9" data-path="../Docker/微容器.html">
+            
+                <a href="../Docker/微容器.html">
+            
+                    
+                    微容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.10" data-path="../Docker/心得.html">
+            
+                <a href="../Docker/心得.html">
+            
+                    
+                    心得
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.11" data-path="../Docker/持续集成与自动发布.html">
+            
+                <a href="../Docker/持续集成与自动发布.html">
+            
+                    
+                    持续集成与自动发布
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" >
+            
+                <span>
+            
+                    
+                    HTTP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../HTTP/cookie.html">
+            
+                <a href="../HTTP/cookie.html">
+            
+                    
+                    Cookie
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../HTTP/encode_and_decode.html">
+            
+                <a href="../HTTP/encode_and_decode.html">
+            
+                    
+                    Encode and Decode
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../HTTP/http请求格式.html">
+            
+                <a href="../HTTP/http请求格式.html">
+            
+                    
+                    HTTP请求格式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../HTTP/proxy.html">
+            
+                <a href="../HTTP/proxy.html">
+            
+                    
+                    Proxy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../HTTP/xpath.html">
+            
+                <a href="../HTTP/xpath.html">
+            
+                    
+                    XPATH
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" >
+            
+                <span>
+            
+                    
+                    Git
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../Git/gist.html">
+            
+                <a href="../Git/gist.html">
+            
+                    
+                    Gist
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../Git/git.html">
+            
+                <a href="../Git/git.html">
+            
+                    
+                    git
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../Git/git_remote_operation.html">
+            
+                <a href="../Git/git_remote_operation.html">
+            
+                    
+                    git remote operation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Image
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../Image/png.html">
+            
+                <a href="../Image/png.html">
+            
+                    
+                    PNG
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" >
+            
+                <span>
+            
+                    
+                    JS
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../JS/xhr.html">
+            
+                <a href="../JS/xhr.html">
+            
+                    
+                    XHR
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" >
+            
+                <span>
+            
+                    
+                    Note
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../Note/ctf.html">
+            
+                <a href="../Note/ctf.html">
+            
+                    
+                    CTF
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.2" data-path="../Note/elk.html">
+            
+                <a href="../Note/elk.html">
+            
+                    
+                    ELK
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.3" data-path="../Note/google-hacking.html">
+            
+                <a href="../Note/google-hacking.html">
+            
+                    
+                    Google Hacking
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.4" data-path="../Note/sql.html">
+            
+                <a href="../Note/sql.html">
+            
+                    
+                    Sql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.5" data-path="../Note/mysql.html">
+            
+                <a href="../Note/mysql.html">
+            
+                    
+                    mysql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.6" data-path="../Note/same-origin-policy.html">
+            
+                <a href="../Note/same-origin-policy.html">
+            
+                    
+                    same origin policy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.7" data-path="../Note/software.html">
+            
+                <a href="../Note/software.html">
+            
+                    
+                    software
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" >
+            
+                <span>
+            
+                    
+                    AWS
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../AWS/note.html">
+            
+                <a href="../AWS/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" >
+            
+                <span>
+            
+                    
+                    Python3
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../Python3/string.html">
+            
+                <a href="../Python3/string.html">
+            
+                    
+                    String
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" >
+            
+                <span>
+            
+                    
+                    Simiki
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="../Simiki/simiki-命令.html">
+            
+                <a href="../Simiki/simiki-命令.html">
+            
+                    
+                    simiki 命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="../Simiki/start with github page.html">
+            
+                <a href="../Simiki/start with github page.html">
+            
+                    
+                    start github page
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >PHP序列化</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="&#x5E8F;&#x5217;&#x5316;&#x673A;&#x5236;">&#x5E8F;&#x5217;&#x5316;&#x673A;&#x5236;</h2><p>PHP&#x4E2D;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;php.ini&#x4E2D;&#x542B;&#x6709;&#x51E0;&#x9879;&#x914D;&#x7F6E;&#x9879;</p><pre><code>session.save_path=&quot;&quot;   --&#x8BBE;&#x7F6E;session&#x7684;&#x5B58;&#x50A8;&#x8DEF;&#x5F84;
+session_set_save_handler=&quot;&quot; --&#x8BBE;&#x5B9A;&#x7528;&#x6237;&#x81EA;&#x5B9A;&#x4E49;&#x5B58;&#x50A8;&#x51FD;&#x6570;&#xFF0C;&#x5982;&#x679C;&#x60F3;&#x4F7F;&#x7528;PHP&#x5185;&#x7F6E;&#x4F1A;&#x8BDD;&#x5B58;&#x50A8;&#x673A;&#x5236;&#x4E4B;&#x5916;&#x7684;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x672C;&#x51FD;&#x6570;(&#x6570;&#x636E;&#x5E93;&#x7B49;&#x65B9;&#x5F0F;)
+session.auto_start   boolen --&#x6307;&#x5B9A;&#x4F1A;&#x8BDD;&#x6A21;&#x5757;&#x662F;&#x5426;&#x5728;&#x8BF7;&#x6C42;&#x5F00;&#x59CB;&#x65F6;&#x542F;&#x52A8;&#x4E00;&#x4E2A;&#x4F1A;&#x8BDD;,&#x9ED8;&#x8BA4;&#x4E3A;0&#x4E0D;&#x542F;&#x52A8;
+session.serialize_handler   string --&#x5B9A;&#x4E49;&#x7528;&#x6765;&#x5E8F;&#x5217;&#x5316;/&#x53CD;&#x5E8F;&#x5217;&#x5316;&#x7684;&#x5904;&#x7406;&#x5668;&#x540D;&#x5B57;&#x3002;&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;php</code></pre>
+<blockquote><p>&#x5F53;session.auto_start&#x8BBE;&#x7F6E;&#x4E3A;True&#x7684;&#x65F6;&#x5019;&#x6216;&#x8005;&#x624B;&#x52A8;session_start()&#x521B;&#x5EFA;&#x65B0;&#x4F1A;&#x8BDD;&#xFF0C;PHP&#x5185;&#x90E8;&#x8C03;&#x4F1A;&#x8C03;&#x7528;&#x4F1A;&#x8BDD;&#x7BA1;&#x7406;&#x5668;&#x3002;</p></blockquote><h2 id="php-session-&#x4E09;&#x79CD;&#x5E8F;&#x5217;&#x5316;&#x65B9;&#x5F0F;">PHP Session &#x4E09;&#x79CD;&#x5E8F;&#x5217;&#x5316;&#x65B9;&#x5F0F;</h2><p>PHP &#x5185;&#x7F6E;&#x4E86;&#x591A;&#x79CD;&#x5904;&#x7406;&#x5668;&#x7528;&#x4E8E;&#x5B58;&#x53D6; $_SESSION &#x6570;&#x636E;&#x65F6;&#x4F1A;&#x5BF9;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x5E8F;&#x5217;&#x5316;&#x548C;&#x53CD;&#x5E8F;&#x5217;&#x5316;&#xFF0C;&#x5E38;&#x7528;&#x7684;&#x6709;&#x4EE5;&#x4E0B;&#x4E09;&#x79CD;&#xFF0C;&#x5BF9;&#x5E94;&#x4E09;&#x79CD;&#x4E0D;&#x540C;&#x7684;&#x5904;&#x7406;&#x683C;&#x5F0F;&#xFF1A;</p><table>
+<thead>
+<tr><th>&#x5904;&#x7406;&#x5668;</th>
+<th>&#x5BF9;&#x5E94;&#x7684;&#x5B58;&#x50A8;&#x683C;&#x5F0F;</th>
+</tr></thead><tbody>
+<tr><td>php</td>
+<td>&#x952E;&#x540D; &#xFF0B; &#x7AD6;&#x7EBF; &#xFF0B; &#x7ECF;&#x8FC7; serialize() &#x51FD;&#x6570;&#x53CD;&#x5E8F;&#x5217;&#x5904;&#x7406;&#x7684;&#x503C;</td>
+</tr><tr><td>php_binary</td>
+<td>&#x952E;&#x540D;&#x7684;&#x957F;&#x5EA6;&#x5BF9;&#x5E94;&#x7684; ASCII &#x5B57;&#x7B26; &#xFF0B; &#x952E;&#x540D; &#xFF0B; &#x7ECF;&#x8FC7; serialize() &#x51FD;&#x6570;&#x53CD;&#x5E8F;&#x5217;&#x5904;&#x7406;&#x7684;&#x503C;</td>
+</tr><tr><td>php_serialize <br>(php&gt;=5.5.4)</td>
+<td>&#x7ECF;&#x8FC7; serialize() &#x51FD;&#x6570;&#x53CD;&#x5E8F;&#x5217;&#x5904;&#x7406;&#x7684;&#x6570;&#x7EC4;</td>
+</tr></tbody></table>
+
+<p>php&#x5904;&#x7406;&#x5668;&#x5E8F;&#x5217;&#x5316;&#x8FC7;&#x7684;&#x503C;</p><pre><code>name|s:6:&quot;whoami&quot;;address|s:7:&quot;beijing&quot;;
+
+# &#x5176;&#x4E2D;&#x6BCF;&#x4E2A;session&#x503C;&#x662F;&#x4EE5;&quot;;&quot;&#x5206;&#x5272;&#x5F00;&#x6765;&#xFF0C;&#x4F8B;&#x5982;
+name|s:6:&quot;whoami&quot;;</code></pre>
+<p>session&#x503C;,&quot;|&quot;&#x524D;&#x9762;&#x8868;&#x793A;session&#x540D;&#x79F0;&#xFF0C;&quot;|&quot;&#x540E;&#x8FB9;&#x8868;&#x793A;session&#x5177;&#x4F53;&#x4FE1;&#x606F;,&#x5305;&#x542B;&#x6570;&#x636E;&#x7C7B;&#x578B;,&#x957F;&#x5EA6;,&#x6570;&#x636E;&#x5185;&#x5BB9;&#x3002;</p><h3 id="&#x914D;&#x7F6E;&#x9009;&#x9879;-sessionserializehandler">&#x914D;&#x7F6E;&#x9009;&#x9879; session.serialize_handler</h3><p>PHP &#x63D0;&#x4F9B;&#x4E86; session.serialize_handler &#x914D;&#x7F6E;&#x9009;&#x9879;&#xFF0C;&#x901A;&#x8FC7;&#x8BE5;&#x9009;&#x9879;&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E;&#x5E8F;&#x5217;&#x5316;&#x53CA;&#x53CD;&#x5E8F;&#x5217;&#x5316;&#x65F6;&#x4F7F;&#x7528;&#x7684;&#x5904;&#x7406;&#x5668;&#xFF1A;</p><pre><code class="lang-php">session.serialize_handler    <span class="hljs-string">&quot;php&quot;</span>    PHP_INI_ALL</code></pre>
+<h3 id="&#x5B89;&#x5168;&#x9690;&#x60A3;">&#x5B89;&#x5168;&#x9690;&#x60A3;</h3><p>&#x901A;&#x8FC7;&#x4E0A;&#x9762;&#x5BF9;&#x5B58;&#x50A8;&#x683C;&#x5F0F;&#x7684;&#x5206;&#x6790;&#xFF0C;&#x5982;&#x679C; PHP &#x5728;&#x53CD;&#x5E8F;&#x5217;&#x5316;&#x5B58;&#x50A8;&#x7684; $_SESSION &#x6570;&#x636E;&#x65F6;&#x7684;&#x4F7F;&#x7528;&#x7684;&#x5904;&#x7406;&#x5668;&#x548C;&#x5E8F;&#x5217;&#x5316;&#x65F6;&#x4F7F;&#x7528;&#x7684;&#x5904;&#x7406;&#x5668;&#x4E0D;&#x540C;&#xFF0C;&#x4F1A;&#x5BFC;&#x81F4;&#x6570;&#x636E;&#x65E0;&#x6CD5;&#x6B63;&#x786E;&#x53CD;&#x5E8F;&#x5217;&#x5316;&#xFF0C;&#x901A;&#x8FC7;&#x7279;&#x6B8A;&#x7684;&#x6784;&#x9020;&#xFF0C;&#x751A;&#x81F3;&#x53EF;&#x4EE5;&#x4F2A;&#x9020;&#x4EFB;&#x610F;&#x6570;&#x636E;&#xFF1A;&#xFF09;</p><pre><code class="lang-php">$_SESSION[<span class="hljs-string">&apos;ryat&apos;</span>] = <span class="hljs-string">&apos;|O:8:&quot;stdClass&quot;:0:{}&apos;</span>;</code></pre>
+<p>&#x4F8B;&#x5982;&#x4E0A;&#x9762;&#x7684; $_SESSION &#x6570;&#x636E;&#xFF0C;&#x5728;&#x5B58;&#x50A8;&#x65F6;&#x4F7F;&#x7528;&#x7684;&#x5E8F;&#x5217;&#x5316;&#x5904;&#x7406;&#x5668;&#x4E3A; php_serialize&#xFF0C;&#x5B58;&#x50A8;&#x7684;&#x683C;&#x5F0F;&#x5982;&#x4E0B;&#xFF1A;</p><pre><code class="lang-php">a:<span class="hljs-number">1</span>:{s:<span class="hljs-number">4</span>:<span class="hljs-string">&quot;ryat&quot;</span>;s:<span class="hljs-number">20</span>:<span class="hljs-string">&quot;|O:8:&quot;</span>stdClass<span class="hljs-string">&quot;:0:{}&quot;</span>;}</code></pre>
+<p>&#x5728;&#x8BFB;&#x53D6;&#x6570;&#x636E;&#x65F6;&#x5982;&#x679C;&#x7528;&#x7684;&#x53CD;&#x5E8F;&#x5217;&#x5316;&#x5904;&#x7406;&#x5668;&#x4E0D;&#x662F; php_serialize&#xFF0C;&#x800C;&#x662F; php &#x7684;&#x8BDD;&#xFF0C;&#x90A3;&#x4E48;&#x53CD;&#x5E8F;&#x5217;&#x5316;&#x540E;&#x7684;&#x6570;&#x636E;&#x5C06;&#x4F1A;&#x53D8;&#x6210;&#xFF1A;</p><pre><code class="lang-php"><span class="hljs-comment">// var_dump($_SESSION);</span>
+<span class="hljs-keyword">array</span>(<span class="hljs-number">1</span>) {
+  [<span class="hljs-string">&quot;a:1:{s:4:&quot;</span>ryat<span class="hljs-string">&quot;;s:20:&quot;</span><span class="hljs-string">&quot;]=&gt;
+  object(stdClass)#1 (0) {
+  }
+}</span></code></pre>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;&#x901A;&#x8FC7;&#x6CE8;&#x5165; <code>|</code> &#x5B57;&#x7B26;&#x4F2A;&#x9020;&#x4E86;&#x5BF9;&#x8C61;&#x7684;&#x5E8F;&#x5217;&#x5316;&#x6570;&#x636E;&#xFF0C;&#x6210;&#x529F;&#x5B9E;&#x4F8B;&#x5316;&#x4E86; stdClass &#x5BF9;&#x8C61;&#xFF1A;&#xFF09;</p><h3 id="&#x5B9E;&#x9645;&#x5229;&#x7528;">&#x5B9E;&#x9645;&#x5229;&#x7528;</h3><h4 id="i&#xFF09;&#x5F53;-sessionautostart&#xFF1D;on-&#x65F6;&#xFF1A;">i&#xFF09;&#x5F53; session.auto_start&#xFF1D;On &#x65F6;&#xFF1A;</h4><p>&#x5F53;&#x914D;&#x7F6E;&#x9009;&#x9879; session.auto_start&#xFF1D;On&#xFF0C;&#x4F1A;&#x81EA;&#x52A8;&#x6CE8;&#x518C; Session &#x4F1A;&#x8BDD;&#xFF0C;&#x56E0;&#x4E3A;&#x8BE5;&#x8FC7;&#x7A0B;&#x662F;&#x53D1;&#x751F;&#x5728;&#x811A;&#x672C;&#x4EE3;&#x7801;&#x6267;&#x884C;&#x524D;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x811A;&#x672C;&#x4E2D;&#x8BBE;&#x5B9A;&#x7684;&#x5305;&#x62EC;&#x5E8F;&#x5217;&#x5316;&#x5904;&#x7406;&#x5668;&#x5728;&#x5185;&#x7684; session &#x76F8;&#x5173;&#x914D;&#x9009;&#x9879;&#x7684;&#x8BBE;&#x7F6E;&#x662F;&#x4E0D;&#x8D77;&#x4F5C;&#x7528;&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x4E00;&#x4E9B;&#x9700;&#x8981;&#x5728;&#x811A;&#x672C;&#x4E2D;&#x8BBE;&#x7F6E;&#x5E8F;&#x5217;&#x5316;&#x5904;&#x7406;&#x5668;&#x914D;&#x7F6E;&#x7684;&#x7A0B;&#x5E8F;&#x4F1A;&#x5728; session.auto_start&#xFF1D;On &#x65F6;&#xFF0C;&#x9500;&#x6BC1;&#x81EA;&#x52A8;&#x751F;&#x6210;&#x7684; Session &#x4F1A;&#x8BDD;&#xFF0C;&#x7136;&#x540E;&#x8BBE;&#x7F6E;&#x9700;&#x8981;&#x7684;&#x5E8F;&#x5217;&#x5316;&#x5904;&#x7406;&#x5668;&#xFF0C;&#x518D;&#x8C03;&#x7528; session_start() &#x51FD;&#x6570;&#x6CE8;&#x518C;&#x4F1A;&#x8BDD;&#xFF0C;&#x8FD9;&#x65F6;&#x5982;&#x679C;&#x811A;&#x672C;&#x4E2D;&#x8BBE;&#x7F6E;&#x7684;&#x5E8F;&#x5217;&#x5316;&#x5904;&#x7406;&#x5668;&#x4E0E; php.ini &#x4E2D;&#x8BBE;&#x7F6E;&#x7684;&#x4E0D;&#x540C;&#xFF0C;&#x5C31;&#x4F1A;&#x51FA;&#x73B0;&#x5B89;&#x5168;&#x95EE;&#x9898;&#xFF0C;&#x5982;&#x4E0B;&#x9762;&#x7684;&#x4EE3;&#x7801;&#xFF1A;</p><pre><code class="lang-php"><span class="hljs-comment">//foo.php</span>
+
+<span class="hljs-keyword">if</span> (ini_get(<span class="hljs-string">&apos;session.auto_start&apos;</span>)) {
+    session_destroy();
+}
+
+ini_set(<span class="hljs-string">&apos;session.serialize_handler&apos;</span>, <span class="hljs-string">&apos;php_serialize&apos;</span>);
+session_start();
+
+$_SESSION[<span class="hljs-string">&apos;ryat&apos;</span>] = $_GET[<span class="hljs-string">&apos;ryat&apos;</span>];</code></pre>
+<p>&#x5F53;&#x7B2C;&#x4E00;&#x6B21;&#x8BBF;&#x95EE;&#x8BE5;&#x811A;&#x672C;&#xFF0C;&#x5E76;&#x63D0;&#x4EA4;&#x6570;&#x636E;&#x5982;&#x4E0B;&#xFF1A;</p><pre><code class="lang-php">foo.php?ryat=|O:<span class="hljs-number">8</span>:<span class="hljs-string">&quot;stdClass&quot;</span>:<span class="hljs-number">0</span>:{}</code></pre>
+<p>&#x811A;&#x672C;&#x4F1A;&#x6309;&#x7167; php_serialize &#x5904;&#x7406;&#x5668;&#x7684;&#x5E8F;&#x5217;&#x5316;&#x683C;&#x5F0F;&#x5B58;&#x50A8;&#x6570;&#x636E;&#xFF1A;</p><pre><code class="lang-php">a:<span class="hljs-number">1</span>:{s:<span class="hljs-number">4</span>:<span class="hljs-string">&quot;ryat&quot;</span>;s:<span class="hljs-number">20</span>:<span class="hljs-string">&quot;|O:8:&quot;</span>stdClass<span class="hljs-string">&quot;:0:{}&quot;</span>;}</code></pre>
+<p>&#x5F53;&#x7B2C;&#x4E8C;&#x6B21;&#x8BBF;&#x95EE;&#x8BE5;&#x811A;&#x672C;&#x65F6;&#xFF0C;PHP &#x4F1A;&#x6309;&#x7167; php.ini &#x91CC;&#x8BBE;&#x7F6E;&#x7684;&#x5E8F;&#x5217;&#x5316;&#x5904;&#x7406;&#x5668;&#x53CD;&#x5E8F;&#x5217;&#x5316;&#x5B58;&#x50A8;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x8FD9;&#x65F6;&#x5982;&#x679C; php.ini &#x91CC;&#x8BBE;&#x7F6E;&#x7684;&#x662F; php &#x5904;&#x7406;&#x5668;&#x7684;&#x8BDD;&#xFF0C;&#x5C06;&#x4F1A;&#x53CD;&#x5E8F;&#x5217;&#x5316;&#x4F2A;&#x9020;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x6210;&#x529F;&#x5B9E;&#x4F8B;&#x5316;&#x4E86; stdClass &#x5BF9;&#x8C61;&#xFF1A;&#xFF09;</p><p>&#x8FD9;&#x91CC;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x56E0;&#x4E3A; PHP &#x81EA;&#x52A8;&#x6CE8;&#x518C; Session &#x4F1A;&#x8BDD;&#x662F;&#x5728;&#x811A;&#x672C;&#x6267;&#x884C;&#x524D;&#xFF0C;&#x6240;&#x4EE5;&#x901A;&#x8FC7;&#x8BE5;&#x65B9;&#x5F0F;&#x53EA;&#x80FD;&#x6CE8;&#x5165; PHP &#x7684;&#x5185;&#x7F6E;&#x7C7B;&#x3002;</p><h4 id="ii&#xFF09;&#x5F53;-sessionautostart&#xFF1D;off-&#x65F6;&#xFF1A;">ii&#xFF09;&#x5F53; session.auto_start&#xFF1D;Off &#x65F6;&#xFF1A;</h4><p>&#x5F53;&#x914D;&#x7F6E;&#x9009;&#x9879; session.auto_start&#xFF1D;Off&#xFF0C;&#x4E24;&#x4E2A;&#x811A;&#x672C;&#x6CE8;&#x518C; Session &#x4F1A;&#x8BDD;&#x65F6;&#x4F7F;&#x7528;&#x7684;&#x5E8F;&#x5217;&#x5316;&#x5904;&#x7406;&#x5668;&#x4E0D;&#x540C;&#xFF0C;&#x5C31;&#x4F1A;&#x51FA;&#x73B0;&#x5B89;&#x5168;&#x95EE;&#x9898;&#xFF0C;&#x5982;&#x4E0B;&#x9762;&#x7684;&#x4EE3;&#x7801;&#xFF1A;</p><pre><code class="lang-php"><span class="hljs-comment">//foo1.php</span>
+
+ini_set(<span class="hljs-string">&apos;session.serialize_handler&apos;</span>, <span class="hljs-string">&apos;php_serialize&apos;</span>);
+session_start();
+
+$_SESSION[<span class="hljs-string">&apos;ryat&apos;</span>] = $_GET[<span class="hljs-string">&apos;ryat&apos;</span>];
+
+<span class="hljs-comment">//foo2.php</span>
+
+ini_set(<span class="hljs-string">&apos;session.serialize_handler&apos;</span>, <span class="hljs-string">&apos;php&apos;</span>);
+<span class="hljs-comment">//or session.serialize_handler set to php in php.ini </span>
+session_start();
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ryat</span> </span>{
+    <span class="hljs-keyword">var</span> $hi;
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__wakeup</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">echo</span> <span class="hljs-string">&apos;hi&apos;</span>;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__destruct</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">echo</span> $this-&gt;hi;
+    }
+}</code></pre>
+<p>&#x5F53;&#x8BBF;&#x95EE; foo1.php &#x65F6;&#xFF0C;&#x63D0;&#x4EA4;&#x6570;&#x636E;&#x5982;&#x4E0B;&#xFF1A;</p><pre><code class="lang-php">foo1.php?ryat=|O:<span class="hljs-number">4</span>:<span class="hljs-string">&quot;ryat&quot;</span>:<span class="hljs-number">1</span>:{s:<span class="hljs-number">2</span>:<span class="hljs-string">&quot;hi&quot;</span>;s:<span class="hljs-number">4</span>:<span class="hljs-string">&quot;ryat&quot;</span>;}</code></pre>
+<p>&#x811A;&#x672C;&#x4F1A;&#x6309;&#x7167; php<em>serialize &#x5904;&#x7406;&#x5668;&#x7684;&#x5E8F;&#x5217;&#x5316;&#x683C;&#x5F0F;&#x5B58;&#x50A8;&#x6570;&#x636E;&#xFF0C;&#x8BBF;&#x95EE; foo2.php &#x65F6;&#xFF0C;&#x5219;&#x4F1A;&#x6309;&#x7167; php &#x5904;&#x7406;&#x5668;&#x7684;&#x53CD;&#x5E8F;&#x5217;&#x5316;&#x683C;&#x5F0F;&#x8BFB;&#x53D6;&#x6570;&#x636E;&#xFF0C;&#x8FD9;&#x65F6;&#x5C06;&#x4F1A;&#x53CD;&#x5E8F;&#x5217;&#x5316;&#x4F2A;&#x9020;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x6210;&#x529F;&#x5B9E;&#x4F8B;&#x5316;&#x4E86; ryat &#x5BF9;&#x8C61;&#xFF0C;&#x5E76;&#x5C06;&#x4F1A;&#x6267;&#x884C;&#x7C7B;&#x4E2D;&#x7684; \</em>_wakeup &#x65B9;&#x6CD5;&#x548C; __destruct &#x65B9;&#x6CD5;&#xFF1A;&#xFF09;</p>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="note.html" class="navigation navigation-prev " aria-label="Previous page: Note">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="ssti-jinja2.html" class="navigation navigation-next " aria-label="Next page: SSTI Jinja2">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"PHP序列化","date":"2016-04-18 13:28","level":"1.4.6","depth":2,"next":{"title":"SSTI Jinja2","level":"1.4.7","depth":2,"path":"WebSecurity/ssti-jinja2.md","ref":"WebSecurity/ssti-jinja2.md","articles":[]},"previous":{"title":"Note","level":"1.4.5","depth":2,"path":"WebSecurity/note.md","ref":"WebSecurity/note.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"janes","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Wiki | janes","language":"cn","gitbook":">= 3.2.0"},"file":{"path":"WebSecurity/php序列化.md","mtime":"2016-08-16T14:00:50.457Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2016-08-16T16:38:45.378Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
     </body>
 </html>
+

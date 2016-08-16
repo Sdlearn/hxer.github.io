@@ -1,727 +1,2435 @@
+
 <!DOCTYPE HTML>
-<html>
+<html lang="cn" >
     <head>
-        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
-        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
-        <title>常用内置对象操作 - Wiki | janes</title>
-        <meta name="keywords" content=""/>
-        <meta name="description" content=""/>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
+        <title>常用内置对象操作 · Wiki | janes</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.0">
+        <meta name="author" content="janes">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
 
-    <body>
-        <div id="container">
+    
             
-<div id="header">
-  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Python">Python</a>&nbsp;»&nbsp;常用内置对象操作</div>
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="常用模块.html" />
+    
+    
+    <link rel="prev" href="command.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
 </div>
-<div class="clearfix"></div>
-<div id="title">常用内置对象操作</div>
-  <div id="content">
-  <h2 id="0x01-string">0x01 string</h2>
-<h3 id="_1">基本操作</h3>
-<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;a&quot;</span> <span class="o">+</span> <span class="s">&quot;b&quot;</span>
-<span class="s">&#39;ab&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;a&quot;</span> <span class="o">*</span> <span class="mi">3</span>
-<span class="s">&#39;aaa&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">])</span>           <span class="c"># 合并多个字符串</span>
-<span class="s">&#39;a,b,c&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;a,b,c&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">)</span>                  <span class="c"># 按指定字符分割</span>
-<span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;a</span><span class="se">\n</span><span class="s">b</span><span class="se">\r\n</span><span class="s">c&quot;</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>            <span class="c"># 按行分割</span>
-<span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;a</span><span class="se">\n</span><span class="s">b</span><span class="se">\r\n</span><span class="s">c&quot;</span><span class="o">.</span><span class="n">splitlines</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>        <span class="c"># 分割后,保留换行行符。</span>
-<span class="p">[</span><span class="s">&#39;a</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="s">&#39;b</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;abc&quot;</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;ab&quot;</span><span class="p">),</span> <span class="s">&quot;abc&quot;</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&quot;bc&quot;</span><span class="p">)</span><span class="err">!</span>       <span class="c"># 判断是否以特定子子串开始或结束。</span>
-<span class="bp">True</span><span class="p">,</span> <span class="bp">True</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;abc&quot;</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="s">&quot;Abc&quot;</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>        <span class="c"># 大大小小写转换。</span>
-<span class="s">&#39;ABC&#39;</span><span class="p">,</span> <span class="s">&#39;abc&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;abcabc&quot;</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;bc&quot;</span><span class="p">),</span> <span class="s">&quot;abcabc&quot;</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;bc&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>         <span class="c"># 可指定查找起始结束位置。</span>
-<span class="mi">1</span><span class="p">,</span> <span class="mi">4</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot; abc&quot;</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(),</span> <span class="s">&quot;abc &quot;</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(),</span> <span class="s">&quot; abc &quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>   <span class="c"># 剔除前后空格。</span>
-<span class="s">&#39;abc&#39;</span><span class="p">,</span> <span class="s">&#39;abc&#39;</span><span class="p">,</span> <span class="s">&#39;abc&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;abc&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&quot;ac&quot;</span><span class="p">)</span>                   <span class="c"># 可删除指定的前后缀字符。</span>
-<span class="s">&#39;b&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;abcabc&quot;</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;bc&quot;</span><span class="p">,</span> <span class="s">&quot;BC&quot;</span><span class="p">)</span>        <span class="c"># 可指定替换次数。</span>
-<span class="s">&#39;aBCaBC&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;a</span><span class="se">\t</span><span class="s">bc&quot;</span><span class="o">.</span><span class="n">expandtabs</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>               <span class="c"># 将 tab 替换成空格。</span>
-<span class="s">&#39;a    bc&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;123&quot;</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s">&#39;0&#39;</span><span class="p">),</span> <span class="s">&quot;456&quot;</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s">&#39;0&#39;</span><span class="p">),</span> <span class="s">&quot;abc&quot;</span><span class="o">.</span><span class="n">center</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s">&#39;*&#39;</span><span class="p">)</span>     <span class="c"># 填充</span>
-<span class="s">&#39;12300&#39;</span><span class="p">,</span> <span class="s">&#39;00456&#39;</span><span class="p">,</span> <span class="s">&#39;***abc****&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;123&quot;</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span> <span class="s">&quot;123456&quot;</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>   <span class="c"># 数字填充</span>
-<span class="s">&#39;000123&#39;</span><span class="p">,</span> <span class="s">&#39;123456&#39;</span>
-</pre></div>
+
+            
+                <nav role="navigation">
+                
 
 
-<h3 id="_2">格式化</h3>
-<p>Python 提供了两种字符串格式化方方法</p>
-<ol>
-<li><code>%[(key)][flags][width][.precision]typecode</code></li>
-</ol>
-<p>标记: - 左对齐, + 数字符号, # 进制前缀, 或者用用空格、0 填充。</p>
-<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;</span><span class="si">%(key)s</span><span class="s">=</span><span class="si">%(value)d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="nb">dict</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>       <span class="c"># key</span>
-<span class="s">&#39;a=10&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;[</span><span class="si">%-10s</span><span class="s">]&quot;</span> <span class="o">%</span> <span class="s">&quot;a&quot;</span>         <span class="c"># 左对齐</span>
-<span class="s">&#39;[a         ]&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;</span><span class="si">%+d</span><span class="s">, </span><span class="si">%+d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c"># 数字符号</span>
-<span class="s">&#39;-10, +10&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;</span><span class="si">%010d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="mi">3</span>             <span class="c"># 填充</span>
-<span class="s">&#39;0000000003&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;</span><span class="si">%.2f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="mf">0.1234</span>         <span class="c"># 小小数位</span>
-<span class="s">&#39;0.12&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;</span><span class="si">%#x</span><span class="s">, </span><span class="si">%#X</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span> <span class="c"># 十十六进制、前缀、大大小小写</span>
-<span class="s">&#39;0x64, 0XC8&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">, </span><span class="si">%r</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>       <span class="c"># s: str(); r: repr()</span>
-<span class="s">&#39;test..., &lt;__main__.M object at 0x103c4aa10&gt;&#39;</span>
-</pre></div>
+<ul class="summary">
+    
+    
 
+    
 
-<ol>
-<li>format 方方法支支持更多的数据类型,包括列表、字典、对象成员等</li>
-</ol>
-<p><code>{field!convertflag:formatspec}</code></p>
-<p>格式化规范: formatspec: <code>[[fill]align][sign][#][0][width][.precision][typecode]</code></p>
-<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;{key}={value}&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>   <span class="err">#</span> <span class="err">使用用命名参数</span>
-<span class="err">&#39;</span><span class="n">a</span><span class="o">=</span><span class="mi">10</span><span class="err">&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;{0},{1},{0}&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>                  <span class="err">#</span> <span class="n">field</span> <span class="err">可多次使用用</span>
-<span class="err">&#39;</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="err">&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;{0:,}&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="mi">1234567</span><span class="p">)</span>                     <span class="err">#</span> <span class="err">千分位符号</span> 
-<span class="err">&#39;</span><span class="mi">1</span><span class="p">,</span><span class="mi">234</span><span class="p">,</span><span class="mi">567</span><span class="err">&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;{0:,.2f}&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="mf">12345.6789</span><span class="p">)</span>               <span class="err">#</span> <span class="err">千分位</span><span class="p">,</span><span class="err">带小小数位。</span>
-<span class="err">&#39;</span><span class="mi">12</span><span class="p">,</span><span class="mf">345.68</span><span class="err">&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;[{0:&lt;10}], [{0:^10}], [{0:*&gt;10}]&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">)</span><span class="o">!</span> <span class="err">#</span> <span class="err">左中右对齐</span><span class="p">,</span><span class="err">可指定填充字符。</span>
-<span class="err">&#39;</span><span class="p">[</span><span class="n">a</span>       <span class="p">],</span> <span class="p">[</span>    <span class="n">a</span>     <span class="p">],</span> <span class="p">[</span><span class="o">*********</span><span class="n">a</span><span class="p">]</span><span class="err">&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">import</span> <span class="n">sys</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;{0.platform}&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">sys</span><span class="p">)</span>          <span class="err">#</span> <span class="err">成员</span>
-<span class="err">&#39;</span><span class="n">linux2</span><span class="err">&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;{0[a]}&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">dict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">20</span><span class="p">))</span>   <span class="err">#</span> <span class="err">字典</span>
-<span class="err">&#39;</span><span class="mi">10</span><span class="err">&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&quot;{0[5]}&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>          <span class="err">#</span> <span class="err">列表</span>
-<span class="sc">&#39;5&#39;</span>
-</pre></div>
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Wiki
+            
+                </a>
+            
 
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    Python
+            
+                </span>
+            
 
-<p>另有 string.Template 模板可供使用用。该模块还定义了各种常见的字符序列。</p>
-<div class="hlcode"><pre>&gt;&gt;&gt; from string import letters, digits, Template
-&gt;&gt;&gt; letters`        # 字母母表
-&#39;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;
-&gt;&gt;&gt; digits          # 数字表
-&#39;0123456789&#39;
-&gt;&gt;&gt; Template(&quot;<span class="nv">$name</span>, <span class="nv">$age</span>&quot;).substitute(name = &quot;User1&quot;, age = 20)    # 模板替换。
-&#39;User1, 20&#39;
-&gt;&gt;&gt; Template(&quot;<span class="cp">${</span><span class="n">name</span><span class="cp">}</span>, <span class="nv">$age</span>&quot;).safe_substitute(name = &quot;User1&quot;)       # 没找到值,不会抛出异常。
-&#39;User1, <span class="nv">$age</span>&#39;
-</pre></div>
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="anaconda.html">
+            
+                <a href="anaconda.html">
+            
+                    
+                    Anaconda
+            
+                </a>
+            
 
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="django.html">
+            
+                <a href="django.html">
+            
+                    
+                    Django 1.8.7
+            
+                </a>
+            
 
-<h2 id="0x02">0x02 字符串数字转换</h2>
-<p>二进制：    ‘0b’ 开头
-八进制：    ‘0o’ 开头
-十六进制：  ‘0x’ 开头</p>
-<ul>
-<li>整数 &lt;==&gt; 字符串</li>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="excel.html">
+            
+                <a href="excel.html">
+            
+                    
+                    Excel
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="flask.html">
+            
+                <a href="flask.html">
+            
+                    
+                    Flask
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="flask_github_api_login.html">
+            
+                <a href="flask_github_api_login.html">
+            
+                    
+                    Flask github api login
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="函数.html">
+            
+                <a href="函数.html">
+            
+                    
+                    Function
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="http_server.html">
+            
+                <a href="http_server.html">
+            
+                    
+                    Http_server
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="iterators.html">
+            
+                <a href="iterators.html">
+            
+                    
+                    Iterators
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="log.html">
+            
+                <a href="log.html">
+            
+                    
+                    Log
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="pickle.html">
+            
+                <a href="pickle.html">
+            
+                    
+                    Pickle
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="pythonic.html">
+            
+                <a href="pythonic.html">
+            
+                    
+                    Pythonic
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="random.html">
+            
+                <a href="random.html">
+            
+                    
+                    Random
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13" data-path="scapy.html">
+            
+                <a href="scapy.html">
+            
+                    
+                    Scapy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14" data-path="selenium.html">
+            
+                <a href="selenium.html">
+            
+                    
+                    Selenium and Xvfb 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15" data-path="socket.html">
+            
+                <a href="socket.html">
+            
+                    
+                    Socket
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16" data-path="network_package.html">
+            
+                <a href="network_package.html">
+            
+                    
+                    network package
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17" data-path="note.html">
+            
+                <a href="note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18" data-path="eval.html">
+            
+                <a href="eval.html">
+            
+                    
+                    动态执行字符串代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19" data-path="command.html">
+            
+                <a href="command.html">
+            
+                    
+                    命令执行
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.20" data-path="buildin_type.html">
+            
+                <a href="buildin_type.html">
+            
+                    
+                    常用内置对象操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.21" data-path="常用模块.html">
+            
+                <a href="常用模块.html">
+            
+                    
+                    常用模块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.22" data-path="wechat.html">
+            
+                <a href="wechat.html">
+            
+                    
+                    微信公众号开发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.23" data-path="模拟http-post-upload-file.html">
+            
+                <a href="模拟http-post-upload-file.html">
+            
+                    
+                    模拟HTTP POST upload file
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.24" data-path="自省.html">
+            
+                <a href="自省.html">
+            
+                    
+                    自省
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.25" data-path="运维.html">
+            
+                <a href="运维.html">
+            
+                    
+                    运维
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.26" data-path="processing.html">
+            
+                <a href="processing.html">
+            
+                    
+                    进(线程)程处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.27" data-path="迭代器和生成器.html">
+            
+                <a href="迭代器和生成器.html">
+            
+                    
+                    迭代器和生成器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    Linux
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../Linux/centos.html">
+            
+                <a href="../Linux/centos.html">
+            
+                    
+                    Centos7
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../Linux/cmdline.html">
+            
+                <a href="../Linux/cmdline.html">
+            
+                    
+                    Cmdline
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../Linux/ncat.html">
+            
+                <a href="../Linux/ncat.html">
+            
+                    
+                    Nc
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../Linux/nmap.html">
+            
+                <a href="../Linux/nmap.html">
+            
+                    
+                    Nmap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../Linux/ubuntu.html">
+            
+                <a href="../Linux/ubuntu.html">
+            
+                    
+                    Ubuntu
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    WebSecurity
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../WebSecurity/attacktool.html">
+            
+                <a href="../WebSecurity/attacktool.html">
+            
+                    
+                    AttackTool
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../WebSecurity/csrf.html">
+            
+                <a href="../WebSecurity/csrf.html">
+            
+                    
+                    CSRF
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../WebSecurity/dns.html">
+            
+                <a href="../WebSecurity/dns.html">
+            
+                    
+                    DNS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../WebSecurity/mysqlinject.html">
+            
+                <a href="../WebSecurity/mysqlinject.html">
+            
+                    
+                    Mysql 注入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../WebSecurity/note.html">
+            
+                <a href="../WebSecurity/note.html">
+            
+                    
+                    Note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../WebSecurity/php序列化.html">
+            
+                <a href="../WebSecurity/php序列化.html">
+            
+                    
+                    PHP序列化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../WebSecurity/ssti-jinja2.html">
+            
+                <a href="../WebSecurity/ssti-jinja2.html">
+            
+                    
+                    SSTI Jinja2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../WebSecurity/scan_for_info.html">
+            
+                <a href="../WebSecurity/scan_for_info.html">
+            
+                    
+                    Scan For Information
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9" data-path="../WebSecurity/sqlinject.html">
+            
+                <a href="../WebSecurity/sqlinject.html">
+            
+                    
+                    SqlInject
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.10" data-path="../WebSecurity/vulnapp.html">
+            
+                <a href="../WebSecurity/vulnapp.html">
+            
+                    
+                    Vulnapp
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11" data-path="../WebSecurity/xss.html">
+            
+                <a href="../WebSecurity/xss.html">
+            
+                    
+                    XSS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.12" data-path="../WebSecurity/backdoor.html">
+            
+                <a href="../WebSecurity/backdoor.html">
+            
+                    
+                    backdoor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.13" data-path="../WebSecurity/linux提权.html">
+            
+                <a href="../WebSecurity/linux提权.html">
+            
+                    
+                    linux提权
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.14" data-path="../WebSecurity/mysql.html">
+            
+                <a href="../WebSecurity/mysql.html">
+            
+                    
+                    mysql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.15" data-path="../WebSecurity/mysql宽字节注入.html">
+            
+                <a href="../WebSecurity/mysql宽字节注入.html">
+            
+                    
+                    mysql宽字节注入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.16" data-path="../WebSecurity/mysql注入过滤.html">
+            
+                <a href="../WebSecurity/mysql注入过滤.html">
+            
+                    
+                    mysql注入过滤
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.17" data-path="../WebSecurity/php.html">
+            
+                <a href="../WebSecurity/php.html">
+            
+                    
+                    php
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.18" data-path="../WebSecurity/php-match-or-comapre.html">
+            
+                <a href="../WebSecurity/php-match-or-comapre.html">
+            
+                    
+                    php match or comapre
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.19" data-path="../WebSecurity/php-文件包含.html">
+            
+                <a href="../WebSecurity/php-文件包含.html">
+            
+                    
+                    php 文件包含
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.20" data-path="../WebSecurity/ssrf.html">
+            
+                <a href="../WebSecurity/ssrf.html">
+            
+                    
+                    ssrf
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.21" data-path="../WebSecurity/url.html">
+            
+                <a href="../WebSecurity/url.html">
+            
+                    
+                    url
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.22" data-path="../WebSecurity/webshell.html">
+            
+                <a href="../WebSecurity/webshell.html">
+            
+                    
+                    webshell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.23" data-path="../WebSecurity/web渗透测试.html">
+            
+                <a href="../WebSecurity/web渗透测试.html">
+            
+                    
+                    web渗透测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.24" data-path="../WebSecurity/常用端口.html">
+            
+                <a href="../WebSecurity/常用端口.html">
+            
+                    
+                    常用端口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.25" data-path="../WebSecurity/常见协议.html">
+            
+                <a href="../WebSecurity/常见协议.html">
+            
+                    
+                    常见协议
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.26" data-path="../WebSecurity/敏感配置文件.html">
+            
+                <a href="../WebSecurity/敏感配置文件.html">
+            
+                    
+                    敏感配置文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.27" data-path="../WebSecurity/path_collect.html">
+            
+                <a href="../WebSecurity/path_collect.html">
+            
+                    
+                    文件读取漏洞路径收集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.28" data-path="../WebSecurity/解析漏洞.html">
+            
+                <a href="../WebSecurity/解析漏洞.html">
+            
+                    
+                    解析漏洞
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    Kali2
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../Kali2/beef.html">
+            
+                <a href="../Kali2/beef.html">
+            
+                    
+                    Beef
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../Kali2/burpsuite.html">
+            
+                <a href="../Kali2/burpsuite.html">
+            
+                    
+                    BurpSuite
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../Kali2/code_editor.html">
+            
+                <a href="../Kali2/code_editor.html">
+            
+                    
+                    Code editor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../Kali2/gather-information.html">
+            
+                <a href="../Kali2/gather-information.html">
+            
+                    
+                    Gather Information
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../Kali2/hydra.html">
+            
+                <a href="../Kali2/hydra.html">
+            
+                    
+                    Hydra
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6" data-path="../Kali2/mitmproxy.html">
+            
+                <a href="../Kali2/mitmproxy.html">
+            
+                    
+                    MitmProxy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.7" data-path="../Kali2/pyenv.html">
+            
+                <a href="../Kali2/pyenv.html">
+            
+                    
+                    Pyenv
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.8" data-path="../Kali2/remote.html">
+            
+                <a href="../Kali2/remote.html">
+            
+                    
+                    Remote access
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9" data-path="../Kali2/shell.html">
+            
+                <a href="../Kali2/shell.html">
+            
+                    
+                    Shell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.10" data-path="../Kali2/tmux.html">
+            
+                <a href="../Kali2/tmux.html">
+            
+                    
+                    Tmux
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.11" data-path="../Kali2/w3af.html">
+            
+                <a href="../Kali2/w3af.html">
+            
+                    
+                    W3af
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.12" data-path="../Kali2/install&configure.html">
+            
+                <a href="../Kali2/install&configure.html">
+            
+                    
+                    install and configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.13" data-path="../Kali2/phpmyadmin.html">
+            
+                <a href="../Kali2/phpmyadmin.html">
+            
+                    
+                    phpmyadmin install and configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.14" data-path="../Kali2/flow_analysis.html">
+            
+                <a href="../Kali2/flow_analysis.html">
+            
+                    
+                    流量监听
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    Vuln
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../Vuln/joomla.html">
+            
+                <a href="../Vuln/joomla.html">
+            
+                    
+                    Joomla
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    PHP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../PHP/function.html">
+            
+                <a href="../PHP/function.html">
+            
+                    
+                    Function
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../PHP/configure.html">
+            
+                <a href="../PHP/configure.html">
+            
+                    
+                    configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../PHP/note.html">
+            
+                <a href="../PHP/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../PHP/正则匹配.html">
+            
+                <a href="../PHP/正则匹配.html">
+            
+                    
+                    正则匹配
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    Docker
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../Docker/docker-compose.html">
+            
+                <a href="../Docker/docker-compose.html">
+            
+                    
+                    Docker Compose
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../Docker/dockerfile.html">
+            
+                <a href="../Docker/dockerfile.html">
+            
+                    
+                    Dockerfile
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../Docker/docker-api-in-python.html">
+            
+                <a href="../Docker/docker-api-in-python.html">
+            
+                    
+                    docker api in python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../Docker/locale.html">
+            
+                <a href="../Docker/locale.html">
+            
+                    
+                    locale
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="../Docker/note.html">
+            
+                <a href="../Docker/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" data-path="../Docker/openvpn.html">
+            
+                <a href="../Docker/openvpn.html">
+            
+                    
+                    openvpn
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7" data-path="../Docker/安装和基本命令.html">
+            
+                <a href="../Docker/安装和基本命令.html">
+            
+                    
+                    安装和基本命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.8" data-path="../Docker/常用开发环境.html">
+            
+                <a href="../Docker/常用开发环境.html">
+            
+                    
+                    常用开发环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.9" data-path="../Docker/微容器.html">
+            
+                <a href="../Docker/微容器.html">
+            
+                    
+                    微容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.10" data-path="../Docker/心得.html">
+            
+                <a href="../Docker/心得.html">
+            
+                    
+                    心得
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.11" data-path="../Docker/持续集成与自动发布.html">
+            
+                <a href="../Docker/持续集成与自动发布.html">
+            
+                    
+                    持续集成与自动发布
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" >
+            
+                <span>
+            
+                    
+                    HTTP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../HTTP/cookie.html">
+            
+                <a href="../HTTP/cookie.html">
+            
+                    
+                    Cookie
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../HTTP/encode_and_decode.html">
+            
+                <a href="../HTTP/encode_and_decode.html">
+            
+                    
+                    Encode and Decode
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../HTTP/http请求格式.html">
+            
+                <a href="../HTTP/http请求格式.html">
+            
+                    
+                    HTTP请求格式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../HTTP/proxy.html">
+            
+                <a href="../HTTP/proxy.html">
+            
+                    
+                    Proxy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../HTTP/xpath.html">
+            
+                <a href="../HTTP/xpath.html">
+            
+                    
+                    XPATH
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" >
+            
+                <span>
+            
+                    
+                    Git
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../Git/gist.html">
+            
+                <a href="../Git/gist.html">
+            
+                    
+                    Gist
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../Git/git.html">
+            
+                <a href="../Git/git.html">
+            
+                    
+                    git
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../Git/git_remote_operation.html">
+            
+                <a href="../Git/git_remote_operation.html">
+            
+                    
+                    git remote operation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Image
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../Image/png.html">
+            
+                <a href="../Image/png.html">
+            
+                    
+                    PNG
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" >
+            
+                <span>
+            
+                    
+                    JS
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../JS/xhr.html">
+            
+                <a href="../JS/xhr.html">
+            
+                    
+                    XHR
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" >
+            
+                <span>
+            
+                    
+                    Note
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../Note/ctf.html">
+            
+                <a href="../Note/ctf.html">
+            
+                    
+                    CTF
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.2" data-path="../Note/elk.html">
+            
+                <a href="../Note/elk.html">
+            
+                    
+                    ELK
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.3" data-path="../Note/google-hacking.html">
+            
+                <a href="../Note/google-hacking.html">
+            
+                    
+                    Google Hacking
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.4" data-path="../Note/sql.html">
+            
+                <a href="../Note/sql.html">
+            
+                    
+                    Sql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.5" data-path="../Note/mysql.html">
+            
+                <a href="../Note/mysql.html">
+            
+                    
+                    mysql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.6" data-path="../Note/same-origin-policy.html">
+            
+                <a href="../Note/same-origin-policy.html">
+            
+                    
+                    same origin policy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.7" data-path="../Note/software.html">
+            
+                <a href="../Note/software.html">
+            
+                    
+                    software
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" >
+            
+                <span>
+            
+                    
+                    AWS
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../AWS/note.html">
+            
+                <a href="../AWS/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" >
+            
+                <span>
+            
+                    
+                    Python3
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../Python3/string.html">
+            
+                <a href="../Python3/string.html">
+            
+                    
+                    String
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" >
+            
+                <span>
+            
+                    
+                    Simiki
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="../Simiki/simiki-命令.html">
+            
+                <a href="../Simiki/simiki-命令.html">
+            
+                    
+                    simiki 命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="../Simiki/start with github page.html">
+            
+                <a href="../Simiki/start with github page.html">
+            
+                    
+                    start github page
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
 </ul>
-<div class="hlcode"><pre><span class="n">hex</span><span class="p">()</span>       <span class="n">hex</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">string</span>       
-<span class="o">&gt;</span> <span class="n">hex</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">==&gt;</span> <span class="err">&#39;</span><span class="mh">0xa</span><span class="err">&#39;</span>
-
-<span class="kt">int</span><span class="p">()</span>       <span class="kt">int</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">int</span> <span class="n">or</span> <span class="kt">long</span>
-<span class="o">&gt;</span> <span class="kt">int</span><span class="p">(</span><span class="err">&#39;</span><span class="mi">0</span><span class="n">b100</span><span class="err">&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==&gt;</span> <span class="mi">4</span>
-<span class="o">&gt;</span> <span class="kt">int</span><span class="p">(</span><span class="err">&#39;</span><span class="mi">0</span><span class="n">b100</span><span class="err">&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">==&gt;</span> <span class="mi">4</span>
-<span class="o">&gt;</span> <span class="kt">int</span><span class="p">(</span><span class="err">&#39;</span><span class="mh">0x10</span><span class="err">&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span> <span class="o">==&gt;</span> <span class="mi">16</span>
-<span class="o">&gt;</span> <span class="kt">int</span><span class="p">(</span><span class="err">&#39;</span><span class="mi">10</span><span class="err">&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>   <span class="o">==&gt;</span> <span class="mi">16</span>
-
-<span class="n">bin</span><span class="p">()</span>       <span class="n">bin</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">string</span>
-<span class="o">&gt;</span> <span class="n">bin</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">==&gt;</span> <span class="err">&#39;</span><span class="mi">0</span><span class="n">b100</span><span class="err">&#39;</span>
-
-<span class="s">&quot;{0:b}&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">==&gt;</span> <span class="err">&#39;</span><span class="mi">100</span><span class="err">&#39;</span>
-</pre></div>
 
 
-<ul>
-<li>整数 &lt;==&gt; 字节串</li>
-</ul>
-<p>short:2字节， long：4字节</p>
-<div class="hlcode"><pre><span class="n">import</span> <span class="k">struct</span>
+                </nav>
+            
+        
+    </div>
 
-<span class="k">struct</span><span class="p">.</span><span class="n">unpack</span><span class="p">(</span><span class="err">&#39;</span><span class="o">&lt;</span><span class="n">HH</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">bytes</span><span class="p">(</span><span class="n">b</span><span class="err">&#39;\</span><span class="n">x01</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">&#39;</span><span class="p">))</span> <span class="o">==&gt;</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-<span class="k">struct</span><span class="p">.</span><span class="n">unpack</span><span class="p">(</span><span class="err">&#39;</span><span class="o">&lt;</span><span class="n">L</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">bytes</span><span class="p">(</span><span class="n">b</span><span class="err">&#39;\</span><span class="n">x01</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">&#39;</span><span class="p">))</span>  <span class="o">==&gt;</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
 
-<span class="k">struct</span><span class="p">.</span><span class="n">pack</span><span class="p">(</span><span class="err">&#39;</span><span class="o">&lt;</span><span class="n">HH</span><span class="err">&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>    <span class="o">==&gt;</span> <span class="err">&#39;\</span><span class="n">x01</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x02</span><span class="err">\</span><span class="n">x00</span><span class="err">&#39;</span>
-<span class="k">struct</span><span class="p">.</span><span class="n">pack</span><span class="p">(</span><span class="err">&#39;</span><span class="o">&lt;</span><span class="n">LL</span><span class="err">&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>    <span class="o">==&gt;</span> <span class="err">&#39;\</span><span class="n">x01</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x02</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">&#39;</span>
-</pre></div>
+<div class="book-header" role="navigation">
+    
 
-
-<ul>
-<li>16进制串 &lt;==&gt; 字符串</li>
-</ul>
-<div class="hlcode"><pre><span class="err">&#39;</span><span class="n">abc</span><span class="err">&#39;</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="err">&#39;</span><span class="n">hex</span><span class="err">&#39;</span><span class="p">)</span>     <span class="o">==&gt;</span> <span class="err">&#39;</span><span class="mi">616263</span><span class="err">&#39;</span>
-<span class="n">binascii</span><span class="p">.</span><span class="n">b2a_hex</span><span class="p">(</span><span class="err">&#39;</span><span class="n">abc</span><span class="err">&#39;</span><span class="p">)</span> <span class="o">==&gt;</span> <span class="err">&#39;</span><span class="mi">616263</span><span class="err">&#39;</span>
-<span class="n">binascii</span><span class="p">.</span><span class="n">hexlify</span><span class="p">(</span><span class="err">&#39;</span><span class="n">abc</span><span class="err">&#39;</span><span class="p">)</span> <span class="o">==&gt;</span> <span class="err">&#39;</span><span class="mi">616263</span><span class="err">&#39;</span>
-
-<span class="err">&#39;</span><span class="mi">616263</span><span class="err">&#39;</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="err">&#39;</span><span class="n">hex</span><span class="err">&#39;</span><span class="p">)</span>      <span class="o">==&gt;</span> <span class="err">&#39;</span><span class="n">abc</span><span class="err">&#39;</span>
-<span class="n">binascii</span><span class="p">.</span><span class="n">a2b_hex</span><span class="p">(</span><span class="err">&#39;</span><span class="mi">616263</span><span class="err">&#39;</span><span class="p">)</span>  <span class="o">==&gt;</span> <span class="err">&#39;</span><span class="n">abc</span><span class="err">&#39;</span>
-<span class="n">binascii</span><span class="p">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="err">&#39;</span><span class="mi">616263</span><span class="err">&#39;</span><span class="p">)</span><span class="o">==&gt;</span> <span class="err">&#39;</span><span class="n">abc</span><span class="err">&#39;</span>
-</pre></div>
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >常用内置对象操作</a>
+    </h1>
+</div>
 
 
-<ul>
-<li>字符串 &lt;==&gt; 字节串</li>
-</ul>
-<div class="hlcode"><pre>
-</pre></div>
 
 
-<ul>
-<li>unicode</li>
-</ul>
-<p>\u 后面是十六进制的Unicode码</p>
-<div class="hlcode"><pre><span class="o">+</span> <span class="n">prefix</span> <span class="n">u</span>
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="0x01-string">0x01 string</h2><h3 id="&#x57FA;&#x672C;&#x64CD;&#x4F5C;">&#x57FA;&#x672C;&#x64CD;&#x4F5C;</h3><pre><code class="lang-python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">&quot;a&quot;</span> + <span class="hljs-string">&quot;b&quot;</span>
+<span class="hljs-string">&apos;ab&apos;</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">&quot;a&quot;</span> * <span class="hljs-number">3</span>
+<span class="hljs-string">&apos;aaa&apos;</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">&quot;,&quot;</span>.join([<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>])           <span class="hljs-comment"># &#x5408;&#x5E76;&#x591A;&#x4E2A;&#x5B57;&#x7B26;&#x4E32;</span>
+<span class="hljs-string">&apos;a,b,c&apos;</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">&quot;a,b,c&quot;</span>.split(<span class="hljs-string">&quot;,&quot;</span>)                  <span class="hljs-comment"># &#x6309;&#x6307;&#x5B9A;&#x5B57;&#x7B26;&#x5206;&#x5272;</span>
+[<span class="hljs-string">&apos;a&apos;</span>, <span class="hljs-string">&apos;b&apos;</span>, <span class="hljs-string">&apos;c&apos;</span>]
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">&quot;a\nb\r\nc&quot;</span>.splitlines()            <span class="hljs-comment"># &#x6309;&#x884C;&#x5206;&#x5272;</span>
+[<span class="hljs-string">&apos;a&apos;</span>, <span class="hljs-string">&apos;b&apos;</span>, <span class="hljs-string">&apos;c&apos;</span>]
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">&quot;a\nb\r\nc&quot;</span>.splitlines(<span class="hljs-keyword">True</span>)        <span class="hljs-comment"># &#x5206;&#x5272;&#x540E;,&#x4FDD;&#x7559;&#x6362;&#x884C;&#x884C;&#x7B26;&#x3002;</span>
+[<span class="hljs-string">&apos;a\n&apos;</span>, <span class="hljs-string">&apos;b\r\n&apos;</span>, <span class="hljs-string">&apos;c&apos;</span>]
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">&quot;abc&quot;</span>.startswith(<span class="hljs-string">&quot;ab&quot;</span>), <span class="hljs-string">&quot;abc&quot;</span>.endswith(<span class="hljs-string">&quot;bc&quot;</span>)!       <span class="hljs-comment"># &#x5224;&#x65AD;&#x662F;&#x5426;&#x4EE5;&#x7279;&#x5B9A;&#x5B50;&#x5B50;&#x4E32;&#x5F00;&#x59CB;&#x6216;&#x7ED3;&#x675F;&#x3002;</span>
+<span class="hljs-keyword">True</span>, <span class="hljs-keyword">True</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">&quot;abc&quot;</span>.upper(), <span class="hljs-string">&quot;Abc&quot;</span>.lower()        <span class="hljs-comment"># &#x5927;&#x5927;&#x5C0F;&#x5C0F;&#x5199;&#x8F6C;&#x6362;&#x3002;</span>
+<span class="hljs-string">&apos;ABC&apos;</span>, <span class="hljs-string">&apos;abc&apos;</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">&quot;abcabc&quot;</span>.find(<span class="hljs-string">&quot;bc&quot;</span>), <span class="hljs-string">&quot;abcabc&quot;</span>.find(<span class="hljs-string">&quot;bc&quot;</span>, <span class="hljs-number">2</span>)         <span class="hljs-comment"># &#x53EF;&#x6307;&#x5B9A;&#x67E5;&#x627E;&#x8D77;&#x59CB;&#x7ED3;&#x675F;&#x4F4D;&#x7F6E;&#x3002;</span>
+<span class="hljs-number">1</span>, <span class="hljs-number">4</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">&quot; abc&quot;</span>.lstrip(), <span class="hljs-string">&quot;abc &quot;</span>.rstrip(), <span class="hljs-string">&quot; abc &quot;</span>.strip()   <span class="hljs-comment"># &#x5254;&#x9664;&#x524D;&#x540E;&#x7A7A;&#x683C;&#x3002;</span>
+<span class="hljs-string">&apos;abc&apos;</span>, <span class="hljs-string">&apos;abc&apos;</span>, <span class="hljs-string">&apos;abc&apos;</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">&quot;abc&quot;</span>.strip(<span class="hljs-string">&quot;ac&quot;</span>)                   <span class="hljs-comment"># &#x53EF;&#x5220;&#x9664;&#x6307;&#x5B9A;&#x7684;&#x524D;&#x540E;&#x7F00;&#x5B57;&#x7B26;&#x3002;</span>
+<span class="hljs-string">&apos;b&apos;</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">&quot;abcabc&quot;</span>.replace(<span class="hljs-string">&quot;bc&quot;</span>, <span class="hljs-string">&quot;BC&quot;</span>)        <span class="hljs-comment"># &#x53EF;&#x6307;&#x5B9A;&#x66FF;&#x6362;&#x6B21;&#x6570;&#x3002;</span>
+<span class="hljs-string">&apos;aBCaBC&apos;</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">&quot;a\tbc&quot;</span>.expandtabs(<span class="hljs-number">4</span>)               <span class="hljs-comment"># &#x5C06; tab &#x66FF;&#x6362;&#x6210;&#x7A7A;&#x683C;&#x3002;</span>
+<span class="hljs-string">&apos;a    bc&apos;</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">&quot;123&quot;</span>.ljust(<span class="hljs-number">5</span>, <span class="hljs-string">&apos;0&apos;</span>), <span class="hljs-string">&quot;456&quot;</span>.rjust(<span class="hljs-number">5</span>, <span class="hljs-string">&apos;0&apos;</span>), <span class="hljs-string">&quot;abc&quot;</span>.center(<span class="hljs-number">10</span>, <span class="hljs-string">&apos;*&apos;</span>)     <span class="hljs-comment"># &#x586B;&#x5145;</span>
+<span class="hljs-string">&apos;12300&apos;</span>, <span class="hljs-string">&apos;00456&apos;</span>, <span class="hljs-string">&apos;***abc****&apos;</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">&quot;123&quot;</span>.zfill(<span class="hljs-number">6</span>), <span class="hljs-string">&quot;123456&quot;</span>.zfill(<span class="hljs-number">4</span>)   <span class="hljs-comment"># &#x6570;&#x5B57;&#x586B;&#x5145;</span>
+<span class="hljs-string">&apos;000123&apos;</span>, <span class="hljs-string">&apos;123456&apos;</span></code></pre>
+<h3 id="&#x683C;&#x5F0F;&#x5316;">&#x683C;&#x5F0F;&#x5316;</h3><p>Python &#x63D0;&#x4F9B;&#x4E86;&#x4E24;&#x79CD;&#x5B57;&#x7B26;&#x4E32;&#x683C;&#x5F0F;&#x5316;&#x65B9;&#x65B9;&#x6CD5;</p><ol><li><code>%[(key)][flags][width][.precision]typecode</code>
+</li></ol>
+<p>&#x6807;&#x8BB0;: - &#x5DE6;&#x5BF9;&#x9F50;, + &#x6570;&#x5B57;&#x7B26;&#x53F7;, # &#x8FDB;&#x5236;&#x524D;&#x7F00;, &#x6216;&#x8005;&#x7528;&#x7528;&#x7A7A;&#x683C;&#x3001;0 &#x586B;&#x5145;&#x3002;</p><pre><code class="lang-python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">&quot;%(key)s=%(value)d&quot;</span> % dict(key = <span class="hljs-string">&quot;a&quot;</span>, value = <span class="hljs-number">10</span>)       <span class="hljs-comment"># key</span>
+<span class="hljs-string">&apos;a=10&apos;</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">&quot;[%-10s]&quot;</span> % <span class="hljs-string">&quot;a&quot;</span>         <span class="hljs-comment"># &#x5DE6;&#x5BF9;&#x9F50;</span>
+<span class="hljs-string">&apos;[a         ]&apos;</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">&quot;%+d, %+d&quot;</span> % (<span class="hljs-number">-10</span>, <span class="hljs-number">10</span>)  <span class="hljs-comment"># &#x6570;&#x5B57;&#x7B26;&#x53F7;</span>
+<span class="hljs-string">&apos;-10, +10&apos;</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">&quot;%010d&quot;</span> % <span class="hljs-number">3</span>             <span class="hljs-comment"># &#x586B;&#x5145;</span>
+<span class="hljs-string">&apos;0000000003&apos;</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">&quot;%.2f&quot;</span> % <span class="hljs-number">0.1234</span>         <span class="hljs-comment"># &#x5C0F;&#x5C0F;&#x6570;&#x4F4D;</span>
+<span class="hljs-string">&apos;0.12&apos;</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">&quot;%#x, %#X&quot;</span> % (<span class="hljs-number">100</span>, <span class="hljs-number">200</span>) <span class="hljs-comment"># &#x5341;&#x5341;&#x516D;&#x8FDB;&#x5236;&#x3001;&#x524D;&#x7F00;&#x3001;&#x5927;&#x5927;&#x5C0F;&#x5C0F;&#x5199;</span>
+<span class="hljs-string">&apos;0x64, 0XC8&apos;</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">&quot;%s, %r&quot;</span> % (m, m)       <span class="hljs-comment"># s: str(); r: repr()</span>
+<span class="hljs-string">&apos;test..., &lt;__main__.M object at 0x103c4aa10&gt;&apos;</span></code></pre>
+<ol><li>format &#x65B9;&#x65B9;&#x6CD5;&#x652F;&#x652F;&#x6301;&#x66F4;&#x591A;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;,&#x5305;&#x62EC;&#x5217;&#x8868;&#x3001;&#x5B57;&#x5178;&#x3001;&#x5BF9;&#x8C61;&#x6210;&#x5458;&#x7B49;
+</li></ol>
+<p><code>{field!convertflag:formatspec}</code></p><p>&#x683C;&#x5F0F;&#x5316;&#x89C4;&#x8303;: formatspec: <code>[[fill]align][sign][#][0][width][.precision][typecode]</code></p><pre><code>&gt;&gt;&gt; &quot;{key}={value}&quot;.format(key=&quot;a&quot;, value=10)   # &#x4F7F;&#x7528;&#x7528;&#x547D;&#x540D;&#x53C2;&#x6570;
+&apos;a=10&apos;
+&gt;&gt;&gt; &quot;{0},{1},{0}&quot;.format(1, 2)                  # field &#x53EF;&#x591A;&#x6B21;&#x4F7F;&#x7528;&#x7528;
+&apos;1,2,1&apos;
+&gt;&gt;&gt; &quot;{0:,}&quot;.format(1234567)                     # &#x5343;&#x5206;&#x4F4D;&#x7B26;&#x53F7; 
+&apos;1,234,567&apos;
+&gt;&gt;&gt; &quot;{0:,.2f}&quot;.format(12345.6789)               # &#x5343;&#x5206;&#x4F4D;,&#x5E26;&#x5C0F;&#x5C0F;&#x6570;&#x4F4D;&#x3002;
+&apos;12,345.68&apos;
+&gt;&gt;&gt; &quot;[{0:&lt;10}], [{0:^10}], [{0:*&gt;10}]&quot;.format(&quot;a&quot;)! # &#x5DE6;&#x4E2D;&#x53F3;&#x5BF9;&#x9F50;,&#x53EF;&#x6307;&#x5B9A;&#x586B;&#x5145;&#x5B57;&#x7B26;&#x3002;
+&apos;[a       ], [    a     ], [*********a]&apos;
+&gt;&gt;&gt; import sys
+&gt;&gt;&gt; &quot;{0.platform}&quot;.format(sys)          # &#x6210;&#x5458;
+&apos;linux2&apos;
+&gt;&gt;&gt; &quot;{0[a]}&quot;.format(dict(a=10, b=20))   # &#x5B57;&#x5178;
+&apos;10&apos;
+&gt;&gt;&gt; &quot;{0[5]}&quot;.format(range(10))          # &#x5217;&#x8868;
+&apos;5&apos;</code></pre>
+<p>&#x53E6;&#x6709; string.Template &#x6A21;&#x677F;&#x53EF;&#x4F9B;&#x4F7F;&#x7528;&#x7528;&#x3002;&#x8BE5;&#x6A21;&#x5757;&#x8FD8;&#x5B9A;&#x4E49;&#x4E86;&#x5404;&#x79CD;&#x5E38;&#x89C1;&#x7684;&#x5B57;&#x7B26;&#x5E8F;&#x5217;&#x3002;</p><pre><code>&gt;&gt;&gt; from string import letters, digits, Template
+&gt;&gt;&gt; letters`        # &#x5B57;&#x6BCD;&#x6BCD;&#x8868;
+&apos;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&apos;
+&gt;&gt;&gt; digits          # &#x6570;&#x5B57;&#x8868;
+&apos;0123456789&apos;
+&gt;&gt;&gt; Template(&quot;$name, $age&quot;).substitute(name = &quot;User1&quot;, age = 20)    # &#x6A21;&#x677F;&#x66FF;&#x6362;&#x3002;
+&apos;User1, 20&apos;
+&gt;&gt;&gt; Template(&quot;${name}, $age&quot;).safe_substitute(name = &quot;User1&quot;)       # &#x6CA1;&#x627E;&#x5230;&#x503C;,&#x4E0D;&#x4F1A;&#x629B;&#x51FA;&#x5F02;&#x5E38;&#x3002;
+&apos;User1, $age&apos;</code></pre>
+<h2 id="0x02-&#x5B57;&#x7B26;&#x4E32;&#x6570;&#x5B57;&#x8F6C;&#x6362;">0x02 &#x5B57;&#x7B26;&#x4E32;&#x6570;&#x5B57;&#x8F6C;&#x6362;</h2><p>&#x4E8C;&#x8FDB;&#x5236;&#xFF1A;    &#x2018;0b&#x2019; &#x5F00;&#x5934;
+&#x516B;&#x8FDB;&#x5236;&#xFF1A;    &#x2018;0o&#x2019; &#x5F00;&#x5934;
+&#x5341;&#x516D;&#x8FDB;&#x5236;&#xFF1A;  &#x2018;0x&#x2019; &#x5F00;&#x5934;</p><ul><li>&#x6574;&#x6570; &lt;==&gt; &#x5B57;&#x7B26;&#x4E32;
+</li></ul>
+<pre><code>hex()       hex(number) -&gt; string       
+&gt; hex(10) ==&gt; &apos;0xa&apos;
 
-<span class="n">u</span><span class="err">‘中文’</span> <span class="o">==&gt;</span> <span class="n">u</span><span class="err">&#39;\</span><span class="n">u4e2d</span><span class="err">\</span><span class="n">u6587</span><span class="err">&#39;</span>
+int()       int(x, base=10) -&gt; int or long
+&gt; int(&apos;0b100&apos;, 0) ==&gt; 4
+&gt; int(&apos;0b100&apos;, 2) ==&gt; 4
+&gt; int(&apos;0x10&apos;, 16) ==&gt; 16
+&gt; int(&apos;10&apos;, 16)   ==&gt; 16
 
-<span class="o">+</span> <span class="n">unicode</span> <span class="err">强制转换</span>
+bin()       bin(number) -&gt; string
+&gt; bin(4) ==&gt; &apos;0b100&apos;
 
-<span class="err">要求</span> <span class="n">python</span><span class="err">文件中指定了对应的编码类型；并且对应的</span><span class="n">python</span><span class="err">文件的确是以该编码方式保存的</span>
-</pre></div>
+&quot;{0:b}&quot;.format(4) ==&gt; &apos;100&apos;</code></pre>
+<ul><li>&#x6574;&#x6570; &lt;==&gt; &#x5B57;&#x8282;&#x4E32;
+</li></ul>
+<p>short:2&#x5B57;&#x8282;&#xFF0C; long&#xFF1A;4&#x5B57;&#x8282;</p><pre><code>import struct
 
+struct.unpack(&apos;&lt;HH&apos;, bytes(b&apos;\x01\x00\x00\x00&apos;)) ==&gt; (1,0)
+struct.unpack(&apos;&lt;L&apos;, bytes(b&apos;\x01\x00\x00\x00&apos;))  ==&gt; (1,)
 
-<div class="hlcode"><pre><span class="cp"># -*- coding: utf-8 -*-</span>
+struct.pack(&apos;&lt;HH&apos;, 1,2)    ==&gt; &apos;\x01\x00\x02\x00&apos;
+struct.pack(&apos;&lt;LL&apos;, 1,2)    ==&gt; &apos;\x01\x00\x00\x00\x02\x00\x00\x00&apos;</code></pre>
+<ul><li>16&#x8FDB;&#x5236;&#x4E32; &lt;==&gt; &#x5B57;&#x7B26;&#x4E32;
+</li></ul>
+<pre><code>&apos;abc&apos;.encode(&apos;hex&apos;)     ==&gt; &apos;616263&apos;
+binascii.b2a_hex(&apos;abc&apos;) ==&gt; &apos;616263&apos;
+binascii.hexlify(&apos;abc&apos;) ==&gt; &apos;616263&apos;
 
-<span class="n">import</span> <span class="n">sys</span>
+&apos;616263&apos;.decode(&apos;hex&apos;)      ==&gt; &apos;abc&apos;
+binascii.a2b_hex(&apos;616263&apos;)  ==&gt; &apos;abc&apos;
+binascii.unhexlify(&apos;616263&apos;)==&gt; &apos;abc&apos;</code></pre>
+<ul><li>&#x5B57;&#x7B26;&#x4E32; &lt;==&gt; &#x5B57;&#x8282;&#x4E32;
+</li></ul>
+<pre><code>
+    * unicode
 
-<span class="n">reload</span><span class="p">(</span><span class="n">sys</span><span class="p">)</span>
-<span class="n">sys</span><span class="p">.</span><span class="n">setdefaultencoding</span><span class="p">(</span><span class="s">&quot;utf-8&quot;</span><span class="p">)</span>
+    \\u &#x540E;&#x9762;&#x662F;&#x5341;&#x516D;&#x8FDB;&#x5236;&#x7684;Unicode&#x7801;
 
-<span class="n">s</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="err">&#39;中文&#39;</span><span class="p">)</span>
+        + prefix u
 
-<span class="o">&gt;&gt;&gt;</span> <span class="n">u</span><span class="err">&#39;\</span><span class="n">u4e2d</span><span class="err">\</span><span class="n">u6587</span><span class="err">&#39;</span>
-</pre></div>
+        u&#x2018;&#x4E2D;&#x6587;&#x2019; ==&gt; u&apos;\u4e2d\u6587&apos;
 
+        + unicode &#x5F3A;&#x5236;&#x8F6C;&#x6362;
 
-<ul>
-<li>unicode &lt;==&gt; string</li>
-</ul>
-<p>unicode ==&gt; string : encode</p>
-<p>string  ==&gt; unicode: decode</p>
-<h2 id="0x03">0x03 编码</h2>
-<p>Python 2.x 默认采用用 ASCII 编码。为了完成编码转换,必须和操作系统字符编码统一一起来。</p>
-<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">import</span> <span class="n">sys</span><span class="p">,</span> <span class="n">locale</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">sys</span><span class="p">.</span><span class="n">getdefaultencoding</span><span class="p">()</span>            <span class="err">#</span> <span class="n">Python</span> <span class="err">默认编码。</span>
-<span class="err">&#39;</span><span class="n">ascii</span><span class="err">&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="n">locale</span><span class="p">.</span><span class="n">getdefaultlocale</span><span class="p">();</span> <span class="n">c</span>    <span class="err">#</span> <span class="err">获取当前系统编码。</span>
-<span class="p">(</span><span class="err">&#39;</span><span class="n">zh_CN</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span><span class="err">&#39;</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">reload</span><span class="p">(</span><span class="n">sys</span><span class="p">)</span>                         <span class="err">#</span> <span class="n">setdefaultencoding</span> <span class="err">在被初始化时被</span> <span class="n">site</span><span class="p">.</span><span class="n">py</span> <span class="err">删掉了。</span>
-<span class="o">&lt;</span><span class="n">module</span> <span class="err">&#39;</span><span class="n">sys</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">built</span><span class="o">-</span><span class="n">in</span><span class="p">)</span><span class="o">&gt;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">sys</span><span class="p">.</span><span class="n">setdefaultencoding</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>        <span class="err">#</span> <span class="err">重新设置默认编码。</span>
-</pre></div>
-
-
-<p>str、unicode 都提供了 encode 和 decode 编码转换方方法。</p>
-<ul>
-<li>encode: 将默认编码转换为其他编码。</li>
-<li>decode: 将默认或者指定编码字符串转换为 unicode</li>
-</ul>
-<p>标准库 codecs 模块用用来处理更复杂的编码转换</p>
-<h3 id="base64">base64</h3>
-<ul>
-<li>characters set</li>
-</ul>
-<div class="hlcode"><pre><span class="n">ABCDEFGHIJKLMNOP</span>
-<span class="n">QRSTUVWXYZabcdef</span>
-<span class="n">ghijklmnopqrstuv</span>
-<span class="n">wxyz0123456789</span><span class="o">+/</span>
-</pre></div>
-
-
-<h2 id="0x04-list">0x04 list</h2>
-<h3 id="_3">基本操作</h3>
-<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="p">[]</span>                          <span class="c"># 空列表</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span>   
-<span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">]</span>     <span class="c"># 连接多个列表</span>
-<span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="s">&quot;abcd&quot;</span><span class="p">)</span>                <span class="c"># 将序列类型或迭代器转换为列表</span>
-<span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>       <span class="c"># 生生成器表达式</span>
-<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
-
-<span class="o">&gt;&gt;&gt;</span><span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="s">&quot;abcbc&quot;</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span><span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>                      <span class="c"># 切片</span>
-<span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">)</span>                <span class="c"># 统计元素项</span>
-<span class="mi">2</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>             <span class="c"># 从指定位置查找项，返回序号</span>
-<span class="mi">3</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;d&#39;</span><span class="p">)</span>               <span class="c"># 追加元素</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span>
-<span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>              <span class="c"># 指定位置插入元素</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span>
-<span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>          <span class="c"># 合并列表</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span>
-<span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">)</span>               <span class="c"># 移除第一个指定元素</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span>
-<span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>                    <span class="c"># 弹出指定位置的元素(默认最后项)</span>
-<span class="s">&#39;a&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span>
-<span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-</pre></div>
-
-
-<h3 id="bisect">bisect 向有序列表中插入入元素</h3>
-<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">import</span> <span class="n">bisect</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;d&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">,</span> <span class="s">&quot;e&quot;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span><span class="p">.</span><span class="n">sort</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span>
-<span class="p">[</span><span class="sc">&#39;a&#39;</span><span class="p">,</span> <span class="sc">&#39;c&#39;</span><span class="p">,</span> <span class="sc">&#39;d&#39;</span><span class="p">,</span> <span class="sc">&#39;e&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">bisect</span><span class="p">.</span><span class="n">insort</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span>
-<span class="p">[</span><span class="sc">&#39;a&#39;</span><span class="p">,</span> <span class="sc">&#39;b&#39;</span><span class="p">,</span> <span class="sc">&#39;c&#39;</span><span class="p">,</span> <span class="sc">&#39;d&#39;</span><span class="p">,</span> <span class="sc">&#39;e&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">bisect</span><span class="p">.</span><span class="n">insort</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="s">&quot;d&quot;</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span>
-<span class="p">[</span><span class="sc">&#39;a&#39;</span><span class="p">,</span> <span class="sc">&#39;b&#39;</span><span class="p">,</span> <span class="sc">&#39;c&#39;</span><span class="p">,</span> <span class="sc">&#39;d&#39;</span><span class="p">,</span> <span class="sc">&#39;d&#39;</span><span class="p">,</span> <span class="sc">&#39;e&#39;</span><span class="p">]</span>
-</pre></div>
-
-
-<h3 id="array">array</h3>
-<p>某些时候,可以考虑用用数组代替列表。 和列表存储对象指针不同,数组直接内嵌数据,既省了创建
-对象的内存开销,又又提升了读写效率。</p>
-<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">import</span> <span class="n">array</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">array</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="s">&quot;l&quot;</span><span class="p">,</span> <span class="n">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>     <span class="err">#</span> <span class="err">用用其他序列类型初始化数组。</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
-<span class="n">array</span><span class="p">(</span><span class="sc">&#39;l&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">.</span><span class="n">tolist</span><span class="p">()</span>                          <span class="err">#</span> <span class="err">转换为列表。</span>
-<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">array</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="s">&quot;c&quot;</span><span class="p">)</span>                <span class="err">#</span> <span class="err">创建特定类型数组。</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">.</span><span class="n">fromstring</span><span class="p">(</span><span class="s">&quot;abc&quot;</span><span class="p">)</span>                 <span class="err">#</span> <span class="err">从字符串添加元素。</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
-<span class="n">array</span><span class="p">(</span><span class="sc">&#39;c&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">abc</span><span class="err">&#39;</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">.</span><span class="n">fromlist</span><span class="p">(</span><span class="n">list</span><span class="p">(</span><span class="s">&quot;def&quot;</span><span class="p">))</span>             <span class="err">#</span> <span class="err">从列表添加元素。</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
-<span class="n">array</span><span class="p">(</span><span class="sc">&#39;c&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">abcdef</span><span class="err">&#39;</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">.</span><span class="n">extend</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="s">&quot;c&quot;</span><span class="p">,</span> <span class="s">&quot;xyz&quot;</span><span class="p">))</span>   <span class="err">#</span> <span class="err">合并列表或数组。</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
-<span class="n">array</span><span class="p">(</span><span class="sc">&#39;c&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">abcdefxyz</span><span class="err">&#39;</span><span class="p">)</span>
-</pre></div>
+        &#x8981;&#x6C42; python&#x6587;&#x4EF6;&#x4E2D;&#x6307;&#x5B9A;&#x4E86;&#x5BF9;&#x5E94;&#x7684;&#x7F16;&#x7801;&#x7C7B;&#x578B;&#xFF1B;&#x5E76;&#x4E14;&#x5BF9;&#x5E94;&#x7684;python&#x6587;&#x4EF6;&#x7684;&#x786E;&#x662F;&#x4EE5;&#x8BE5;&#x7F16;&#x7801;&#x65B9;&#x5F0F;&#x4FDD;&#x5B58;&#x7684;
 
 
-<h2 id="0x05-tuple">0x05 tuple</h2>
-<ul>
-<li>只读对象,元组和元素指针数组内存是一一次性连续分配的</li>
-<li>虚拟机缓存 n 个元素数量小小于 20 的元组复用用对象</li>
-</ul>
-<p>在编码中,应该尽可能用用元组代替列表。除内存复用用更高高效外,其只读特征更利于并行行开发</p>
-<h3 id="_4">基本操作:</h3>
-<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span>             <span class="err">#</span> <span class="err">少了逗号</span><span class="p">,</span><span class="err">就成了普通的括号运算符了</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">type</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="o">&lt;</span><span class="n">type</span> <span class="err">&#39;</span><span class="kt">int</span><span class="err">&#39;</span><span class="o">&gt;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,)</span>            <span class="err">#</span> <span class="err">这才是元组</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">type</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="o">&lt;</span><span class="n">type</span> <span class="err">&#39;</span><span class="n">tuple</span><span class="err">&#39;</span><span class="o">&gt;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="n">tuple</span><span class="p">(</span><span class="s">&quot;abcadef&quot;</span><span class="p">)</span><span class="o">!</span> <span class="o">!</span> <span class="o">!</span> <span class="err">#</span> <span class="err">将其他序列类型转换成元组。</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span>
-<span class="p">(</span><span class="sc">&#39;a&#39;</span><span class="p">,</span> <span class="sc">&#39;b&#39;</span><span class="p">,</span> <span class="sc">&#39;c&#39;</span><span class="p">,</span> <span class="sc">&#39;a&#39;</span><span class="p">,</span> <span class="sc">&#39;d&#39;</span><span class="p">,</span> <span class="sc">&#39;e&#39;</span><span class="p">,</span> <span class="sc">&#39;f&#39;</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">)</span>        <span class="err">#</span> <span class="err">元素统计。</span>
-<span class="mi">2</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">.</span><span class="n">index</span><span class="p">(</span><span class="s">&quot;d&quot;</span><span class="p">)</span>        <span class="err">#</span> <span class="err">查找元素</span><span class="p">,</span><span class="err">返回序号</span>
-<span class="mi">4</span>
-</pre></div>
+# -_- coding: utf-8 -_-
 
+import sys
 
-<h3 id="namedtuple">标准库 namedtuple</h3>
-<p>可用用名字访问元素项。</p>
-<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">from</span> <span class="n">collections</span> <span class="n">import</span> <span class="n">namedtuple</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">User</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s">&quot;User&quot;</span><span class="p">,</span> <span class="s">&quot;name age&quot;</span><span class="p">)</span>       <span class="err">#</span> <span class="err">空格分隔字段名</span><span class="p">,</span><span class="err">或使用用迭代器。</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">u</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="s">&quot;user1&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">u</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">u</span><span class="p">.</span><span class="n">age</span>
-<span class="p">(</span><span class="err">&#39;</span><span class="n">user1</span><span class="err">&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-</pre></div>
+reload\(sys\)
+sys.setdefaultencoding\(&quot;utf-8&quot;\)
 
+s = unicode\(&apos;&#x4E2D;&#x6587;&apos;\)
 
-<p>其实 namedtuple 并不是元组,而而是利用用模板动态创建的自自定义类型</p>
-<h2 id="0x06-dict">0x06 dict</h2>
-<p>字典 (dict) 采用用开放地址法的哈希表实现</p>
-<ul>
-<li>自自带元素容量为 8 的 smalltable,只有 "超出" 时才到堆上额外分配元素表内存。</li>
-<li>虚拟机缓存 80 个字典复用用对象,但在堆上分配的元素表内存会被释放。</li>
-<li>按需动态调整容量。扩容或收缩操作都将重新分配内存,重新哈希</li>
-<li>删除元素操作不会立立即收缩内存</li>
-</ul>
-<h3 id="_5">创建字典</h3>
-<blockquote>
-<blockquote>
-<blockquote>
-<p 0_="0," 1="1" 2_="2," _a_:="'a':" _b_:="'b':" _c_:="'c':">{}              # 空字典
-{"a":1, "b":2}  # 普通构造方方式
-dict(a = 1, b = 2)          # 构造
-{'a': 1, 'b': 2}
-dict((["a", 1], ["b", 2]))  # 用两个序列类型构造字典
-{'a': 1, 'b': 2}
-dict(zip("ab", range(2)))   # 同上
-{'a': 0, 'b': 1}
-dict(map(None, "abc", range(2)))    #同上
-{'a': 0, 'c': None, 'b': 1}
-dict.fromkeys("abc", 1)     # 用序列作 key， 并提供默认的 value
-{'a': 1, 'c': 1, 'b': 1}
-{k:v for k, v in zip("abc", range(3))}      # 使用用生生成表达式构造字典。</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<div class="hlcode"><pre><span class="c">### 基本操作</span>
-</pre></div>
+&gt; &gt; &gt; u&apos;\u4e2d\u6587&apos;
+&gt; &gt; &gt; \`\`\`
 
+* unicode &amp;lt;==&amp;gt; string
 
-<blockquote>
-<blockquote>
-<blockquote>
-<p>d = {"a":1, "b":2}
-"b" in d            # 判断是否包含 key
+unicode ==&amp;gt; string : encode
+
+string  ==&amp;gt; unicode: decode
+
+## 0x03 &#x7F16;&#x7801;
+
+Python 2.x &#x9ED8;&#x8BA4;&#x91C7;&#x7528;&#x7528; ASCII &#x7F16;&#x7801;&#x3002;&#x4E3A;&#x4E86;&#x5B8C;&#x6210;&#x7F16;&#x7801;&#x8F6C;&#x6362;,&#x5FC5;&#x987B;&#x548C;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#x7EDF;&#x4E00;&#x4E00;&#x8D77;&#x6765;&#x3002;
+</code></pre>
+<blockquote><blockquote><blockquote><p>import sys, locale
+sys.getdefaultencoding()            # Python &#x9ED8;&#x8BA4;&#x7F16;&#x7801;&#x3002;
+&apos;ascii&apos;
+c = locale.getdefaultlocale(); c    # &#x83B7;&#x53D6;&#x5F53;&#x524D;&#x7CFB;&#x7EDF;&#x7F16;&#x7801;&#x3002;
+(&apos;zh_CN&apos;, &apos;UTF-8&apos;)
+reload(sys)                         # setdefaultencoding &#x5728;&#x88AB;&#x521D;&#x59CB;&#x5316;&#x65F6;&#x88AB; site.py &#x5220;&#x6389;&#x4E86;&#x3002;</p><p><module 'sys'="" (built-in)="">
+sys.setdefaultencoding(c[1])        # &#x91CD;&#x65B0;&#x8BBE;&#x7F6E;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;&#x3002;
+```</module></p></blockquote></blockquote></blockquote><p>str&#x3001;unicode &#x90FD;&#x63D0;&#x4F9B;&#x4E86; encode &#x548C; decode &#x7F16;&#x7801;&#x8F6C;&#x6362;&#x65B9;&#x65B9;&#x6CD5;&#x3002;</p><ul><li>encode: &#x5C06;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;&#x8F6C;&#x6362;&#x4E3A;&#x5176;&#x4ED6;&#x7F16;&#x7801;&#x3002;
+</li>
+<li>decode: &#x5C06;&#x9ED8;&#x8BA4;&#x6216;&#x8005;&#x6307;&#x5B9A;&#x7F16;&#x7801;&#x5B57;&#x7B26;&#x4E32;&#x8F6C;&#x6362;&#x4E3A; unicode
+</li></ul>
+<p>&#x6807;&#x51C6;&#x5E93; codecs &#x6A21;&#x5757;&#x7528;&#x7528;&#x6765;&#x5904;&#x7406;&#x66F4;&#x590D;&#x6742;&#x7684;&#x7F16;&#x7801;&#x8F6C;&#x6362;</p><h3 id="base64">base64</h3><ul><li>characters set
+</li></ul>
+<pre><code>ABCDEFGHIJKLMNOP
+QRSTUVWXYZabcdef
+ghijklmnopqrstuv
+wxyz0123456789+/</code></pre>
+<h2 id="0x04-list">0x04 list</h2><h3 id="&#x57FA;&#x672C;&#x64CD;&#x4F5C;">&#x57FA;&#x672C;&#x64CD;&#x4F5C;</h3><pre><code class="lang-python"><span class="hljs-meta">&gt;&gt;&gt; </span>[]                          <span class="hljs-comment"># &#x7A7A;&#x5217;&#x8868;</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>[<span class="hljs-string">&apos;a&apos;</span>, <span class="hljs-string">&apos;b&apos;</span>] * <span class="hljs-number">3</span>   
+[<span class="hljs-string">&apos;a&apos;</span>, <span class="hljs-string">&apos;b&apos;</span>, <span class="hljs-string">&apos;a&apos;</span>, <span class="hljs-string">&apos;b&apos;</span>, <span class="hljs-string">&apos;a&apos;</span>, <span class="hljs-string">&apos;b&apos;</span>]
+<span class="hljs-meta">&gt;&gt;&gt; </span>[<span class="hljs-string">&apos;a&apos;</span>, <span class="hljs-string">&apos;b&apos;</span>] + [<span class="hljs-string">&apos;c&apos;</span>, <span class="hljs-string">&apos;d&apos;</span>]     <span class="hljs-comment"># &#x8FDE;&#x63A5;&#x591A;&#x4E2A;&#x5217;&#x8868;</span>
+[<span class="hljs-string">&apos;a&apos;</span>, <span class="hljs-string">&apos;b&apos;</span>, <span class="hljs-string">&apos;c&apos;</span>, <span class="hljs-string">&apos;d&apos;</span>]
+<span class="hljs-meta">&gt;&gt;&gt; </span>list(<span class="hljs-string">&quot;abcd&quot;</span>)                <span class="hljs-comment"># &#x5C06;&#x5E8F;&#x5217;&#x7C7B;&#x578B;&#x6216;&#x8FED;&#x4EE3;&#x5668;&#x8F6C;&#x6362;&#x4E3A;&#x5217;&#x8868;</span>
+[<span class="hljs-string">&apos;a&apos;</span>, <span class="hljs-string">&apos;b&apos;</span>, <span class="hljs-string">&apos;c&apos;</span>, <span class="hljs-string">&apos;d&apos;</span>]
+<span class="hljs-meta">&gt;&gt;&gt; </span>[x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> range(<span class="hljs-number">3</span>)]       <span class="hljs-comment"># &#x751F;&#x751F;&#x6210;&#x5668;&#x8868;&#x8FBE;&#x5F0F;</span>
+[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>]
+
+&gt;&gt;&gt;l = list(<span class="hljs-string">&quot;abcbc&quot;</span>)
+&gt;&gt;&gt;l[<span class="hljs-number">1</span>:<span class="hljs-number">-1</span>]                      <span class="hljs-comment"># &#x5207;&#x7247;</span>
+[<span class="hljs-string">&apos;b&apos;</span>, <span class="hljs-string">&apos;c&apos;</span>, <span class="hljs-string">&apos;b&apos;</span>]
+<span class="hljs-meta">&gt;&gt;&gt; </span>l.count(<span class="hljs-string">&apos;b&apos;</span>)                <span class="hljs-comment"># &#x7EDF;&#x8BA1;&#x5143;&#x7D20;&#x9879;</span>
+<span class="hljs-number">2</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>l.index(<span class="hljs-string">&apos;b&apos;</span>, <span class="hljs-number">2</span>)             <span class="hljs-comment"># &#x4ECE;&#x6307;&#x5B9A;&#x4F4D;&#x7F6E;&#x67E5;&#x627E;&#x9879;&#xFF0C;&#x8FD4;&#x56DE;&#x5E8F;&#x53F7;</span>
+<span class="hljs-number">3</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>l.append(<span class="hljs-string">&apos;d&apos;</span>)               <span class="hljs-comment"># &#x8FFD;&#x52A0;&#x5143;&#x7D20;</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>l
+[<span class="hljs-string">&apos;a&apos;</span>, <span class="hljs-string">&apos;b&apos;</span>, <span class="hljs-string">&apos;c&apos;</span>, <span class="hljs-string">&apos;b&apos;</span>, <span class="hljs-string">&apos;c&apos;</span>, <span class="hljs-string">&apos;d&apos;</span>]
+<span class="hljs-meta">&gt;&gt;&gt; </span>l.insert(<span class="hljs-number">1</span>, <span class="hljs-number">5</span>)              <span class="hljs-comment"># &#x6307;&#x5B9A;&#x4F4D;&#x7F6E;&#x63D2;&#x5165;&#x5143;&#x7D20;</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>l
+[<span class="hljs-string">&apos;a&apos;</span>, <span class="hljs-number">5</span>, <span class="hljs-string">&apos;b&apos;</span>, <span class="hljs-string">&apos;c&apos;</span>, <span class="hljs-string">&apos;b&apos;</span>, <span class="hljs-string">&apos;c&apos;</span>, <span class="hljs-string">&apos;d&apos;</span>]
+<span class="hljs-meta">&gt;&gt;&gt; </span>l.extend(range(<span class="hljs-number">2</span>))          <span class="hljs-comment"># &#x5408;&#x5E76;&#x5217;&#x8868;</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>l
+[<span class="hljs-string">&apos;a&apos;</span>, <span class="hljs-number">5</span>, <span class="hljs-string">&apos;b&apos;</span>, <span class="hljs-string">&apos;c&apos;</span>, <span class="hljs-string">&apos;b&apos;</span>, <span class="hljs-string">&apos;c&apos;</span>, <span class="hljs-string">&apos;d&apos;</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>]
+<span class="hljs-meta">&gt;&gt;&gt; </span>l.remove(<span class="hljs-string">&apos;b&apos;</span>)               <span class="hljs-comment"># &#x79FB;&#x9664;&#x7B2C;&#x4E00;&#x4E2A;&#x6307;&#x5B9A;&#x5143;&#x7D20;</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>l
+[<span class="hljs-string">&apos;a&apos;</span>, <span class="hljs-number">5</span>, <span class="hljs-string">&apos;c&apos;</span>, <span class="hljs-string">&apos;b&apos;</span>, <span class="hljs-string">&apos;c&apos;</span>, <span class="hljs-string">&apos;d&apos;</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>]
+<span class="hljs-meta">&gt;&gt;&gt; </span>l.pop(<span class="hljs-number">0</span>)                    <span class="hljs-comment"># &#x5F39;&#x51FA;&#x6307;&#x5B9A;&#x4F4D;&#x7F6E;&#x7684;&#x5143;&#x7D20;(&#x9ED8;&#x8BA4;&#x6700;&#x540E;&#x9879;)</span>
+<span class="hljs-string">&apos;a&apos;</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>l
+[<span class="hljs-number">5</span>, <span class="hljs-string">&apos;c&apos;</span>, <span class="hljs-string">&apos;b&apos;</span>, <span class="hljs-string">&apos;c&apos;</span>, <span class="hljs-string">&apos;d&apos;</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>]</code></pre>
+<h3 id="bisect-&#x5411;&#x6709;&#x5E8F;&#x5217;&#x8868;&#x4E2D;&#x63D2;&#x5165;&#x5165;&#x5143;&#x7D20;">bisect &#x5411;&#x6709;&#x5E8F;&#x5217;&#x8868;&#x4E2D;&#x63D2;&#x5165;&#x5165;&#x5143;&#x7D20;</h3><pre><code>&gt;&gt;&gt; import bisect
+&gt;&gt;&gt; l = [&quot;a&quot;, &quot;d&quot;, &quot;c&quot;, &quot;e&quot;]
+&gt;&gt;&gt; l.sort()
+&gt;&gt;&gt; l
+[&apos;a&apos;, &apos;c&apos;, &apos;d&apos;, &apos;e&apos;]
+&gt;&gt;&gt; bisect.insort(l, &quot;b&quot;)
+&gt;&gt;&gt; l
+[&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;, &apos;e&apos;]
+&gt;&gt;&gt; bisect.insort(l, &quot;d&quot;)
+&gt;&gt;&gt; l
+[&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;, &apos;d&apos;, &apos;e&apos;]</code></pre>
+<h3 id="array">array</h3><p>&#x67D0;&#x4E9B;&#x65F6;&#x5019;,&#x53EF;&#x4EE5;&#x8003;&#x8651;&#x7528;&#x7528;&#x6570;&#x7EC4;&#x4EE3;&#x66FF;&#x5217;&#x8868;&#x3002; &#x548C;&#x5217;&#x8868;&#x5B58;&#x50A8;&#x5BF9;&#x8C61;&#x6307;&#x9488;&#x4E0D;&#x540C;,&#x6570;&#x7EC4;&#x76F4;&#x63A5;&#x5185;&#x5D4C;&#x6570;&#x636E;,&#x65E2;&#x7701;&#x4E86;&#x521B;&#x5EFA;
+&#x5BF9;&#x8C61;&#x7684;&#x5185;&#x5B58;&#x5F00;&#x9500;,&#x53C8;&#x53C8;&#x63D0;&#x5347;&#x4E86;&#x8BFB;&#x5199;&#x6548;&#x7387;&#x3002;</p><pre><code>&gt;&gt;&gt; import array
+&gt;&gt;&gt; a = array.array(&quot;l&quot;, range(10))     # &#x7528;&#x7528;&#x5176;&#x4ED6;&#x5E8F;&#x5217;&#x7C7B;&#x578B;&#x521D;&#x59CB;&#x5316;&#x6570;&#x7EC4;&#x3002;
+&gt;&gt;&gt; a
+array(&apos;l&apos;, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+&gt;&gt;&gt; a.tolist()                          # &#x8F6C;&#x6362;&#x4E3A;&#x5217;&#x8868;&#x3002;
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+&gt;&gt;&gt; a = array.array(&quot;c&quot;)                # &#x521B;&#x5EFA;&#x7279;&#x5B9A;&#x7C7B;&#x578B;&#x6570;&#x7EC4;&#x3002;
+&gt;&gt;&gt; a.fromstring(&quot;abc&quot;)                 # &#x4ECE;&#x5B57;&#x7B26;&#x4E32;&#x6DFB;&#x52A0;&#x5143;&#x7D20;&#x3002;
+&gt;&gt;&gt; a
+array(&apos;c&apos;, &apos;abc&apos;)
+&gt;&gt;&gt; a.fromlist(list(&quot;def&quot;))             # &#x4ECE;&#x5217;&#x8868;&#x6DFB;&#x52A0;&#x5143;&#x7D20;&#x3002;
+&gt;&gt;&gt; a
+array(&apos;c&apos;, &apos;abcdef&apos;)
+&gt;&gt;&gt; a.extend(array.array(&quot;c&quot;, &quot;xyz&quot;))   # &#x5408;&#x5E76;&#x5217;&#x8868;&#x6216;&#x6570;&#x7EC4;&#x3002;
+&gt;&gt;&gt; a
+array(&apos;c&apos;, &apos;abcdefxyz&apos;)</code></pre>
+<h2 id="0x05-tuple">0x05 tuple</h2><ul><li>&#x53EA;&#x8BFB;&#x5BF9;&#x8C61;,&#x5143;&#x7EC4;&#x548C;&#x5143;&#x7D20;&#x6307;&#x9488;&#x6570;&#x7EC4;&#x5185;&#x5B58;&#x662F;&#x4E00;&#x4E00;&#x6B21;&#x6027;&#x8FDE;&#x7EED;&#x5206;&#x914D;&#x7684;
+</li>
+<li>&#x865A;&#x62DF;&#x673A;&#x7F13;&#x5B58; n &#x4E2A;&#x5143;&#x7D20;&#x6570;&#x91CF;&#x5C0F;&#x5C0F;&#x4E8E; 20 &#x7684;&#x5143;&#x7EC4;&#x590D;&#x7528;&#x7528;&#x5BF9;&#x8C61;
+</li></ul>
+<p>&#x5728;&#x7F16;&#x7801;&#x4E2D;,&#x5E94;&#x8BE5;&#x5C3D;&#x53EF;&#x80FD;&#x7528;&#x7528;&#x5143;&#x7EC4;&#x4EE3;&#x66FF;&#x5217;&#x8868;&#x3002;&#x9664;&#x5185;&#x5B58;&#x590D;&#x7528;&#x7528;&#x66F4;&#x9AD8;&#x9AD8;&#x6548;&#x5916;,&#x5176;&#x53EA;&#x8BFB;&#x7279;&#x5F81;&#x66F4;&#x5229;&#x4E8E;&#x5E76;&#x884C;&#x884C;&#x5F00;&#x53D1;</p><h3 id="&#x57FA;&#x672C;&#x64CD;&#x4F5C;">&#x57FA;&#x672C;&#x64CD;&#x4F5C;:</h3><pre><code>&gt;&gt;&gt; a = (4)             # &#x5C11;&#x4E86;&#x9017;&#x53F7;,&#x5C31;&#x6210;&#x4E86;&#x666E;&#x901A;&#x7684;&#x62EC;&#x53F7;&#x8FD0;&#x7B97;&#x7B26;&#x4E86;
+&gt;&gt;&gt; type(a)
+&lt;type &apos;int&apos;&gt;
+&gt;&gt;&gt; a = (4,)            # &#x8FD9;&#x624D;&#x662F;&#x5143;&#x7EC4;
+&gt;&gt;&gt; type(a)
+&lt;type &apos;tuple&apos;&gt;
+&gt;&gt;&gt; s = tuple(&quot;abcadef&quot;)! ! ! # &#x5C06;&#x5176;&#x4ED6;&#x5E8F;&#x5217;&#x7C7B;&#x578B;&#x8F6C;&#x6362;&#x6210;&#x5143;&#x7EC4;&#x3002;
+&gt;&gt;&gt; s
+(&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;a&apos;, &apos;d&apos;, &apos;e&apos;, &apos;f&apos;)
+&gt;&gt;&gt; s.count(&quot;a&quot;)        # &#x5143;&#x7D20;&#x7EDF;&#x8BA1;&#x3002;
+2
+&gt;&gt;&gt; s.index(&quot;d&quot;)        # &#x67E5;&#x627E;&#x5143;&#x7D20;,&#x8FD4;&#x56DE;&#x5E8F;&#x53F7;
+4</code></pre>
+<h3 id="&#x6807;&#x51C6;&#x5E93;-namedtuple">&#x6807;&#x51C6;&#x5E93; namedtuple</h3><p>&#x53EF;&#x7528;&#x7528;&#x540D;&#x5B57;&#x8BBF;&#x95EE;&#x5143;&#x7D20;&#x9879;&#x3002;</p><pre><code>&gt;&gt;&gt; from collections import namedtuple
+&gt;&gt;&gt; User = namedtuple(&quot;User&quot;, &quot;name age&quot;)       # &#x7A7A;&#x683C;&#x5206;&#x9694;&#x5B57;&#x6BB5;&#x540D;,&#x6216;&#x4F7F;&#x7528;&#x7528;&#x8FED;&#x4EE3;&#x5668;&#x3002;
+&gt;&gt;&gt; u = User(&quot;user1&quot;, 10)
+&gt;&gt;&gt; u.name, u.age
+(&apos;user1&apos;, 10)</code></pre>
+<p>&#x5176;&#x5B9E; namedtuple &#x5E76;&#x4E0D;&#x662F;&#x5143;&#x7EC4;,&#x800C;&#x800C;&#x662F;&#x5229;&#x7528;&#x7528;&#x6A21;&#x677F;&#x52A8;&#x6001;&#x521B;&#x5EFA;&#x7684;&#x81EA;&#x81EA;&#x5B9A;&#x4E49;&#x7C7B;&#x578B;</p><h2 id="0x06-dict">0x06 dict</h2><p>&#x5B57;&#x5178; (dict) &#x91C7;&#x7528;&#x7528;&#x5F00;&#x653E;&#x5730;&#x5740;&#x6CD5;&#x7684;&#x54C8;&#x5E0C;&#x8868;&#x5B9E;&#x73B0;</p><ul><li>&#x81EA;&#x81EA;&#x5E26;&#x5143;&#x7D20;&#x5BB9;&#x91CF;&#x4E3A; 8 &#x7684; smalltable,&#x53EA;&#x6709; &quot;&#x8D85;&#x51FA;&quot; &#x65F6;&#x624D;&#x5230;&#x5806;&#x4E0A;&#x989D;&#x5916;&#x5206;&#x914D;&#x5143;&#x7D20;&#x8868;&#x5185;&#x5B58;&#x3002;
+</li>
+<li>&#x865A;&#x62DF;&#x673A;&#x7F13;&#x5B58; 80 &#x4E2A;&#x5B57;&#x5178;&#x590D;&#x7528;&#x7528;&#x5BF9;&#x8C61;,&#x4F46;&#x5728;&#x5806;&#x4E0A;&#x5206;&#x914D;&#x7684;&#x5143;&#x7D20;&#x8868;&#x5185;&#x5B58;&#x4F1A;&#x88AB;&#x91CA;&#x653E;&#x3002;
+</li>
+<li>&#x6309;&#x9700;&#x52A8;&#x6001;&#x8C03;&#x6574;&#x5BB9;&#x91CF;&#x3002;&#x6269;&#x5BB9;&#x6216;&#x6536;&#x7F29;&#x64CD;&#x4F5C;&#x90FD;&#x5C06;&#x91CD;&#x65B0;&#x5206;&#x914D;&#x5185;&#x5B58;,&#x91CD;&#x65B0;&#x54C8;&#x5E0C;
+</li>
+<li>&#x5220;&#x9664;&#x5143;&#x7D20;&#x64CD;&#x4F5C;&#x4E0D;&#x4F1A;&#x7ACB;&#x7ACB;&#x5373;&#x6536;&#x7F29;&#x5185;&#x5B58;
+</li></ul>
+<h3 id="&#x521B;&#x5EFA;&#x5B57;&#x5178;">&#x521B;&#x5EFA;&#x5B57;&#x5178;</h3><blockquote><blockquote><blockquote><p>{}              # &#x7A7A;&#x5B57;&#x5178;
+{&quot;a&quot;:1, &quot;b&quot;:2}  # &#x666E;&#x901A;&#x6784;&#x9020;&#x65B9;&#x65B9;&#x5F0F;
+dict(a = 1, b = 2)          # &#x6784;&#x9020;
+{&apos;a&apos;: 1, &apos;b&apos;: 2}
+dict(([&quot;a&quot;, 1], [&quot;b&quot;, 2]))  # &#x7528;&#x4E24;&#x4E2A;&#x5E8F;&#x5217;&#x7C7B;&#x578B;&#x6784;&#x9020;&#x5B57;&#x5178;
+{&apos;a&apos;: 1, &apos;b&apos;: 2}
+dict(zip(&quot;ab&quot;, range(2)))   # &#x540C;&#x4E0A;
+{&apos;a&apos;: 0, &apos;b&apos;: 1}
+dict(map(None, &quot;abc&quot;, range(2)))    #&#x540C;&#x4E0A;
+{&apos;a&apos;: 0, &apos;c&apos;: None, &apos;b&apos;: 1}
+dict.fromkeys(&quot;abc&quot;, 1)     # &#x7528;&#x5E8F;&#x5217;&#x4F5C; key&#xFF0C; &#x5E76;&#x63D0;&#x4F9B;&#x9ED8;&#x8BA4;&#x7684; value
+{&apos;a&apos;: 1, &apos;c&apos;: 1, &apos;b&apos;: 1}
+{k:v for k, v in zip(&quot;abc&quot;, range(3))}      # &#x4F7F;&#x7528;&#x7528;&#x751F;&#x751F;&#x6210;&#x8868;&#x8FBE;&#x5F0F;&#x6784;&#x9020;&#x5B57;&#x5178;&#x3002;
+{&apos;a&apos;: 0, &apos;c&apos;: 2, &apos;b&apos;: 1}
+```</p></blockquote></blockquote></blockquote><h3 id="&#x57FA;&#x672C;&#x64CD;&#x4F5C;">&#x57FA;&#x672C;&#x64CD;&#x4F5C;</h3><pre><code>&gt;&gt;&gt; d = {&quot;a&quot;:1, &quot;b&quot;:2}
+&gt;&gt;&gt; &quot;b&quot; in d            # &#x5224;&#x65AD;&#x662F;&#x5426;&#x5305;&#x542B; key
 True
-d = {"a":1, "b":2}  # 删除 k/v
-del d["b"]
-d
-{'a': 1}
-d = {"a":1}
-d.update({"c": 3})  # 合并
-d
-{'a': 1, 'c': 3}
-d = {"a":1, "b":2}
-d.pop("b")          # 弹出
-d
-(2, {'a': 1})
-d = {"a":1, "b":2}
-d.popitem()         # 弹出 (key, value)
-('a', 1)</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<h1 id="_6">默认返回值</h1>
-<blockquote>
-<blockquote>
-<blockquote>
-<p 1_="1," 2="2" 200_="200," _a_:="'a':" _b_:="'b':" _c_:="'c':">d = {"a":1, "b":2}
-d.get("c")              # 如果没有对应 key, 返回 None
+&gt;&gt;&gt; d = {&quot;a&quot;:1, &quot;b&quot;:2}  # &#x5220;&#x9664; k/v
+&gt;&gt;&gt; del d[&quot;b&quot;]
+&gt;&gt;&gt; d
+{&apos;a&apos;: 1}
+&gt;&gt;&gt; d = {&quot;a&quot;:1}
+&gt;&gt;&gt; d.update({&quot;c&quot;: 3})  # &#x5408;&#x5E76;
+&gt;&gt;&gt; d
+{&apos;a&apos;: 1, &apos;c&apos;: 3}
+&gt;&gt;&gt; d = {&quot;a&quot;:1, &quot;b&quot;:2}
+&gt;&gt;&gt; d.pop(&quot;b&quot;)          # &#x5F39;&#x51FA;
+&gt;&gt;&gt; d
+(2, {&apos;a&apos;: 1})
+&gt;&gt;&gt; d = {&quot;a&quot;:1, &quot;b&quot;:2}
+&gt;&gt;&gt; d.popitem()         # &#x5F39;&#x51FA; (key, value)
+(&apos;a&apos;, 1)
+
+# &#x9ED8;&#x8BA4;&#x8FD4;&#x56DE;&#x503C;
+&gt;&gt;&gt; d = {&quot;a&quot;:1, &quot;b&quot;:2}
+&gt;&gt;&gt; d.get(&quot;c&quot;)              # &#x5982;&#x679C;&#x6CA1;&#x6709;&#x5BF9;&#x5E94; key, &#x8FD4;&#x56DE; None
 None
-d.get("d", 123)         # 如果没有对应 key,返回缺省值。
-d.setdefault("a", 100)  # key 存在,直接返回 value。
+&gt;&gt;&gt; d.get(&quot;d&quot;, 123)         # &#x5982;&#x679C;&#x6CA1;&#x6709;&#x5BF9;&#x5E94; key,&#x8FD4;&#x56DE;&#x7F3A;&#x7701;&#x503C;&#x3002;
+&gt;&gt;&gt; d.setdefault(&quot;a&quot;, 100)  # key &#x5B58;&#x5728;,&#x76F4;&#x63A5;&#x8FD4;&#x56DE; value&#x3002;
 1
-d.setdefault("c", 200)  # key 不存在,先设置,后返回。
+&gt;&gt;&gt; d.setdefault(&quot;c&quot;, 200)  # key &#x4E0D;&#x5B58;&#x5728;,&#x5148;&#x8BBE;&#x7F6E;,&#x540E;&#x8FD4;&#x56DE;&#x3002;
 200
-d</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<div class="hlcode"><pre><span class="c">### 迭代器操作</span>
-</pre></div>
-
-
-<blockquote>
-<blockquote>
-<blockquote>
-<p>d = {"a":1, "b":2}
-d.keys()
-['a', 'b']
-d.values()
+&gt;&gt;&gt; d
+{&apos;a&apos;: 1, &apos;c&apos;: 200, &apos;b&apos;: 2}</code></pre>
+<h3 id="&#x8FED;&#x4EE3;&#x5668;&#x64CD;&#x4F5C;">&#x8FED;&#x4EE3;&#x5668;&#x64CD;&#x4F5C;</h3><pre><code>&gt;&gt;&gt; d = {&quot;a&quot;:1, &quot;b&quot;:2}
+&gt;&gt;&gt; d.keys()
+[&apos;a&apos;, &apos;b&apos;]
+&gt;&gt;&gt; d.values()
 [1, 2]
-d.items()
-[('a', 1), ('b', 2)]
-for k in d: print k, d[k]
+&gt;&gt;&gt; d.items()
+[(&apos;a&apos;, 1), (&apos;b&apos;, 2)]
+&gt;&gt;&gt; for k in d: print k, d[k]
 a 1
 b 2
-for k, v in d.items(): print k, v
+&gt;&gt;&gt; for k, v in d.items(): print k, v
 a 1
-b 2</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<div class="hlcode"><pre><span class="err">对于大大字典</span><span class="p">,</span><span class="err">调用用</span> <span class="n">keys</span><span class="p">()</span><span class="err">、</span><span class="n">values</span><span class="p">()</span><span class="err">、</span><span class="n">items</span><span class="p">()</span> <span class="err">会构造同样巨大大的列表。建议用用迭代器替代</span><span class="p">,</span><span class="err">以减</span>
-<span class="err">少内存开销</span>
-</pre></div>
-
-
-<blockquote>
-<blockquote>
-<blockquote>
-<p>d = {"a":1, "b":2}
-d.iterkeys()
-<dictionary-keyiterator object at 0x10de82cb0>
-d.itervalues()
-<dictionary-valueiterator object at 0x10de82d08>
-d.iteritems()
-<dictionary-itemiterator object at 0x10de82d60>
-for k, v in d.iteritems():
+b 2</code></pre>
+<p>&#x5BF9;&#x4E8E;&#x5927;&#x5927;&#x5B57;&#x5178;,&#x8C03;&#x7528;&#x7528; keys()&#x3001;values()&#x3001;items() &#x4F1A;&#x6784;&#x9020;&#x540C;&#x6837;&#x5DE8;&#x5927;&#x5927;&#x7684;&#x5217;&#x8868;&#x3002;&#x5EFA;&#x8BAE;&#x7528;&#x7528;&#x8FED;&#x4EE3;&#x5668;&#x66FF;&#x4EE3;,&#x4EE5;&#x51CF;
+&#x5C11;&#x5185;&#x5B58;&#x5F00;&#x9500;</p><pre><code>&gt;&gt;&gt; d = {&quot;a&quot;:1, &quot;b&quot;:2}
+&gt;&gt;&gt; d.iterkeys()
+&lt;dictionary-keyiterator object at 0x10de82cb0&gt;
+&gt;&gt;&gt; d.itervalues()
+&lt;dictionary-valueiterator object at 0x10de82d08&gt;
+&gt;&gt;&gt; d.iteritems()
+&lt;dictionary-itemiterator object at 0x10de82d60&gt;
+&gt;&gt;&gt; for k, v in d.iteritems():
 ...    print k, v
 a 1
-b 2</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<div class="hlcode"><pre><span class="cp">### 视图</span>
+b 2</code></pre>
+<h3 id="&#x89C6;&#x56FE;">&#x89C6;&#x56FE;</h3><p>&#x8981;&#x5224;&#x65AD;&#x4E24;&#x4E2A;&#x5B57;&#x5178;&#x95F4;&#x7684;&#x5DEE;&#x5F02;,&#x4F7F;&#x7528;&#x7528;&#x89C6;&#x56FE;&#x662F;&#x6700;&#x7B80;&#x4FBF;&#x7684;&#x505A;&#x6CD5;&#x3002;</p><pre><code>&gt;&gt;&gt; d1 = dict(a = 1, b = 2)
+&gt;&gt;&gt; d2 = dict(b = 2, c = 3)
+&gt;&gt;&gt; d1 &amp; d2                 # &#x5B57;&#x5178;&#x4E0D;&#x652F;&#x652F;&#x6301;&#x8BE5;&#x64CD;&#x4F5C;&#x3002;
+TypeError: unsupported operand type(s) for &amp;: &apos;dict&apos; and &apos;dict&apos;
+&gt;&gt;&gt; v1 = d1.viewitems()
+&gt;&gt;&gt; v2 = d2.viewitems()
+&gt;&gt;&gt; v1 &amp; v2                 # &#x4EA4;&#x96C6;
+set([(&apos;b&apos;, 2)]) 
+&gt;&gt;&gt; v1 | v2                 # &#x5E76;&#x96C6;
+set([(&apos;a&apos;, 1), (&apos;b&apos;, 2), (&apos;c&apos;, 3)])
+&gt;&gt;&gt; v1 - v2                 # &#x5DEE;&#x96C6; (&#x4EC5; v1 &#x6709;,v2 &#x6CA1;&#x6709;&#x7684;)
+set([(&apos;a&apos;, 1)])
+&gt;&gt;&gt; v1 ^ v2                 # &#x5BF9;&#x79F0;&#x5DEE;&#x96C6; (&#x4E0D;&#x4F1A;&#x540C;&#x65F6;&#x51FA;&#x73B0;&#x5728; v1 &#x548C; v2 &#x4E2D;)
+set([(&apos;a&apos;, 1), (&apos;c&apos;, 3)])
+&gt;&gt;&gt; (&apos;a&apos;, 1) in v1          # &#x5224;&#x65AD;
+True
 
-<span class="err">要判断两个字典间的差异</span><span class="p">,</span><span class="err">使用用视图是最简便的做法。</span>
-</pre></div>
-
-
-<blockquote>
-<blockquote>
-<blockquote>
-<p>d1 = dict(a = 1, b = 2)
-d2 = dict(b = 2, c = 3)
-d1 &amp; d2                 # 字典不支支持该操作。
-TypeError: unsupported operand type(s) for &amp;: 'dict' and 'dict'
-v1 = d1.viewitems()
-v2 = d2.viewitems()
-v1 &amp; v2                 # 交集
-set([('b', 2)]) 
-v1 | v2                 # 并集
-set([('a', 1), ('b', 2), ('c', 3)])
-v1 - v2                 # 差集 (仅 v1 有,v2 没有的)
-set([('a', 1)])
-v1 ^ v2                 # 对称差集 (不会同时出现在 v1 和 v2 中)
-set([('a', 1), ('c', 3)])
-('a', 1) in v1          # 判断
-True</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<h1 id="_7">更新字典内容</h1>
-<blockquote>
-<blockquote>
-<blockquote>
-<p 10="10" _x_:="'x':">a = dict(x=1)
-b = dict(x=10, y=20)
+# &#x66F4;&#x65B0;&#x5B57;&#x5178;&#x5185;&#x5BB9;
+&gt;&gt;&gt; a = dict(x=1)
+&gt;&gt;&gt; b = dict(x=10, y=20)
 39&gt;&gt;&gt; a.update({k:b[k] for k in a.viewkeys() &amp; b.viewkeys()})
-a</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<div class="hlcode"><pre><span class="err">视图会和字典同步变更</span>
-</pre></div>
+&gt;&gt;&gt; a
+{&apos;x&apos;: 10}</code></pre>
+<p>&#x89C6;&#x56FE;&#x4F1A;&#x548C;&#x5B57;&#x5178;&#x540C;&#x6B65;&#x53D8;&#x66F4;</p><pre><code>&gt;&gt;&gt; d = {&quot;a&quot;: 1}
+&gt;&gt;&gt; v = d.viewitems()
+&gt;&gt;&gt; v
+dict_items([(&apos;a&apos;, 1)])
+&gt;&gt;&gt; d[&quot;b&quot;] = 2
+&gt;&gt;&gt; v
+dict_items([(&apos;a&apos;, 1), (&apos;b&apos;, 2)])
+&gt;&gt;&gt; del d[&quot;a&quot;]
+&gt;&gt;&gt; v
+dict_items([(&apos;b&apos;, 2)])</code></pre>
+<h3 id="&#x6269;&#x5C55;">&#x6269;&#x5C55;</h3><p>&#x5F53;&#x8BBF;&#x95EE;&#x7684; key &#x4E0D;&#x5B58;&#x5728;&#x65F6;, defaultdict &#x81EA;&#x81EA;&#x52A8;&#x8C03;&#x7528;&#x7528; factory &#x5BF9;&#x8C61;&#x521B;&#x5EFA;&#x6240;&#x9700;&#x952E;&#x503C;&#x5BF9;&#x3002;factory &#x53EF;&#x4EE5;&#x662F;&#x4EFB;&#x4F55;&#x65E0;&#x65E0;&#x53C2;&#x6570;&#x51FD;&#x6570;&#x6216; callable &#x5BF9;&#x8C61;</p><pre><code>&gt;&gt;&gt; from collections import defaultdict
+&gt;&gt;&gt; d = defaultdict(list)       # key &quot;a&quot; &#x4E0D;&#x5B58;&#x5728;,&#x76F4;&#x63A5;&#x7528;&#x7528; list() &#x51FD;&#x6570;&#x521B;&#x5EFA;&#x4E00;&#x4E00;&#x4E2A;&#x7A7A;&#x5217;&#x8868;&#x4F5C;&#x4E3A; value&#x3002;
+&gt;&gt;&gt; d[&quot;a&quot;].append(1)
 
-
-<blockquote>
-<blockquote>
-<blockquote>
-<p>d = {"a": 1}
-v = d.viewitems()
-v
-dict_items([('a', 1)])
-d["b"] = 2
-v
-dict_items([('a', 1), ('b', 2)])
-del d["a"]
-v
-dict_items([('b', 2)])</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<div class="hlcode"><pre><span class="cp">### 扩展</span>
-
-<span class="err">当访问的</span> <span class="n">key</span> <span class="err">不存在时</span><span class="p">,</span> <span class="n">defaultdict</span> <span class="err">自自动调用用</span> <span class="n">factory</span> <span class="err">对象创建所需键值对。</span><span class="n">factory</span> <span class="err">可以是任何无无参数函数或</span> <span class="n">callable</span> <span class="err">对象</span>
-</pre></div>
-
-
-<blockquote>
-<blockquote>
-<blockquote>
-<p>from collections import defaultdict
-d = defaultdict(list)       # key "a" 不存在,直接用用 list() 函数创建一一个空列表作为 value。
-d["a"].append(1)</p>
-<p>d["a"].append(2)
-d["a"]
-[1, 2]</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<div class="hlcode"><pre><span class="err">字典是哈希表</span><span class="p">,</span><span class="err">默认迭代是无无序的。如果希望按照元素添加顺序输出结果</span><span class="p">,</span><span class="err">可以用用</span> <span class="n">OrderedDict</span><span class="err">。</span>
-</pre></div>
-
-
-<blockquote>
-<blockquote>
-<blockquote>
-<p>from collections import OrderedDict
-d = dict()
-d["a"] = 1
-d["b"] = 2
-d["c"] = 3
-for k, v in d.items(): print k, v           # 并非非按添加顺序输出。
+&gt;&gt;&gt; d[&quot;a&quot;].append(2)
+&gt;&gt;&gt; d[&quot;a&quot;]
+[1, 2]</code></pre>
+<p>&#x5B57;&#x5178;&#x662F;&#x54C8;&#x5E0C;&#x8868;,&#x9ED8;&#x8BA4;&#x8FED;&#x4EE3;&#x662F;&#x65E0;&#x65E0;&#x5E8F;&#x7684;&#x3002;&#x5982;&#x679C;&#x5E0C;&#x671B;&#x6309;&#x7167;&#x5143;&#x7D20;&#x6DFB;&#x52A0;&#x987A;&#x5E8F;&#x8F93;&#x51FA;&#x7ED3;&#x679C;,&#x53EF;&#x4EE5;&#x7528;&#x7528; OrderedDict&#x3002;</p><pre><code>&gt;&gt;&gt; from collections import OrderedDict
+&gt;&gt;&gt; d = dict()
+&gt;&gt;&gt; d[&quot;a&quot;] = 1
+&gt;&gt;&gt; d[&quot;b&quot;] = 2
+&gt;&gt;&gt; d[&quot;c&quot;] = 3
+&gt;&gt;&gt; for k, v in d.items(): print k, v           # &#x5E76;&#x975E;&#x975E;&#x6309;&#x6DFB;&#x52A0;&#x987A;&#x5E8F;&#x8F93;&#x51FA;&#x3002;
 a 1
 c 3
 b 2
-od = OrderedDict()
-od["a"] = 1
-od["b"] = 2
-od["c"] = 3
-for k, v in od.items(): print k, v          # 按添加顺序输出。
+&gt;&gt;&gt; od = OrderedDict()
+&gt;&gt;&gt; od[&quot;a&quot;] = 1
+&gt;&gt;&gt; od[&quot;b&quot;] = 2
+&gt;&gt;&gt; od[&quot;c&quot;] = 3
+&gt;&gt;&gt; for k, v in od.items(): print k, v          # &#x6309;&#x6DFB;&#x52A0;&#x987A;&#x5E8F;&#x8F93;&#x51FA;&#x3002;
 a 1
 b 2
 c 3
-od.popitem()                                # 按 LIFO 顺序弹出。
-('c', 3)
-od.popitem()
-('b', 2)
-od.popitem()
-('a', 1)</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<div class="hlcode"><pre><span class="cp">## 0x07 set</span>
-
-<span class="err">集合</span> <span class="p">(</span><span class="n">set</span><span class="p">)</span> <span class="err">用用来存储无无序不重复对象。所谓不重复对象</span><span class="p">,</span><span class="err">除了不是同一一对象外</span><span class="p">,</span><span class="err">还包括</span> <span class="s">&quot;值&quot;</span> <span class="err">不能相同。集合只能存储可哈希对象</span><span class="p">,</span><span class="err">一一样有只读版本</span> <span class="n">frozenset</span><span class="err">。</span>
-
-<span class="err">判重公式</span><span class="o">:</span> <span class="err">`</span><span class="p">(</span><span class="n">a</span> <span class="n">is</span> <span class="n">b</span><span class="p">)</span> <span class="n">or</span> <span class="p">(</span><span class="n">hash</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="n">hash</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="n">and</span> <span class="n">eq</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span><span class="err">`</span>
-
-<span class="err">在内部实现上</span><span class="p">,</span><span class="err">集合和字典非非常相似</span><span class="p">,</span><span class="err">除了</span> <span class="n">Entry</span> <span class="err">没有</span> <span class="n">value</span> <span class="err">字段。集合不是序列类型</span><span class="p">,</span><span class="err">不能像列表那样按序号访问</span><span class="p">,</span><span class="err">也不能做切片片操作</span>
-</pre></div>
-
-
-<blockquote>
-<blockquote>
-<blockquote>
-<p>s = set("abc")              # 通过序列类型初始化。
-set(['a', 'c', 'b'])
-{v for v in "abc"}          # 通过构造表达式创建
-set(['a', 'c', 'b'])
-"b" in s                    # 判断元素是否在集合中
+&gt;&gt;&gt; od.popitem()                                # &#x6309; LIFO &#x987A;&#x5E8F;&#x5F39;&#x51FA;&#x3002;
+(&apos;c&apos;, 3)
+&gt;&gt;&gt; od.popitem()
+(&apos;b&apos;, 2)
+&gt;&gt;&gt; od.popitem()
+(&apos;a&apos;, 1)</code></pre>
+<h2 id="0x07-set">0x07 set</h2><p>&#x96C6;&#x5408; (set) &#x7528;&#x7528;&#x6765;&#x5B58;&#x50A8;&#x65E0;&#x65E0;&#x5E8F;&#x4E0D;&#x91CD;&#x590D;&#x5BF9;&#x8C61;&#x3002;&#x6240;&#x8C13;&#x4E0D;&#x91CD;&#x590D;&#x5BF9;&#x8C61;,&#x9664;&#x4E86;&#x4E0D;&#x662F;&#x540C;&#x4E00;&#x4E00;&#x5BF9;&#x8C61;&#x5916;,&#x8FD8;&#x5305;&#x62EC; &quot;&#x503C;&quot; &#x4E0D;&#x80FD;&#x76F8;&#x540C;&#x3002;&#x96C6;&#x5408;&#x53EA;&#x80FD;&#x5B58;&#x50A8;&#x53EF;&#x54C8;&#x5E0C;&#x5BF9;&#x8C61;,&#x4E00;&#x4E00;&#x6837;&#x6709;&#x53EA;&#x8BFB;&#x7248;&#x672C; frozenset&#x3002;</p><p>&#x5224;&#x91CD;&#x516C;&#x5F0F;: <code>(a is b) or (hash(a) == hash(b) and eq(a, b))</code></p><p>&#x5728;&#x5185;&#x90E8;&#x5B9E;&#x73B0;&#x4E0A;,&#x96C6;&#x5408;&#x548C;&#x5B57;&#x5178;&#x975E;&#x975E;&#x5E38;&#x76F8;&#x4F3C;,&#x9664;&#x4E86; Entry &#x6CA1;&#x6709; value &#x5B57;&#x6BB5;&#x3002;&#x96C6;&#x5408;&#x4E0D;&#x662F;&#x5E8F;&#x5217;&#x7C7B;&#x578B;,&#x4E0D;&#x80FD;&#x50CF;&#x5217;&#x8868;&#x90A3;&#x6837;&#x6309;&#x5E8F;&#x53F7;&#x8BBF;&#x95EE;,&#x4E5F;&#x4E0D;&#x80FD;&#x505A;&#x5207;&#x7247;&#x7247;&#x64CD;&#x4F5C;</p><pre><code>&gt;&gt;&gt; s = set(&quot;abc&quot;)              # &#x901A;&#x8FC7;&#x5E8F;&#x5217;&#x7C7B;&#x578B;&#x521D;&#x59CB;&#x5316;&#x3002;
+set([&apos;a&apos;, &apos;c&apos;, &apos;b&apos;])
+&gt;&gt;&gt; {v for v in &quot;abc&quot;}          # &#x901A;&#x8FC7;&#x6784;&#x9020;&#x8868;&#x8FBE;&#x5F0F;&#x521B;&#x5EFA;
+set([&apos;a&apos;, &apos;c&apos;, &apos;b&apos;])
+&gt;&gt;&gt; &quot;b&quot; in s                    # &#x5224;&#x65AD;&#x5143;&#x7D20;&#x662F;&#x5426;&#x5728;&#x96C6;&#x5408;&#x4E2D;
 True
-s.add("d")                  # 添加元素
-s
-set(['a', 'c', 'b', 'd'])
-s.remove("b")               # 移除元素
-s
-set(['a', 'c', 'd'])
-s.discard("a")              # 如果存在,就移除
-s
-set(['c', 'd'])
-s.update(set("abcd"))       # 合并集合
-s
-set(['a', 'c', 'b', 'd'])
-s.pop()                     # 弹出元素
-'a'
-s
-set(['c', 'b', 'd'])</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<div class="hlcode"><pre><span class="c">### 集合运算</span>
-</pre></div>
-
-
-<blockquote>
-<blockquote>
-<blockquote>
-<p>"c" in set("abcd")          # 判断集合中是否有特定元素
-set("abc") is set("abc")
+&gt;&gt;&gt; s.add(&quot;d&quot;)                  # &#x6DFB;&#x52A0;&#x5143;&#x7D20;
+&gt;&gt;&gt; s
+set([&apos;a&apos;, &apos;c&apos;, &apos;b&apos;, &apos;d&apos;])
+&gt;&gt;&gt; s.remove(&quot;b&quot;)               # &#x79FB;&#x9664;&#x5143;&#x7D20;
+&gt;&gt;&gt; s
+set([&apos;a&apos;, &apos;c&apos;, &apos;d&apos;])
+&gt;&gt;&gt; s.discard(&quot;a&quot;)              # &#x5982;&#x679C;&#x5B58;&#x5728;,&#x5C31;&#x79FB;&#x9664;
+&gt;&gt;&gt; s
+set([&apos;c&apos;, &apos;d&apos;])
+&gt;&gt;&gt; s.update(set(&quot;abcd&quot;))       # &#x5408;&#x5E76;&#x96C6;&#x5408;
+&gt;&gt;&gt; s
+set([&apos;a&apos;, &apos;c&apos;, &apos;b&apos;, &apos;d&apos;])
+&gt;&gt;&gt; s.pop()                     # &#x5F39;&#x51FA;&#x5143;&#x7D20;
+&apos;a&apos;
+&gt;&gt;&gt; s
+set([&apos;c&apos;, &apos;b&apos;, &apos;d&apos;])</code></pre>
+<h3 id="&#x96C6;&#x5408;&#x8FD0;&#x7B97;">&#x96C6;&#x5408;&#x8FD0;&#x7B97;</h3><pre><code>&gt;&gt;&gt; &quot;c&quot; in set(&quot;abcd&quot;)          # &#x5224;&#x65AD;&#x96C6;&#x5408;&#x4E2D;&#x662F;&#x5426;&#x6709;&#x7279;&#x5B9A;&#x5143;&#x7D20;
+&gt;&gt;&gt; set(&quot;abc&quot;) is set(&quot;abc&quot;)
 False
-set("abc") == set("abc")    # 相等判断
+&gt;&gt;&gt; set(&quot;abc&quot;) == set(&quot;abc&quot;)    # &#x76F8;&#x7B49;&#x5224;&#x65AD;
 True
-set("abc") != set("abc")    # 不等判断
+&gt;&gt;&gt; set(&quot;abc&quot;) != set(&quot;abc&quot;)    # &#x4E0D;&#x7B49;&#x5224;&#x65AD;
 False
-set("abcd") &gt;= set("ab")    # 超集判断 (issuperset)
+&gt;&gt;&gt; set(&quot;abcd&quot;) &gt;= set(&quot;ab&quot;)    # &#x8D85;&#x96C6;&#x5224;&#x65AD; (issuperset)
 True
-set("bc") &lt; set("abcd")     # 子集判断 (issubset)
+&gt;&gt;&gt; set(&quot;bc&quot;) &lt; set(&quot;abcd&quot;)     # &#x5B50;&#x96C6;&#x5224;&#x65AD; (issubset)
 True
-set("abcd") | set("cdef")   # 并集 (union)
-set(['a', 'c', 'b', 'e', 'd', 'f'])
-set("abcd") &amp; set("abx")    # 交集 (intersection)
-set(['a', 'b'])
-set("abcd") - set("ab")     # 差集 (difference), 仅左边有,右边没有的
-set(['c', 'd'])
-set("abx") ^ set("aby")     # 对称差集 (symmetric_difference)
-set(['y', 'x'])                 # 不会同时出现在两个集合当中的元素
-set("abcd").isdisjoint("ab")    # 判断是否没有交集
-False</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<div class="hlcode"><pre><span class="c">### 更新操作</span>
-</pre></div>
-
-
-<blockquote>
-<blockquote>
-<blockquote>
-<p>s = set("abcd")
-s |= set("cdef")        # 并集 (update)
-s
-set(['a', 'c', 'b', 'e', 'd', 'f'])
-s = set("abcd")
-s &amp;= set("cdef")        # 交集 (intersection_update)
-s
-set(['c', 'd'])
-s = set("abx")
-s -= set("abcdy")       # 差集 (difference_update)
-s
-set(['x'])
-s = set("abx")
-s ^= set("aby")         # 对称差集 (symmetric_difference_update)
-s
-set(['y', 'x'])</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<div class="hlcode"><pre><span class="err">集合和字典主键都必须是可哈希类型对象</span><span class="p">,</span><span class="err">但常用用的</span> <span class="n">list</span><span class="err">、</span><span class="n">dict</span><span class="err">、</span><span class="n">set</span><span class="err">、</span><span class="n">defaultdict</span><span class="err">、</span><span class="n">OrderedDict</span> <span class="err">都是不可哈希的</span><span class="p">,</span><span class="err">仅有</span> <span class="n">tuple</span><span class="err">、</span><span class="n">frozenset</span> <span class="err">可用用</span>
-</pre></div>
-
-
-<blockquote>
-<blockquote>
-<blockquote>
-<p>hash([])
-TypeError: unhashable type: 'list'
-hash({})
-TypeError: unhashable type: 'dict'
-hash(set())
-TypeError: unhashable type: 'set'
-hash(tuple()), hash(frozenset())
-(3527539, 133156838395276)</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<div class="hlcode"><pre><span class="err">如果想把自自定义类型放入入集合</span><span class="p">,</span><span class="err">需要保证</span> <span class="n">hash</span> <span class="err">和</span> <span class="n">equal</span> <span class="err">的结果都相同才能去重</span>
-</pre></div>
-
-
-<blockquote>
-<blockquote>
-<blockquote>
-<p>class User(object):
-...     def <strong>init</strong>(self, name):
+&gt;&gt;&gt; set(&quot;abcd&quot;) | set(&quot;cdef&quot;)   # &#x5E76;&#x96C6; (union)
+set([&apos;a&apos;, &apos;c&apos;, &apos;b&apos;, &apos;e&apos;, &apos;d&apos;, &apos;f&apos;])
+&gt;&gt;&gt; set(&quot;abcd&quot;) &amp; set(&quot;abx&quot;)    # &#x4EA4;&#x96C6; (intersection)
+set([&apos;a&apos;, &apos;b&apos;])
+&gt;&gt;&gt; set(&quot;abcd&quot;) - set(&quot;ab&quot;)     # &#x5DEE;&#x96C6; (difference), &#x4EC5;&#x5DE6;&#x8FB9;&#x6709;,&#x53F3;&#x8FB9;&#x6CA1;&#x6709;&#x7684;
+set([&apos;c&apos;, &apos;d&apos;])
+&gt;&gt;&gt; set(&quot;abx&quot;) ^ set(&quot;aby&quot;)     # &#x5BF9;&#x79F0;&#x5DEE;&#x96C6; (symmetric_difference)
+set([&apos;y&apos;, &apos;x&apos;])                 # &#x4E0D;&#x4F1A;&#x540C;&#x65F6;&#x51FA;&#x73B0;&#x5728;&#x4E24;&#x4E2A;&#x96C6;&#x5408;&#x5F53;&#x4E2D;&#x7684;&#x5143;&#x7D20;
+&gt;&gt;&gt; set(&quot;abcd&quot;).isdisjoint(&quot;ab&quot;)    # &#x5224;&#x65AD;&#x662F;&#x5426;&#x6CA1;&#x6709;&#x4EA4;&#x96C6;
+False</code></pre>
+<h3 id="&#x66F4;&#x65B0;&#x64CD;&#x4F5C;">&#x66F4;&#x65B0;&#x64CD;&#x4F5C;</h3><pre><code>&gt;&gt;&gt; s = set(&quot;abcd&quot;)
+&gt;&gt;&gt; s |= set(&quot;cdef&quot;)        # &#x5E76;&#x96C6; (update)
+&gt;&gt;&gt; s
+set([&apos;a&apos;, &apos;c&apos;, &apos;b&apos;, &apos;e&apos;, &apos;d&apos;, &apos;f&apos;])
+&gt;&gt;&gt; s = set(&quot;abcd&quot;)
+&gt;&gt;&gt; s &amp;= set(&quot;cdef&quot;)        # &#x4EA4;&#x96C6; (intersection_update)
+&gt;&gt;&gt; s
+set([&apos;c&apos;, &apos;d&apos;])
+&gt;&gt;&gt; s = set(&quot;abx&quot;)
+&gt;&gt;&gt; s -= set(&quot;abcdy&quot;)       # &#x5DEE;&#x96C6; (difference_update)
+&gt;&gt;&gt; s
+set([&apos;x&apos;])
+&gt;&gt;&gt; s = set(&quot;abx&quot;)
+&gt;&gt;&gt; s ^= set(&quot;aby&quot;)         # &#x5BF9;&#x79F0;&#x5DEE;&#x96C6; (symmetric_difference_update)
+&gt;&gt;&gt; s
+set([&apos;y&apos;, &apos;x&apos;])</code></pre>
+<p>&#x96C6;&#x5408;&#x548C;&#x5B57;&#x5178;&#x4E3B;&#x952E;&#x90FD;&#x5FC5;&#x987B;&#x662F;&#x53EF;&#x54C8;&#x5E0C;&#x7C7B;&#x578B;&#x5BF9;&#x8C61;,&#x4F46;&#x5E38;&#x7528;&#x7528;&#x7684; list&#x3001;dict&#x3001;set&#x3001;defaultdict&#x3001;OrderedDict &#x90FD;&#x662F;&#x4E0D;&#x53EF;&#x54C8;&#x5E0C;&#x7684;,&#x4EC5;&#x6709; tuple&#x3001;frozenset &#x53EF;&#x7528;&#x7528;</p><pre><code>&gt;&gt;&gt; hash([])
+TypeError: unhashable type: &apos;list&apos;
+&gt;&gt;&gt; hash({})
+TypeError: unhashable type: &apos;dict&apos;
+&gt;&gt;&gt; hash(set())
+TypeError: unhashable type: &apos;set&apos;
+&gt;&gt;&gt; hash(tuple()), hash(frozenset())
+(3527539, 133156838395276)</code></pre>
+<p>&#x5982;&#x679C;&#x60F3;&#x628A;&#x81EA;&#x81EA;&#x5B9A;&#x4E49;&#x7C7B;&#x578B;&#x653E;&#x5165;&#x5165;&#x96C6;&#x5408;,&#x9700;&#x8981;&#x4FDD;&#x8BC1; hash &#x548C; equal &#x7684;&#x7ED3;&#x679C;&#x90FD;&#x76F8;&#x540C;&#x624D;&#x80FD;&#x53BB;&#x91CD;</p><pre><code>&gt;&gt;&gt; class User(object):
+...     def __init__(self, name):
 ...         self.name = name
-hash(User("tom"))           # 每次的哈希结果都不同
+&gt;&gt;&gt; hash(User(&quot;tom&quot;))           # &#x6BCF;&#x6B21;&#x7684;&#x54C8;&#x5E0C;&#x7ED3;&#x679C;&#x90FD;&#x4E0D;&#x540C;
 279218517
-hash(User("tom"))
+&gt;&gt;&gt; hash(User(&quot;tom&quot;))
 279218521
-class User(object):
-...    def <strong>init</strong>(self, name):
+&gt;&gt;&gt; class User(object):
+...    def __init__(self, name):
 ...        self.name = name
-...    def <strong>hash</strong>(self):
+...    def __hash__(self):
 ...        return hash(self.name)
-...    def <strong>eq</strong>(self, o):
+...    def __eq__(self, o):
 ...        if not o or not isinstance(o, User): return False
 ...        return self.name == o.name
-s = set()
-s.add(User("tom"))
-s.add(User("tom"))
-s
-set([&lt;<strong>main</strong>.User object at 0x10a48d150&gt;])
-```</p>
-</blockquote>
-</blockquote>
-</blockquote>
+&gt;&gt;&gt; s = set()
+&gt;&gt;&gt; s.add(User(&quot;tom&quot;))
+&gt;&gt;&gt; s.add(User(&quot;tom&quot;))
+&gt;&gt;&gt; s
+set([&lt;__main__.User object at 0x10a48d150&gt;])</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
 </div>
 
-        </div>
-        <div id="footer">
-            <span>
-                Copyright © 2012-2016 .
-                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
-            </span>
-        </div>
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="command.html" class="navigation navigation-prev " aria-label="Previous page: 命令执行">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="常用模块.html" class="navigation navigation-next " aria-label="Next page: 常用模块">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
         
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"常用内置对象操作","date":"2016-01-28 11:18","level":"1.2.20","depth":2,"next":{"title":"常用模块","level":"1.2.21","depth":2,"path":"Python/常用模块.md","ref":"Python/常用模块.md","articles":[]},"previous":{"title":"命令执行","level":"1.2.19","depth":2,"path":"Python/command.md","ref":"Python/command.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"janes","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Wiki | janes","language":"cn","gitbook":">= 3.2.0"},"file":{"path":"Python/buildin_type.md","mtime":"2016-08-16T14:00:50.457Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2016-08-16T16:38:45.378Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
     </body>
 </html>
+

