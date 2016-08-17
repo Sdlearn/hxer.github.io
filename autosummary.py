@@ -34,7 +34,6 @@ for d in sdirs:
 	dict_ = sorted(sum[d].iteritems(), key=lambda d:d[1])
 	for k, v in dict_:
 		txt.append('    * [{t}]({p}/{f})\n'.format(t=v, p=d,f=k))
-	txt.append('\n')
 
 #print txt	
 with open('SUMMARY.md', 'w') as f:

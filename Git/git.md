@@ -1,5 +1,5 @@
 ---
-title: "git"
+title: "Git"
 date: 2016-01-25 21:39
 ---
 
