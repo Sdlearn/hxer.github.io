@@ -1,11 +1,11 @@
 ---
-title: "mysql宽字节注入"
+title: "Mysql宽字节注入"
 date: 2016-03-05 21:01
 ---
 
 ## mysql 宽字节注入
 
-## 绕过addslasher和mysql_real_escape_string(Trick)
+## 绕过`addslasher`和`mysql_real_escape_string`(Trick)
 
 > 在MYSQL5.5.37-log下该Trick已经被修复了
 

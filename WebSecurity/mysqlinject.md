@@ -6,25 +6,23 @@ date: 2016-04-21 11:50
 
 
 ```	
-Select Nth Row	SELECT host,user FROM user ORDER BY host LIMIT 1 OFFSET 0; # rows numbered from 0
-
-Select Nth Char	SELECT substr(‘abcd’, 3, 1); # returns c
-Bitwise AND	SELECT 6 & 2; # returns 2
-SELECT 6 & 1; # returns 0
-ASCII Value -> Char	SELECT char(65); # returns A
-Char -> ASCII Value	SELECT ascii(‘A’); # returns 65
-Casting	SELECT cast(’1′ AS unsigned integer);
-SELECT cast(’123′ AS char);
-
-String Concatenation	SELECT CONCAT(‘A’,'B’); #returns AB
-SELECT CONCAT(‘A’,'B’,'C’); # returns ABC
-If Statement	SELECT if(1=1,’foo’,'bar’); — returns ‘foo’
-Case Statement	SELECT CASE WHEN (1=1) THEN ‘A’ ELSE ‘B’ END; # returns A
-Avoiding Quotes	SELECT 0×414243; # returns ABC
-Time Delay	SELECT BENCHMARK(1000000,MD5(‘A’));
-SELECT SLEEP(5); # >= 5.0.12
-Make DNS Requests	Impossible?
-Command Execution	If mysqld (<5.0) is running as root AND you compromise a DBA account you can execute OS commands by uploading a shared object file into /usr/lib (or similar).  The .so file should contain a User Defined Function (UDF).  raptor_udf.c explains exactly how you go about this.  Remember to compile for the target architecture which may or may not be the same as your attack platform.
+Select Nth Row       SELECT host,user FROM user ORDER BY host LIMIT 1 OFFSET 0; # rows numbered from 0
+Select Nth Char      SELECT substr(‘abcd’, 3, 1); # returns c
+Bitwise AND          SELECT 6 & 2; # returns 2
+                     SELECT 6 & 1; # returns 0
+ASCII Value -> Char  SELECT char(65); # returns A
+Char -> ASCII Value  SELECT ascii(‘A’); # returns 65
+Casting              SELECT cast(’1′ AS unsigned integer);
+                     SELECT cast(’123′ AS char);
+String Concatenation SELECT CONCAT(‘A’,'B’); #returns AB
+                     SELECT CONCAT(‘A’,'B’,'C’); # returns ABC
+If Statement         SELECT if(1=1,’foo’,'bar’); — returns ‘foo’
+Case Statement       SELECT CASE WHEN (1=1) THEN ‘A’ ELSE ‘B’ END; # returns A
+Avoiding Quotes      SELECT 0×414243; # returns ABC
+Time Delay           SELECT BENCHMARK(1000000,MD5(‘A’));
+                     SELECT SLEEP(5); # >= 5.0.12
+Make DNS Requests	 Impossible?
+Command Execution    If mysqld (<5.0) is running as root AND you compromise a DBA account you can execute OS commands by uploading a shared object file into /usr/lib (or similar).  The .so file should contain a User Defined Function (UDF).  raptor_udf.c explains exactly how you go about this.  Remember to compile for the target architecture which may or may not be the same as your attack platform.
 
 ```
 
@@ -46,8 +44,8 @@ load_file()       MYSQL读取本地文件
 ```
 
 ```
-List Users	            SELECT user FROM mysql.user; — priv
-List Password Hashes	SELECT host, user, password FROM mysql.user; — priv
+List Users              SELECT user FROM mysql.user; — priv
+List Password Hashes    SELECT host, user, password FROM mysql.user; — priv
 
 SELECT distinct(db) FROM mysql.db — priv
 ```

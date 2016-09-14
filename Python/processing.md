@@ -159,7 +159,7 @@ print pool.map(worker, range(6))
 dummy 作用于线程
 
 ```
-from multiprocessing.pool import ThreadPool
+from multiprocessing.dummy import Pool as ThreadPool
 ```
 
 ### 备注 
