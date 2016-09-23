@@ -86,3 +86,15 @@ curl -i --header "Accept:application/json" -X GET -b ~/cookie.txt http://www.res
 # HTTP Basic Authentication
 curl -i --user kent:secret http://www.rest.com/api/foo'
 ```
+
+## netstat
+
+* 参数
+
+```
+-p      显示进程号或程序
+```
+
+* sample
+
+`netstat -anp | grep 8080` 查看8080端口占用, 需要root权限, 显示信息更多

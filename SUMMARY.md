@@ -6,6 +6,8 @@
     * [Django 1.8.7](Python/django.md)
     * [Excel](Python/excel.md)
     * [Requests](Python/requests.md)
+    * [Celery](Python/celery.md)
+    * [Supervisor](Python/supervisor.md)
     * [Flask](Python/flask.md)
     * [Flask github api login](Python/flask_github_api_login.md)
     * [Function](Python/函数.md)
@@ -35,6 +37,7 @@
     * [Cmdline](Linux/cmdline.md)
     * [Nc](Linux/ncat.md)
     * [Nmap](Linux/nmap.md)
+    * [Redis](Linux/redis.md)
     * [Ubuntu](Linux/ubuntu.md)
     * [Centos7](Linux/centos.md)
 * Hack

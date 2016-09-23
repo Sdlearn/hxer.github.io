@@ -107,6 +107,11 @@ TEMPLATES = [
 * 如果只是改了django.po中的翻译,只需 **compilemessages** 就行了
 
 
+## debug 模式
+
+django 默认处理 `debug=False` 的情况下，不处理静态文件，交给服务器处理，若需要在没有服务器的情况下，可以使用 `python manage.py runserver 0.0.0.0:80 --insecure`
+
+
 ### 模板
 
 * 1.基本
