@@ -1,0 +1,15 @@
+
+
+## 打包
+
+* 1.复制整个环境
+
+```
+# env test
+cd ~/.virtualenvs/test
+# 装换为相对路径
+virtualenv --relocatable ./
+
+# copy
+cp -r * /xxx/venv/
+```
