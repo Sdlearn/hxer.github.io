@@ -18,7 +18,8 @@
     * [Pythonic](Python/pythonic.md)
     * [Random](Python/random.md)
     * [Scapy](Python/scapy.md)
-    * [Selenium and Xvfb ](Python/selenium.md)
+    * [Phantomjs](Python/phantomjs.md)
+    * [Selenium and Xvfb](Python/selenium.md)
     * [Socket](Python/socket.md)
     * [network package](Python/network_package.md)
     * [note](Python/note.md)
@@ -41,6 +42,7 @@
     * [Ubuntu](Linux/ubuntu.md)
     * [Centos7](Linux/centos.md)
 * Hack
+    * [Sqlmap](Hack/sqlmap.md)
     * [Shell](Hack/shell.md)
     * [Weevely3](Hack/weevely3.md)
     * [linux提权](Hack/linux提权.md)

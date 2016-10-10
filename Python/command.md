@@ -48,13 +48,21 @@ stderr 可以为STDOUT，表示来自子进程中标准错误的数据捕获到�
 
 `shell=True`，则指定的命令将通过shell执行。方便地访问shell功能，例如shell 管道、文件名通配符、环境变量的扩展以及~访问某个用户的home目录
 
-## subprocess.check_call(args, *, stdin=None, stdout=None, stderr=None, shell=False)
+## subprocess.check_call
+
+```
+subprocess.check_call(args, *, stdin=None, stdout=None, stderr=None, shell=False)
+```
 
 > 执行带参数的命令, `等待命令完成`。如果返回码是`零`则返回，否则抛出`CalledProcessError`， 返回码在`returncode`属性中。
 
 > 不要使用stdout=PIPE或stderr=PIPE，基于子进程的输出流量可能导致死锁。需要管道时，使用Popen和它的communicate()方法
 
-## subprocess.check_output(args, *, stdin=None, stderr=None, shell=False, universal_newlines=False)
+## subprocess.check_output
+
+```python
+subprocess.check_output(args, *, stdin=None, stderr=None, shell=False, universal_newlines=False)
+```
 
 > 执行带参数的命令并将它的输出作为`字节字符串`返回。如果返回码非零，引发CalledProcessError, 返回码保存在`returncode`属性中并把任何输出都保存在`output`属性中。
 
@@ -62,19 +70,26 @@ stderr 可以为STDOUT，表示来自子进程中标准错误的数据捕获到�
 
 * demo
 
-```
+```python
+In [2]: subprocess.check_output(['echo', '123'])
+Out[2]: '123\n'
+
 # 结果中捕获标准错误，可以使用 stderr=subprocess.STDOUT：
 In [15]: subprocess.check_output( "ls ff; exit 0", stderr=subprocess.STDOUT, shell=True)
 Out[15]: "ls: cannot access 'ff': No such file or directory\n"
 ```
 
-## class subprocess.Popen(args, bufsize=0, executable=None, stdin=None, stdout=None, stderr=None, preexec_fn=None, close_fds=False, shell=False, cwd=None, env=None, universal_newlines=False, startupinfo=None, creationflags=0)
+## subprocess.Popen
+
+```
+class subprocess.Popen(args, bufsize=0, executable=None, stdin=None, stdout=None, stderr=None, preexec_fn=None, close_fds=False, shell=False, cwd=None, env=None, universal_newlines=False, startupinfo=None, creationflags=0)
+```
 
 > 在Unix上，shell=True，默认为/bin/sh
 
 * demo 
 
-```
+```python
 # 替换shell 的管道
 # output=`dmesg | grep hda`
 p1 = Popen(["dmesg"], stdout=PIPE)
