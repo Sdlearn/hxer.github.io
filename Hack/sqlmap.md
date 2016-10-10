@@ -117,7 +117,7 @@ txt文件
 | --privileges  | 枚举数据库管理系统用户的权限 | 
 | --roles  | 枚举数据库管理系统用户的角色 | 
 | --dbs  | 枚举数据库管理系统数据库 | 
-| -D  | DBname 要进行枚举的指定数据库名 | 
+| -D DBname |  要进行枚举的指定数据库名 | 
 | -T TBLname  | 要进行枚举的指定数据库表（如：-T tablename | --columns） | 
 | --tables  | 枚举的DBMS数据库中的表 | 
 | --columns  | 枚举DBMS数据库表列 | 
@@ -131,7 +131,7 @@ txt文件
 | --stop=LIMITSTOP  | 最后查询的输出进入检索 | 
 | --first=FIRSTCHAR  | 第一个查询输出字的字符检索 | 
 | --last=LASTCHAR  | 最后查询的输出字字符检索 | 
-| --sql-query=QUERY 要执行的SQL语句 | 
+| --sql-query=QUERY | 要执行的SQL语句 | 
 | --sql-shell  | 提示交互式SQL的shell | 
 
 ### Optimization（优化）：
@@ -153,8 +153,8 @@ txt文件
 | arg | note |
 | --- | ---- | 
 | -p TESTPARAMETER |  可测试的参数（S） | 
-| --dbms=DBMS 强制后端的DBMS为此值 | 
-| --os=OS 强制后端的DBMS操作系统为这个值 | 
+| --dbms=DBMS  | 强制后端的DBMS为此值 | 
+| --os=OS  | 强制后端的DBMS操作系统为这个值 | 
 | --prefix=PREFIX |  注入payload字符串前缀 | 
 | --suffix=SUFFIX  | 注入payload字符串后缀 | 
 | --tamper=TAMPER  | 使用给定的脚本（S）篡改注入数据 | 
@@ -291,7 +291,7 @@ txt文件
 ### 绕过 waf 的tamper
 
 | No | tamper | note |
-|| --- || ---- || ------ |
+| --- | ---- | ------ |
 |01 | apostrophemask.py  | 用UTF-8全角字符替换单引号字符 |
 |02 | apostrophenullencode.py    |    用非法双字节unicode字符替换单引号字符|
 |03 | appendnullbyte.py      |  在payload末尾添加空字符编码|
