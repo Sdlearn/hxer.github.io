@@ -1,6 +1,25 @@
 {
-	"title": "Wiki | janes",
-	"author": "janes",
-	"language": "cn",
-	"gitbook": ">= 3.2.0"
+    "title": "Wiki | janes",
+    "author": "janes",
+    "description": "janes' note",
+    "language": "cn",
+    "gitbook": ">= 3.2.0",
+    "plugins": [
+        "prism", 
+        "-highlight",
+        "splitter",
+        "toggle-chapters",
+        "sitemap",
+        "simple-page-toc",
+        "navigator"
+    ],
+    "pluginsConfig": {
+        "simple-page-toc": {
+            "maxDepth": 3,
+            "skipFirstH1": true
+        },
+        "sitemap": {
+            "hostname": "https://hxer.github.io"
+        } 
+    }
 }
