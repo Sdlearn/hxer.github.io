@@ -25,7 +25,10 @@ sqlmap.py -u url --dbms "后端数据库名"--tables  -D "数据库名"
 # 列出数据库名中的表名内容                     
 sqlmap.py -u url --dbms "后端数据库名"--columns  -T "表名" -D "数据库名"   
 # 获取字段里面的内容           
-sqlmap.py -u url --dbms "后端数据库名"--dump  -C "字段,字段"  -T "表名" -D "数据库名"       
+sqlmap.py -u url --dbms "后端数据库名"--dump  -C "字段,字段"  -T "表名" -D "数据库名"   
+
+# referer 注入
+sqlmap -u url --referer=1 --level 3 -p referer    
 ```
 
 ## 参数解析

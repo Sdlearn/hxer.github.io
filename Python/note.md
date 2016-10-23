@@ -3,6 +3,17 @@ title: "note"
 date: 2016-01-22 15:40
 ---
 
+## `requests proxy` vs `pysocks proxy`
+
+[pysocks](https://github.com/Anorov/PySocks)
+
+### http proxy
+
+pysocks 进行 http 代理时， 使用的是 HTTP CONNECT 方式， 对于不支持 `CONNECT` 方式的代理服务器，比如BurpSuite, 就无效
+
+requests 进行 http 代理，不使用 HTTP CONNECT 方式， 兼容性更好 
+
+
 ## __dict__
 
 __dict__分层存储属性。每一层的__dict__只存储该层新增的属性。子类不需要重复存储父类中的属性。

@@ -114,17 +114,24 @@ Python 提供了两种字符串格式化方方法
 * 整数 <==> 字符串
 
 ```
-hex()       hex(number) -> string       
+# 十六进制
+hex()       hex(number) -> string
 > hex(10) ==> '0xa'
 
+# 十进制
 int()       int(x, base=10) -> int or long
 > int('0b100', 0) ==> 4
 > int('0b100', 2) ==> 4
 > int('0x10', 16) ==> 16
 > int('10', 16)   ==> 16
 
+# 二进制
 bin()       bin(number) -> string
 > bin(4) ==> '0b100'
+
+# 八进制
+oct()       oct(number) -> string
+> oct(17) ==> '021'
 
 "{0:b}".format(4) ==> '100'
 ```
