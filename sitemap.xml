@@ -34,6 +34,7 @@
 <url> <loc>https://hxer.github.io/Python/迭代器和生成器.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Linux/ps.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Linux/cmdline.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>https://hxer.github.io/Linux/tcpdump.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Linux/ncat.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Linux/nmap.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Linux/redis.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
@@ -51,6 +52,7 @@
 <url> <loc>https://hxer.github.io/WebSecurity/mysql宽字节注入.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/WebSecurity/mysql注入过滤.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/WebSecurity/note.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>https://hxer.github.io/WebSecurity/php_view.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/WebSecurity/php_cmdinject.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/WebSecurity/php序列化.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/WebSecurity/php-文件包含.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
