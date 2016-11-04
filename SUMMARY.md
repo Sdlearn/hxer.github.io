@@ -36,6 +36,7 @@
 * Linux
     * [ps](Linux/ps.md)
     * [Cmdline](Linux/cmdline.md)
+    * [Tcpdump](Linux/tcpdump.md)
     * [Nc](Linux/ncat.md)
     * [Nmap](Linux/nmap.md)
     * [Redis](Linux/redis.md)
@@ -55,6 +56,7 @@
     * [Mysql宽字节注入](WebSecurity/mysql宽字节注入.md)
     * [Mysql注入过滤](WebSecurity/mysql注入过滤.md)
     * [Note](WebSecurity/note.md)
+    * [PHP 代码审计](WebSecurity/php_view.md)
     * [PHP代码执行与命令注入](WebSecurity/php_cmdinject.md)
     * [PHP序列化](WebSecurity/php序列化.md)
     * [php 文件包含](WebSecurity/php-文件包含.md)
