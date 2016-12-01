@@ -21,6 +21,7 @@
     * [Phantomjs](Python/phantomjs.md)
     * [Selenium and Xvfb](Python/selenium.md)
     * [Socket](Python/socket.md)
+    * [Elasticsearch](Python/elasticsearch.md)
     * [network package](Python/network_package.md)
     * [note](Python/note.md)
     * [动态执行字符串代码](Python/eval.md)
@@ -65,7 +66,8 @@
     * [Scan For Information](WebSecurity/scan_for_info.md)
     * [SqlInject](WebSecurity/sqlinject.md)
     * [Vulnapp](WebSecurity/vulnapp.md)
-    * [XSS](WebSecurity/xss.md)   
+    * [XSS](WebSecurity/xss.md)
+    * [XSS绕过](WebSecurity/xss_bypass.md)   
     * [php](WebSecurity/php.md)
     * [ssrf](WebSecurity/ssrf.md)
     * [url](WebSecurity/url.md)
@@ -121,6 +123,8 @@
     * [git remote operation](Git/git_remote_operation.md)
     * [git](Git/git.md)
     * [Gist](Git/gist.md)
+* MAC
+    * [brew](MAC/brew.md)
 * Image
     * [PNG](Image/png.md)
 * JS

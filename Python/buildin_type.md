@@ -5,6 +5,15 @@ date: 2016-01-28 11:18
 
 ## 0x01 string
 
+### 编码
+
+```
+# unicode
+chinese = '\u4e2d\u6587'
+>>> print chinese.decode('unicode-escape')
+中文
+```
+
 ### 基本操作
 
 ```python

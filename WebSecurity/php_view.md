@@ -1,5 +1,38 @@
 # PHP 代码审计
 
+## 工具
+
+### 静态代码审计
+
+* [RISP]()
+## 基础函数
+
+* get_defined_vars(void)
+
+此函数返回一个包含当前可用的变量列表的多维数组，这些变量包括环境变量、服务器变量和用户定义的变量.在函数中使用此函数可以调试函数中的变量，而不会返回其他的变量
+
+* get_defined_functions(void)
+
+获取所有已经定义的函数,包含内部函数和用户定义的函数。
+
+```php
+# 输出用户定义的函数方法为：
+$funcs = get_defined_functions();
+var_dump($funcs['user']);
+```
+
+* get_defined_constants(void)
+
+返回所有可用的常量，包含系统常量和用户定义的常量
+
+* get_declared_classes(void)
+
+返回所有可用的类，包含系统类和用户定义的类。
+
+* get_included_files()
+
+返回所有的包含的文件路径的数组，included 和 required 的包含文件
+
 ## 弱类型比较
 
 ### 类型转换
