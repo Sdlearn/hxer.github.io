@@ -20,6 +20,7 @@
 <url> <loc>https://hxer.github.io/Python/phantomjs.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Python/selenium.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Python/socket.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>https://hxer.github.io/Python/elasticsearch.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Python/network_package.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Python/note.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Python/eval.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
@@ -62,6 +63,7 @@
 <url> <loc>https://hxer.github.io/WebSecurity/sqlinject.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/WebSecurity/vulnapp.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/WebSecurity/xss.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>https://hxer.github.io/WebSecurity/xss_bypass.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/WebSecurity/php.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/WebSecurity/ssrf.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/WebSecurity/url.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
@@ -111,6 +113,7 @@
 <url> <loc>https://hxer.github.io/Git/git_remote_operation.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Git/git.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Git/gist.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>https://hxer.github.io/MAC/brew.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Image/png.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/JS/xhr.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Note/ctf.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
