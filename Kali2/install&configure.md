@@ -401,7 +401,7 @@ Prerequisites:
 * GNU Make 3.81 or newer
 * libexecinfo (FreeBSD and OpenBSD only)
 
-```text
+```
 $ ./configure
 $ make
 $ [sudo] make install
@@ -410,7 +410,7 @@ $ [sudo] make install
 If your Python binary is in a non-standard location or has a
 non-standard name, run the following instead:
 
-```text
+```
 $ export PYTHON=/path/to/python
 $ $PYTHON ./configure
 $ make
@@ -419,19 +419,19 @@ $ [sudo] make install
 
 To run the tests:
 
-```text
+```
 $ make test
 ```
 
 To build the documentation:
 
-```text
+```
 $ make doc
 ```
 
 To read the documentation:
 
-```text
+```
 $ man doc/node.1
 ```
 

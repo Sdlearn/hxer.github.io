@@ -29,6 +29,41 @@ pane为一个window分隔出来的各个间隔，即window中的终端。
 apt-get install tmux
 ```
 
+### cmd 
+
+```
+# 关闭所有会话
+tmux kill-server
+# 关闭某个会话
+tmux kill-session -t session_name
+
+息查询:
+
+tmux list-keys 列出所有可以的快捷键和其运行的 tmux 命令
+tmux list-commands 列出所有的 tmux 命令及其参数
+tmux info 流出所有的 session, window, pane, 运行的进程号，等。
+会话控制:
+
+tmux new -s session_name 创建一个叫做 session_name 的 tmux session
+tmux attach -t session_name 重新开启叫做 session_name 的 tmux session
+tmux switch -t session_name 转换到叫做 session_name 的 tmux session
+tmux list-sessions / tmux ls 列出现有的所有 session
+tmux detach 离开当前开启的 session
+tmux kill-server 关闭所有 session
+窗口控制:
+
+tmux new-window 创建一个新的 window
+tmux list-windows 列出所有的 window
+tmux select-window -t :0-9 根据索引转到该 window
+tmux rename-window 重命名当前 window
+窗格控制:
+
+tmux split-window 将 window 垂直划分为两个 pane
+tmux split-window -h 将 window 水平划分为两个 pane
+tmux swap-pane -[UDLR] 在指定的方向交换 pane
+tmux select-pane -[UDLR] 在指定的方向选择下一个 pane
+```
+
 ## 基本用法
 
 tmux的所有操作必须先使用一个前缀键进入命令模式，或者说进入控制台，就像vi中的esc。默认的前缀为<c-b>,比较难按，很多人会改为screen中的<c-a>，来保持一致性。

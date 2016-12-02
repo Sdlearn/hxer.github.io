@@ -2,6 +2,7 @@
 
 * [Wiki](README.md)
 * Python
+    * [Virtualenv](Python/virtualenv.md)
     * [Anaconda](Python/anaconda.md)
     * [Django 1.8.7](Python/django.md)
     * [Excel](Python/excel.md)
@@ -37,6 +38,8 @@
 * Linux
     * [ps](Linux/ps.md)
     * [Cmdline](Linux/cmdline.md)
+    * [Tmux](Linux/tmux.md)
+    * [Byobu](Linux/byobu.md)
     * [Tcpdump](Linux/tcpdump.md)
     * [Nc](Linux/ncat.md)
     * [Nmap](Linux/nmap.md)
@@ -87,7 +90,6 @@
     * [MitmProxy](Kali2/mitmproxy.md)
     * [Pyenv](Kali2/pyenv.md)
     * [Remote access](Kali2/remote.md)
-    * [Tmux](Kali2/tmux.md)
     * [W3af](Kali2/w3af.md)
     * [install and configure](Kali2/install&configure.md)
     * [phpmyadmin install and configure](Kali2/phpmyadmin.md)
@@ -124,7 +126,9 @@
     * [git](Git/git.md)
     * [Gist](Git/gist.md)
 * MAC
-    * [brew](MAC/brew.md)
+    * [Homebrew](MAC/brew.md)
+    * [ITerm2](MAC/iterm2.md)
+    * [Note](MAC/note.md)
 * Image
     * [PNG](Image/png.md)
 * JS

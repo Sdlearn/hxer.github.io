@@ -13,7 +13,7 @@ demo as follow:
 
 * mysql
 
-```mysql 
+``` 
 mysql> create database test_gbk default charset GBK; 
 Query OK, 1 row affected (0.00 sec)
 
