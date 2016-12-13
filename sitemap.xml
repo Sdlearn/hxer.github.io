@@ -35,6 +35,8 @@
 <url> <loc>https://hxer.github.io/Python/processing.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Python/迭代器和生成器.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Linux/ps.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>https://hxer.github.io/Linux/grep.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>https://hxer.github.io/Linux/find.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Linux/cmdline.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Linux/tmux.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Linux/byobu.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
@@ -95,9 +97,11 @@
 <url> <loc>https://hxer.github.io/PHP/configure.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/PHP/note.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/PHP/正则匹配.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>https://hxer.github.io/Docker/clean.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Docker/docker-compose.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Docker/dockerfile.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Docker/docker-api-in-python.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>https://hxer.github.io/Docker/mac.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Docker/locale.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Docker/note.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://hxer.github.io/Docker/openvpn.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
