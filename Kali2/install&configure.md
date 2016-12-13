@@ -9,7 +9,37 @@ date: 2016-01-20 21:20
 
 ```
 deb http://http.kali.org/kali kali-rolling main contrib non-free
+
+# 中科大
+deb http://mirrors.ustc.edu.cn/kali kali-rolling main non-free contrib
+deb-src http://mirrors.ustc.edu.cn/kali kali-rolling main non-free contrib
+deb http://mirrors.ustc.edu.cn/kali-security kali-current/updates main contrib non-free
+deb-src http://mirrors.ustc.edu.cn/kali-security kali-current/updates main contrib non-free
 ```
+
+## ssh
+
+* 1.编辑sshd_config文件: `vi /etc/ssh/sshd_config`
+* 2.修改`PermitRootLogin prohibit-password`为`PermitRootLogin yes`
+* 3.命令启动SSH服务: `/etc/init.d/ssh start` 或 `service ssh start`
+* 4.设置系统开机自动启动SSH服务:
+`update-rc.d ssh enable  //系统自动启动SSH服务`
+
+### 私钥登录
+
+* 1. 本地生成SSH公私钥：`ssh-keygen -t rsa -C "your_email"`, 保存文件名为`xxx`
+* 2. 将公钥`xxx.pub`的内容写入kali用户`.ssh/authorized_keys`文件中
+* 本地`/etc/hosts`文件添加`kali`记录: `ip kali`
+* 3. 本地`.ssh/config`加入如下内容：
+
+```
+Host kali
+HostName kali
+User root
+IdentityFile ~/.ssh/xxx
+```
+
+* 4. ssh 登录：`ssh kali`
 
 ## reboot shutdown不能关机
 

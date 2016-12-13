@@ -31,3 +31,10 @@ socks5 127.0.0.1 1080
 # or
 http 127.0.0.1 8080
 ```
+
+## lxml
+
+```
+brew install libxml2 --with-python
+pip install lxml
+```

@@ -47,6 +47,7 @@ var_dump($funcs['user']);
 => false
 >>> 0 == "0abc"
 => true
+```
 
 * int vs float 
 
@@ -63,7 +64,7 @@ var_dump($funcs['user']);
 
 比较运算时, 遇到 `\d+e\d+` 类型字符串会将其解析为科学计数法
 
-```
+```php
 >>> "0e1234" == "0e7654321"
 => true
 >>> "0e1234" == "0e1234abc"
@@ -74,12 +75,14 @@ var_dump($funcs['user']);
 => false
 >>> "0e1234" == "0e1"
 => true
+
 # md5
 >>> md5('240610708')
 => "0e462097431906509019562988736854"
 >>> md5('QNKCDZO')
 => "0e830400451993494058024219903391"
->>> 
+>>> md5('240610708') == md5('QNKCDZO')
+=> true
 
 >>> "1e2" == "100"
 => true
@@ -146,3 +149,24 @@ strcmp函数比较字符串的本质是将两个变量转换为ascii，然后进
 ```
 
 seem to `array_search()`
+
+## 序列化
+
+### unserialize
+
+unserialize 函数反序列化不成功会返回`false`, 函数会从第一个字符开始解析，解析完`完整的反序列化字符串`就会返回，而不再解析之后的可能存在的字符串，如下所示：
+
+```php
+$tmp = 's:3:"123";';
+var_dump(unserialize($tmp));
+=>string '123' (length=3)
+
+$tmp = 's:3:"123";s:2:"34";';
+=>string '123' (length=3)
+
+$tmp = 's:3:"123";xxx';
+=>string '123' (length=3)
+
+$tmp = ' s:3:"123";';
+=>boolean false
+```

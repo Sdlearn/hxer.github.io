@@ -37,6 +37,8 @@
     * [迭代器和生成器](Python/迭代器和生成器.md)
 * Linux
     * [ps](Linux/ps.md)
+    * [Grep](Linux/grep.md)
+    * [Find](Linux/find.md)
     * [Cmdline](Linux/cmdline.md)
     * [Tmux](Linux/tmux.md)
     * [Byobu](Linux/byobu.md)
@@ -103,9 +105,11 @@
     * [note](PHP/note.md)
     * [正则匹配](PHP/正则匹配.md)
 * Docker
+    * [镜像和容器清理](Docker/clean.md)
     * [Docker Compose](Docker/docker-compose.md)
     * [Dockerfile](Docker/dockerfile.md)
     * [docker api in python](Docker/docker-api-in-python.md)
+    * [docker for mac](Docker/mac.md)
     * [locale](Docker/locale.md)
     * [note](Docker/note.md)
     * [openvpn](Docker/openvpn.md)
@@ -148,4 +152,3 @@
 * Simiki
     * [simiki 命令](Simiki/simiki-命令.md)
     * [start github page](Simiki/start with github page.md)
-
