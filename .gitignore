@@ -5,3 +5,4 @@ wiki
 _book
 
 .ropeproject/
+.DS_Store
