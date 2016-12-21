@@ -17,3 +17,10 @@ docker kill $(docker ps -a -q)
 # 删除所有已经停止的容器
 docker rm $(docker ps -a -q)
 ```
+
+## volume
+
+```
+# 移除无用的挂载目录
+docker volume rm $(docker volume ls -qf dangling=true)
+```
