@@ -5,7 +5,7 @@
     "language": "cn",
     "gitbook": ">= 3.2.0",
     "plugins": [
-        "prism", 
+        "prism",
         "-highlight",
         "splitter",
         "sitemap",
@@ -19,6 +19,6 @@
         },
         "sitemap": {
             "hostname": "https://hxer.github.io"
-        } 
+        }
     }
 }
