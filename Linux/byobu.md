@@ -54,15 +54,15 @@ byobu kill-server
 ## 快捷键
 
 Function | Shortcut
---- | ----- 
-创建新的窗口 | F2 
-回到先前窗口 | F3 
+--- | -----
+创建新的窗口 | F2
+回到先前窗口 | F3
 跳到下一个窗口 | F4
-重新加载文件 | F5 
-Detach and logout | F6 
-进入 复制/回滚模式 | F7 
-重新命名一个窗口 | F8 
-启动配置窗口 | F9 
+重新命名一个窗口 | F8
+重新加载文件 | F5
+Detach and logout | F6
+进入 复制/回滚模式 | F7
+启动配置窗口 | F9
 生成水平分隔 | shift+F2
 生成垂直分隔 | ctrl+F2
 生成新会话 | ctrl+shift+F2
@@ -71,14 +71,12 @@ Detach and logout | F6
 切换当前窗口 | Ctrl+a H/D/J/K
 调整当前窗口大小 | Ctrl+a 上/下/左/右
 
-```
+
 
 ```
 F12 -  Lock this terminal
 
-shift-F2 - Split the screen horizontally
 
-ctrl-F2 - Split the screen vertically
 
 shift-F3 - Shift the focus to the previous split region
 

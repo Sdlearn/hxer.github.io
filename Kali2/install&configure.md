@@ -17,13 +17,15 @@ deb http://mirrors.ustc.edu.cn/kali-security kali-current/updates main contrib n
 deb-src http://mirrors.ustc.edu.cn/kali-security kali-current/updates main contrib non-free
 ```
 
+kali的各种deb包: [http://http.kali.org/kali/pool/main/l/linux/](http://http.kali.org/kali/pool/main/l/linux/)
+
 ## ssh
 
 * 1.编辑sshd_config文件: `vi /etc/ssh/sshd_config`
 * 2.修改`PermitRootLogin prohibit-password`为`PermitRootLogin yes`
-* 3.命令启动SSH服务: `/etc/init.d/ssh start` 或 `service ssh start`
+* 3.命令启动SSH服务: `/etc/init.d/ssh start` 或 `service ssh start` 或 `systemctl start ssh`
 * 4.设置系统开机自动启动SSH服务:
-`update-rc.d ssh enable  //系统自动启动SSH服务`
+`update-rc.d ssh enable  //系统自动启动SSH服务` 或 `systemctl enable ssh`
 
 ### 私钥登录
 
@@ -43,7 +45,7 @@ IdentityFile ~/.ssh/xxx
 
 ## reboot shutdown不能关机
 
-solution: 
+solution:
 
 先做 用户注销，然后返回到登录页面，点击关机或重启
 
@@ -69,9 +71,9 @@ vim /etc/apt/sources.list
 
 ```
 #中科大源
-deb http://mirrors.ustc.edu.cn/kali sana main non-free contrib 
-deb-src http://mirrors.ustc.edu.cn/kali sana main non-free contrib 
-deb http://mirrors.ustc.edu.cn/kali-security/ sana/updates main contrib non-free 
+deb http://mirrors.ustc.edu.cn/kali sana main non-free contrib
+deb-src http://mirrors.ustc.edu.cn/kali sana main non-free contrib
+deb http://mirrors.ustc.edu.cn/kali-security/ sana/updates main contrib non-free
 deb-src http://mirrors.ustc.edu.cn/kali-security/ sana/updates main contrib non-free
 #阿里云kali源
 deb http://mirrors.aliyun.com/kali sana main non-free contrib
@@ -97,7 +99,7 @@ root@kali:# cat << EOF >/etc/apt/sources.list
 > EOF
 root@kali:#apt-get update
 root@kali:#apt-get dist-upgrade
-root@kali:#reboot 
+root@kali:#reboot
 ```
 
 ## 设置 root 密码
@@ -192,7 +194,7 @@ pip install shadowsocks
 run
 
 ```
-sslocal -s <remote_ip> -p <remote_port> -k <password> 
+sslocal -s <remote_ip> -p <remote_port> -k <password>
 ```
 
 run with user login
@@ -200,13 +202,13 @@ run with user login
 ```
 vim ~/opt/ss.sh
     sslocal -s <remote_ip> -p <remote_port> -k <password>   #add to ss.sh
-    
+
 chmod u+x ss.sh
 
 vim ~/.profile
     sh ~/opt/ss.sh 1>/dev/null 2>~/opt/ss.log &     #add to file end, 1:stdout 2:stderr
-``` 
-    
+```
+
 * socks proxy
 
 1.安装
@@ -245,7 +247,7 @@ Debian / Ubuntu
 
 ```
 gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-or 
+or
 curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
 
 sudo apt-get update
@@ -277,7 +279,7 @@ cd beef
 bundle install
 ./beef
 ```
- 
+
 ## install docker
 
 ```
@@ -290,7 +292,7 @@ sudo apt-get install docker.io
 
 or
 
-curl -sSL https://get.docker.com/ | sh 
+curl -sSL https://get.docker.com/ | sh
 ```
 
 ## irc
@@ -298,7 +300,7 @@ curl -sSL https://get.docker.com/ | sh
 * irssi
 
 ```
-sudo apt-get install irssi 
+sudo apt-get install irssi
 ```
 
 ## zbar -- decode 二维码
@@ -332,7 +334,7 @@ openvpn --config clientname.ovpn 1>ovpn_info.log 2>ovpn_error.log &
 
 chmod u+x ovpn.sh
 
-# run 
+# run
 sudo ./ovpn.sh
 ```
 
@@ -408,7 +410,7 @@ Edit menu -> Preferences
 
 kali2 默认安装好了gdb
 
-#### peda 
+#### peda
 
 * install
 
@@ -477,9 +479,9 @@ $ node -e "console.log('Hello from Node.js ' + process.version)"
 
 * install
 
-1.intall nodejs 
+1.intall nodejs
 
-then 
+then
 
 ```
 # 下载仓库
@@ -505,14 +507,14 @@ npm start
 ```
 su root
 apt-get install flashplugin-nonfree
-update-flashplugin-nonfree --install 
+update-flashplugin-nonfree --install
 ```
 
 * 安装百度云
 
 首先先git一下：https://github.com/LiuLang/bcloud-packages
 
-然后安装自己对应版本（32bit or 64bit） 
+然后安装自己对应版本（32bit or 64bit）
 
 ```
 dpkg -i bcloud-x.x.x.deb
@@ -561,7 +563,7 @@ $sudo service vsftpd restart
 sudo service apache2 start
 ```
 
-2.修改网站默认打开路径 
+2.修改网站默认打开路径
 
     /etc/apache2/sites-enabled/000-default.conf    
             修改“DocumentRoot /var/www/html" to "DocumentRoot yourpath"     这是修改80端口
@@ -574,9 +576,9 @@ sudo service apache2 start
                 AllowOverride None
                 Require all granted
             </Directory>
-                 
+
 2.mysql 服务启动    
-    
+
 ```
 sudo service mysql start
 ```
@@ -588,12 +590,12 @@ mysql -u root
 >use mysql;
 >UPDATE user SET Password=PASSWORD('<passwd>') WHERE User='root';
 >flush privileges;
->exit; 
+>exit;
 ```
 
 3.php 配置      
 
-直接在/var/www/html/(默认情况)目录放php文件，即可通过 http://127.0.0.1/xx.php 来访问 
+直接在/var/www/html/(默认情况)目录放php文件，即可通过 http://127.0.0.1/xx.php 来访问
 修改php.ini文件， 改为"display_errors = On"     重启apache生效
 
 4.织梦模板
@@ -694,34 +696,34 @@ key：1A2ZZ-8RH06-AZTJ1-7A17H-32RM8
     + run
 
     ```
-    java -jar WebGoat-6.0.1-war.exec.jar". 
+    java -jar WebGoat-6.0.1-war.exec.jar".
     ```
-    
-    + browse 
-    
+
+    + browse
+
     ```
      http://localhost:8080/WebGoat
     ```
-    
+
 * 安装源码（for developers）
 
     + 下载source文件
     + 下载JAVA JDK，满足安装要求的版本，Kali自带java jdk且满足要求
     + 下载配置maven， http://maven.apache.org/  
-    
+
     按要求下载 apache-maven-3.2.3-bin.tar.gz    
-    
+
     下载文件解压至/usr/local/目录下
-        
+
     vi /etc/profile 设置全局变量
 
 ```
-M2_HOME=/usr/local/apache-maven-3.2.3 
-export M2_HOME 
-PATH=$PATH:$M2_HOME/bin 
+M2_HOME=/usr/local/apache-maven-3.2.3
+export M2_HOME
+PATH=$PATH:$M2_HOME/bin
 export PATH
 ```
-    
+
 ```
 #source /etc/profile  生效
 ```
@@ -730,22 +732,22 @@ export PATH
 
 ```
 #mvn -v
-``` 
- 
+```
+
 maven 修建项目
-    
+
 ```
 #cd webgoat* #(webgoat 源码解压目录),
 #mvn clean package
 #mvn tomcat:run-war
 ```
-    
+
 选用eclipse，安装maven插件，
-    
-    name为：m2e, 
-    
+
+    name为：m2e,
+
     location为：http://download.eclipse.org/technology/m2e/releases
-    
+
     当这样安装插件时会报错，原因是m2e插件和eclipse版本不匹配导致，location改为：http://download.eclipse.org/technology/m2e/releases/1.4 即可。
 
 

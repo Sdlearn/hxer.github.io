@@ -3,16 +3,14 @@ title: "note"
 date: 2016-01-22 15:40
 ---
 
-## `requests proxy` vs `pysocks proxy`
+## 静态方法 vs 类成员方法
 
-[pysocks](https://github.com/Anorov/PySocks)
+Python的静态方法(staticmethod)和类成员方法(classmethod)都可以被类或实例访问, 两者之间存在区别，如下：
 
-### http proxy
+* 静态方法无需传入self参数，类成员方法需传入代表本类的cls参数
+* 静态方法是无法访问实例变量的，而类成员方法也同样无法访问实例变量，但可以访问类变量
 
-pysocks 进行 http 代理时， 使用的是 HTTP CONNECT 方式， 对于不支持 `CONNECT` 方式的代理服务器，比如BurpSuite, 就无效
-
-requests 进行 http 代理，不使用 HTTP CONNECT 方式， 兼容性更好 
-
+总结来看：**静态方法**：无法访问类属性、实例属性，相当于一个相对独立的方法，可以认为是放在一个类的作用域里的函数。**类成员方法**：可以访问类属性，无法访问实例属性
 
 ## __dict__
 
@@ -135,4 +133,3 @@ X (VERBOSE)
 [10]: http://pyzh.readthedocs.org/en/latest/python-questions-on-stackoverflow.html
 [20]: http://drops.wooyun.org/tips/7301
 [21]: https://bootstrap.pypa.io/get-pip.py
-

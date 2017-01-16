@@ -47,7 +47,7 @@
 |`Ctrl + Shift + V`   |
 |`Ctrl + D` |  复制当前的行或者选中的块  |
 |`Ctrl + Y` |  在插入符号处删除行|
-|`Ctrl + Shift + J`  | Join lines  | 
+|`Ctrl + Shift + J`  | Join lines  |
 |`Ctrl + Enter`   | Split line   |
 |`Shift + Enter`  |  新起一行|
 |`Ctrl + Shift + U` |  切换大小写|
@@ -110,29 +110,29 @@
 |`Ctrl + N` | 查找类|
 |`Ctrl + Shift + N`|	 查找文件|
 |`Ctrl + Alt + Shift + N` | 查找符号|
+|`F4 / Ctrl + Enter` | 编辑源代码 / 查看源代码|
+|`Ctrl + Shift + I`	| 查看定义(例如：查看函数具体实现)|
+|`Ctrl + G` | 调整到指定行|
+|`Ctrl + B or Ctrl + Click`  |调整到声明处|
+|`Ctrl + Alt + B`|  调整到实现|
+|`Ctrl + Shift + B` | 调整到类型声明处|
+|`Ctrl + U` | 跳到父类/超类|
+|`Ctrl + Alt + H`| 调用层次结构|
+|`Ctrl + H`  | 类型层次结构,例如类的继承|
+|`Ctrl + Shift + H`  |方法的层次结构|
+|`Ctrl + F12`  |显示文件结构|
 |`Alt + Right/Left`|  切换上一个/下一个编辑区|
 |`F12` | 回到以前的工具窗口|
 |`Esc` | 从工具窗口到编辑区|
 |`Shift + Esc` | 隐藏当前使用的或上次使用的窗口|
 |`Ctrl + Shift + F4`	| 关闭打开的运行/消息/查找/...	对话框|
-|`Ctrl + G` | 调整到指定行|
 |`Ctrl + E`	| 打开最近使用的文件显示框|
 |`Ctrl + Alt + Left/Right` | 导航回退或者前进|
 |`Ctrl + Shift + Backspace` | 定位到最后编辑区|
 |`Alt + F1`	| 选择当前文件或者符号在任意显示窗口中(例如：结构，项目等)|
-|`Ctrl + B or Ctrl + Click`  |调整到声明处|
-|`Ctrl + Alt + B`|  调整到实现|
-|`Ctrl + Shift + I`	| 查看定义(例如：查看函数具体实现)|
-|`Ctrl + Shift + B` | 调整到类型声明处|
-|`Ctrl + U` | 跳到父类/超类|
 |`Alt + Up/Down`  |跳到上一个/下一个方法|
 |`Ctrl + ] / [` | 移动到代码块的结束/开始|
-|`Ctrl + F12`  |显示文件结构|
-|`Ctrl + H`  | 类型层次结构,例如类的继承|
-|`Ctrl + Shift + H`  |方法的层次结构|
-|`Ctrl + Alt + H`| 调用层次结构|
 |`F2 / Shift + F2`  |下一个/以前的突出显示错误|
-|`F4 / Ctrl + Enter` | 编辑源代码 / 查看源代码|
 |`Alt + Home` | 显示导航栏|
 |`F11` | 切换书签|
 |`Ctrl + F11` | Toggle bookmark with mnemonic|
@@ -161,6 +161,3 @@
 |`Ctrl + K` | 提交项目到VCS|
 |`Ctrl + T` | 从VCS更新项目|
 |`Alt + Shift + C` | 查看最近更改|
-
-
-

@@ -49,7 +49,7 @@ var_dump($funcs['user']);
 => true
 ```
 
-* int vs float 
+* int vs float
 
 ```
 >>> 1.000000000000001 == 1
@@ -170,3 +170,15 @@ $tmp = 's:3:"123";xxx';
 $tmp = ' s:3:"123";';
 =>boolean false
 ```
+
+## 变量覆盖
+
+很多应用会有这个逻辑，就是在全局覆盖变量前，检查`$_REQUEST`变量，如果`$_REQUEST`中含有一些不允许覆盖的变量时就报错；如果不含有非法变量，再依次将`$_GET` `$_POST` `$_COOKIE`三者覆盖到全局变量。
+
+这在php5.3以前都是比较安全的，但php5.3以后** `$_REQUEST`变量中不再包含`$_COOKIE` ** ，所以第一步检查的时候也就不会检查`$_COOKIE`中的变量，但第二步又是包含了`$_COOKIE`的。这种情景不光在变量覆盖中存在，比如一些WAF也可能会因为php5.3而漏掉检查`$_COOKIE`。
+
+php 5.3以后`$_REQUEST`变量中不再包含`$_COOKIE`, 这是php5.3.0以后`$_REQUEST`是受php.ini中的`request_order`影响的，关于 `request_order` 这个配置选项，是php的5.3.0版本中新增加的, `request_order`默认值为GP，也就是说默认配置下`$_REQUEST`只包含`$_GET`和`$_POST`而不包括`$_COOKIE`。通过 COOKIE就可以提交GLOBALS变量。
+
+ 从而绕过了大多开源程序中的全局变量防御。因此要将次选项更改为 `request_order = "CGP"`
+
+* [2015通达oa-从前台注入到后台getshell](http://www.cnblogs.com/iamstudy/articles/tongdaoa_2015_sql_getshell.html)
