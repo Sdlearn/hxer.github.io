@@ -1,4 +1,0 @@
-# Wiki | janes
-
-janes' wiki
-
