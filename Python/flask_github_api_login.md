@@ -31,7 +31,7 @@ http://localhost:5000/github/callback
 
 Homepage URL 和 Authorization callback URL 根据需求来填，没有严格限制。注册完应用后会生成一个 Client ID 和 Client Secret, 这两个值用来访问Github API.它们应该存储在环境变量中，而不是被硬编码或放在版本控制库中，这样做是不安全的。
 
-## 重定向用户请求到dithub，获取code信息
+## 重定向用户请求到github，获取code信息
 
 向 https://github.com/login/oauth/authorize 发送 get 请求，获取code信息。get请求需要带如下参数：
 
@@ -41,7 +41,7 @@ Homepage URL 和 Authorization callback URL 根据需求来填，没有严格限
 
 * redirect_url [optional]
 
-从github获取code码之后跳转到的url, 
+从github获取code码之后跳转到的url,
 
 The redirect_uri parameter is optional. If left out, GitHub will redirect users to the callback URL configured in the OAuth Application settings. If provided, the redirect URL's host and port must exactly match the callback URL. The redirect URL's path must reference a subdirectory of the callback URL.
 
@@ -93,13 +93,13 @@ The client secret you received from GitHub when you registered.
 
 The code you received as a response
 
-* redirect_uri	
+* redirect_uri
 
 The URL in your app where users will be sent after authorization
 
-* state	
+* state
 
-The unguessable random string you optionally provided 
+The unguessable random string you optionally provided
 
 ```python
 @app.route('/github/callback', methods=['GET'])
@@ -115,7 +115,7 @@ def github_callback():
         }
         r = requests.post(url, data=payload)
         return r.content
-        
+
 # github 返回参数
 access_token=18365f14ea0b85beecf17e841af0060e493150d1&scope=&token_type=bearer
 ```

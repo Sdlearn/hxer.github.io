@@ -10,8 +10,8 @@ Cmd + Ctrl + Opt + Power | 关机 (shutdown)
 
 ## software
 
-software | note 
---- | ---- 
+software | note
+--- | ----
 Amphetamine | 防止系统休眠 Better than Caffeine
 
 * sougouinput
@@ -31,6 +31,10 @@ socks5 127.0.0.1 1080
 # or
 http 127.0.0.1 8080
 ```
+
+* proxychains4.12_1
+
+'/usr/local/etc/proxychains.conf'
 
 ## lxml
 
