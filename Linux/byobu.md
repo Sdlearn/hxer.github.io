@@ -71,7 +71,7 @@ Detach and logout | F6
 切换当前窗口 | Ctrl+a H/D/J/K
 调整当前窗口大小 | Ctrl+a 上/下/左/右
 
-
+关闭当前窗口: 命令行输入 `exit`
 
 ```
 F12 -  Lock this terminal

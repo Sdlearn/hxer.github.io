@@ -7,6 +7,27 @@ Ctrl + Shift + Power | 关闭屏幕
 Cmd + Opt + Power | 睡眠 (sleep)
 Cmd + Ctrl + Power | 重启 (restart)
 Cmd + Ctrl + Opt + Power | 关机 (shutdown)
+fn + delete | 向光标后删除
+cmd + 方向左 | home
+cmd + 方向右 | end
+crtl+cmd+f | 全屏某个应用
+cmd+w | 关闭应用
+cmd+m | 最小化应用
+alt+cmd+esc | 任务管理器
+cmd+shift+3 | 截全屏
+cmd+shift+4 | 选择截屏
+cmd+delete | 删除
+cmd+alt+c | 复制当前路径(finder下)
+
+在finder下选中一个目录按空格 可以查看目录大小
+
+## 信息查看
+
+### 进程
+
+```
+lsof -i tcp:8000 查看某个端口对应进程
+```
 
 ## software
 

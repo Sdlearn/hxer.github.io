@@ -3,19 +3,19 @@ title: "Selenium and Xvfb "
 date: 2016-01-22 14:41
 ---
 
-## reference
+## 参考
 
 * [selenium-python doc][1]
 
 [1]: http://selenium-python.readthedocs.org/getting-started.html
 
-## install
+## 安装
 
 ```
 pip install selenium
 ```
 
-## simple example
+## 样例
 
 ```python
 import unittest
@@ -43,38 +43,161 @@ if __name__ == "__main__":
     unittest.main()
 ```
 
-* close vs quit
+## 常用功能
 
-    + close() 
-    
+### 获取页面渲染后的源代码
+
+获取页面渲染后的源代码， 可以做到网页的动态爬取。
+
+`page_source` 属性输出页面源码
+
+```python
+dirver.get('http://xxx.xxx.xxx')
+soup = BeautifulSoup(dirver.page_source, 'lxml')
+```
+
+### 执行js脚本
+
+```python
+# 滚动致页面最下方
+driver.execute_script('window.scrollTo(0,document.body.scrollHeight)')
+```
+
+### 退出
+
+* driver.close()
+
     close browser
-    
-    + quit()
-    
+
+* driver.quit()
+
     close a tab
+
+## driver的优化
+
+优化表示可以指定各种参数运行，比如不加载图片，使用代理等。
+
+### phantomjs使用代理，指定UA，设置超时：
+
+```python
+from selenium import webdriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
+dcap = DesiredCapabilities.PHANTOMJS.copy()
+dcap["phantomjs.page.settings.userAgent"] = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0"
+dcap["phantomjs.page.settings.resourceTimeout"] = 1000
+dcap["phantomjs.page.settings.loadImages"] = False
+dcap["phantomjs.page.settings.disk-cache"] = True
+dcap["phantomjs.page.customHeaders.Cookie"]
+service_args = [ '--proxy=127.0.0.1:1080', '--proxy-type=socks5']   
+driver = webdriver.PhantomJS('../path_to/phantomjs', service_args=service_args, desired_capabilities=dcap)
+
+# 自定义请求头
+headers = {'Accept': '*/*',
+    'Accept-Language': 'en-US,en;q=0.8',
+    'Cache-Control': 'max-age=0',
+    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36', #这种修改 UA 也效
+    'Connection': 'keep-alive'
+    'Referer':'http://www.baidu.com/'
+}
+
+for key, value in headers.iteritems():
+    desired_capabilities['phantomjs.page.customHeaders.{}'.format(key)] = value
+desired_capabilities['phantomjs.page.customHeaders.User-Agent'] ='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36(KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'
+
+# phantom 命令行禁用图片
+--load-images=false
+```
+
+其中service_args有很多可选参数，详细参数请参考：[http://phantomjs.org/api/command-line.html](http://phantomjs.org/api/command-line.html)
+
+* 方式二
+
+```python
+from selenium import webdriver
+from selenium.webdriver.common.proxy import ProxyType
+
+# 利用DesiredCapabilities(代理设置)参数值，重新打开一个sessionId，我看意思就相当于浏览器清空缓存后，加上代理重新访问一次url
+driver = webdriver.PhantomJS(PATH_PHANTOMJS)
+proxy=driver.Proxy()
+proxy.proxy_type=ProxyType.MANUAL
+proxy.http_proxy='1.9.171.51:800'
+# 将代理设置添加到webdriver.DesiredCapabilities.PHANTOMJS中
+proxy.add_to_capabilities(webdriver.DesiredCapabilities.PHANTOMJS)
+driver.start_session(webdriver.DesiredCapabilities.PHANTOMJS)
+driver.get('url')
+```
+
+### Firefox Driver添加代理, 禁用图片，flash等
+
+* 方式1
+
+```
+profile = webdriver.FirefoxProfile()
+profile.set_preference("network.proxy.type", 1)             # 1代表手动设置
+profile.set_preference("network.proxy.http", "127.0.0.1")
+profile.set_preference("network.proxy.http_port", 1080)
+profile.update_preferences()
+driver = webdriver.Firefox(firefox_profile=profile)
+
+# 禁用
+firefoxProfile.set_preference('permissions.default.stylesheet', 2)  # 禁用CSS
+firefoxProfile.set_preference('dom.ipc.plugins.enabled.libflashplayer.so','false') # 禁用flash
+firefoxProfile.set_preference('permissions.default.image', 2)   # 禁用图片
+```
+
+如果是socks5代理，变更其中两行
+
+```
+profile.setPreference("network.proxy.socks", "190.x.y.z");
+profile.setPreference("network.proxy.socks_port", 8**8);
+```
+
+* 方式2
+
+```
+from selenium import webdriver
+from selenium.webdriver.common.proxy import *
+
+myProxy = "86.111.144.194:3128"
+proxy = Proxy({
+    'proxyType': ProxyType.MANUAL,
+    'httpProxy': myProxy,
+    'ftpProxy': myProxy,
+    'sslProxy': myProxy,
+    'noProxy':''})
+
+driver = webdriver.Firefox(proxy=proxy)
+driver.set_page_load_timeout(30)
+driver.get('http://whatismyip.com')
+```
+
+## 其他
+
+
 
 * input like human
 
     + send_keys(string)
-    
+
     + click()
-    
+
     + clear()
 
 * find element
 
     + find_element_by_name() vs find_elements_by_name()
-    
+
     find_elements_by_name(): return list
-    
+
     + find_elements()
-    
+
     ```python
     from selenium.webdriver.common.by import By
     webdriver.find_elements(By.NAME, <string>)[0].send_keys(<string>)
     webdriver.find_elements(By.XPATH, "//input[@value='<string>']")[0].click()
     ```
-    
+
 * Keys class provide keys in the keyboard like RETURN, F1, ALT etc.
 
 * support browser
@@ -175,11 +298,11 @@ driver.delete_all_cookies()
 
 
 # Xvfb
- 
+
 It is an X11 server that performs all graphical operations in memory, not showing any screen output
 
 Only a network layer is necessary.
- 
+
 ## install
 
 ```

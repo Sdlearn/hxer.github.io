@@ -40,3 +40,11 @@ requests 进行 http 代理，不使用 HTTP CONNECT 方式， 兼容性更好
 [Errno -2] Name or service not known
 -- DNS lookup of the host name you're trying to access failed
 ```
+
+### 自动跳转
+
+通过配置`allow_redirects`参数，可以设置requests自动跳转，默认允许
+
+* 禁止自动跳转
+
+`requests.get(url, allow_redirects=False)`

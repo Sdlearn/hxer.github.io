@@ -1,5 +1,7 @@
 # src 平台
 
+http://0xsafe.org
+
 名称 | 地址
 ---- | ----
 漏洞盒子平台 | https://www.vulbox.com
