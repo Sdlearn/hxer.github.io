@@ -2441,13 +2441,13 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h2 id="reference">1. reference</h2>
+                                <h2 id="&#x53C2;&#x8003;">1. &#x53C2;&#x8003;</h2>
 <ul>
 <li><a href="http://selenium-python.readthedocs.org/getting-started.html" target="_blank">selenium-python doc</a></li>
 </ul>
-<h2 id="install">2. install</h2>
+<h2 id="&#x5B89;&#x88C5;">2. &#x5B89;&#x88C5;</h2>
 <pre class="language-"><code>pip install selenium
-</code></pre><h2 id="simple_example">3. simple example</h2>
+</code></pre><h2 id="&#x6837;&#x4F8B;">3. &#x6837;&#x4F8B;</h2>
 <pre class="language-"><code class="lang-python"><span class="token keyword">import</span> unittest
 <span class="token keyword">from</span> selenium <span class="token keyword">import</span> webdriver
 <span class="token keyword">from</span> selenium<span class="token punctuation">.</span>webdriver<span class="token punctuation">.</span>common<span class="token punctuation">.</span>keys <span class="token keyword">import</span> Keys
@@ -2472,17 +2472,111 @@
 <span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">&quot;__main__&quot;</span><span class="token punctuation">:</span>
     unittest<span class="token punctuation">.</span>main<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
+<h2 id="&#x5E38;&#x7528;&#x529F;&#x80FD;">4. &#x5E38;&#x7528;&#x529F;&#x80FD;</h2>
+<h3 id="&#x83B7;&#x53D6;&#x9875;&#x9762;&#x6E32;&#x67D3;&#x540E;&#x7684;&#x6E90;&#x4EE3;&#x7801;">4.1. &#x83B7;&#x53D6;&#x9875;&#x9762;&#x6E32;&#x67D3;&#x540E;&#x7684;&#x6E90;&#x4EE3;&#x7801;</h3>
+<p>&#x83B7;&#x53D6;&#x9875;&#x9762;&#x6E32;&#x67D3;&#x540E;&#x7684;&#x6E90;&#x4EE3;&#x7801;&#xFF0C; &#x53EF;&#x4EE5;&#x505A;&#x5230;&#x7F51;&#x9875;&#x7684;&#x52A8;&#x6001;&#x722C;&#x53D6;&#x3002;</p>
+<p><code>page_source</code> &#x5C5E;&#x6027;&#x8F93;&#x51FA;&#x9875;&#x9762;&#x6E90;&#x7801;</p>
+<pre class="language-"><code class="lang-python">dirver<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">&apos;http://xxx.xxx.xxx&apos;</span><span class="token punctuation">)</span>
+soup <span class="token operator">=</span> BeautifulSoup<span class="token punctuation">(</span>dirver<span class="token punctuation">.</span>page_source<span class="token punctuation">,</span> <span class="token string">&apos;lxml&apos;</span><span class="token punctuation">)</span>
+</code></pre>
+<h3 id="&#x6267;&#x884C;js&#x811A;&#x672C;">4.2. &#x6267;&#x884C;js&#x811A;&#x672C;</h3>
+<pre class="language-"><code class="lang-python"><span class="token comment" spellcheck="true"># &#x6EDA;&#x52A8;&#x81F4;&#x9875;&#x9762;&#x6700;&#x4E0B;&#x65B9;</span>
+driver<span class="token punctuation">.</span>execute_script<span class="token punctuation">(</span><span class="token string">&apos;window.scrollTo(0,document.body.scrollHeight)&apos;</span><span class="token punctuation">)</span>
+</code></pre>
+<h3 id="&#x9000;&#x51FA;">4.3. &#x9000;&#x51FA;</h3>
 <ul>
-<li><p>close vs quit</p>
-<ul>
-<li><p>close() </p>
-<p>close browser</p>
+<li><p>driver.close()</p>
+<p>  close browser</p>
 </li>
-<li><p>quit()</p>
-<p>close a tab</p>
+<li><p>driver.quit()</p>
+<p>  close a tab</p>
 </li>
 </ul>
-</li>
+<h2 id="driver&#x7684;&#x4F18;&#x5316;">5. driver&#x7684;&#x4F18;&#x5316;</h2>
+<p>&#x4F18;&#x5316;&#x8868;&#x793A;&#x53EF;&#x4EE5;&#x6307;&#x5B9A;&#x5404;&#x79CD;&#x53C2;&#x6570;&#x8FD0;&#x884C;&#xFF0C;&#x6BD4;&#x5982;&#x4E0D;&#x52A0;&#x8F7D;&#x56FE;&#x7247;&#xFF0C;&#x4F7F;&#x7528;&#x4EE3;&#x7406;&#x7B49;&#x3002;</p>
+<h3 id="phantomjs&#x4F7F;&#x7528;&#x4EE3;&#x7406;&#xFF0C;&#x6307;&#x5B9A;UA&#xFF0C;&#x8BBE;&#x7F6E;&#x8D85;&#x65F6;&#xFF1A;">5.1. phantomjs&#x4F7F;&#x7528;&#x4EE3;&#x7406;&#xFF0C;&#x6307;&#x5B9A;UA&#xFF0C;&#x8BBE;&#x7F6E;&#x8D85;&#x65F6;&#xFF1A;</h3>
+<pre class="language-"><code class="lang-python"><span class="token keyword">from</span> selenium <span class="token keyword">import</span> webdriver
+<span class="token keyword">from</span> selenium<span class="token punctuation">.</span>webdriver<span class="token punctuation">.</span>common<span class="token punctuation">.</span>desired_capabilities <span class="token keyword">import</span> DesiredCapabilities
+
+dcap <span class="token operator">=</span> DesiredCapabilities<span class="token punctuation">.</span>PHANTOMJS<span class="token punctuation">.</span>copy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+dcap<span class="token punctuation">[</span><span class="token string">&quot;phantomjs.page.settings.userAgent&quot;</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;Mozilla/5.0 (Windows NT 6.1; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0&quot;</span>
+dcap<span class="token punctuation">[</span><span class="token string">&quot;phantomjs.page.settings.resourceTimeout&quot;</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1000</span>
+dcap<span class="token punctuation">[</span><span class="token string">&quot;phantomjs.page.settings.loadImages&quot;</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">False</span>
+dcap<span class="token punctuation">[</span><span class="token string">&quot;phantomjs.page.settings.disk-cache&quot;</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">True</span>
+dcap<span class="token punctuation">[</span><span class="token string">&quot;phantomjs.page.customHeaders.Cookie&quot;</span><span class="token punctuation">]</span>
+service_args <span class="token operator">=</span> <span class="token punctuation">[</span> <span class="token string">&apos;--proxy=127.0.0.1:1080&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;--proxy-type=socks5&apos;</span><span class="token punctuation">]</span>   
+driver <span class="token operator">=</span> webdriver<span class="token punctuation">.</span>PhantomJS<span class="token punctuation">(</span><span class="token string">&apos;../path_to/phantomjs&apos;</span><span class="token punctuation">,</span> service_args<span class="token operator">=</span>service_args<span class="token punctuation">,</span> desired_capabilities<span class="token operator">=</span>dcap<span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true"># &#x81EA;&#x5B9A;&#x4E49;&#x8BF7;&#x6C42;&#x5934;</span>
+headers <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">&apos;Accept&apos;</span><span class="token punctuation">:</span> <span class="token string">&apos;*/*&apos;</span><span class="token punctuation">,</span>
+    <span class="token string">&apos;Accept-Language&apos;</span><span class="token punctuation">:</span> <span class="token string">&apos;en-US,en;q=0.8&apos;</span><span class="token punctuation">,</span>
+    <span class="token string">&apos;Cache-Control&apos;</span><span class="token punctuation">:</span> <span class="token string">&apos;max-age=0&apos;</span><span class="token punctuation">,</span>
+    <span class="token string">&apos;User-Agent&apos;</span><span class="token punctuation">:</span> <span class="token string">&apos;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36&apos;</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#&#x8FD9;&#x79CD;&#x4FEE;&#x6539; UA &#x4E5F;&#x6548;</span>
+    <span class="token string">&apos;Connection&apos;</span><span class="token punctuation">:</span> <span class="token string">&apos;keep-alive&apos;</span>
+    <span class="token string">&apos;Referer&apos;</span><span class="token punctuation">:</span><span class="token string">&apos;http://www.baidu.com/&apos;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">for</span> key<span class="token punctuation">,</span> value <span class="token keyword">in</span> headers<span class="token punctuation">.</span>iteritems<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    desired_capabilities<span class="token punctuation">[</span><span class="token string">&apos;phantomjs.page.customHeaders.{}&apos;</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> value
+desired_capabilities<span class="token punctuation">[</span><span class="token string">&apos;phantomjs.page.customHeaders.User-Agent&apos;</span><span class="token punctuation">]</span> <span class="token operator">=</span><span class="token string">&apos;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36(KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36&apos;</span>
+
+<span class="token comment" spellcheck="true"># phantom &#x547D;&#x4EE4;&#x884C;&#x7981;&#x7528;&#x56FE;&#x7247;</span>
+<span class="token operator">-</span><span class="token operator">-</span>load<span class="token operator">-</span>images<span class="token operator">=</span>false
+</code></pre>
+<p>&#x5176;&#x4E2D;service_args&#x6709;&#x5F88;&#x591A;&#x53EF;&#x9009;&#x53C2;&#x6570;&#xFF0C;&#x8BE6;&#x7EC6;&#x53C2;&#x6570;&#x8BF7;&#x53C2;&#x8003;&#xFF1A;<a href="http://phantomjs.org/api/command-line.html" target="_blank">http://phantomjs.org/api/command-line.html</a></p>
+<ul>
+<li>&#x65B9;&#x5F0F;&#x4E8C;</li>
+</ul>
+<pre class="language-"><code class="lang-python"><span class="token keyword">from</span> selenium <span class="token keyword">import</span> webdriver
+<span class="token keyword">from</span> selenium<span class="token punctuation">.</span>webdriver<span class="token punctuation">.</span>common<span class="token punctuation">.</span>proxy <span class="token keyword">import</span> ProxyType
+
+<span class="token comment" spellcheck="true"># &#x5229;&#x7528;DesiredCapabilities(&#x4EE3;&#x7406;&#x8BBE;&#x7F6E;)&#x53C2;&#x6570;&#x503C;&#xFF0C;&#x91CD;&#x65B0;&#x6253;&#x5F00;&#x4E00;&#x4E2A;sessionId&#xFF0C;&#x6211;&#x770B;&#x610F;&#x601D;&#x5C31;&#x76F8;&#x5F53;&#x4E8E;&#x6D4F;&#x89C8;&#x5668;&#x6E05;&#x7A7A;&#x7F13;&#x5B58;&#x540E;&#xFF0C;&#x52A0;&#x4E0A;&#x4EE3;&#x7406;&#x91CD;&#x65B0;&#x8BBF;&#x95EE;&#x4E00;&#x6B21;url</span>
+driver <span class="token operator">=</span> webdriver<span class="token punctuation">.</span>PhantomJS<span class="token punctuation">(</span>PATH_PHANTOMJS<span class="token punctuation">)</span>
+proxy<span class="token operator">=</span>driver<span class="token punctuation">.</span>Proxy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+proxy<span class="token punctuation">.</span>proxy_type<span class="token operator">=</span>ProxyType<span class="token punctuation">.</span>MANUAL
+proxy<span class="token punctuation">.</span>http_proxy<span class="token operator">=</span><span class="token string">&apos;1.9.171.51:800&apos;</span>
+<span class="token comment" spellcheck="true"># &#x5C06;&#x4EE3;&#x7406;&#x8BBE;&#x7F6E;&#x6DFB;&#x52A0;&#x5230;webdriver.DesiredCapabilities.PHANTOMJS&#x4E2D;</span>
+proxy<span class="token punctuation">.</span>add_to_capabilities<span class="token punctuation">(</span>webdriver<span class="token punctuation">.</span>DesiredCapabilities<span class="token punctuation">.</span>PHANTOMJS<span class="token punctuation">)</span>
+driver<span class="token punctuation">.</span>start_session<span class="token punctuation">(</span>webdriver<span class="token punctuation">.</span>DesiredCapabilities<span class="token punctuation">.</span>PHANTOMJS<span class="token punctuation">)</span>
+driver<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">&apos;url&apos;</span><span class="token punctuation">)</span>
+</code></pre>
+<h3 id="Firefox_Driver&#x6DFB;&#x52A0;&#x4EE3;&#x7406;__&#x7981;&#x7528;&#x56FE;&#x7247;&#xFF0C;flash&#x7B49;">5.2. Firefox Driver&#x6DFB;&#x52A0;&#x4EE3;&#x7406;, &#x7981;&#x7528;&#x56FE;&#x7247;&#xFF0C;flash&#x7B49;</h3>
+<ul>
+<li>&#x65B9;&#x5F0F;1</li>
+</ul>
+<pre class="language-"><code>profile = webdriver.FirefoxProfile()
+profile.set_preference(&quot;network.proxy.type&quot;, 1)             # 1&#x4EE3;&#x8868;&#x624B;&#x52A8;&#x8BBE;&#x7F6E;
+profile.set_preference(&quot;network.proxy.http&quot;, &quot;127.0.0.1&quot;)
+profile.set_preference(&quot;network.proxy.http_port&quot;, 1080)
+profile.update_preferences()
+driver = webdriver.Firefox(firefox_profile=profile)
+
+# &#x7981;&#x7528;
+firefoxProfile.set_preference(&apos;permissions.default.stylesheet&apos;, 2)  # &#x7981;&#x7528;CSS
+firefoxProfile.set_preference(&apos;dom.ipc.plugins.enabled.libflashplayer.so&apos;,&apos;false&apos;) # &#x7981;&#x7528;flash
+firefoxProfile.set_preference(&apos;permissions.default.image&apos;, 2)   # &#x7981;&#x7528;&#x56FE;&#x7247;
+</code></pre><p>&#x5982;&#x679C;&#x662F;socks5&#x4EE3;&#x7406;&#xFF0C;&#x53D8;&#x66F4;&#x5176;&#x4E2D;&#x4E24;&#x884C;</p>
+<pre class="language-"><code>profile.setPreference(&quot;network.proxy.socks&quot;, &quot;190.x.y.z&quot;);
+profile.setPreference(&quot;network.proxy.socks_port&quot;, 8**8);
+</code></pre><ul>
+<li>&#x65B9;&#x5F0F;2</li>
+</ul>
+<pre class="language-"><code>from selenium import webdriver
+from selenium.webdriver.common.proxy import *
+
+myProxy = &quot;86.111.144.194:3128&quot;
+proxy = Proxy({
+    &apos;proxyType&apos;: ProxyType.MANUAL,
+    &apos;httpProxy&apos;: myProxy,
+    &apos;ftpProxy&apos;: myProxy,
+    &apos;sslProxy&apos;: myProxy,
+    &apos;noProxy&apos;:&apos;&apos;})
+
+driver = webdriver.Firefox(proxy=proxy)
+driver.set_page_load_timeout(30)
+driver.get(&apos;http://whatismyip.com&apos;)
+</code></pre><h2 id="&#x5176;&#x4ED6;">6. &#x5176;&#x4ED6;</h2>
+<ul>
 <li><p>input like human</p>
 <ul>
 <li><p>send_keys(string)</p>
@@ -2593,12 +2687,12 @@ driver.delete_all_cookies()
 <h1 id="Xvfb">Xvfb</h1>
 <p>It is an X11 server that performs all graphical operations in memory, not showing any screen output</p>
 <p>Only a network layer is necessary.</p>
-<h2 id="install">4. install</h2>
+<h2 id="install">7. install</h2>
 <pre class="language-"><code>System Requirements:
 
 sudo apt-get install xvfb   # or similar)
 pip install xvfbwrapper
-</code></pre><h2 id="example">5. example</h2>
+</code></pre><h2 id="example">8. example</h2>
 <pre class="language-"><code class="lang-python"><span class="token keyword">import</span> unittest
 
 <span class="token keyword">from</span> selenium <span class="token keyword">import</span> webdriver
@@ -2621,7 +2715,7 @@ pip install xvfbwrapper
 <span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">&apos;__main__&apos;</span><span class="token punctuation">:</span>
     unittest<span class="token punctuation">.</span>main<span class="token punctuation">(</span>verbosity<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span>
 </code></pre>
-<div id="anchors-navbar"><i class="fa fa-anchor"></i><ul><p><a href="#Xvfb">Xvfb</a></p><li><a href="#reference">1. reference</a></li><li><a href="#install">2. install</a></li><li><a href="#simple_example">3. simple example</a></li><li><a href="#install">4. install</a></li><li><a href="#example">5. example</a></li></ul></div><a href="#reference" id="goTop"><i class="fa fa-arrow-up"></i></a>
+<div id="anchors-navbar"><i class="fa fa-anchor"></i><ul><p><a href="#Xvfb">Xvfb</a></p><li><a href="#&#x53C2;&#x8003;">1. &#x53C2;&#x8003;</a></li><li><a href="#&#x5B89;&#x88C5;">2. &#x5B89;&#x88C5;</a></li><li><a href="#&#x6837;&#x4F8B;">3. &#x6837;&#x4F8B;</a></li><li><a href="#&#x5E38;&#x7528;&#x529F;&#x80FD;">4. &#x5E38;&#x7528;&#x529F;&#x80FD;</a></li><ul><li><a href="#&#x83B7;&#x53D6;&#x9875;&#x9762;&#x6E32;&#x67D3;&#x540E;&#x7684;&#x6E90;&#x4EE3;&#x7801;">4.1. &#x83B7;&#x53D6;&#x9875;&#x9762;&#x6E32;&#x67D3;&#x540E;&#x7684;&#x6E90;&#x4EE3;&#x7801;</a></li><li><a href="#&#x6267;&#x884C;js&#x811A;&#x672C;">4.2. &#x6267;&#x884C;js&#x811A;&#x672C;</a></li><li><a href="#&#x9000;&#x51FA;">4.3. &#x9000;&#x51FA;</a></li></ul><li><a href="#driver&#x7684;&#x4F18;&#x5316;">5. driver&#x7684;&#x4F18;&#x5316;</a></li><ul><li><a href="#phantomjs&#x4F7F;&#x7528;&#x4EE3;&#x7406;&#xFF0C;&#x6307;&#x5B9A;UA&#xFF0C;&#x8BBE;&#x7F6E;&#x8D85;&#x65F6;&#xFF1A;">5.1. phantomjs&#x4F7F;&#x7528;&#x4EE3;&#x7406;&#xFF0C;&#x6307;&#x5B9A;UA&#xFF0C;&#x8BBE;&#x7F6E;&#x8D85;&#x65F6;&#xFF1A;</a></li><li><a href="#Firefox_Driver&#x6DFB;&#x52A0;&#x4EE3;&#x7406;__&#x7981;&#x7528;&#x56FE;&#x7247;&#xFF0C;flash&#x7B49;">5.2. Firefox Driver&#x6DFB;&#x52A0;&#x4EE3;&#x7406;, &#x7981;&#x7528;&#x56FE;&#x7247;&#xFF0C;flash&#x7B49;</a></li></ul><li><a href="#&#x5176;&#x4ED6;">6. &#x5176;&#x4ED6;</a></li><li><a href="#install">7. install</a></li><li><a href="#example">8. example</a></li></ul></div><a href="#&#x53C2;&#x8003;" id="goTop"><i class="fa fa-arrow-up"></i></a>
                                 
                                 </section>
                             
@@ -2664,7 +2758,7 @@ pip install xvfbwrapper
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Selenium and Xvfb","date":"2016-01-22 14:41","level":"1.2.25","depth":2,"next":{"title":"Socket","level":"1.2.26","depth":2,"path":"Python/socket.md","ref":"Python/socket.md","articles":[]},"previous":{"title":"Phantomjs","level":"1.2.24","depth":2,"path":"Python/phantomjs.md","ref":"Python/phantomjs.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","splitter","sitemap","simple-page-toc","navigator","livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{},"livereload":{},"simple-page-toc":{"maxDepth":3,"skipFirstH1":true},"splitter":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"sitemap":{"hostname":"https://hxer.github.io"},"navigator":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"janes","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Wiki | janes","language":"cn","gitbook":">= 3.2.0","description":"janes' note"},"file":{"path":"Python/selenium.md","mtime":"2016-11-25T07:15:35.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-02-17T07:13:48.645Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Selenium and Xvfb","date":"2016-01-22 14:41","level":"1.2.25","depth":2,"next":{"title":"Socket","level":"1.2.26","depth":2,"path":"Python/socket.md","ref":"Python/socket.md","articles":[]},"previous":{"title":"Phantomjs","level":"1.2.24","depth":2,"path":"Python/phantomjs.md","ref":"Python/phantomjs.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","splitter","sitemap","simple-page-toc","navigator"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{},"simple-page-toc":{"maxDepth":3,"skipFirstH1":true},"splitter":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"sitemap":{"hostname":"https://hxer.github.io"},"navigator":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"janes","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Wiki | janes","language":"cn","gitbook":">= 3.2.0","description":"janes' note"},"file":{"path":"Python/selenium.md","mtime":"2017-03-13T07:52:02.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-03-14T06:08:57.515Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
@@ -2675,10 +2769,6 @@ pip install xvfbwrapper
     
         
         <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
         
     
         

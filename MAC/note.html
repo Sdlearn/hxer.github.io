@@ -2468,9 +2468,57 @@
 <td>Cmd + Ctrl + Opt + Power</td>
 <td>&#x5173;&#x673A; (shutdown)</td>
 </tr>
+<tr>
+<td>fn + delete</td>
+<td>&#x5411;&#x5149;&#x6807;&#x540E;&#x5220;&#x9664;</td>
+</tr>
+<tr>
+<td>cmd + &#x65B9;&#x5411;&#x5DE6;</td>
+<td>home</td>
+</tr>
+<tr>
+<td>cmd + &#x65B9;&#x5411;&#x53F3;</td>
+<td>end</td>
+</tr>
+<tr>
+<td>crtl+cmd+f</td>
+<td>&#x5168;&#x5C4F;&#x67D0;&#x4E2A;&#x5E94;&#x7528;</td>
+</tr>
+<tr>
+<td>cmd+w</td>
+<td>&#x5173;&#x95ED;&#x5E94;&#x7528;</td>
+</tr>
+<tr>
+<td>cmd+m</td>
+<td>&#x6700;&#x5C0F;&#x5316;&#x5E94;&#x7528;</td>
+</tr>
+<tr>
+<td>alt+cmd+esc</td>
+<td>&#x4EFB;&#x52A1;&#x7BA1;&#x7406;&#x5668;</td>
+</tr>
+<tr>
+<td>cmd+shift+3</td>
+<td>&#x622A;&#x5168;&#x5C4F;</td>
+</tr>
+<tr>
+<td>cmd+shift+4</td>
+<td>&#x9009;&#x62E9;&#x622A;&#x5C4F;</td>
+</tr>
+<tr>
+<td>cmd+delete</td>
+<td>&#x5220;&#x9664;</td>
+</tr>
+<tr>
+<td>cmd+alt+c</td>
+<td>&#x590D;&#x5236;&#x5F53;&#x524D;&#x8DEF;&#x5F84;(finder&#x4E0B;)</td>
+</tr>
 </tbody>
 </table>
-<h2 id="software">2. software</h2>
+<p>&#x5728;finder&#x4E0B;&#x9009;&#x4E2D;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;&#x6309;&#x7A7A;&#x683C; &#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x76EE;&#x5F55;&#x5927;&#x5C0F;</p>
+<h2 id="&#x4FE1;&#x606F;&#x67E5;&#x770B;">2. &#x4FE1;&#x606F;&#x67E5;&#x770B;</h2>
+<h3 id="&#x8FDB;&#x7A0B;">2.1. &#x8FDB;&#x7A0B;</h3>
+<pre class="language-"><code>lsof -i tcp:8000 &#x67E5;&#x770B;&#x67D0;&#x4E2A;&#x7AEF;&#x53E3;&#x5BF9;&#x5E94;&#x8FDB;&#x7A0B;
+</code></pre><h2 id="software">3. software</h2>
 <table>
 <thead>
 <tr>
@@ -2490,8 +2538,8 @@
 </ul>
 <p>install <code>brew cask install sougouinput</code></p>
 <p>then <code>open /usr/local/Caskroom/sogouinput/{versions}/&#x5B89;&#x88C5;&#x641C;&#x72D7;&#x8F93;&#x5165;&#x6CD5;.app</code></p>
-<h2 id="proxychains-ng">3. proxychains-ng</h2>
-<h3 id="conf">3.1. conf</h3>
+<h2 id="proxychains-ng">4. proxychains-ng</h2>
+<h3 id="conf">4.1. conf</h3>
 <p><code>vim /usr/local/Cellar/proxychains-ng/4.11/etc/proxychains.conf</code></p>
 <pre class="language-"><code>socks5 127.0.0.1 1080
 # or
@@ -2500,10 +2548,10 @@ http 127.0.0.1 8080
 <li>proxychains4.12_1</li>
 </ul>
 <p>&apos;/usr/local/etc/proxychains.conf&apos;</p>
-<h2 id="lxml">4. lxml</h2>
+<h2 id="lxml">5. lxml</h2>
 <pre class="language-"><code>brew install libxml2 --with-python
 pip install lxml
-</code></pre><div id="anchors-navbar"><i class="fa fa-anchor"></i><ul><p><a href="#"></a></p><li><a href="#mac_&#x5FEB;&#x6377;&#x952E;">1. mac &#x5FEB;&#x6377;&#x952E;</a></li><li><a href="#software">2. software</a></li><li><a href="#proxychains-ng">3. proxychains-ng</a></li><ul><li><a href="#conf">3.1. conf</a></li></ul><li><a href="#lxml">4. lxml</a></li></ul></div><a href="#mac_&#x5FEB;&#x6377;&#x952E;" id="goTop"><i class="fa fa-arrow-up"></i></a>
+</code></pre><div id="anchors-navbar"><i class="fa fa-anchor"></i><ul><p><a href="#"></a></p><li><a href="#mac_&#x5FEB;&#x6377;&#x952E;">1. mac &#x5FEB;&#x6377;&#x952E;</a></li><li><a href="#&#x4FE1;&#x606F;&#x67E5;&#x770B;">2. &#x4FE1;&#x606F;&#x67E5;&#x770B;</a></li><ul><li><a href="#&#x8FDB;&#x7A0B;">2.1. &#x8FDB;&#x7A0B;</a></li></ul><li><a href="#software">3. software</a></li><li><a href="#proxychains-ng">4. proxychains-ng</a></li><ul><li><a href="#conf">4.1. conf</a></li></ul><li><a href="#lxml">5. lxml</a></li></ul></div><a href="#mac_&#x5FEB;&#x6377;&#x952E;" id="goTop"><i class="fa fa-arrow-up"></i></a>
                                 
                                 </section>
                             
@@ -2542,7 +2590,7 @@ pip install lxml
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Note","level":"1.12.3","depth":2,"next":{"title":"Image","level":"1.13","depth":1,"ref":"","articles":[{"title":"PNG","level":"1.13.1","depth":2,"path":"Image/png.md","ref":"Image/png.md","articles":[]}]},"previous":{"title":"ITerm2","level":"1.12.2","depth":2,"path":"MAC/iterm2.md","ref":"MAC/iterm2.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","splitter","sitemap","simple-page-toc","navigator","livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{},"livereload":{},"simple-page-toc":{"maxDepth":3,"skipFirstH1":true},"splitter":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"sitemap":{"hostname":"https://hxer.github.io"},"navigator":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"janes","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Wiki | janes","language":"cn","gitbook":">= 3.2.0","description":"janes' note"},"file":{"path":"MAC/note.md","mtime":"2017-02-23T08:38:49.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-02-17T07:13:48.645Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Note","level":"1.12.3","depth":2,"next":{"title":"Image","level":"1.13","depth":1,"ref":"","articles":[{"title":"PNG","level":"1.13.1","depth":2,"path":"Image/png.md","ref":"Image/png.md","articles":[]}]},"previous":{"title":"ITerm2","level":"1.12.2","depth":2,"path":"MAC/iterm2.md","ref":"MAC/iterm2.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","splitter","sitemap","simple-page-toc","navigator"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{},"simple-page-toc":{"maxDepth":3,"skipFirstH1":true},"splitter":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"sitemap":{"hostname":"https://hxer.github.io"},"navigator":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"janes","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Wiki | janes","language":"cn","gitbook":">= 3.2.0","description":"janes' note"},"file":{"path":"MAC/note.md","mtime":"2017-02-25T08:08:49.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-03-14T06:08:57.515Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
@@ -2553,10 +2601,6 @@ pip install lxml
     
         
         <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
         
     
         

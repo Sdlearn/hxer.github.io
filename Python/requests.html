@@ -2473,7 +2473,13 @@ resp <span class="token operator">=</span> requests<span class="token punctuatio
 [Errno -5] No address associated with hostname
 [Errno -2] Name or service not known
 -- DNS lookup of the host name you&apos;re trying to access failed
-</code></pre><div id="anchors-navbar"><i class="fa fa-anchor"></i><ul><p><a href="#requests">requests</a></p><li><a href="#requests_proxy">1. requests proxy</a></li><ul><li><a href="#requests_proxy_vs_pysocks_proxy">1.1. requests proxy vs pysocks proxy</a></li></ul><li><a href="#error">2. error</a></li></ul></div><a href="#requests_proxy" id="goTop"><i class="fa fa-arrow-up"></i></a>
+</code></pre><h3 id="&#x81EA;&#x52A8;&#x8DF3;&#x8F6C;">2.1. &#x81EA;&#x52A8;&#x8DF3;&#x8F6C;</h3>
+<p>&#x901A;&#x8FC7;&#x914D;&#x7F6E;<code>allow_redirects</code>&#x53C2;&#x6570;&#xFF0C;&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E;requests&#x81EA;&#x52A8;&#x8DF3;&#x8F6C;&#xFF0C;&#x9ED8;&#x8BA4;&#x5141;&#x8BB8;</p>
+<ul>
+<li>&#x7981;&#x6B62;&#x81EA;&#x52A8;&#x8DF3;&#x8F6C;</li>
+</ul>
+<p><code>requests.get(url, allow_redirects=False)</code></p>
+<div id="anchors-navbar"><i class="fa fa-anchor"></i><ul><p><a href="#requests">requests</a></p><li><a href="#requests_proxy">1. requests proxy</a></li><ul><li><a href="#requests_proxy_vs_pysocks_proxy">1.1. requests proxy vs pysocks proxy</a></li></ul><li><a href="#error">2. error</a></li><ul><li><a href="#&#x81EA;&#x52A8;&#x8DF3;&#x8F6C;">2.1. &#x81EA;&#x52A8;&#x8DF3;&#x8F6C;</a></li></ul></ul></div><a href="#requests_proxy" id="goTop"><i class="fa fa-arrow-up"></i></a>
                                 
                                 </section>
                             
@@ -2516,7 +2522,7 @@ resp <span class="token operator">=</span> requests<span class="token punctuatio
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Requests","level":"1.2.5","depth":2,"next":{"title":"Celery","level":"1.2.6","depth":2,"path":"Python/celery.md","ref":"Python/celery.md","articles":[]},"previous":{"title":"Django 1.8.7","level":"1.2.4","depth":2,"path":"Python/django.md","ref":"Python/django.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","splitter","sitemap","simple-page-toc","navigator","livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{},"livereload":{},"simple-page-toc":{"maxDepth":3,"skipFirstH1":true},"splitter":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"sitemap":{"hostname":"https://hxer.github.io"},"navigator":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"janes","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Wiki | janes","language":"cn","gitbook":">= 3.2.0","description":"janes' note"},"file":{"path":"Python/requests.md","mtime":"2017-02-20T08:41:17.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-02-17T07:13:48.645Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Requests","level":"1.2.5","depth":2,"next":{"title":"Celery","level":"1.2.6","depth":2,"path":"Python/celery.md","ref":"Python/celery.md","articles":[]},"previous":{"title":"Django 1.8.7","level":"1.2.4","depth":2,"path":"Python/django.md","ref":"Python/django.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","splitter","sitemap","simple-page-toc","navigator"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{},"simple-page-toc":{"maxDepth":3,"skipFirstH1":true},"splitter":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"sitemap":{"hostname":"https://hxer.github.io"},"navigator":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"janes","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Wiki | janes","language":"cn","gitbook":">= 3.2.0","description":"janes' note"},"file":{"path":"Python/requests.md","mtime":"2017-03-01T07:56:28.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-03-14T06:08:57.515Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
@@ -2527,10 +2533,6 @@ resp <span class="token operator">=</span> requests<span class="token punctuatio
     
         
         <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
         
     
         
