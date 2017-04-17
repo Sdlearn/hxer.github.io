@@ -1,13 +1,3 @@
-## php 命令注入或代码执行
-
-
-### 系统命令
-
-系统命令执行是指应用程序对传入命令行的参数过滤不严格导致恶意用户能控制最终执行的命令，进而入侵系统，导致严重破坏的高危漏洞
-
-* 形成原因
-
-此类命令执行函数依赖PHP配置文件的设置，如果配置选项 safe_mode 设置为 off，此类命令不可执行，必须设置为 On 的情况下，才可执行。PHP 默认是关闭的。在安全模式下，只有在特定目录中的外部程序才可以被执行，对其它程序的调用将被拒绝。这个目录可以在php.ini文件中用 safe_mode_exec_dir指令，或在编译PHP是加上–with-exec-dir选项来指定，默认是/usr/local/php /bin
 
 ## php 代码执行
 
@@ -105,7 +95,7 @@ callback=phpinfo
 
 php能够执行系统命令的函数有：
 
-assert,system,passthru,exec,pcntl_exec,shell_exec,popen,proc_open,`(反单引号)
+assert,system,passthru,exec,pcntl_exec,shell_exec,popen,proc_open,`` `(反单引号)``
 
 * shell_exec()
 
@@ -119,7 +109,7 @@ assert,system,passthru,exec,pcntl_exec,shell_exec,popen,proc_open,`(反单引号
 
 成功则返回命令输出的结果， 失败则返回 FALSE
 
-* exec() 
+* exec()
 
 > string exec( string $command [, array &$output [, int &$return_var ］)
 
@@ -158,7 +148,7 @@ $ php -r 'echo `ls -l`;'
 
 ### 防御
 
-* php.ini 
+* php.ini
 
 ```
 safe_mode = On      #safe mode

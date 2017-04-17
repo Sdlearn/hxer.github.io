@@ -48,3 +48,21 @@ requests 进行 http 代理，不使用 HTTP CONNECT 方式， 兼容性更好
 * 禁止自动跳转
 
 `requests.get(url, allow_redirects=False)`
+
+### 手动添加cookie
+
+通过requests.utils.add_dict_to_cookiejar对session对象设置cookie，之后所有的请求都会自动加上自定义的cookie内容。
+
+也可以通过requests.utils.cookiejar_from_dict 生成一个cookiejar对象，再赋值给session.cookies。
+
+```python
+import requests
+import time
+
+mycookie = { "PHPSESSID":"56v9clgo1kdfo3q5q8ck0aaaaa" }
+s = requests.session()
+requests.utils.add_dict_to_cookiejar(x.cookies,{"PHPSESSID":"07et4ol1g7ttb0bnjmbiqjhp43"})
+s.get("http://127.0.0.1:80",cookies = mycookie)
+time.sleep(5)
+s.get("http://127.0.0.1:80")
+```

@@ -21,6 +21,14 @@ cmd+alt+c | 复制当前路径(finder下)
 
 在finder下选中一个目录按空格 可以查看目录大小
 
+### Finder 显示路径
+
+命令行输入:
+
+```
+defaults write com.apple.finder _FXShowPosixPathInTitle -bool YES
+```
+
 ## 信息查看
 
 ### 进程
